@@ -1,0 +1,31 @@
+/* Navbar.css */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* 네비게이션 바 배경색을 원하는 색상으로 설정하세요 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과를 추가할 수 있습니다 */
+    padding: 10px 20px; /* 네비게이션 바 내부 여백 설정 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbar ul {
+    list-style: none;
+    display: flex;
+  }
+  
+  .navbar ul a {
+    text-decoration: none;
+    color: #333; /* 링크 색상을 원하는 색상으로 설정하세요 */
+    margin-right: 20px; /* 링크 간격 설정 */
+  }
+  
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+  
