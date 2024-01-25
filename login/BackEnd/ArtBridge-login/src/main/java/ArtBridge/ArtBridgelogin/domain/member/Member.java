@@ -2,6 +2,8 @@ package ArtBridge.ArtBridgelogin.domain.member;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,7 +14,7 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_seq")
-    private int memberSeq;
+    private Long memberSeq;
 
     @Column(name = "member_id", length = 30, nullable = false)
     private String memberId;
@@ -42,6 +44,6 @@ public class Member {
     private Date memberDeletedDate;
 
     @Column(name = "member_created_date", nullable = false)
-    private Date memberCreatedDate;
+    private LocalDateTime memberCreatedDate;
 
 }
