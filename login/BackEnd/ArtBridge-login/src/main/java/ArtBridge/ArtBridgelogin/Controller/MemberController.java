@@ -2,35 +2,41 @@ package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.member.Member;
 import ArtBridge.ArtBridgelogin.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Controller
-@RequiredArgsConstructor
+@RestController
+@RequestMapping("/members") // 엔드포인트 경로를 일관성 있게 변경
 public class MemberController {
 
-    private final MemberService memberService;
+    @Autowired
+    private MemberService memberService;
 
-    @GetMapping("/member/new")
-    public MemberForm createForm(){
-        return new MemberForm();
-    }
-
-    @PostMapping("/members/new")
-    public String create(MemberForm form, BindingResult result) {
-
+    @PostMapping("/new") // 엔드포인트 경로를 일관성 있게 변경
+    public ResponseEntity<String> create(@RequestBody MemberForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return "members/createMemberForm";
+            // 유효성 검사 오류가 있다면, 잘못된 요청 상태를 반환
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효성 검사 오류");
         }
 
+        // MemberForm에서 Member 엔티티로 변환
+        Member member = convertToEntity(form);
+
+        // JPA를 통해 회원 저장
+        memberService.join(member);
+
+        // 회원이 성공적으로 생성되었다면, 성공 상태를 반환
+        return ResponseEntity.status(HttpStatus.CREATED).body("회원이 성공적으로 생성되었습니다");
+    }
+
+    // MemberForm에서 Member 엔티티로 변환하는 메서드
+    private Member convertToEntity(MemberForm form) {
         Member member = new Member();
         member.setMemberName(form.getName());
         member.setMemberId(form.getId());
@@ -40,17 +46,11 @@ public class MemberController {
         member.setMemberContact(form.getPhonenumber());
         member.setMemberPoint(0);
         member.setMemberCreatedDate(LocalDateTime.now());
-
-        memberService.join(member);
-        return "redirect:/";
+        return member;
     }
 
-    @GetMapping("/members")
-    public String list(Model model) {
-        List<Member> members = memberService.findMembers();
-        model.addAttribute("members", members);
-        return "members/memberList";
+    @GetMapping("/list") // 엔드포인트 경로를 일관성 있게 변경
+    public List<Member> list() {
+        return memberService.findMembers();
     }
-
-
 }
