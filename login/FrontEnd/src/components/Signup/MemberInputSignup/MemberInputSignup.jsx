@@ -1,12 +1,14 @@
 'use client'
-import React, { useState } from 'react'
-import styles from './MemberInputSignup.module.scss'
+import React, { useState } from 'react';
+import axios from 'axios';
+import styles from './MemberInputSignup.module.scss';
 
-const InputSignup = () => {
+const MemberInputSignup = () => {
     const [username, setUsername] = useState('');
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
 
     const [errors, setErrors] = useState({});
@@ -68,8 +70,42 @@ const InputSignup = () => {
           setErrors((prevErrors) => ({ ...prevErrors, email: null }));
         }
       };
+
+    const signUpSubmit = async (e) => {
+      e.preventDefault();
+
+      // 유효성 검사 실패한 경우
+      if (!Object.values(errors).every((error) => error === null)) {
+        console.log('모든 항목을 올바르게 입력하세요.');
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("confirmPassword", confirmPassword);
+      formData.append("username", username);
+      formData.append("userid", userid);
+      formData.append("nickname", nickname);
+
+      try {
+        const response = await axios.
+          post("url", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+        console.log(response.data);
+        
+      } catch (error) {
+        console.error(error);
+      }
+    
+    };
+
     return (
-        <form className={styles.form}>
+        <form className={styles.form} onSubmit={signUpSubmit}>
             <div className={styles.form_title}>개인 회원가입</div>
             <div>
                 <div className={styles.form_element}>
@@ -113,7 +149,10 @@ const InputSignup = () => {
                 </div>
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>닉네임</div>
-                    <input type="name" className={styles.form_input} placeholder='닉네임'/>
+                    <input type="name" className={styles.form_input} placeholder='닉네임'
+                    value={nickname} onChange={(e) => {
+                      setNickname(e.target.value);
+                  }}/>
                 </div>
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>이메일</div>
@@ -139,4 +178,4 @@ const InputSignup = () => {
     )
 }
 
-export default InputSignup
+export default MemberInputSignup

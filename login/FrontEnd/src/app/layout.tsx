@@ -21,18 +21,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      
-
-      
-      <body className={styles.body}>
-        <div className={styles.container}>
+      <body>
           <Navbar currentUser={currentUser}/>
           <ToastProvider />
             {children}
-        </div>
       </body>
-      
-      
     </html>
   );
 }

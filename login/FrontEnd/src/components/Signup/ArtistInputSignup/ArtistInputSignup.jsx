@@ -1,9 +1,10 @@
 'use client'
 import React, { useState } from 'react';
+// import {router} from 'react-router-dom';
 import axios from 'axios';
 import styles from './ArtistInputSignup.module.scss';
 
-const InputSignup = () => {
+const ArtistInputSignup = () => {
     const [username, setUsername] = useState('');
     const [userid, setUserid] = useState('');
     const [password, setPassword] = useState('');
@@ -102,47 +103,18 @@ const InputSignup = () => {
 
 
       try {
-        await axios.
+        const response = await axios.
           post("url", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           });
+
+        console.log(response.data);
+        
       } catch (error) {
         console.error(error);
       }
-
-      // await axios
-      //     .post("url",{
-      //       email: email,
-      //       password: password,
-      //       confirmPassword: confirmPassword,
-      //       username: username,
-      //       userid: userid,
-      //     })
-      //     .then((response) => {
-      //         console.log(response.data);
-      //     })
-      //     .catch((error)=>{
-      //         console.log(error);
-      // })
-
-      //   try {
-      //     axios.post("http://localhost:3001/api/signup", {
-      //     // const response = await axios.post('http://localhost:3001/api/signup', {
-      //       email: email,
-      //       password: password,
-      //       confirmPassword: confirmPassword,
-      //       username: username,
-      //       userid: userid,
-      //       // + 필명, 포트폴리오, 연락처
-      //     });
-
-      //     // console.log(response.data);
-
-      //   } catch (error) {
-      //     console.error(error);
-      //     }
     };
 
     return (
@@ -229,4 +201,4 @@ const InputSignup = () => {
     )
 };
 
-export default InputSignup;
+export default ArtistInputSignup;
