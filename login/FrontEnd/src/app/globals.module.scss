@@ -1,0 +1,83 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .container{
+    .logo {
+      height: 6em;
+      padding: 1.5em;
+      will-change: filter;
+      transition: filter 300ms;
+    }
+    .logo:hover {
+      filter: drop-shadow(0 0 2em #646cffaa);
+    }
+    .logo.react:hover {
+      filter: drop-shadow(0 0 2em #61dafbaa);
+    }
+    
+    @keyframes logo-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    @media (prefers-reduced-motion: no-preference) {
+      a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+      }
+    }
+    
+    .card {
+      padding: 2em;
+    }
+    
+    .read-the-docs {
+      color: #888;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333; /* 배경 색상은 원하는 색상으로 변경하세요 */
+      padding: 10px 20px;
+    }
+    
+    .logo img {
+      height: 50px; /* 로고 이미지의 높이를 조절하세요 */
+    }
+    
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+    
+    nav ul li {
+      margin-right: 20px;
+      display: inline-block;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: #fff; /* 링크 텍스트 색상은 원하는 색상으로 변경하세요 */
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+  }
+ 

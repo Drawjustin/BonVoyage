@@ -1,0 +1,18 @@
+.Head {
+    width: 100%;
+    height: 80vh;
+    overflow: hidden;
+    aspect-ratio: 1/ 1;
+    border-radius: 0.75rem;
+    position: relative;
+}
+
+.heartButton {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+}
+
+.Image {
+    width: 100%;
+}

@@ -1,0 +1,114 @@
+// MyPage.scss
+
+.my_page {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  
+  @media (min-width: 768px) {
+    padding:40px;
+  }
+
+  @media (min-width: 1200px) {
+    padding: 60px;
+  }
+}
+  
+  .page_title {
+    font-size: 24px;
+    font-weight: blod;
+    margin-top: 20px;
+  }
+  
+  .profile_container {
+    display: flex;
+    margin-top: 30px;
+    background-color: #cce8e8;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 768px) {
+      justify-content: space-between;
+    }
+  }
+  
+  .profile_picture_container {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .profile_picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: lightgray; /* 또는 프로필 이미지의 경로를 설정하세요. */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+    
+  }
+
+  .change_profile {
+    margin-top: 10px;
+    color: blue;
+    cursor: pointer;
+  }
+  
+  .right_section {
+    flex: 1;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-left: 20px;
+    margin-bottom: 0;
+  }
+  
+  .membership_info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .membership_grade {
+    margin-left: 10px;
+  }
+  
+  .points_info {
+    margin-top: 10px;
+  }
+  
+  .charge_points_button {
+    color: black;
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #8FCACA;
+    cursor: pointer;
+  }
+  
+  .navigation_container {
+    justify-content: space-between;
+    display: flex;
+    margin-top: 20px;
+    width: fit-c;
+    
+  }
+  
+  .nav_button {
+    justify-content: space-between;
+    margin: 0 10px;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+
+  .image {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 40px;
+    height: 40px;
+
+  }
+
+  
