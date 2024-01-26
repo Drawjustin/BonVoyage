@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import Input from '@/components/Input'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Button from '@/components/button/Button';
+import Button from '@/components/Button';
 import Link from 'next/link';
 import axios from 'axios';
 import { signIn } from 'next-auth/react';

@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import React from 'react'
-import styles from './Avatar.module.scss'
 
 interface AvatarProps {
     src: string | null;
@@ -9,7 +8,7 @@ interface AvatarProps {
 const Avatar = ({src}:AvatarProps) => {
   return (
     <Image
-        className={styles.avatar}
+        className='w-10 h-10 rounded-full'
         height={30}
         width={30}
         alt="avatar"

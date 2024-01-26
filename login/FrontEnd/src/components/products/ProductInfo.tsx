@@ -2,7 +2,7 @@ import { User } from '@prisma/client'
 import React from 'react'
 import { IconType } from 'react-icons'
 import ProductCategory from './ProductCategory';
-import Avatar from '../Avatar/Avatar';
+import Avatar from '../Avatar';
 import { formatTime } from '@/helpers/dayjs';
 
 interface ProductInfoProps {

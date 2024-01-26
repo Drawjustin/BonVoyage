@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { Inter } from "next/font/google";
-import './globals.css'
+import styles from "./globals.module.scss";
 import getCurrentUser from "./actions/getCurrentUser";
 import ToastProvider from "@/components/ToastProvider";
 
@@ -22,11 +22,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <main>
-          {/* <Navbar currentUser={currentUser}/> */}
+          <Navbar currentUser={currentUser}/>
           <ToastProvider />
             {children}
-        </main>
       </body>
     </html>
   );
