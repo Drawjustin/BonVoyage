@@ -1,7 +1,6 @@
 // import Navbar from "@/components/Navbar";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import getCurrentUser from "./actions/getCurrentUser";
 import ToastProvider from "@/components/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,8 +15,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
