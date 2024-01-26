@@ -1,0 +1,27 @@
+.layout {
+    max-width:1024px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Card {
+    display:flex;
+    flex-direction:column;
+    gap: 1.5rem;
+}
+
+.Info {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-top: 1.5rem;
+    @media (min-width: 768px){
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    } 
+    @media (min-width: 768px) {
+        gap: 2.5rem;
+    }
+}
+
+.button {
+    margin-top: 2.5rem;
+}
