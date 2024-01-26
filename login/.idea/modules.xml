@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ArtBridge-login.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ArtBridge-login.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/login.iml" filepath="$PROJECT_DIR$/.idea/login.iml" />
     </modules>
   </component>
