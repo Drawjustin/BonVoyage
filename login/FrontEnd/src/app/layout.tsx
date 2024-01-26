@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-          <Navbar currentUser={currentUser}/>
+          {/* <Navbar currentUser={currentUser}/> */}
           <ToastProvider />
             {children}
       </body>
