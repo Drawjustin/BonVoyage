@@ -1,0 +1,48 @@
+.id_finder_container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.id_finder_container h2 {
+  margin-bottom: 10px;
+}
+.id_finder_container .input_container {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.id_finder_container .input_container label {
+  margin-right: 10px;
+  width: 80px;
+}
+.id_finder_container .input_container input {
+  border-radius: 8px;
+  flex: 1;
+  padding: 8px;
+  box-sizing: border-box;
+}
+.id_finder_container .find_button {
+  width: 100%;
+  padding: 10px;
+  background-color: lightblue;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.id_finder_container .result_container {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 10px;
+}
+.id_finder_container .result_container p {
+  margin: 0;
+}/*# sourceMappingURL=FindId.module.css.map */

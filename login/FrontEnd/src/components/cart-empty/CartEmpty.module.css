@@ -1,0 +1,22 @@
+.cart_empty {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.cart_empty img {
+  width: 320px;
+  margin-bottom: 20px;
+}
+.cart_empty h1 {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 30px;
+}
+.cart_empty p {
+  margin: 0;
+  margin-bottom: 20px;
+}
+.cart_empty a {
+  color: var(--hover-color);
+  text-decoration: underline;
+  cursor: pointer;
+}/*# sourceMappingURL=CartEmpty.module.css.map */

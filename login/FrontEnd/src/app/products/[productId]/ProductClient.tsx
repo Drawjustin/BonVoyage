@@ -1,5 +1,5 @@
 'use client';
-import Button from '@/components/Button';
+import Button from '@/components/button/Button';
 import Container from '@/components/Container';
 import { categories } from '@/components/categories/Categories';
 import ProductHead from '@/components/products/ProductHead';

@@ -1,0 +1,63 @@
+.checkout {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 130px;
+}
+.checkout div {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+.checkout div p {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 20px;
+  font-weight: 500;
+  font-size: 25px;
+  text-align: start;
+  background: #f1eadc;
+}
+@media (min-width: 510px) {
+  .checkout div {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  .checkout div p {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 30px;
+    margin-bottom: 0;
+    padding: 20px 50px;
+  }
+  .checkout div p span {
+    margin-right: 30px;
+  }
+}
+
+.checkout_button {
+  display: block;
+  padding: 20px 50px;
+  color: var(--main-color);
+  font-weight: 400;
+  font-size: 17px;
+  background: #fff;
+  border: 1px solid var(--main-color);
+  cursor: pointer;
+  transition: 0.3s all ease;
+}
+.checkout_button:hover {
+  color: #fff;
+  background: var(--second-color);
+}
+.checkout_button:disabled {
+  color: white;
+  background: var(--second-color);
+}
+@media (min-width: 510px) {
+  .checkout_button {
+    padding: 20px 50px;
+  }
+}/*# sourceMappingURL=Checkout.module.css.map */

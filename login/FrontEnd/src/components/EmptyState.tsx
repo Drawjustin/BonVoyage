@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Heading from './Heading';
-import Button from './Button';
+import Button from './button/Button';
 import { useRouter } from 'next/navigation';
 
 interface EmptyStateProps {

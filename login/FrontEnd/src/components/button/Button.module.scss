@@ -1,0 +1,75 @@
+.button {
+    position: relative;
+    :disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    } 
+    border-radius: 0.5rem;
+    :hover{opacity: 0.8}
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    width: 100%;
+
+    
+}
+
+.outline {
+    @extend .button;
+    background-color: white;
+    border-color: black;
+    color: black;
+}
+
+.not_outline {
+    @extend .button;
+    background-color: orange;
+    border-color: orange;
+    color: white;
+}
+
+.small_outline {
+    @extend .outline;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-weight: 300;
+    border-width: 1px;
+}
+
+.small_not_outline {
+    @extend .not_outline;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    font-weight: 300;
+    border-width: 1px;
+}
+
+.not_small_outline {
+    @extend .outline;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-weight: 600;
+    border-width: 2px;
+}
+
+.not_small_not_outline {
+    @extend .not_outline;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-weight: 600;
+    border-width: 2px;
+}
+
+.Icon {
+    position: absolute;
+    left: 1rem;
+    top: 0.75rem
+}

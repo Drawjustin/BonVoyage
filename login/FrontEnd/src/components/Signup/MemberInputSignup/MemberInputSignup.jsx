@@ -10,6 +10,7 @@ const MemberInputSignup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
+    const [phonenum, setPhonenum] = useState('');
 
     const [errors, setErrors] = useState({});
 
@@ -87,10 +88,11 @@ const MemberInputSignup = () => {
       formData.append("username", username);
       formData.append("userid", userid);
       formData.append("nickname", nickname);
+      formData.append("phonenum", phonenum);
 
       try {
         const response = await axios.
-          post("url", formData, {
+          post("http://1ocalhost:8080/members/new", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -166,7 +168,10 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'/>
+                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    value={phonenum} onChange={(e) => {
+                      setPhonenum(e.target.value);
+                  }}/>
                         <button className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>

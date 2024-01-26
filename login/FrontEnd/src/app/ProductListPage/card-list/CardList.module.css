@@ -1,0 +1,21 @@
+.card_list {
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+.card_list li {
+  border-radius: 4px;
+}
+@media (min-width: 667px) {
+  .card_list {
+    flex-flow: row wrap;
+    align-items: flex-start;
+  }
+}
+@media (min-width: 785px) {
+  .card_list {
+    justify-content: flex-start;
+  }
+}/*# sourceMappingURL=CardList.module.css.map */

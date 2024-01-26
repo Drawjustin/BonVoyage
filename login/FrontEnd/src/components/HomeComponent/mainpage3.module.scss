@@ -68,6 +68,7 @@
 .product {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .product_ {
@@ -115,7 +116,7 @@
     background-color: #e9e9e9;
     border-radius: 100%;
     width: 50px;
-    height:50px;
+    height: 40px;
     margin: 10px 5px 10px 10px;
 }
 
@@ -132,7 +133,7 @@
 
 .auction_btn {
     width: 30px;
-    height: 30px;
+    height: 25px;
     margin: 12px 8px 5px 10px;
     border-radius: 100%;
     margin-left: 10px;

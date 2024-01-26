@@ -1,0 +1,89 @@
+.login_container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.login_container h2 {
+  text-align: center;
+}
+.login_container .toggle_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.login_container .toggle_container button {
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: #eee;
+  border: none;
+  border-radius: 4px;
+}
+.login_container .toggle_container button.not_selected {
+  pointer-events: auto;
+}
+.login_container .toggle_container button.selected {
+  background-color: #ccc;
+  pointer-events: none;
+}
+.login_container .container {
+  display: flex;
+  justify-content: space-between;
+}
+.login_container .input_container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.login_container .input_container .icon_input {
+  position: relative;
+}
+.login_container .input_container .icon_input .icon {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  left: 22px;
+}
+.login_container .input_container .icon_input input {
+  width: calc(80% - 30px);
+  padding: 10px 10px 10px 30px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.login_container .button_container {
+  display: flex;
+  justify-content: space-between;
+}
+.login_container .login_button {
+  width: 80px;
+  height: 85px;
+  padding: 10px;
+  background-color: #7377b6;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.login_container .login_button:hover {
+  background-color: #7377b6;
+}
+
+.search_user_info_div {
+  font-size: small;
+  color: #ababab;
+}
+
+.search_user_info_div_div {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.search_user_info_div_div_b {
+  cursor: pointer;
+  margin-top: -5px;
+  font-size: 14px;
+}/*# sourceMappingURL=InputLogin.module.css.map */

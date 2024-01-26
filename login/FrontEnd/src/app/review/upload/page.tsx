@@ -2,12 +2,13 @@
 import React, {useState} from 'react'
 import Input from '@/components/Input'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import Button from '@/components/Button';
+import Button from '@/components/button/Button';
 import Container from '@/components/Container';
 import Heading from '@/components/Heading';
 import ImageUpload from '@/components/ImageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import styles from './upload.module.scss'
 
 const ReviewUploadPage = () => {
     const router = useRouter();
@@ -54,10 +55,10 @@ const ReviewUploadPage = () => {
   return (
     <Container>
         <div
-            className='max-w-screen-lg mx-auto'
+            className={styles.container}
         >
             <form
-                className='flex flex-col gap-8'
+                className={styles.form}
                 onSubmit={handleSubmit(onSubmit)}
                 >
                 

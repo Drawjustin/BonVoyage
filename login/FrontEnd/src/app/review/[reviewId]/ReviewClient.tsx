@@ -1,11 +1,12 @@
 'use client';
-import Button from '@/components/Button';
+import Button from '@/components/button/Button';
 import Container from '@/components/Container';
 import ReviewHead from '@/components/review/ReviewHead';
 import ReviewInfo from '@/components/review/ReviewInfo';
 import { Review, User } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import React from 'react'
+import styles from './ReviewClient.module.scss'
 
 interface ReviewClientProps {
     Review: Review & {user: User};
@@ -17,8 +18,8 @@ const ReviewClient = ({Review, currentUser}: ReviewClientProps) => {
   return (
     <Container>
         <div
-        className='max-w-screen-lg mx-auto'>
-            <div className='flex flex-col gap-6'>
+        className={styles.layout}>
+            <div className={styles.Card}>
                 <ReviewHead
                     title={Review.title}
                     imageSrc={Review.imageSrc}
@@ -26,7 +27,7 @@ const ReviewClient = ({Review, currentUser}: ReviewClientProps) => {
                     currentUser={currentUser}
                 />
                     <div
-                        className='grid grid-cols-1 mt-6 md:grid-colss-2 md:gap-10'
+                        className={styles.Info}
                     >
                         <ReviewInfo
                             user={Review.user}
@@ -35,7 +36,7 @@ const ReviewClient = ({Review, currentUser}: ReviewClientProps) => {
                         />
                     </div>
             </div>
-            <div className='mt-10'>
+            <div className={styles.button}>
                 <Button
                     label='댓글달기'
                 />

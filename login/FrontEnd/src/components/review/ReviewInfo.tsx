@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 import React from 'react'
-import Avatar from '../Avatar';
+import Avatar from '../Avatar/Avatar';
 import { formatTime } from '@/helpers/dayjs';
 import style from './ReviewInfo.module.scss';
 
