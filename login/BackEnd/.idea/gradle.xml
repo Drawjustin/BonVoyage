@@ -4,11 +4,13 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/BackEnd/ArtBridge-login" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/ArtBridge-login" />
+        <option name="gradleJvm" value="21" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/BackEnd/ArtBridge-login" />
+            <option value="$PROJECT_DIR$/ArtBridge-login" />
           </set>
         </option>
       </GradleProjectSettings>
