@@ -48,14 +48,14 @@
 #     - echo "Deploying application..."
 #     - echo "Application successfully deployed."
 
-stages:
-  - mirror
+# stages:
+#   - mirror
 
-mirror_to_github:
-  stage: mirror
-  script:
-    # - git remote add github https://github.com/SSAFY-10-A207/BonVoyage.git 2>&1 | Out-Null
-    - git config --global user.email "dkfls921@gmail.com"
-    - git config --global user.name "lynne921"
-    - git fetch origin
-    - git push --mirror "https://${GITHUB_PAT}@github.com/SSAFY-10-A207/BonVoyage"
+# mirror_to_github:
+#   stage: mirror
+#   script:
+#     # - git remote add github https://github.com/SSAFY-10-A207/BonVoyage.git 2>&1 | Out-Null
+#     - git config --global user.email "dkfls921@gmail.com"
+#     - git config --global user.name "lynne921"
+#     - git fetch origin
+#     - git push --mirror "https://${GITHUB_PAT}@github.com/SSAFY-10-A207/BonVoyage"
