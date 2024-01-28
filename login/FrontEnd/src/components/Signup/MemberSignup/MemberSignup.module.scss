@@ -1,0 +1,20 @@
+.guest_card {
+    width: 300px;
+    height: 400px;
+    background-color: #F2F2F2;
+    border-radius: 20px;
+    padding: 30px 40px;
+    box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease 0s;
+}
+
+.guest_card:hover {
+    transform: translateY(-20px);
+}
+
+.guest_card_inner {
+    font-weight: bold;
+    text-align: end;
+    font-size: 50px;
+    color: #595959;
+}
