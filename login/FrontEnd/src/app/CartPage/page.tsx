@@ -1,3 +1,19 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f0f240b61e88942f4e620c99521b71cd2a2473a243e0061695e7328c148a18a6
-size 616
+'use client'
+import React from 'react'
+import CartDetail from './cartDetail/CartDetail';
+import { Provider } from 'react-redux';
+import store from '@/store'
+
+const CartPage = () => {
+
+  return (
+        <div className='page'>
+          <Provider store={store}>
+            <CartDetail/>
+          </Provider>
+        </div >
+    
+  )
+}
+
+export default CartPage
