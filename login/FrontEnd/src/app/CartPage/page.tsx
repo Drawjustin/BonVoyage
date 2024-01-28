@@ -1,23 +1,18 @@
+'use client'
 import React from 'react'
-import CartEmpty from '../../components/cart-empty/CartEmpty';
-import { useAppSelector } from '@/hooks/redux';
-import CartList from './cart-list/CartList';
-import Checkout from './checkout/Checkout';
+import CartDetail from './cartDetail/CartDetail';
+import { Provider } from 'react-redux';
+import store from '@/store'
 
 const CartPage = () => {
-  const { products } = useAppSelector((state:any) => state.cartSlice);
+
   return (
-    <div className='page'>
-      {!products.length ? (
-        <CartEmpty title="Cart" />
-      ) : (
-        <div className='container'>
-          <h1>장바구니</h1>
-          <CartList />
-          <Checkout />
-        </div>
-      )}
-    </div >
+        <div className='page'>
+          <Provider store={store}>
+            <CartDetail/>
+          </Provider>
+        </div >
+    
   )
 }
 

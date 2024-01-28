@@ -1,10 +1,10 @@
 'use client'
 import React from 'react'
 import { Link } from 'next/link';
-import { deleteFromCart, incrementProduct, decrementProduct } from '../../../../store/cart/cart.slice';
+import { deleteFromCart, incrementProduct, decrementProduct } from '@/store/cart/cart.slice';
 import styles from './CartItem.module.scss';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { useAppDispatch } from '../../../../hooks/redux';
+import { useAppDispatch } from '@/hooks/redux';
 
 const CartItem = ({ item }) => {
 

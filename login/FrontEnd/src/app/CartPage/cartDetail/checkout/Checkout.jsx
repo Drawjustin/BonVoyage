@@ -1,9 +1,9 @@
 'use client'
 import React, { useEffect } from 'react'
 import { Link } from 'next/link';
-import { useAppSelector, useAppDispatch } from '../../../hooks/redux';
-import { useAuth } from '../../../hooks/useAuth';
-import { getTotalPrice, postOrder } from '../../../store/cart/cart.slice';
+import { useAppSelector, useAppDispatch } from '@/hooks/redux';
+import { useAuth } from '@/hooks/useAuth';
+import { getTotalPrice, postOrder } from '@/store/cart/cart.slice';
 import styles from './Checkout.module.scss';
 
 const Checkout = () => {

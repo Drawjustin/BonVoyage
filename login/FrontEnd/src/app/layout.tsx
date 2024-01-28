@@ -20,7 +20,6 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <main>
-          {/* <Navbar currentUser={currentUser}/> */}
           <ToastProvider />
             {children}
         </main>
