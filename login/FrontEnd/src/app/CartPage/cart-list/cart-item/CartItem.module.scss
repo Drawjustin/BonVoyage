@@ -1,0 +1,136 @@
+.cart_item {
+    display: flex;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(182 179 179);
+
+    img {
+        width: 100%;
+        max-width: 100px;
+        height: 120px;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.cart_description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 30%;
+    margin-left: 20px;
+    text-align: start;
+
+    h3 {
+        margin: 0;
+        margin-bottom: 10px;
+        color: rgb(206 202 202);
+        font-size: 12px;
+    }
+
+    h2 {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 15px;
+    }
+
+    span {
+        display: block;
+        font-size: 15px;
+    }
+
+    @media (min-width: 610px) {
+        h3 {
+            font-size: 16px;
+        }
+
+        h2 {
+            font-size: 20px;
+        }
+
+        span {
+            font-size: 20px;
+        }
+    }
+}
+
+.cart_count {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        button {
+            padding: 5px 10px;
+            color: #333;
+            font-weight: 400;
+            font-size: 10px;
+            background: none;
+            border: 2px solid rgb(39 39 39 / 10%);
+            cursor: pointer;
+            transition: 0.3s ease-out;
+
+            &:disabled {
+                color: rgb(39 39 39 / 10%);
+                cursor: default;
+            }
+
+            &:hover {
+                border: 2px solid #333;
+            }
+        }
+
+        span {
+            display: block;
+            margin-right: 10px;
+            margin-left: 10px;
+            padding: 5px 10px;
+            color: #333;
+            font-weight: 400;
+            font-size: 10px;
+            border: 2px solid rgb(39 39 39 / 10%);
+        }
+
+        @media (min-width: 610px) {
+            span {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.cart_delete {
+    display: flex;
+    align-items: flex-start;
+    height: 20%;
+    color: rgb(31 30 30 / 36.3%);
+    font-size: 25px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease-out;
+
+    &:hover {
+        color: #333;
+    }
+}
