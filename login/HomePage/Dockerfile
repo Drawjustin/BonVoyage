@@ -2,7 +2,7 @@
 FROM node:latest as build
 
 # Set the working directory to /app
-WORKDIR /app
+WORKDIR /
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -16,7 +16,7 @@ COPY . .
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Build the React app
-RUN npm run build
+RUN npx next build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
