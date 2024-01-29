@@ -17,7 +17,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 # Build the React app
 RUN npx next build
-RUN npx next start
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
