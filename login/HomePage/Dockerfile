@@ -15,14 +15,12 @@ COPY . .
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-
-
+# Build the React app
+RUN npm run build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
-# Build the React app
-RUN npm run build
 
 # Copy the build output from the build environment to the nginx directory
 COPY --from=build /app/build /usr/share/nginx/html
