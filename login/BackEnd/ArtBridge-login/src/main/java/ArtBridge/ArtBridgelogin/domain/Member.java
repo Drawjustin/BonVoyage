@@ -1,10 +1,10 @@
-package ArtBridge.ArtBridgelogin.domain.member;
+package ArtBridge.ArtBridgelogin.domain;
 
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.*;
+import java.util.*;
 
 @Entity
 @Table(name = "member")
@@ -41,7 +41,7 @@ public class Member {
     private boolean memberIsDeleted;
 
     @Column(name = "member_deleted_date")
-    private Date memberDeletedDate;
+    private LocalDateTime memberDeletedDate;
 
     @Column(name = "member_created_date", nullable = false)
     private LocalDateTime memberCreatedDate;
