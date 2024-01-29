@@ -13,14 +13,13 @@ RUN npm install
 # Copy the local source files to the working directory
 COPY . .
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Build the React app
 RUN npx next build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy the build output from the build environment to the nginx directory
 COPY --from=build app/build /usr/share/nginx/html
