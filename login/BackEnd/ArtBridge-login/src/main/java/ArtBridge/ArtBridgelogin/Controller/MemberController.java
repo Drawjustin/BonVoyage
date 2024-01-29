@@ -23,7 +23,7 @@ public class MemberController {
         return memberService.findOne(id);
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public Member createMember(@RequestBody Member member) {
         return memberService.createMember(member);
     }
