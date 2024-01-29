@@ -10,5 +10,8 @@
         <module name="ArtBridge-login.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ArtBridge-login.querydsl" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
