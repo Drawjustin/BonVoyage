@@ -1,0 +1,399 @@
+.id_finder_container {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  .input_container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+
+    label {
+      margin-right: 10px;
+      width: 80px;
+    }
+
+    input {
+      border-radius: 8px;
+      flex: 1;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  }
+
+  .find_button {
+    width: 100%;
+    padding: 10px;
+    background-color: lightblue;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .result_container {
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 10px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+
+
+
+
+
+
+// .login_container {
+//     box-sizing: content-box;
+//     max-width: 600px;
+//     margin: 0 auto;
+//     padding: 30px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  
+//     h2 {
+//       text-align: center;
+//     }
+  
+//     .toggle_container {
+//       display: flex;
+//       justify-content: center;
+//       margin-bottom: 20px;
+  
+//       button {
+//         padding: 10px;
+//         margin: 0 5px;
+//         cursor: pointer;
+//         background-color: #eee;
+//         border: none;
+//         border-radius: 4px;
+  
+//         &.not_selected{
+//           pointer-events: auto;
+//         }
+  
+//         &.selected {
+//           background-color: #ccc;
+//           pointer-events: none;
+          
+//         }
+//       }
+//     }
+    
+// .input_blank {
+//   margin-bottom: 10px;
+//   position: relative;
+//   input {
+//     width: calc(100% - 30px);
+//     padding: 10px 10px 10px 30px;
+//     margin-bottom: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 4px;
+//   }
+// }
+
+
+// .input_container {
+//   display: flex;
+//   justify-content: space-between;
+//   margin-bottom: 20px;
+
+//   .icon_input {
+//     position: relative;
+
+//     .icon {
+//       position: absolute;
+//       top: 40%;
+//       transform: translateY(-50%);
+//       left: 10px;
+//     }
+
+//     input {
+//       width: calc(100% - 30px);
+//       padding: 10px 10px 10px 30px;
+//       margin-bottom: 10px;
+//       border: 1px solid #ccc;
+//       border-radius: 4px;
+//     }
+//   }
+// }
+  
+//     .login_button {
+//       width: 100%;
+//       padding: 10px;
+//       background-color: #3498db;
+//       color: #fff;
+//       border: none;
+//       border-radius: 4px;
+//       cursor: pointer;
+  
+//       &:hover {
+//         background-color: #217dbb;
+//       }
+//     }
+//   }
+  
+// .search_user_info_div {
+//     font-size: small;
+//     color: #ababab;
+   
+//   }
+  
+// .search_user_info_div_div {
+//     text-align: left;
+//     margin-top: 10px;
+//   }
+  
+// .search_user_info_div_div_b {
+//     cursor: pointer;
+//     margin-top: -5px;
+//     font-size: 14px;
+//   }
+
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+//   }
+  
+//   @import url('https://fonts.googleapis.com/css?family=Lato:100,300,400');
+//   @import url('https://fonts.googleapis.com/css?family=Roboto:100');
+  
+//   @mixin button($bcolor,
+//   $url,
+//   $x1,
+//   $y1,
+//   $bor,
+//   $col) {
+//   background: $bcolor;
+//   -webkit-mask: url($url);
+//   mask: url($url);
+//   -webkit-mask-size: $x1 $y1;
+//   mask-size: $x1 $y1;
+//   border: $bor;
+//   color: $col;
+//   }
+  
+//   .header {
+//   text-align: center;
+//   font-family: 'Roboto', sans-serif;
+//   font-size: 34px;
+//   margin-top: 12vh;
+//   }
+  
+// .footer {
+//   text-align: center;
+//   font-family: 'Lato', sans-serif;
+//   font-weight: 300;
+//   font-size: 20px;
+//   margin-top: 15vh;
+//   }
+  
+// .button-container-1 {
+//   position: relative;
+//   width: 100px;
+//   height: 50px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 6vh;
+//   overflow: hidden;
+//   border: 1px solid;
+//   font-family: 'Lato', sans-serif;
+//   font-weight: 300;
+//   font-size: 20px;
+//   transition: 0.5s;
+//   letter-spacing: 1px;
+//     border-radius: 8px;
+  
+//   button {
+//     width: 101%;
+//     height: 100%;
+//     font-family: 'Lato', sans-serif;
+//     font-weight: 300;
+//     font-size: 11px;
+//     letter-spacing: 1px;
+//     font-weight: bold;
+  
+//     @include button(#000,
+//     "https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/nature-sprite.png",
+//     2300%,
+//     100%,
+//     none,
+//     #fff);
+//     cursor: pointer;
+//     -webkit-animation: ani2 0.7s steps(22) forwards;
+//     animation: ani2 0.7s steps(22) forwards;
+  
+//     &:hover {
+//     -webkit-animation: ani 0.7s steps(22) forwards;
+//     animation: ani 0.7s steps(22) forwards;
+//     }
+//   }
+//   }
+  
+// .button-container-2 {
+//   position: relative;
+//   width: 100px;
+//   height: 50px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 7vh;
+//   overflow: hidden;
+//   border: 1px solid #000;
+//   font-family: 'Lato', sans-serif;
+//   font-weight: 300;
+//   transition: 0.5s;
+//   letter-spacing: 1px;
+//   border-radius: 8px;
+  
+//   button {
+//     width: 101%;
+//     height: 100%;
+//     font-family: 'Lato', sans-serif;
+//     font-weight: 300;
+//     font-size: 11px;
+//     letter-spacing: 1px;
+//     font-weight: bold;
+  
+//     @include button(#000, "https://raw.githubusercontent.com/robin-dela/css-mask-animation/master/img/urban-sprite.png",
+//     3000%,
+//     100%,
+//     none,
+//     #fff);
+//     cursor: pointer;
+//     -webkit-animation: ani2 0.7s steps(29) forwards;
+//     animation: ani2 0.7s steps(29) forwards;
+  
+//     &:hover {
+//     -webkit-animation: ani 0.7s steps(29) forwards;
+//     animation: ani 0.7s steps(29) forwards;
+//     }
+//   }
+//   }
+  
+  
+// .mas {
+//       position: absolute;
+//       color: #000000;
+//       text-align: center;
+//       width: 101%;
+//       font-family: 'Lato', sans-serif;
+//       font-weight: 300;
+//       position: absolute;
+//       font-size: 11px;
+//       margin-top: 17px;
+//       overflow: hidden;
+//       font-weight: bold;
+  
+//   }
+  
+//   @-webkit-keyframes ani {
+//   from {
+//     -webkit-mask-position: 0 0;
+//     mask-position: 0 0;
+//   }
+  
+//   to {
+//     -webkit-mask-position: 100% 0;
+//     mask-position: 100% 0;
+//   }
+//   }
+  
+//   @keyframes ani {
+//   from {
+//     -webkit-mask-position: 0 0;
+//     mask-position: 0 0;
+//   }
+  
+//   to {
+//     -webkit-mask-position: 100% 0;
+//     mask-position: 100% 0;
+//   }
+//   }
+  
+//   @-webkit-keyframes ani2 {
+//   from {
+//     -webkit-mask-position: 100% 0;
+//     mask-position: 100% 0;
+//   }
+  
+//   to {
+//     -webkit-mask-position: 0 0;
+//     mask-position: 0 0;
+//   }
+//   }
+  
+//   @keyframes ani2 {
+//   from {
+//     -webkit-mask-position: 100% 0;
+//     mask-position: 100% 0;
+//   }
+  
+//   to {
+//     -webkit-mask-position: 0 0;
+//     mask-position: 0 0;
+//   }
+//   }
+  
+//   a{
+//     color:#00ff95;
+//   }
+  
+// .button_container {
+//   position: relative;
+//   width: 100px;
+//   height: 50px;
+//   margin-left: auto;
+//   margin-right: auto;
+//   margin-top: 8vh;
+//   overflow: hidden;
+//   border: 1px solid #9bc4ff;
+//   font-family: 'Lato', sans-serif;
+//   font-weight: 300;
+//   transition: 0.5s;
+//   letter-spacing: 1px;
+//   border-radius: 8px;
+  
+//   button {
+//     width: 101%;
+//     height: 100%;
+//     font-family: 'Lato', sans-serif;
+//     font-weight: 300;
+//     font-size: 11px;
+//     letter-spacing: 1px;
+//     font-weight: bold;
+  
+  
+//     @include button(#9bc4ff, "https://raw.githubusercontent.com/pizza3/asset/master/natureSmaller.png",
+//     7100%,
+//     100%,
+//     none,
+//     #fff);
+//     cursor: pointer;
+//     -webkit-animation: ani2 0.7s steps(70) forwards;
+//     animation: ani2 0.7s steps(70) forwards;
+  
+//     &:hover {
+//     -webkit-animation: ani 0.7s steps(70) forwards;
+//     animation: ani 0.7s steps(70) forwards;
+//     }
+//   }
+//   }
