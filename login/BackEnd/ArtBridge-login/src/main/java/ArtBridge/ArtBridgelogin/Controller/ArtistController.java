@@ -24,7 +24,7 @@ public class ArtistController {
         return artistService.findOne(id);
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public Artist createArtist(@RequestBody Artist artist) {
         return artistService.createArtist(artist);
     }

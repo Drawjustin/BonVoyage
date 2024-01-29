@@ -31,7 +31,8 @@ public class ArtistServiceTest {
     EntityManager em;
 
     private Artist createArtist(String name, String id, String pwd, String nickname, String email,
-                                String contact, long point, String content, LocalDateTime createdDate) {
+                                String contact, long point, boolean isDelete, String content,
+                                LocalDateTime deletedDate, LocalDateTime createdDate) {
         Artist artist = new Artist();
         artist.setArtistName(name);
         artist.setArtistId(id);
@@ -40,7 +41,9 @@ public class ArtistServiceTest {
         artist.setArtistEmail(email);
         artist.setArtistContact(contact);
         artist.setArtistPoint(point);
+        artist.setArtistIsdeleted(isDelete);
         artist.setArtistHistory(content);
+        artist.setArtistDeletedDate(deletedDate);
         artist.setArtistCreatedDate(createdDate);
         return artist;
     }
@@ -50,8 +53,8 @@ public class ArtistServiceTest {
     @BeforeEach
     public void setUp() {
         artist = createArtist("이동훈", "alexander", "1234", "상남자",
-                "alexander@gmail.com", "01022369308", 0, "할 수 없어",
-                LocalDateTime.now());
+                "alexander@gmail.com", "01022369308", 0,
+                false, "할수 없어", LocalDateTime.now(), LocalDateTime.now());
     }
 
 

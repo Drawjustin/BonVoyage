@@ -25,7 +25,7 @@ public class ArtistRepository {
 
     @Transactional(readOnly = true)
     public List<Artist> findAll(){
-        return em.createQuery("select from Artist m", Artist.class)
+        return em.createQuery("select m from Artist m", Artist.class)
                 .getResultList();
     }
 

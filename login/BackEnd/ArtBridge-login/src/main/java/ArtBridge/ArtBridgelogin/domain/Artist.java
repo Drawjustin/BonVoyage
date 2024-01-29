@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Artist {
     @Column(name = "artist_seq")
     private Long artistSeq;
 
+    @OneToMany(mappedBy = "artist")
     @Column(name = "artist_name", length = 30, nullable = false)
     private String artistName;
 
@@ -41,12 +43,13 @@ public class Artist {
     private String artistHistory;
 
     @Column(name = "artist_isdeleted", nullable = false)
-    private boolean artistIsdeleted = false;
+    private boolean artistIsdeleted;
 
     @Column(name = "artist_deleted_date")
     private LocalDateTime artistDeletedDate;
 
     @Column(name = "artist_created_date", nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime artistCreatedDate;
 
 }
