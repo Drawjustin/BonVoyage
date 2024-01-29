@@ -1,5 +1,5 @@
 # Use an official Node runtime as a base image
-FROM node:14-alpine as build
+FROM node:latest as build
 
 # Set the working directory to /app
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Use an official Nginx runtime as a base image
-FROM nginx:alpine
+FROM nginx:latest
 
 # Copy the build output from the build environment to the nginx directory
 COPY --from=build /app/build /usr/share/nginx/html
