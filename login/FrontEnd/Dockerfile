@@ -13,8 +13,6 @@ RUN npm install
 # Copy the local source files to the working directory
 COPY . .
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # Build the React app
 RUN npm run build
 
