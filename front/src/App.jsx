@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 // import Navbar from './components/Navbar/Navbar';
 import HomePage from './pages/HomePage';
-
+import '/quill.custom.css';
 import LoginPage from './pages/LoginPage';
 import FindId from './components/FindId/FindId';
 import ResetPw from './components/ResetPw/ResetPw';
@@ -15,7 +15,7 @@ import SignupMemberPage from './pages/SignupMemberPage';
 import MyPage from './pages/MyPage';
 import './pages/HomePage/logo.png';
 import Layout from './components/layout/Layout';
-import ChargePoint from './components/ChargePoint/ChargePoint';
+import ChargePoint from './components/MyPageComponent/ChargePoint/ChargePoint';
 
 const App = () => {
 

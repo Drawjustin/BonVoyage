@@ -3,7 +3,7 @@ import styles from '../../components/HomeComponent/HomeComponent.module.scss';
 import Navbar from '../../components/Navbar/Navbar';
 import PopularReviews from '../../components/HomeComponent/PopularReviews';
 import AuctionComingSoon from '../../components/HomeComponent/AuctionComingSoon';
-import AuctionCal from '../../components/HomeComponent/AuctionCal';
+import AuctionCal from '../../components/HomeComponent/AuctionCal/';
 const HomePage = () => {
 
     return (

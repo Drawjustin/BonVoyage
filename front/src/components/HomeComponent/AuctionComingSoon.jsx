@@ -11,57 +11,14 @@ const AuctionComingSoon = () => {
     
   ];
 
-  // const [selectedArtwork, setSelectedArtwork] = useState(null);
-
-  // const handleArtworkClick = (artwork) => {
-  //   setSelectedArtwork(artwork);
-  // };
+  const [isExpaned, setIsExpanded] = useState(false);
+  
+  const handleToggle = () => {
+    setIsExpanded(!isExpaned);
+  };
 
   return (
-    <div className={styles.auction_container}>
-        <div className={styles.auction_center_container}>
-          <div className={styles.auction_details}>
-            <div>
-              <div className={styles.box1}>  
-                <div className={styles.in_box1}>
-                <div className={styles.box1_wrap}>
-                  <svg value='60' className={styles.svg1} open>
-                    <defs>
-                      <linearGradient id='gradient' x1='0%' y1='0%' x2='0%' y2='100%'>
-                        <stop offset='0%' stopColor='#FFFEC4'></stop>
-                        <stop offset='50%' stopColor='#DFFFD8'></stop>
-                        <stop offset='90%' stopColor='#95DAC1'></stop>
-                      </linearGradient>
-                    </defs>                  
-
-                    <circle className={styles.frame} cx='60' cy='60' r='54' strokeWidth='6'></circle>
-                    <circle className={styles.bar_animate} cx='60' cy='60' r='54' strokeWidth='6'></circle>
-                  </svg>
-                  <strong className={styles.text}></strong>
-                </div>
-              </div>
-              <div className={styles.big_figma}></div>
-              </div>
-            </div>
-
-
-          <div>
-            <div className={styles.box2}>
-
-            </div>
-          </div>
-
-           
-          </div>
-
-
-          <div className={styles.auction_details}>
-
-          </div>
-          <div className={styles.auction_details}>
-
-          </div>
-        </div>
+    <div className={`component ${isExpanded ? 'expanded' : ''}`} onClick={handleToggle}>
     </div>
   );
 };

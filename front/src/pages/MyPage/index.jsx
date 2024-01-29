@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react'
 import styles from './MyPage.module.scss'
 import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
-
+// import ReactQuill from 'react-quill';
 // import { Link } from 'react-router-dom';
-import ChargePoint from '../../components/ChargePoint/ChargePoint';
+import ChargePoint from '../../components/MyPageComponent/ChargePoint/ChargePoint';
 import Navbar from '../../components/Navbar/Navbar';
 
 import accountinfo from './1.png';
 import purchaseinfo from './2.png';
 import faq from './3.png';
 import myauctioncal from './4.png';
-import AccountInfo from '../../components/AccountInfo/AccountInfo';
-import PurchaseInfo from '../../components/PurchaseInfo/PurchaseInfo';
-import Faq from '../../components/Faq/Faq';
-import MyAuctionCal from '../../components/MyAuctionCal/MyAuctionCal';
+import AccountInfo from '../../components/MyPageComponent/AccountInfo/AccountInfo';
+import PurchaseInfo from '../../components/MyPageComponent/PurchaseInfo/PurchaseInfo';
+import Faq from '../../components/MyPageComponent/Faq/Faq';
+import MyAuctionCal from '../../components/MyPageComponent/MyAuctionCal/MyAuctionCal';
 
 // import React from 'react';
 // import {
@@ -97,7 +97,7 @@ const MyPage = () => {
         <div>
         <Navbar />
         <div className={styles.my_page}>
-        <h2 style={{textAlign: 'left'}}>마이 페이지</h2>
+        <h2 style={{textAlign: 'left'}}>MY PAGE</h2>
             <div className={styles.profile_container}>
                 <div className={styles.profile_picture_container} onClick={() => document.getElementById('fileInput').click()}>
                     <div className={styles.profile_picture} style={{ backgroundImage: `url(${profilePicture})` }}>

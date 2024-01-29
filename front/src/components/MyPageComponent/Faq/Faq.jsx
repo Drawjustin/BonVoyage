@@ -6,6 +6,7 @@ import Accordion from 'react-bootstrap/Accordion';
 const Faq = () => {
 
   return (
+    <div className={styles.frame_parent}>
     <div className={styles.plz}>
     <h3 className={styles.title}>FAQ</h3>
     <Accordion defaultActiveKey="0">
@@ -37,7 +38,7 @@ const Faq = () => {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-    </div>
+    </div></div>
   );
 }
 

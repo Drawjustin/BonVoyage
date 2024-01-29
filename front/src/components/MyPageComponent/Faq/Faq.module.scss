@@ -77,3 +77,9 @@
           margin-bottom: 8px;
         }
       }
+
+      .frame_parent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }

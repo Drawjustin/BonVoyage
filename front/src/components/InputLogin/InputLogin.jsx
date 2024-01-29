@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import styles from './InputLogin.module.scss';
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 
 const InputLogin = () => {
   const [isArtist, setIsArtist] = useState(false);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate();
 
   const handleArtistToggle = () => {
     setIsArtist(true);
@@ -13,15 +19,48 @@ const InputLogin = () => {
   const handlePersonalToggle = () => {
     setIsArtist(false);
   };
-    const handleLogin = () => {
-    // 로그인 처리 로직 추가
-    console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
-    // 실제 프로젝트에서는 서버로 인증 요청을 보내야 합니다.
+  const handleLogin = () => {
+
+    // 로그인 처리 로직 추가
+    const backendUrl = 'BACKEND_URL'
+    // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
+
+    const loginData = {
+      username: username,
+      password: password,
+      isArtist: isArtist,
+    };
+
+    // axios 요청 넣어봄
+    axios.post(`${backendUrl}/login`, loginData)
+      .then(response => {
+        console.log('로그인 성공 :', response.data);
+        // 로그인 성공하면 홈페이지로 이동시킬것
+        navigate.push('/');
+      })
+      .catch(error => {
+        console.error('로그인 실패', error.response ? error.response.data : error.message);
+        // 로그인 실패하면 팝업 표시할 것
+        setShowAlert(true);
+      });
+  };
+
+  const handleAlertClose = () => {
+    // 팝업 닫기 및 상태 초기화
+    setShowAlert(false);
+    setUsername('');
+    setPassword('');
   };
 
   return (
     <div className={styles.login_container}>
+      {showAlert && (
+        <div className={styles.alert}>
+          <p className={styles.pp}>로그인이 실패하였습니다.</p>
+          <button className={styles.b} onClick={handleAlertClose}>확인</button>
+        </div>
+      )}
       <h2>Login</h2>
       <div className={styles.toggle_container}>
         <label>
