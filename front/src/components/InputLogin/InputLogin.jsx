@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styles from './InputLogin.module.scss';
 import { Link } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
+import KakaoLoginButton from './KakaoLoginButton';
+import GoogleLoginButton from './GoogleLoginButton';
 
 const InputLogin = () => {
   const [isArtist, setIsArtist] = useState(false);
@@ -23,7 +25,7 @@ const InputLogin = () => {
   const handleLogin = () => {
 
     // 로그인 처리 로직 추가
-    const backendUrl = 'BACKEND_URL'
+    const backendUrl = '43.200.244.3:8003'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     const loginData = {
@@ -111,6 +113,14 @@ const InputLogin = () => {
       </button></div>
     </div>
       
+      <div>
+        <KakaoLoginButton />
+        <GoogleLoginButton />
+
+      </div>
+
+
+
       <div className={styles.search_user_info_div}>
         <Link to='/find_id'>아이디 찾기</Link>
         <span> | </span>
