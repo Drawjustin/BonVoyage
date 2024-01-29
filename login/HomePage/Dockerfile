@@ -2,7 +2,7 @@
 FROM node:latest as build
 
 # Set the working directory to /app
-WORKDIR /app
+WORKDIR /
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -14,15 +14,15 @@ RUN npm install
 COPY . .
 
 COPY nginx.conf /etc/nginx/nginx.conf
-
 # Build the React app
-RUN npm run build
+RUN npx next build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
+
 # Copy the build output from the build environment to the nginx directory
-COPY --from=build . /usr/share/nginx/html
+COPY --from=build /out /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
