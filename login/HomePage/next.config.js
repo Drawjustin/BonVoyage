@@ -6,5 +6,6 @@ module.exports = withImages({
             'res.cloudinary.com',
             'via.placeholder.com'
         ]
-    }
+    },
+    output: 'export'
 });
