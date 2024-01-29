@@ -319,22 +319,187 @@ nav a {
 
 // Component.scss
 
-.component {
-  border: 1px solid #ddd;
-  margin: 10px;
-  padding: 10px;
-  cursor: pointer;
-  transition: height 0.3s ease; // 애니메이션 효과를 위한 transition 속성
+// HomeComponent.module.scss
 
-  .header {
-    font-weight: bold;
-  }
+.component {
+  display: flex;
+  margin: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 
   &.expanded {
-    height: 200px; // 펼쳐졌을 때의 높이 설정
+    margin-right: 300px; // 컨텐츠 확장 시 우측 여백 조정
+  }
+
+  .header {
+    
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .artworkList {
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1); // 이미지에 호버 시 크기 조정
+      }
+    }
   }
 
   .content {
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+
+    .info_container {
+      text-align: center;
+      padding: 20px;
+      border-radius: 50%;
+      background-color: #f0f0f0;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  
+      h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+    
+
+    p {
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .info_container,
+    img {
+      flex: 1; // 좌우 대칭되는 크기의 div에 담기
+    }
   }
 }
+
+
+
+// styles.scss
+
+$card_width: 85;
+$card_height: 100;
+
+.selected {
+}
+
+.selected:before {
+  content: '';
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  text-align: justify;
+  margin-left: 50px;
+  margin-top: calc(50vh - 50px);
+  background-color: #ddc4c4;
+  transition: background-color 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.menu_item .menu_item > a {
+  color: #d4caca;
+}
+
+.menu ol {
+  margin: auto;
+  position: relative;
+}
+
+ol {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu_item ol {
+  position: relative;
+}
+
+li {
+  list-style: none;
+}
+
+.menu_item {
+  border: 1px solid rgba(30, 30, 30, 0.5);
+  padding: 0;
+  font-size: 17px;
+  height: #{$card_height}px;
+  width: #{$card_width}px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  line-height: 0.9em;
+  border-radius: 2px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sub_menu a {
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.sub_menu:hover > .menu_item:first-of-type:hover > a {
+  overflow: visible;
+}
+
+.menu > ol > .menu_item > a {
+  padding-top: 4px;
+}
+
+.menu:hover > .menu_item {
+  box-shadow: 1px 1px 5px 4px rgba(5, 5, 20, 0.7);
+}
+
+.menu_item:hover {
+  box-shadow: -1px -2px 2px 0px rgba(26, 26, 26, 0.44);
+  box-shadow: -2px 0px 12px grey;
+}
+
+a {
+  text-decoration: none;
+  text-align: center;
+  color: #cacabc;
+  padding-bottom: 5px;
+}
+
+.sub_menu a {
+  padding-top: 3px;
+  text-shadow: 1px 1px #484848;
+}
+
+.menu_item:hover > a {
+  color: #f1ecec;
+}
+
+.menu {
+  position: absolute;
+}
+
+.menu_item {
+  display: flex;
+  position: absolute;
+}
+
+// ... (이하 생략)
+
+// 여기에 변수 및 스타일 규칙 추가 가능
