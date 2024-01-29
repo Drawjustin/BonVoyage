@@ -22,7 +22,7 @@ FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy the build output from the build environment to the nginx directory
-COPY --from=build app/build /usr/share/nginx/html
+COPY --from=build /out /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
