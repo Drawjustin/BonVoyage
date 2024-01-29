@@ -36,13 +36,13 @@ public class Artist {
     @Column(name = "artist_contact", length = 50, nullable = false)
     private String artistContact;
 
-    @Column(name = "artist_point", length = 11, nullable = false)
+    @Column(name = "artist_point", length = 32, nullable = false, columnDefinition = "INT DEFAULT 0")
     private Long artistPoint;
 
-    @Column(name = "artist_history", nullable = false)
+    @Column(name = "artist_history")
     private String artistHistory;
 
-    @Column(name = "artist_isdeleted", nullable = false)
+    @Column(name = "artist_isdeleted", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean artistIsdeleted;
 
     @Column(name = "artist_deleted_date")
@@ -51,5 +51,11 @@ public class Artist {
     @Column(name = "artist_created_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime artistCreatedDate;
-
+    // 다른 필드 및 메서드들...
+    @PrePersist
+    protected void onCreate() {
+        if (artistCreatedDate == null) {
+            artistCreatedDate = LocalDateTime.now();
+        }
+    }
 }
