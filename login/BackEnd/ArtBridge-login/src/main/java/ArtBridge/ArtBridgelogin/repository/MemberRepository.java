@@ -15,7 +15,7 @@ public class MemberRepository {
     private final EntityManager em;
 
     @Transactional
-    public Member save(Member member) {
+    public Member create(Member member) {
         em.persist(member);
         return member;
     }

@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "artistMention")
+@Table(name = "artist_mention")
 @Data
 public class ArtistMention {
 
@@ -19,10 +19,10 @@ public class ArtistMention {
     @Column(name = "artist_seq", insertable = false, updatable = false)
     private Long artistSeq;
 
-    @Column(name = "artist_mention_content")
+    @Column(name = "artist_mention_content", nullable = false)
     private String artistMentionContent;
 
-    @Column(name = "artist_metion_subject")
+    @Column(name = "artist_metion_subject", nullable = false)
     private String artistMentionSubject;
 
     @Column(name = "artis_mention_created_date")

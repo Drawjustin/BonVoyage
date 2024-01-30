@@ -21,7 +21,6 @@ public class Artist {
     @Column(name = "artist_name", length = 30, nullable = false)
     private String artistName;
 
-
     @Column(name = "artist_id", length = 30, nullable = false)
     private String artistId;
 
