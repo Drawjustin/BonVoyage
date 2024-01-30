@@ -1,0 +1,138 @@
+.point_charge {
+  color: white;
+}
+
+.payment {
+  text-align: left;
+}
+
+.payment_container {
+  color: black;
+  width: 100%;
+  height: 80%;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.payment_container_2 {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.blank {
+  padding-top: 20px;
+}
+
+.payment_page {
+  border-radius: 20px;
+  display: flex;
+  height: 400px;
+}
+
+.left_section {
+  color: white;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 0px;
+  
+  flex: 1.2;
+  background-color: rgb(46, 51, 51);
+}
+
+.right_section {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 20px;
+
+  flex: 2;
+  background-color: lightgray;
+  padding: 20px;
+}
+
+.navigation_container {
+  display: flex;
+  margin-top: 20px;
+  width: fit-c;
+  
+}
+
+.button {
+  width: 40px;
+  height: 40px;
+  font-size: small;
+}
+
+.nav_button {
+  justify-content: space-between;
+  margin: 0 10px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pay {
+  justify-content: center;
+  width: 55px;
+  height: 50px;
+  border: 2.2px solid rgb(62, 62, 62); 
+  border-radius: 20%;
+}
+
+.pay_align {
+  margin-left: 20px;
+  margin-right: 20px;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.choice {
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: left;
+}
+
+.points {
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: x-small;
+  text-align: left;
+}
+
+.point_input {
+  width: 75%;
+  padding: 10px;
+  border: 3px solid white; 
+  background-color: black;
+  border-radius: 10px; 
+  outline: none;
+  box-sizing: border-box;
+  color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pointsContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.point_button {
+  font-size: small;
+
+}
+
+.line {
+  width: 80%;
+  color: rgb(203, 203, 203);
+}
+
+.info {
+  font-size: small;
+  margin-left: 40px;
+  margin-right: 40px;
+  text-align: left;
+}
