@@ -33,7 +33,7 @@ public class Artist {
     @Column(name = "artist_email", length = 30, nullable = false)
     private String artistEmail;
 
-    @Column(name = "artist_contact")
+    @Column(name = "artist_contact", length = 50, nullable = false)
     private String artistContact;
 
     @Column(name = "artist_point", length = 32, nullable = false, columnDefinition = "INT DEFAULT 0")
