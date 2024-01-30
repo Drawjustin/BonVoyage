@@ -5,7 +5,6 @@ FROM openjdk:17 AS build-stage
 WORKDIR /app
 
 # 소스 코드와 Maven 빌드 파일 복사
-COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline
 
