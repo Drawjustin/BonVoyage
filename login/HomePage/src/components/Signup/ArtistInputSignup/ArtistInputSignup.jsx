@@ -107,7 +107,7 @@ const ArtistInputSignup = () => {
         "artistIsDelete" : false,
         "artistCreatedDate" : "2024-01-29T04:54:33"     
       };
-      const serverAddress = 'http://43.200.244.3:80';
+      const serverAddress = 'http://43.200.244.3:8001';
       //formData.append('artistHistory', portfolio);
       formData.append('userData', new Blob([JSON.stringify(userData)], {
         type: "application/json"
