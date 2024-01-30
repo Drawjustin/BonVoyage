@@ -12,6 +12,7 @@ const ArtistInputSignup = () => {
     const [penname, setPenname] = useState('');
     const [portfolio, setPortfolio] = useState("포트폴리오");
     const [email, setEmail] = useState('');
+    const [phonenum, setPhonenum] = useState('');
 
     const [errors, setErrors] = useState({});
 
@@ -92,29 +93,48 @@ const ArtistInputSignup = () => {
         return;
       }
       
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("confirmPassword", confirmPassword);
-      formData.append("username", username);
-      formData.append("userid", userid);
-      formData.append("file", portfolio);
-      formData.append("penname", penname);
+      // const formData = new FormData();
+      // formData.append("email", email);
+      // formData.append("password", password);
+      // formData.append("confirmPassword", confirmPassword);
+      // formData.append("username", username);
+      // formData.append("userid", userid);
+      // formData.append("file", portfolio);
+      // formData.append("penname", penname);
+      
+      const data = {
+       "artistName": username,
+       "artistid": userid,
+       "artistPwd": password,
+      //  "chekedpw": confirmPassword,
+       "artistNickname": penname,
+       "artistEmail": email,
+       "artistContact": phonenum,
+       "artistPoint": 0,
+       "artistHistory": "할수 있어",
+       "artistIsDelete" : false,
+       "artistCreatedDate" : '2024-01-29T04:54:33'
+      }
 
 
       try {
-        const response = await axios.
-          post("url", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+        const response = await axios.post('43.200.244.3:80/artists/new', data, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
         console.log(response.data);
-        
       } catch (error) {
         console.error(error);
       }
+
+
+
+      // const formData = new FormData();
+      // formData.append("data", new Blob([JSON.stringify(data)], {
+      //   type: "application/json"
+      // }));
     };
 
     return (
@@ -189,7 +209,10 @@ const ArtistInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'/>
+                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    value={phonenum} onChange={(e) => {
+                      setPhonenum(e.target.value);
+                  }}/>
                         <button className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>
