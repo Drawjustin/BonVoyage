@@ -95,17 +95,15 @@ const ArtistInputSignup = () => {
       
       const formData = new FormData();
 
+
       const userData = {
-        "artistName": username,
-        "artistId": userid,
-        "artistPwd": password,
-        "artistNickname": penname,
-        "artistEmail": email,
-        "artistContact": phonenum,
-        "artistPoint" : 0,
-        "artistHistory" : "123",
-        "artistIsDelete" : false,
-        "artistCreatedDate" : "2024-01-29T04:54:33"     
+        "artistName": "1234",
+        "artistId": "1234567",
+        "artistPwd": "1234567",
+        "artistNickname": "김싸피",
+        "artistEmail": "123@naver.com",
+        "artistContact": "01023456789",
+        "artistHistory" : "ㅇㅇ",   
       };
       const serverAddress = 'http://43.200.244.3:8001';
       //formData.append('artistHistory', portfolio);
