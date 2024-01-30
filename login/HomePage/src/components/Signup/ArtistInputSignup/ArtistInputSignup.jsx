@@ -93,48 +93,37 @@ const ArtistInputSignup = () => {
         return;
       }
       
-      // const formData = new FormData();
-      // formData.append("email", email);
-      // formData.append("password", password);
-      // formData.append("confirmPassword", confirmPassword);
-      // formData.append("username", username);
-      // formData.append("userid", userid);
-      // formData.append("file", portfolio);
-      // formData.append("penname", penname);
-      
-      const data = {
-       "artistName": username,
-       "artistid": userid,
-       "artistPwd": password,
-      //  "chekedpw": confirmPassword,
-       "artistNickname": penname,
-       "artistEmail": email,
-       "artistContact": phonenum,
-       "artistPoint": 0,
-       "artistHistory": "할수 있어",
-       "artistIsDelete" : false,
-       "artistCreatedDate" : '2024-01-29T04:54:33'
-      }
+      const formData = new FormData();
 
+      const userData = {
+        "artistName": username,
+        "artistId": userid,
+        "artistPwd": password,
+        "artistNickname": penname,
+        "artistEmail": email,
+        "artistContact": phonenum,
+        "artistPoint" : 0,
+        "artistHistory" : "123",
+        "artistIsDelete" : false,
+        "artistCreatedDate" : "2024-01-29T04:54:33"     
+      };
+      const serverAddress = 'http://43.200.244.3:80';
+      //formData.append('artistHistory', portfolio);
+      formData.append('userData', new Blob([JSON.stringify(userData)], {
+        type: "application/json"
+      }));
 
-      try {
-        const response = await axios.post('43.200.244.3:80/artists/new', data, {
+      axios.post(`${serverAddress}/artists/new`, formData,
+        {
           headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        console.log(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-
-
-
-      // const formData = new FormData();
-      // formData.append("data", new Blob([JSON.stringify(data)], {
-      //   type: "application/json"
-      // }));
+            "Content-Type": 'application/json'
+          }
+        }
+      ).then(res => {
+        console.log(res);
+      }).catch(err => {
+        alert(err);
+      });
     };
 
     return (
