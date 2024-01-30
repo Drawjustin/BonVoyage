@@ -15,11 +15,12 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_seq")
-    private Long artistSeq;
+    private long artistSeq;
 
-    @OneToMany(mappedBy = "artist")
+
     @Column(name = "artist_name", length = 30, nullable = false)
     private String artistName;
+
 
     @Column(name = "artist_id", length = 30, nullable = false)
     private String artistId;

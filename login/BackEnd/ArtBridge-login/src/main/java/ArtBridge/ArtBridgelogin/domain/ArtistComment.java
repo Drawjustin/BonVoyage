@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "artistComment")
@@ -17,9 +18,7 @@ public class ArtistComment {
     private Long artistCommentSeq;
 
 
-    @ManyToOne
-    @JoinColumn(name = "artist_seq")
-    @Column(name = "artist_name", length = 30, nullable = false)
+    @Column(name = "artist_Seq")
     private Long artistSeq;
 
     @Column(name = "artist_mention_content")
