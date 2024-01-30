@@ -17,6 +17,9 @@ RUN npm run build
 # Nginx를 사용하여 빌드된 앱 제공
 FROM nginx:stable-alpine as production-stage
 
+# 새로운 Nginx 설정 파일 복사
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # 빌드 단계에서 생성된 빌드 파일을 Nginx의 서빙 디렉토리로 복사
 COPY --from=build-stage /app/build /usr/share/nginx/html
 
