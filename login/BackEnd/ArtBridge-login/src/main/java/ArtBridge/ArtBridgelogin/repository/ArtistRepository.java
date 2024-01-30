@@ -15,7 +15,7 @@ public class ArtistRepository {
     private final EntityManager em;
 
     @Transactional
-    public Artist save(Artist artist) {
+    public Artist create(Artist artist) {
         em.persist(artist);
         return artist;
     }

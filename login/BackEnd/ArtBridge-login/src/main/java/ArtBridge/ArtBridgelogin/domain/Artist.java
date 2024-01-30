@@ -15,9 +15,9 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_seq")
-    private Long artistSeq;
+    private long artistSeq;
 
-    @OneToMany(mappedBy = "artist")
+
     @Column(name = "artist_name", length = 30, nullable = false)
     private String artistName;
 
@@ -58,4 +58,7 @@ public class Artist {
             artistCreatedDate = LocalDateTime.now();
         }
     }
+
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistMention> artistMentions;
 }

@@ -29,7 +29,7 @@ public class ArtistService {
 
     @Transactional
     public Artist createArtist(Artist artist) {
-        return artistRepository.save(artist);
+        return artistRepository.create(artist);
     }
 
     @Transactional
@@ -49,7 +49,7 @@ public class ArtistService {
             existingArtist.setArtistCreatedDate(updatedArtist.getArtistCreatedDate());
 
             // 저장
-            artistRepository.save(existingArtist);
+            artistRepository.create(existingArtist);
             return existingArtist;
         } else {
             // 예외 처리 또는 적절한 로직 추가

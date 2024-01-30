@@ -26,7 +26,7 @@ public class MemberService {
     }
 
     public Member createMember(Member member) {
-        return memberRepository.save(member);
+        return memberRepository.create(member);
     }
 
     @Transactional
@@ -46,7 +46,7 @@ public class MemberService {
             existingMember.setMemberCreatedDate(updatedMember.getMemberCreatedDate());
 
             // 저장
-            memberRepository.save(existingMember);
+            memberRepository.create(existingMember);
             return existingMember;
         } else {
             // 예외 처리 또는 적절한 로직 추가
