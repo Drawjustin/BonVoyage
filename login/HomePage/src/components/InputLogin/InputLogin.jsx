@@ -24,7 +24,7 @@ const InputLogin = () => {
   const handleLogin = () => {
 
     // 로그인 처리 로직 추가
-    const backendUrl = 'BACKEND_URL'
+    const backendUrl = '43.200.244.3:8002'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     const loginData = {
@@ -34,7 +34,7 @@ const InputLogin = () => {
     };
 
     // axios 요청 넣어봄
-    axios.post(`${backendUrl}/login`, loginData)
+    axios.post(`/login`, loginData)
       .then(response => {
         console.log('로그인 성공 :', response.data);
         // 로그인 성공하면 홈페이지로 이동시킬것
