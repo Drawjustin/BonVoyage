@@ -26,3 +26,4 @@ COPY --from=build-stage /app/target/*.jar ./app.jar
 
 # 애플리케이션 실행
 CMD ["java", "-jar", "app.jar"]
+
