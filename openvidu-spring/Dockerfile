@@ -5,14 +5,13 @@ FROM openjdk:17 AS build-stage
 WORKDIR /app
 
 # 소스 코드와 Maven 빌드 파일 복사
-COPY mvnw pom.xml ./
-RUN ./mvnw dependency:go-offline
+COPY pom.xml ./
 
 # 나머지 소스 복사
 COPY src ./src
 
 # 애플리케이션 패키징
-RUN ./mvnw package -DskipTests
+RUN mvn package -DskipTests
 
 # 빌드된 JAR 파일을 실행
 FROM openjdk:17
