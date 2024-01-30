@@ -104,7 +104,7 @@ const ArtistInputSignup = () => {
       
       const data = {
        "artistName": username,
-       "artistid": userid,
+       "artistId": userid,
        "artistPwd": password,
       //  "chekedpw": confirmPassword,
        "artistNickname": penname,
@@ -112,15 +112,16 @@ const ArtistInputSignup = () => {
        "artistContact": phonenum,
        "artistPoint": 0,
        "artistHistory": "할수 있어",
-       "artistIsDelete" : false,
+       "artistIsDeleted" : false,
        "artistCreatedDate" : '2024-01-29T04:54:33'
       }
 
+      
 
       try {
-        const response = await axios.post('43.200.244.3:80/artists/new', data, {
+        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json;  charset=UTF-8',
           },
         });
 
