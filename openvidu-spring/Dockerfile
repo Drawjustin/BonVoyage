@@ -1,5 +1,5 @@
 # OpenJDK 이미지를 기반으로 설정
-FROM maven:3.6.3-jdk-17 AS build-stage
+FROM maven:3.8.4-openjdk-17 AS build-stage
 
 # 작업 디렉토리 설정
 WORKDIR /app
