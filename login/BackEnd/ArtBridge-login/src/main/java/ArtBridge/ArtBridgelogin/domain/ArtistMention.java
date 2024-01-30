@@ -4,28 +4,26 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.*;
 
 @Entity
-@Table(name = "artistComment")
+@Table(name = "artistMention")
 @Data
-public class ArtistComment {
+public class ArtistMention {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "artist_comment_seq")
-    private Long artistCommentSeq;
+    @Column(name = "artist_mention_seq")
+    private Long artistMentionSeq;
 
-
-    @Column(name = "artist_Seq")
+    @Column(name = "artist_seq", insertable = false, updatable = false)
     private Long artistSeq;
 
     @Column(name = "artist_mention_content")
     private String artistMentionContent;
 
     @Column(name = "artist_metion_subject")
-    private String artistSubjectMention;
+    private String artistMentionSubject;
 
     @Column(name = "artis_mention_created_date")
     private LocalDateTime artistMentionCreatedDate;
@@ -36,4 +34,7 @@ public class ArtistComment {
     @Column(name = "arist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
+    @ManyToOne
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
 }

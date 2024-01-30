@@ -59,4 +59,7 @@ public class Artist {
             artistCreatedDate = LocalDateTime.now();
         }
     }
+
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistMention> artistMentions;
 }
