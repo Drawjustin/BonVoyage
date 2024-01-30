@@ -1,4 +1,4 @@
-'use clinet'
+'use client'
 import React from 'react'
 import Form from '../../components/InputLogin/InputLogin'
 import Navbar from '../../components/Navbar/Navbar';
