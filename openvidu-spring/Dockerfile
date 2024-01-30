@@ -1,5 +1,5 @@
 # OpenJDK 이미지를 기반으로 설정
-FROM openjdk:17 AS build-stage
+FROM maven:3.6.3-jdk-17 AS build-stage
 
 # 작업 디렉토리 설정
 WORKDIR /app
@@ -24,4 +24,3 @@ COPY --from=build-stage /app/target/*.jar ./app.jar
 
 # 애플리케이션 실행
 CMD ["java", "-jar", "app.jar"]
-
