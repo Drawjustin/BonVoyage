@@ -1,0 +1,20 @@
+version: '3'
+services:
+  react:
+    image: drawjustin/team207aws:openvidu-react
+    ports:
+      - 5000:5000
+    depends_on:
+      - spring
+
+  spring:
+    image: drawjustin/team207aws:openvidu-spring
+    ports:
+      - 3331:3331
+    depends_on:
+      - openvidu-server
+
+  openvidu-server:
+    image: openvidu/openvidu-server-kms:latest
+    ports:
+      - 4443:4443
