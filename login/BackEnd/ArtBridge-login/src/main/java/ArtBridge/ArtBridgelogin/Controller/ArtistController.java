@@ -36,7 +36,7 @@ public class ArtistController {
         System.out.println(memberForm.toString());
 
         // 여기에서 로그인 처리 로직을 수행하고 성공 여부에 따라 응답을 반환합니다.
-        if ("user123".equals(username) && "password123".equals(password)) {
+        if ("sss".equals(username) && "111111".equals(password)) {
             return "Login successful";
         } else {
             return "Login failed";
