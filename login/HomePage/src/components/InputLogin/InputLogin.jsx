@@ -24,27 +24,64 @@ const InputLogin = () => {
   const handleLogin = () => {
 
     // 로그인 처리 로직 추가
-    const backendUrl = '43.200.244.3:8002'
+    const backendUrl = 'http://43.200.244.3:8001'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     const loginData = {
-      username: username,
-      password: password,
-      isArtist: isArtist,
+      id: username,
+      pw: password,
+      // isArtist: isArtist,
     };
 
-    // axios 요청 넣어봄
-    axios.post(`/login`, loginData)
-      .then(response => {
-        console.log('로그인 성공 :', response.data);
-        // 로그인 성공하면 홈페이지로 이동시킬것
-        navigate.push('/');
+    if (isArtist) {
+        // axios 요청 넣어봄
+        axios.post(`${backendUrl}/artists/login`, loginData, {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        })
+          .then(response => {
+
+            if (response.data === 'Login successful') {
+              console.log('로그인 성공 :', response.data);
+              navigate.push('/');
+            }
+            else {
+              console.log('로그인 실패 :', response.data);
+              setShowAlert(true);
+            }
+          })
+          .catch(error => {
+            console.error('로그인 실패', error.response ? error.response.data : error.message);
+            // 로그인 실패하면 팝업 표시할 것
+            
+          });
+    } else {
+      // axios 요청 넣어봄
+      axios.post(`${backendUrl}/members/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
       })
-      .catch(error => {
-        console.error('로그인 실패', error.response ? error.response.data : error.message);
-        // 로그인 실패하면 팝업 표시할 것
-        setShowAlert(true);
-      });
+        .then(response => {
+
+          if (response.data === 'Login successful') {
+            console.log('로그인 성공 :', response.data);
+            navigate.push('/');
+          }
+          else {
+            console.log('로그인 실패 :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error('로그인 실패', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
+          
+        });
+  }
+
+    
   };
 
   const handleAlertClose = () => {
@@ -95,6 +132,10 @@ const InputLogin = () => {
           <input
             type="text"
             placeholder={isArtist ? '작가 ID' : '개인 ID'}
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
         </div>
 
@@ -103,7 +144,10 @@ const InputLogin = () => {
           <input
             type="password"
             placeholder="Password"
-            />
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}/>
         </div>
       </div>
       <div className={styles.button_container}>
@@ -112,10 +156,10 @@ const InputLogin = () => {
       </button></div>
     </div>
 
-      <div>
+      {/* <div>
         <KakaoLoginButton />
         <GoogleLoginButton />
-      </div>
+      </div> */}
       
       <div className={styles.search_user_info_div}>
         <Link href='/FindId'>아이디 찾기</Link>
