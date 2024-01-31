@@ -6,6 +6,7 @@ import ArtBridge.ArtBridgelogin.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/members") // 엔드포인트 경로를 일관성 있게 변경
 public class MemberController {

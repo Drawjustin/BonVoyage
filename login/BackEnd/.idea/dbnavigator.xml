@@ -17,7 +17,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="ffdc3a82-0d6e-433b-bfc7-c4c411fa9a46">
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main" />
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist;]]></console>
     </connection>
     <connection id="9fedb12c-3ad6-4a6e-96b6-c0c4b7f2c0e1">
       <console name="Connection 1" type="STANDARD" schema="" session="Main" />
@@ -27,9 +27,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="ffdc3a82-0d6e-433b-bfc7-c4c411fa9a46" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="ffdc3a82-0d6e-433b-bfc7-c4c411fa9a46" />

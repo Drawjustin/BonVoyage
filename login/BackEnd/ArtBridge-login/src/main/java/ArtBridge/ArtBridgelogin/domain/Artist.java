@@ -15,7 +15,7 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_seq")
-    private long artistSeq;
+    private Long artistSeq;
 
 
     @Column(name = "artist_name", length = 30, nullable = false)
@@ -61,4 +61,7 @@ public class Artist {
 
     @OneToMany(mappedBy = "artist")
     private List<ArtistMention> artistMentions;
+
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistHomepageComment> artistHomepageComments;
 }
