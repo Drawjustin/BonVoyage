@@ -2,9 +2,7 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.Controller.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
-import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +34,7 @@ public class ArtistService {
 
     @Transactional
     public String login(ArtistLoginForm artistLoginForm){
+
         String userId = artistLoginForm.getId();
         String password = artistLoginForm.getPw();
 
