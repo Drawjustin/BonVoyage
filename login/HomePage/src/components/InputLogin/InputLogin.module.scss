@@ -48,16 +48,17 @@
 
     .icon_input {
       position: relative;
+      width: 100%;
 
       .icon {
         position: absolute;
         top: 40%;
         transform: translateY(-50%);
-        left: 8px;
+        left: 20px;
       }
 
       input {
-        width: calc(80% - 30px);
+        width: calc(100% - 20px);
         padding: 10px 10px 10px 30px;
         margin-bottom: 10px;
         border: 1px solid #ccc;
@@ -74,7 +75,7 @@
 
   .login_button {
     width: 80px;
-    height: 85px;
+    height: 98px;
     padding: 10px;
     background-color: #7377b6;
     color: #ffffff;
@@ -103,4 +104,32 @@
   cursor: pointer;
   margin-top: -5px;
   font-size: 14px;
+}
+
+.alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.b {
+  margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.pp {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
 }

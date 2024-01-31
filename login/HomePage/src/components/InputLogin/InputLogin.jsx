@@ -111,6 +111,11 @@ const InputLogin = () => {
         로그인
       </button></div>
     </div>
+
+      <div>
+        <KakaoLoginButton />
+        <GoogleLoginButton />
+      </div>
       
       <div className={styles.search_user_info_div}>
         <Link href='/FindId'>아이디 찾기</Link>
