@@ -30,8 +30,10 @@ const InputLogin = () => {
     const loginData = {
       id: username,
       pw: password,
-      // isArtist: isArtist,
+      isArtist: isArtist,
     };
+
+    console.log(typeof(loginData.id));
 
     if (isArtist) {
         // axios 요청 넣어봄

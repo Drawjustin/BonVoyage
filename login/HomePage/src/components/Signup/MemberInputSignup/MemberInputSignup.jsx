@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './MemberInputSignup.module.scss';
+import { useRouter } from 'next/navigation';
 
 const MemberInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -10,9 +11,11 @@ const MemberInputSignup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
-
+    const [phonenum, setPhonenum] = useState('');
     const [errors, setErrors] = useState({});
 
+    const navigate = useRouter();
+    
     // 이름 유효성 검사
     const validateUsername = (value) => {
         if (value.length > 15) {
@@ -80,23 +83,45 @@ const MemberInputSignup = () => {
         return;
       }
       
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("confirmPassword", confirmPassword);
-      formData.append("username", username);
-      formData.append("userid", userid);
-      formData.append("nickname", nickname);
+      const data = {
+        "memberName": username,
+        "memberId": userid,
+        "memberPwd": password,
+       //  "chekedpw": confirmPassword,
+        "memberNickname": nickname,
+        "memberEmail": email,
+        "memberContact": phonenum,
+        "memberPoint": 0,
+        "memberHistory": "할수 있어",
+        "memberIsDeleted" : false,
+        "memberCreatedDate" : '2024-01-29T04:54:33'
+       }
+
+      // const formData = new FormData();
+      // formData.append("email", email);
+      // formData.append("password", password);
+      // formData.append("confirmPassword", confirmPassword);
+      // formData.append("username", username);
+      // formData.append("userid", userid);
+      // formData.append("nickname", nickname);
 
       try {
         const response = await axios.
-          post("http://localhost:8080/members/new", formData, {
+          post("http://43.200.244.3:8001/members/new", data, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              "Content-Type": "application/json;charset=UTF-8",
             },
           });
 
         console.log(response.data);
+        if (response.data) {
+          console.log('로그인 성공 :', response.data);
+          navigate.push('/');
+        }
+        else {
+          console.log('로그인 실패 :', response.data);
+          setShowAlert(true);
+        }
         
       } catch (error) {
         console.error(error);
@@ -166,7 +191,9 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'/>
+                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    value={phonenum} onChange={(e) => {
+                      setPhonenum(e.target.value);}}/>
                         <button className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>

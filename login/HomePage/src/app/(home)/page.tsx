@@ -8,6 +8,8 @@ import AuctionCal from '@/components/HomeComponent/auctionCal/AuctionCal';
 
 export default async function HomePage() {
 
+    
+
     return (
         <div className={styles.home}>
             <Navbar />
