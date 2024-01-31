@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -19,7 +20,8 @@
       { "name": "typescript-plugin-css-modules" }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@mui/system": ["node_modules/@mui/system"],
     },
     "typeRoots" : ["./@types", "./node_modules/@types"]
   },
