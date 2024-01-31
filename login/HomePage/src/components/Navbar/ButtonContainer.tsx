@@ -49,9 +49,14 @@ const Underline = styled('ul')({
   fontWeight: 'bold',
 });
 
-interface IButtonContainerProps {}
+interface buttonHandlerProps {
+  item:{
+    text: string
+    path: string
+  }
+}
 
-export const ButtonContainer = ({}: IButtonContainerProps) => {
+export const ButtonContainer = () => {
   const buttonList = [
     { text: '로그인', path: '/login' },
     { text: '회원가입', path: '/signup' },
@@ -59,9 +64,11 @@ export const ButtonContainer = ({}: IButtonContainerProps) => {
   const [selected, setSelected] = useState('');
   const navigate = useRouter();
 
-  const buttonHandler = (text: string, path: string) => {
-    setSelected(text);
-    navigate.push(path);
+
+
+  const buttonHandler = ({item}:buttonHandlerProps) => {
+    setSelected(item.text);
+    navigate.push(item.path);
   };
 
   return (
@@ -69,7 +76,7 @@ export const ButtonContainer = ({}: IButtonContainerProps) => {
       {buttonList.map((item) => (
         <Button
           key={item.text}
-          onClick={() => buttonHandler(item.text, item.path)}
+          onClick={buttonHandler({item})}
         >
           {item.text === selected ? <Underline>{item.text}</Underline> : item.text}
         </Button>

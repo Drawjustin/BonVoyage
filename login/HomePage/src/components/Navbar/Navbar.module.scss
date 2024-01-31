@@ -26,7 +26,9 @@
   }
   
   .logo {
-    width: 30px;
-    height: 30px;
+    width: 15vh;
+    height: 15vh;
+    background-image: url(./logo.png);
+    background-size: contain;
   }
   
