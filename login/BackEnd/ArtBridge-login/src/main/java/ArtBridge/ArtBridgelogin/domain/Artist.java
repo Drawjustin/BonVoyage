@@ -7,8 +7,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Entity
-@Table(name = "artist")
+@Entity(name = "artist")
+//@Table(name = "artist")
 @Data
 public class Artist {
 
