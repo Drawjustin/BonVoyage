@@ -40,7 +40,7 @@ public class ArtistService {
         Artist foundArtist = artistRepository.findArtistByName(userId);
 
         if (foundArtist != null && foundArtist.getArtistPwd().equals(password)) {
-            return "로그인 성공 삉삉뻉뻉";
+            return "Login successful";
         } else {
             return "바보 멍텅구리 로그인 실패했잔요";
         }
