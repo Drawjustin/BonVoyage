@@ -18,6 +18,7 @@ const Button = styled('ul')({
   fontSize: '15px',
   background: 'transparent',
   border: '0',
+  marginRight: '25px',
   '&:hover': {
     fontWeight: 'bolder',
     cursor: 'pointer',
