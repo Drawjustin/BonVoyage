@@ -31,7 +31,7 @@ public class ArtistController {
 
 
     @GetMapping("/{id}")
-    public Artist getArtistById(@PathVariable Long id) {
+    public Artist getArtistById(@PathVariable String id) {
         return artistService.findOne(id);
     }
 
@@ -41,12 +41,12 @@ public class ArtistController {
     }
 
     @PutMapping("/{id}")
-    public Artist updateArtist(@PathVariable Long id, @RequestBody Artist updatedArtist) {
+    public Artist updateArtist(@PathVariable String id, @RequestBody Artist updatedArtist) {
         return artistService.updateArtist(id, updatedArtist);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtist(@PathVariable Long id) {
+    public void deleteArtist(@PathVariable String id) {
         artistService.deleteArtist(id);
     }
 }

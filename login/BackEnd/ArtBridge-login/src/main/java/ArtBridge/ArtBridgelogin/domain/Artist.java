@@ -62,6 +62,6 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<ArtistMention> artistMentions;
 
-    @OneToMany(mappedBy = "artist")
-    private List<ArtistHomepageComment> artistHomepageComments;
+//    @OneToMany(mappedBy = "artist")
+//    private List<ArtistHomepageComment> artistHomepageComments;
 }

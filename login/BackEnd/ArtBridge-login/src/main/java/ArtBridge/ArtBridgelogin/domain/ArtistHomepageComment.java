@@ -35,12 +35,12 @@ public class ArtistHomepageComment {
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
 
-    @ManyToOne
-    @JoinColumn(name = "artist_seq")
-    private Artist artist;
-
-    @ManyToOne
-    @JoinColumn(name = "member_seq")
-    private Member member;
+//    @ManyToOne
+//    @JoinColumn(name = "artist_seq")
+//    private Artist artist;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "member_seq")
+//    private Member member;
 
 }
