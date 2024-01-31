@@ -24,7 +24,7 @@ public class ArtistRepository {
 
     @Transactional(readOnly = true)
     public Artist findArtistByName(String artistId) {
-        String jpql = "SELECT a FROM artist a WHERE a.artistId = :artistId";
+        String jpql = "SELECT a FROM Artist a WHERE a.artistId = :artistId";
         TypedQuery<Artist> query = em.createQuery(jpql, Artist.class);
         query.setParameter("artistId", artistId);
 
