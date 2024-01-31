@@ -38,7 +38,6 @@ public class ArtistMentionService {
 
         if (existingArtistMention != null) {
             // 업데이트할 정보를 새로운 정보로 설정
-            existingArtistMention.setArtistSeq(updatedArtistMention.getArtistSeq());
             existingArtistMention.setArtistMentionContent(updatedArtistMention.getArtistMentionContent());
             existingArtistMention.setArtistMentionSubject(updatedArtistMention.getArtistMentionSubject());
             // 저장

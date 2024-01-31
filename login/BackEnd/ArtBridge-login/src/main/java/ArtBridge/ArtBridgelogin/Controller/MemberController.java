@@ -33,7 +33,6 @@ public class MemberController {
     public Member updateMember(@PathVariable Long id, @RequestBody Member updatedMember) {
         return memberService.updateMember(id, updatedMember);
     }
-
     @DeleteMapping("/{id}")
     public void deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
