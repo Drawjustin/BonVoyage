@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <Link href='/'>
-        <Image src='/assets/images/logo.png' className={styles.logo} width={0.3} height={0.3}/>
+        <Image src='/componenets/Navbar/logo.png' className={styles.logo} width={0.3} height={0.3}/>
       </Link>
       <ul>
         <ButtonContainer />
