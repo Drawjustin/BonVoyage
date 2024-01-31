@@ -17,4 +17,6 @@ public class MemberForm {
     private String email;
     private String phonenumber;
 
+
+
 }
