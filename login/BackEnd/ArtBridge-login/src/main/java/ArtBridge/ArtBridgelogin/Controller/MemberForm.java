@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.apache.logging.log4j.message.Message;
 import org.springframework.stereotype.Component;
 
+
 @Data
 @Component
 public class MemberForm {
