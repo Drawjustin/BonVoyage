@@ -70,11 +70,12 @@
 
 // export default AuctionComingSoon;
 
+'use client'
 import React, {useEffect, useState} from 'react';
-import styles from './HomeComponent.module.scss';
-import one from './1.jpg';
-import two from './2.jpg';
-import three from './3.jpg';
+import styles from '../HomeComponent.module.scss';
+import one from '../1.jpg';
+import two from '../2.jpg';
+import three from '../3.jpg';
 
 
 const fadeRGBColor = (RGBColor) => {
