@@ -93,35 +93,49 @@ const ArtistInputSignup = () => {
         return;
       }
       
-      const formData = new FormData();
+      // const formData = new FormData();
+      // formData.append("email", email);
+      // formData.append("password", password);
+      // formData.append("confirmPassword", confirmPassword);
+      // formData.append("username", username);
+      // formData.append("userid", userid);
+      // formData.append("file", portfolio);
+      // formData.append("penname", penname);
+      
+      const data = {
+       "artistName": username,
+       "artistId": userid,
+       "artistPwd": password,
+      //  "chekedpw": confirmPassword,
+       "artistNickname": penname,
+       "artistEmail": email,
+       "artistContact": phonenum,
+       "artistPoint": 0,
+       "artistHistory": "할수 있어",
+       "artistIsDeleted" : false,
+       "artistCreatedDate" : '2024-01-29T04:54:33'
+      }
 
+      
 
-      const userData = {
-        "artistName": "1234",
-        "artistId": "1234567",
-        "artistPwd": "1234567",
-        "artistNickname": "김싸피",
-        "artistEmail": "123@naver.com",
-        "artistContact": "01023456789",
-        "artistHistory" : "ㅇㅇ",   
-      };
-      const serverAddress = 'http://43.200.244.3:8001';
-      //formData.append('artistHistory', portfolio);
-      formData.append('userData', new Blob([JSON.stringify(userData)], {
-        type: "application/json"
-      }));
-
-      axios.post(`${serverAddress}/artists/new`, formData,
-        {
+      try {
+        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
           headers: {
-            "Content-Type": 'application/json'
-          }
-        }
-      ).then(res => {
-        console.log(res);
-      }).catch(err => {
-        alert(err);
-      });
+            'Content-Type': 'application/json;  charset=UTF-8',
+          },
+        });
+
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+
+
+
+      // const formData = new FormData();
+      // formData.append("data", new Blob([JSON.stringify(data)], {
+      //   type: "application/json"
+      // }));
     };
 
     return (
