@@ -1,11 +1,13 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -53,7 +55,18 @@ public class MemberService {
             return null;
         }
     }
+    @Transactional
+    public String login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
+        // 로그인 처리 로직
 
+        Member foundMember = memberRepository.findMemberId(userId);
+
+        if (foundMember != null && foundMember.getMemberPwd().equals(password)) {
+            return "Login successful";
+        } else {
+            return "바보 멍텅구리 로그인 실패했잔요";
+        }
+    }
     public void deleteMember(Long id) {
         memberRepository.deleteById(id);
     }

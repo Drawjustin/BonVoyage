@@ -23,6 +23,9 @@ public class MemberController {
     public Member getMemberById(@PathVariable Long id) {
         return memberService.findOne(id);
     }
+    @PostMapping("/login")
+    @ResponseBody
+    public String login(@RequestBody MemberLoginForm memberLoginForm) {return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
 
     @PostMapping("/new")
     public Member createMember(@RequestBody Member member) {
