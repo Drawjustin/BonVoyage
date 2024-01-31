@@ -53,8 +53,8 @@ interface buttonHandlerProps {}
 
 export const ButtonContainer = ({}: buttonHandlerProps) => {
   const buttonList = [
-    { text: '로그인', path: '/login' },
-    { text: '회원가입', path: '/signup' },
+    { text: '로그인', path: '/LoginPage' },
+    { text: '회원가입', path: '/SignupPage' },
   ];
   const [selected, setSelected] = useState('');
   const navigate = useRouter();
