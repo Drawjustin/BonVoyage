@@ -3,7 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './Navbar.module.scss';
 import Image from 'next/image';
-// import { ButtonContainer } from './ButtonContainer';
+import { ButtonContainer } from './ButtonContainer';
 
 
 const Navbar = () => {
@@ -13,7 +13,7 @@ const Navbar = () => {
         <Image src='/assets/images/logo.png' className={styles.logo} width={0.3} height={0.3}/>
       </Link>
       <ul>
-        {/* <ButtonContainer /> */}
+        <ButtonContainer />
       </ul>
     </nav>
   );
