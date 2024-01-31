@@ -49,15 +49,17 @@ const Underline = styled('ul')({
   fontWeight: 'bold',
 });
 
-interface IButtonContainerProps {}
+interface buttonHandlerProps {}
 
-export const ButtonContainer = ({}: IButtonContainerProps) => {
+export const ButtonContainer = ({}: buttonHandlerProps) => {
   const buttonList = [
     { text: '로그인', path: '/login' },
     { text: '회원가입', path: '/signup' },
   ];
   const [selected, setSelected] = useState('');
   const navigate = useRouter();
+
+
 
   const buttonHandler = (text: string, path: string) => {
     setSelected(text);
