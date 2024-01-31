@@ -33,7 +33,7 @@ public class MemberRepository {
     }
     @Transactional(readOnly = true)
     public Member findMemberId(String memberId) {
-        String jpql = "SELECT a FROM Member a WHERE a.MemberId = :memberId";
+        String jpql = "SELECT a FROM Member a WHERE a.memberId = :memberId";
         TypedQuery<Member> query = em.createQuery(jpql, Member.class);
         query.setParameter("memberId", memberId);
 
@@ -43,6 +43,7 @@ public class MemberRepository {
             return null; // 해당 조건에 맞는 결과가 없을 경우
         }
     }
+
     @Transactional(readOnly = true)
     public List<Member> findByName(String name){
         return em.createQuery("select m from Member m where m.memberName = :name", Member.class)
