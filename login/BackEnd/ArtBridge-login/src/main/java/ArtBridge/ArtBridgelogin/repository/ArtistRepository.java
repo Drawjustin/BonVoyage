@@ -21,7 +21,7 @@ public class ArtistRepository {
     }
 
     @Transactional(readOnly = true)
-    public Artist findOne(Long id){return em.find(Artist.class, id);}
+    public Artist findOne(String id){return em.find(Artist.class, id);}
 
     @Transactional(readOnly = true)
     public List<Artist> findAll(){
@@ -37,8 +37,8 @@ public class ArtistRepository {
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        em.createQuery("DELETE FROM Artist m WHERE m.artistSeq = :id")
+    public void deleteById(String id) {
+        em.createQuery("DELETE FROM Artist m WHERE m.artistName = :id")
                 .setParameter("id", id)
                 .executeUpdate();
     }

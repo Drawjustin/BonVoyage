@@ -1,8 +1,10 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.Controller.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
+import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +25,7 @@ public class ArtistService {
     }
 
     @Transactional(readOnly = true)
-    public Artist findOne(Long id) {
+    public Artist findOne(String id) {
         return artistRepository.findOne(id);
     }
 
@@ -33,7 +35,21 @@ public class ArtistService {
     }
 
     @Transactional
-    public Artist updateArtist(Long id, Artist updatedArtist) {
+    public String login(ArtistLoginForm artistLoginForm){
+        String userId = artistLoginForm.getId();
+        String password = artistLoginForm.getPw();
+
+        Artist foundArtist = artistRepository.findOne(userId);
+
+        if(foundArtist != null && foundArtist.getArtistPwd().equals(password)){
+            return "로그인 성공 삉삉뻉뻉";
+        }else{
+            return "바보 멍텅구리 로그인 실패했잔요";
+        }
+    }
+
+    @Transactional
+    public Artist updateArtist(String id, Artist updatedArtist) {
         Artist existingArtist = artistRepository.findOne(id);
 
         if (existingArtist != null) {
@@ -58,7 +74,7 @@ public class ArtistService {
     }
 
     @Transactional
-    public void deleteArtist(Long id) {
+    public void deleteArtist(String id) {
         artistRepository.deleteById(id);
     }
 }
