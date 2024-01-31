@@ -10,7 +10,11 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-RUN npm install @mui/system @emotion/react @emotion/styled
+RUN npm install @mui/system 
+
+RUN npm install @emotion/react 
+
+RUN npm install @emotion/styled
 
 # Copy the local source files to the working directory
 COPY . .
