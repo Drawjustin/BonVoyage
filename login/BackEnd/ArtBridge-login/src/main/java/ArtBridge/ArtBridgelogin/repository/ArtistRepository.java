@@ -2,6 +2,8 @@ package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,17 @@ public class ArtistRepository {
     }
 
     @Transactional(readOnly = true)
-    public Artist findOne(String id){return em.find(Artist.class, id);}
+    public Artist findArtistByName(String artistId) {
+        String jpql = "SELECT a FROM Artist a WHERE a.artist_id = :artistId";
+        TypedQuery<Artist> query = em.createQuery(jpql, Artist.class);
+        query.setParameter("artistId", artistId);
+
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null; // 해당 조건에 맞는 결과가 없을 경우
+        }
+    }
 
     @Transactional(readOnly = true)
     public List<Artist> findAll(){
@@ -38,7 +50,7 @@ public class ArtistRepository {
 
     @Transactional
     public void deleteById(String id) {
-        em.createQuery("DELETE FROM Artist m WHERE m.artistName = :id")
+        em.createQuery("DELETE FROM Artist m WHERE m.artistId = :id")
                 .setParameter("id", id)
                 .executeUpdate();
     }

@@ -25,7 +25,7 @@ public class ArtistService {
 
     @Transactional(readOnly = true)
     public Artist findOne(String id) {
-        return artistRepository.findOne(id);
+        return artistRepository.findArtistByName(id);
     }
 
     @Transactional
@@ -37,7 +37,7 @@ public class ArtistService {
     public String login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
         // 로그인 처리 로직
 
-        Artist foundArtist = artistRepository.findOne(userId);
+        Artist foundArtist = artistRepository.findArtistByName(userId);
 
         if (foundArtist != null && foundArtist.getArtistPwd().equals(password)) {
             return "로그인 성공 삉삉뻉뻉";
@@ -48,7 +48,7 @@ public class ArtistService {
 
     @Transactional
     public Artist updateArtist(String id, Artist updatedArtist) {
-        Artist existingArtist = artistRepository.findOne(id);
+        Artist existingArtist = artistRepository.findArtistByName(id);
 
         if (existingArtist != null) {
             // 업데이트할 정보를 새로운 정보로 설정
