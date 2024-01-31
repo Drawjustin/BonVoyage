@@ -11,12 +11,5 @@ import org.springframework.stereotype.Component;
 public class MemberForm {
 
     private String id;
-    private String name;
     private String pw;
-    private String nickname;
-    private String email;
-    private String phonenumber;
-
-
-
 }
