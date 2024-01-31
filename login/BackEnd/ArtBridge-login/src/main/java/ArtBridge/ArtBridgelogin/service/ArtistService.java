@@ -34,7 +34,7 @@ public class ArtistService {
 
     @Transactional
     public String login(ArtistLoginForm artistLoginForm){
-
+        System.out.println(artistLoginForm.toString());
         String userId = artistLoginForm.getId();
         String password = artistLoginForm.getPw();
 
