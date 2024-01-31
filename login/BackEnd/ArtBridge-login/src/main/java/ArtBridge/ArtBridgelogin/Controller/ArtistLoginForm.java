@@ -1,11 +1,10 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
-import jakarta.persistence.Entity;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
 @Data
-@Entity
+@Component
 public class ArtistLoginForm {
 
     private String id;

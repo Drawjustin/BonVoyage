@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -33,16 +34,14 @@ public class ArtistService {
     }
 
     @Transactional
-    public String login(ArtistLoginForm artistLoginForm){
-        System.out.println(artistLoginForm.toString());
-        String userId = artistLoginForm.getId();
-        String password = artistLoginForm.getPw();
+    public String login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
+        // 로그인 처리 로직
 
         Artist foundArtist = artistRepository.findOne(userId);
 
-        if(foundArtist != null && foundArtist.getArtistPwd().equals(password)){
+        if (foundArtist != null && foundArtist.getArtistPwd().equals(password)) {
             return "로그인 성공 삉삉뻉뻉";
-        }else{
+        } else {
             return "바보 멍텅구리 로그인 실패했잔요";
         }
     }

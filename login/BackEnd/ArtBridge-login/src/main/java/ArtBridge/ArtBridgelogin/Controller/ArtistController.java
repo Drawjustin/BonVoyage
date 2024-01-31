@@ -25,7 +25,7 @@ public class ArtistController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody ArtistLoginForm artistLoginForm) {return artistService.login(artistLoginForm);}
+    public String login(@RequestBody ArtistLoginForm artistLoginForm) {return artistService.login(artistLoginForm.getId(),artistLoginForm.getPw());}
 
     // 로그인 정보를 받기 위한 간단한 DTO 클래스
 
