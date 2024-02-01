@@ -31,25 +31,24 @@ public class ArtistHomepageCommentService {
         return artistHomepageCommentRepository.create(artistHomepageComment);
     }
 
-//    @Transactional
-//    public ArtistHomepageComment updateArtistHomepageComment(Long id, ArtistHomepageComment updatedArtistHomepageComment) {
-//        ArtistHomepageComment existingArtistHomepageComment = artistHomepageCommentRepository.findOne(id);
-//
-//        if (existingArtistHomepageComment != null) {
-//            // 업데이트할 정보를 새로운 정보로 설정
-//            existingArtistHomepageComment.getArtistHompageCommentContent(updatedArtistHomepageComment.getArtistHompageCommentContent());
-//            existingArtistHomepageComment.setArtistMentionSubject(updatedArtistMention.getArtistMentionSubject());
-//            // 저장
-//            artistHomepageCommentRepository.create(existingArtistHomepageComment);
-//            return existingArtistHomepageComment;
-//        } else {
-//            // 예외 처리 또는 적절한 로직 추가
-//            return null;
-//        }
-//    }
+    @Transactional
+    public ArtistHomepageComment updateArtistHomepageComment(Long id, ArtistHomepageComment updatedArtistHomepageComment) {
+        ArtistHomepageComment existingArtistHomepageComment = artistHomepageCommentRepository.findOne(id);
+
+        if (existingArtistHomepageComment != null) {
+            // 업데이트할 정보를 새로운 정보로 설정
+            existingArtistHomepageComment.setArtistHompageCommentContent(updatedArtistHomepageComment.getArtistHompageCommentContent());
+            // 저장
+            artistHomepageCommentRepository.create(existingArtistHomepageComment);
+            return existingArtistHomepageComment;
+        } else {
+            // 예외 처리 또는 적절한 로직 추가
+            return null;
+        }
+    }
 
     @Transactional
-    public void deleteArtistMention(Long id) {
+    public void deleteArtistHomepageComment(Long id) {
         artistHomepageCommentRepository.deleteById(id);
     }
 
