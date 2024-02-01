@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.Controller.form;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
