@@ -5,6 +5,7 @@ import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,7 @@ public class ArtistController {
 
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody ArtistLoginForm artistLoginForm) {return artistService.login(artistLoginForm.getId(),artistLoginForm.getPw());}
+    public ResponseEntity<?> login(@RequestBody ArtistLoginForm artistLoginForm) {return artistService.login(artistLoginForm.getId(),artistLoginForm.getPw());}
 
     // 로그인 정보를 받기 위한 간단한 DTO 클래스
 
