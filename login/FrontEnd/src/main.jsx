@@ -4,9 +4,13 @@ import { Provider } from 'react-redux'
 import App from './App.jsx'
 import './App.scss'
 import store from './store'
+import { PlayProvider } from './components/Threejs/contexts/PlayProvider.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <PlayProvider>
+    <Provider store={store}>
+        <App />
+    </Provider>
+  </PlayProvider>
+  ,
 )

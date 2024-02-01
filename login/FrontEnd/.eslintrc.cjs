@@ -17,6 +17,10 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "react/no-unknown-property": ["error", 
+    { "ignore": ["attach", "args", "geometry", "dispose", "material", "position", "transparent", 
+    "position-y", "intensity", "envMapIntensity", "onBeforeCompile"]}],
+    "react/react-in-jsx-scope": "off"
   },
   "parser": "babel-eslint",
   

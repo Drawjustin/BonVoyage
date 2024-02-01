@@ -17,6 +17,9 @@ import './pages/HomePage/logo.png';
 import Layout from './components/layout/Layout';
 import ChargePoint from './components/ChargePoint/ChargePoint';
 
+import dynamic from 'next/dynamic';
+const ThreejsMainPage = dynamic(() => import("../pages/ThreejsMainPage"), { ssr: false });
+
 const App = () => {
 
   return (
@@ -34,6 +37,7 @@ const App = () => {
         <Route path='/reset_pw' element={<ResetPw />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/charge_point' element={<ChargePoint />} />
+        <Route path='/threejs' element={<ThreejsMainPage />} />
       </Routes>
     </BrowserRouter>
   </div>

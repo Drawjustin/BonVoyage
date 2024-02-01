@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
+import { PlayProvider } from '@/components/Threejs/contexts/PlayProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,8 +22,10 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
       </Head>
       <body>
         <main>
-          <ToastProvider />
+        <PlayProvider>
+            <ToastProvider />
           {children}
+        </PlayProvider>
         </main>
       </body>
     </>
