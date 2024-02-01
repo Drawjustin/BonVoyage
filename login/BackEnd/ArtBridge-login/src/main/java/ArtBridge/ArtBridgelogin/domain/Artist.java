@@ -52,16 +52,19 @@ public class Artist {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime artistCreatedDate;
     // 다른 필드 및 메서드들...
-    @PrePersist
-    protected void onCreate() {
-        if (artistCreatedDate == null) {
-            artistCreatedDate = LocalDateTime.now();
-        }
-    }
-
-    @OneToMany(mappedBy = "artist")
-    private List<ArtistMention> artistMentions;
+//    @PrePersist
+//    protected void onCreate() {
+//        if (artistCreatedDate == null) {
+//            artistCreatedDate = LocalDateTime.now();
+//        }
+//    }
 
 //    @OneToMany(mappedBy = "artist")
+//    private List<ArtistMention> artistMentions;
+//
+//    @OneToMany(mappedBy = "artist")
 //    private List<ArtistHomepageComment> artistHomepageComments;
+//
+//    @OneToMany(mappedBy = "artist")
+//    private List<OrderDetail> orderDetailList;
 }

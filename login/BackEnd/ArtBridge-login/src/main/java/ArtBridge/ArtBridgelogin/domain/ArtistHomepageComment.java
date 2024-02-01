@@ -36,11 +36,11 @@ public class ArtistHomepageComment {
 
 
 //    @ManyToOne
-//    @JoinColumn(name = "artist_seq")
+//    @JoinColumn(name = "artist_seq", nullable = false)
 //    private Artist artist;
 //
 //    @ManyToOne
-//    @JoinColumn(name = "member_seq")
+//    @JoinColumn(name = "member_seq", nullable = false)
 //    private Member member;
 
 }

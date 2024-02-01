@@ -46,4 +46,10 @@ public class Member {
     @Column(name = "member_created_date", nullable = false)
     private LocalDateTime memberCreatedDate;
 
+//    @OneToMany(mappedBy = "member")
+//    private List<ArtistHomepageComment> artistHomepageComments;
+//
+//    @OneToMany(mappedBy = "member")
+//    private List<OrderDetail> orderDetailList;
+
 }

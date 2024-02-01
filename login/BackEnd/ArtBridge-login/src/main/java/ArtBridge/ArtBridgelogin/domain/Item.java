@@ -43,4 +43,8 @@ public class Item {
     @Column(name = "item_created_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime itemCreatedDate;
+
+//    @OneToOne
+//    @JoinColumn(name = "order_detail")
+//    private OrderDetail orderDetail;
 }
