@@ -1,6 +1,5 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.Controller.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
