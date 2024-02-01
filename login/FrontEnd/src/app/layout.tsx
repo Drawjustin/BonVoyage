@@ -16,18 +16,21 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
 {
   return (
     <>
-      <Head>
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-      </Head>
-      <body>
-        <main>
-        <PlayProvider>
-            <ToastProvider />
-          {children}
-        </PlayProvider>
-        </main>
-      </body>
+
+        <Head>
+            <title>{metadata.title}</title>
+            <meta name="description" content={metadata.description} />
+          </Head>
+          <body>
+            <main>
+            <PlayProvider>
+                <ToastProvider />
+              {children}
+            </PlayProvider>
+            </main>
+          </body>
+
+      
     </>
   );
 }

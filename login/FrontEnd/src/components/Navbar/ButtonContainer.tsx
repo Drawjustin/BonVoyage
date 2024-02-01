@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 // import getCurrentUser from '@/app/actions/getCurrentUser';
 import { signOut, useSession } from 'next-auth/react';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 // import Link from 'next/link';
 
 const Container = styled('nav')({
@@ -54,22 +55,29 @@ const Underline = styled('ul')({
 
 interface buttonHandlerProps {}
 
-
-
 export const ButtonContainer = ({}: buttonHandlerProps) => {
-  
-  const currentUser = useSession();
 
-  console.log(currentUser);
+  let user;
+  
+  getCurrentUser().then(
+    (result) => {
+      user = result;
+    },
+    (error) => {
+      console.error("Promise rejected with error:", error);
+    }
+  );
+
+
 
   let buttonList = [
     {text: '경매', func: () => navigate.push('/AuctionLivePage')},
     {text: '리뷰', func: () => navigate.push('/review')},
     {text: '작가', func: () => navigate.push('/ArtistHomePage')},
 ];
-  if (!currentUser) {
+  if (!user) {
     buttonList.push(
-      { text: '로그인', func: () => navigate.push('/LoginPage') },
+      { text: '로그인', func: () => navigate.push('/auth/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
     );
   } else {

@@ -5,6 +5,7 @@ import styles from './InputLogin.module.scss';
 import Link from 'next/link';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 const InputLogin = () => {
   const [isArtist, setIsArtist] = useState(false);
@@ -21,64 +22,77 @@ const InputLogin = () => {
     setIsArtist(false);
   };
 
-  const handleLogin = () => {
-
+  const handleLogin = async () => {
+    const body = {
+      username: username,
+      Password: password
+    }
     // 로그인 처리 로직 추가
     const backendUrl = 'http://43.200.244.3:8001'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
-    const loginData = {
-      username: username,
-      password: password,
-    };
+    try {
+      const data = await signIn('credentials', body);
+    } catch (error) {
+        console.log(error);
+    }
 
-    // axios 요청 넣어봄
-    if (isArtist) {
-      // axios 요청 넣어봄
-      axios.post(`${backendUrl}/artists/login`, loginData, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      })
-        .then(response => {
+//     // axios 요청 넣어봄
+//     if (isArtist) {
 
-          if (response.data === 'Login successful') {
-            console.log('로그인 성공 :', response.data);
-            navigate.push('/');
-          }
-          else {
-            console.log('로그인 실패 :', response.data);
-            setShowAlert(true);
-          }
-        })
-        .catch(error => {
-          console.error('로그인 실패', error.response ? error.response.data : error.message);
-          // 로그인 실패하면 팝업 표시할 것
+//       const loginData = {
+//         artistId: username,
+//         artistPwd: password,
+//       };
+//       // axios 요청 넣어봄
+//       axios.post(`${backendUrl}/artists/login`, loginData, {
+//         headers: {
+//           'Content-Type': 'application/json;charset=UTF-8'
+//         }
+//       })
+//         .then(response => {
+
+//           if (response.data === 'Login successful') {
+//             console.log('로그인 성공 :', response.data);
+//             navigate.push('/');
+//           }
+//           else {
+//             console.log('로그인 실패 :', response.data);
+//             setShowAlert(true);
+//           }
+//         })
+//         .catch(error => {
+//           console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+//           // 로그인 실패하면 팝업 표시할 것
           
-        });
-  } else {
-    // axios 요청 넣어봄
-    axios.post(`${backendUrl}/members/login`, loginData, {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(response => {
+//         });
+//   } else {
+//     const loginData = {
+//       memberId: username,
+//       memberPwd: password,
+//     };
+//     // axios 요청 넣어봄
+//     axios.post(`${backendUrl}/members/login`, loginData, {
+//       headers: {
+//         'Content-Type': 'application/json;charset=UTF-8'
+//       }
+//     }).then(response => {
 
-      if (response.data === 'Login successful') {
-        console.log('로그인 성공 :', response.data);
-        navigate.push('/');
-      }
-      else {
-        console.log('로그인 실패 :', response.data);
-        setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('로그인 실패', error.response ? error.response.data : error.message);
-      // 로그인 실패하면 팝업 표시할 것
+//       if (response.data === 'Login successful') {
+//         console.log('로그인 성공 :', response.data);
+//         navigate.push('/');
+//       }
+//       else {
+//         console.log('로그인 실패 :', response.data);
+//         setShowAlert(true);
+//       }
+//     })
+//     .catch(error => {
+//       console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+//       // 로그인 실패하면 팝업 표시할 것
       
-    });
-}
+//     });
+// }
 
 
   };

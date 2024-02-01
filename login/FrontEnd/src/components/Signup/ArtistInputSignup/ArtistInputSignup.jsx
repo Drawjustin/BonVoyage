@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // import {router} from 'react-router-dom';
 import axios from 'axios';
 import styles from './ArtistInputSignup.module.scss';
+import { useRouter } from 'next/navigation';
 
 const ArtistInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -15,6 +16,10 @@ const ArtistInputSignup = () => {
     const [phonenum, setPhonenum] = useState('');
 
     const [errors, setErrors] = useState({});
+
+    const navigate = useRouter();
+
+    const backendUrl = 'http://43.200.244.3:8001'
 
     // 파일 첨부
     function changeImgText(event) { 
@@ -119,13 +124,14 @@ const ArtistInputSignup = () => {
       
 
       try {
-        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
+        const response = await axios.post(`${backendUrl}/artists/new`, data, {
           headers: {
             'Content-Type': 'application/json;  charset=UTF-8',
           },
         });
 
         console.log(response.data);
+        navigate.push('/');
       } catch (error) {
         console.error(error);
       }

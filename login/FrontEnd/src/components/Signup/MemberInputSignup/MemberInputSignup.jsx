@@ -10,8 +10,10 @@ const MemberInputSignup = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [nickname, setNickname] = useState('');
     const [email, setEmail] = useState('');
-
+    const [phonenum, setPhoneNumber] = useState('');
     const [errors, setErrors] = useState({});
+
+    const backendUrl = 'http://43.200.244.3:8001'
 
     // 이름 유효성 검사
     const validateUsername = (value) => {
@@ -80,23 +82,29 @@ const MemberInputSignup = () => {
         return;
       }
       
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("confirmPassword", confirmPassword);
-      formData.append("username", username);
-      formData.append("userid", userid);
-      formData.append("nickname", nickname);
+      const data = {
+        "memberName": username,
+        "memberId": userid,
+        "memberPwd": password,
+        "memberNickname": nickname,
+        "memberEmail": email,
+        "memberContact": phonenum,
+        "memberPoint": 0,
+        "memberIsDeleted" : false,
+        "memberCreatedDate" : '2024-01-29T04:54:33'
+       }
+ 
 
       try {
         const response = await axios.
-          post("http://43.200.244.3:8001/members/new", formData, {
+          post(`${backendUrl}/members/new`, data, {
             headers: {
-              "Content-Type": "multipart/form-data",
+              'Content-Type': 'application/json;  charset=UTF-8',
             },
           });
-
+        navigate.push('/');
         console.log(response.data);
+        
         
       } catch (error) {
         console.error(error);
@@ -166,7 +174,10 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'/>
+                    <input type="text" className={styles.form_input} placeholder='연락처'
+                    value={phonenum} onChange={(e) => {
+                        setPhoneNumber(e.target.value);
+                    }}/>
                         <button className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>
