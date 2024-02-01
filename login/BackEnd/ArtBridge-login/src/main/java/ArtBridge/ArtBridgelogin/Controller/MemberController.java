@@ -6,6 +6,7 @@ import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
@@ -27,7 +28,7 @@ public class MemberController {
     }
     @PostMapping("/login")
     @ResponseBody
-    public String login(@RequestBody MemberLoginForm memberLoginForm) {return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
+    public ResponseEntity<?> login(@RequestBody MemberLoginForm memberLoginForm) {return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
 
     @PostMapping("/new")
     public Member createMember(@RequestBody Member member) {

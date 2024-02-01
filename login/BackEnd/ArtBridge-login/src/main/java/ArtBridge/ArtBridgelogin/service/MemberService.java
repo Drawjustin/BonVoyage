@@ -4,8 +4,11 @@ import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -54,16 +57,19 @@ public class MemberService {
             return null;
         }
     }
+    @PostMapping("/login")
     @Transactional
-    public String login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
+    public ResponseEntity<?> login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
         // 로그인 처리 로직
 
         Member foundMember = memberRepository.findMemberId(userId);
 
         if (foundMember != null && foundMember.getMemberPwd().equals(password)) {
-            return "Login successful";
+            // 로그인 성공 시 Member 정보와 함께 응답
+            return ResponseEntity.ok(foundMember);
         } else {
-            return "바보 멍텅구리 로그인 실패했잔요";
+            // 로그인 실패 시 401 상태 코드와 실패 메시지 응답
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("바보 멍텅구리 로그인 실패했잔요");
         }
     }
     public void deleteMember(Long id) {
