@@ -2,6 +2,8 @@
 import { styled } from '@mui/system';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import getCurrentUser from '@/app/actions/getCurrentUser';
+import { signOut } from 'next-auth/react';
 // import Link from 'next/link';
 
 const Container = styled('nav')({
@@ -9,6 +11,7 @@ const Container = styled('nav')({
   display: 'flex',
   background: 'transparent',
   justifyContent: 'space-between',
+  marginRight: '25px',
 });
 
 const Button = styled('ul')({
@@ -18,7 +21,6 @@ const Button = styled('ul')({
   fontSize: '15px',
   background: 'transparent',
   border: '0',
-  marginRight: '25px',
   '&:hover': {
     fontWeight: 'bolder',
     cursor: 'pointer',
@@ -52,19 +54,30 @@ const Underline = styled('ul')({
 
 interface buttonHandlerProps {}
 
+let buttonList;
+
 export const ButtonContainer = ({}: buttonHandlerProps) => {
-  const buttonList = [
-    { text: '로그인', path: '/LoginPage' },
-    { text: '회원가입', path: '/SignupPage' },
-  ];
+  
+  const currentUser = getCurrentUser();
+
+  if (!currentUser) {
+    buttonList = [
+      { text: '로그인', func: () => navigate.push('/LoginPage') },
+      { text: '회원가입', func: () => navigate.push('/SignupPage') },
+    ];
+  } else {
+    buttonList = [
+      { text: '로그아웃', func: () => signOut() },
+      { text: '마이페이지', func: () => navigate.push('/MyPage') },
+    ];
+  }
+  
   const [selected, setSelected] = useState('');
   const navigate = useRouter();
 
-
-
-  const buttonHandler = (text: string, path: string) => {
-    setSelected(text);
-    navigate.push(path);
+  const buttonHandler = (item:any) => {
+    setSelected(item.text);
+    item.func();
   };
 
   return (
@@ -72,7 +85,7 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
       {buttonList.map((item) => (
         <Button
           key={item.text}
-          onClick={() => buttonHandler(item.text, item.path)}
+          onClick={() => buttonHandler(item)}
         >
           {item.text === selected ? <Underline>{item.text}</Underline> : item.text}
         </Button>

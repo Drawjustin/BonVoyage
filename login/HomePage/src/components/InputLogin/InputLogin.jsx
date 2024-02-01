@@ -46,6 +46,7 @@ const InputLogin = () => {
 
             if (response.data === 'Login successful') {
               console.log('로그인 성공 :', response.data);
+              document.cookie = `token=${data.token}; path=/;`;
               navigate.push('/');
             }
             else {
