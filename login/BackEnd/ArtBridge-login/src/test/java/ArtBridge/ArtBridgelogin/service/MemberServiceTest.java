@@ -37,7 +37,7 @@ public class MemberServiceTest {
         member.setMemberEmail(email);
         member.setMemberCreatedDate(LocalDateTime.now());
         member.setMemberNickname(nickname);
-        member.setMemberPoint(point);
+        member.setMemberPoint((long) point);
         return member;
     }
 

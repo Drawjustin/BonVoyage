@@ -13,6 +13,7 @@ public class AuctionLike {
 
     @Column(name = "auction_seq", nullable = false)
     private Integer auctionSeq;
+
     @Column(name = "member_seq", nullable = false)
     private Long    memberSeq;
 

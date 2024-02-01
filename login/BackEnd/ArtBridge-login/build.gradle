@@ -31,7 +31,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 	//querydsl 설정 추가
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

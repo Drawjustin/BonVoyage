@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.*;
-import java.util.*;
 
 @Entity
 @Table(name = "member")
@@ -35,7 +34,7 @@ public class Member {
     private String memberContact;
 
     @Column(name = "member_point", nullable = false)
-    private long memberPoint;
+    private Long memberPoint;
 
     @Column(name = "member_isdeleted", nullable = false)
     private boolean memberIsDeleted;

@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Table(name="sale_like")
 @Data
 public class SaleLike {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     @Column(name = "item_seq", nullable = false)
-    private Integer itemSeq;
+    private int itemSeq;
+
     @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
+    private int memberSeq;
 
 
 

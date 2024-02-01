@@ -34,7 +34,7 @@ public class ArtistMention {
     @Column(name = "arist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
-    @ManyToOne
-    @JoinColumn(name = "artist_seq")
-    private Artist artist;
+//    @ManyToOne
+//    @JoinColumn(name = "artist_seq")
+//    private Artist artist;
 }

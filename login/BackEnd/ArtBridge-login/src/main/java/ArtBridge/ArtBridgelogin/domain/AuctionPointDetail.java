@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "auction_point_detail")
 @Data
+@Table(name = "auction_point_detail")
 public class AuctionPointDetail implements Serializable {
 
     @Id

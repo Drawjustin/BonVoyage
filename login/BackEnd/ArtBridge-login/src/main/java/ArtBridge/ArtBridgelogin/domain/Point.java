@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Table(name = "point")
 @Data
 public class Point {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_detail_seq")

@@ -16,7 +16,7 @@ public class ArtistMentionComment {
     private Long artistMentionCommentSeq;
 
     @Column(name = "member_seq")
-    private Member memberSeq;
+    private Integer memberSeq;
 
     @Column(name = "artist_mention_seq")
     private String artistMentionSeq;
