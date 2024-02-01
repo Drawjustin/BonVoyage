@@ -90,7 +90,7 @@ const MemberInputSignup = () => {
 
       try {
         const response = await axios.
-          post("http://localhost:8080/members/new", formData, {
+          post("http://43.200.244.3:8001/members/new", formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

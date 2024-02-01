@@ -24,27 +24,63 @@ const InputLogin = () => {
   const handleLogin = () => {
 
     // 로그인 처리 로직 추가
-    const backendUrl = 'BACKEND_URL'
+    const backendUrl = 'http://43.200.244.3:8001'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     const loginData = {
       username: username,
       password: password,
-      isArtist: isArtist,
     };
 
     // axios 요청 넣어봄
-    axios.post(`${backendUrl}/login`, loginData)
-      .then(response => {
-        console.log('로그인 성공 :', response.data);
-        // 로그인 성공하면 홈페이지로 이동시킬것
-        navigate.push('/');
+    if (isArtist) {
+      // axios 요청 넣어봄
+      axios.post(`${backendUrl}/artists/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
       })
-      .catch(error => {
-        console.error('로그인 실패', error.response ? error.response.data : error.message);
-        // 로그인 실패하면 팝업 표시할 것
+        .then(response => {
+
+          if (response.data === 'Login successful') {
+            console.log('로그인 성공 :', response.data);
+            navigate.push('/');
+          }
+          else {
+            console.log('로그인 실패 :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error('로그인 실패', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
+          
+        });
+  } else {
+    // axios 요청 넣어봄
+    axios.post(`${backendUrl}/members/login`, loginData, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    }).then(response => {
+
+      if (response.data === 'Login successful') {
+        console.log('로그인 성공 :', response.data);
+        navigate.push('/');
+      }
+      else {
+        console.log('로그인 실패 :', response.data);
         setShowAlert(true);
-      });
+      }
+    })
+    .catch(error => {
+      console.error('로그인 실패', error.response ? error.response.data : error.message);
+      // 로그인 실패하면 팝업 표시할 것
+      
+    });
+}
+
+
   };
 
   const handleAlertClose = () => {

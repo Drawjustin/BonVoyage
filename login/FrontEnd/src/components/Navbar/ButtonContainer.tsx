@@ -2,8 +2,8 @@
 import { styled } from '@mui/system';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import getCurrentUser from '@/app/actions/getCurrentUser';
-import { signOut } from 'next-auth/react';
+// import getCurrentUser from '@/app/actions/getCurrentUser';
+import { signOut, useSession } from 'next-auth/react';
 // import Link from 'next/link';
 
 const Container = styled('nav')({
@@ -58,7 +58,10 @@ interface buttonHandlerProps {}
 
 export const ButtonContainer = ({}: buttonHandlerProps) => {
   
-  const currentUser = getCurrentUser();
+  const currentUser = useSession();
+
+  console.log(currentUser);
+
   let buttonList = [
     {text: '경매', func: () => navigate.push('/AuctionLivePage')},
     {text: '리뷰', func: () => navigate.push('/review')},
