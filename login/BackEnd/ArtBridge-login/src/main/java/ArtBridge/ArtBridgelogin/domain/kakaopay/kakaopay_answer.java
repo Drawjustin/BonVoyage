@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.domain;
+package ArtBridge.ArtBridgelogin.domain.kakaopay;
 
 import jakarta.persistence.*;
 import lombok.Data;

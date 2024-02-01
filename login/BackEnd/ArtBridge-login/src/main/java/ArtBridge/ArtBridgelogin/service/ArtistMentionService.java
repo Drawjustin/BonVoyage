@@ -14,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistMentionService {
 
-    @Autowired
-    private ArtistMentionRepository artistMentionRepository;
+
+    private final ArtistMentionRepository artistMentionRepository;
 
     @Transactional(readOnly = true)
     public List<ArtistMention> getAllArtistsMention() {
