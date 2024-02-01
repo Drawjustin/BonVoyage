@@ -22,9 +22,9 @@ public class kakaopay_answer {
     @Column(name = "quantity", length = 100, nullable = false)
     private String quantity;
     @Column(name = "total_amount", nullable = false)
-    private int totalAmount;
+    private Integer totalAmount;
     @Column(name = "tax_free_amount",nullable = true)
-    private int taxFreeAmount;
+    private Integer taxFreeAmount;
     @Column(name = "approval_url", length = 255, nullable = true)
     private String approvalUrl;
     @Column(name = "cancel_url", length = 255, nullable = true)

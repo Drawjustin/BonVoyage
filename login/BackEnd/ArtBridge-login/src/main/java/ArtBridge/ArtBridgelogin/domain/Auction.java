@@ -16,8 +16,7 @@ public class Auction implements Serializable {
     @Column(name = "auction_seq")
     private Integer auctionSeq;
 
-    @Column(name = "item_seq", nullable = false)
-    private Integer itemSeq;
+
 
     @Column(name = "auction_scheduled_time", nullable = false)
     private LocalDateTime auctionScheduledTime;

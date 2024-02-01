@@ -15,7 +15,7 @@ public class Point {
     private Long pointDetailSeq;
 
     @Column(name = "point_detail_id", nullable = false)
-    private int pointDetailId;
+    private Integer pointDetailId;
 
     @Column(name = "point_detail_isartist", length = 30, nullable = false)
     private boolean pointDetailIsartist;
@@ -27,8 +27,8 @@ public class Point {
     private LocalDateTime pointDetailTradeDate;
 
     @Column(name = "point_detail_trade_category", length = 30, nullable = false)
-    private int pointDetailTradeCategory;
+    private Integer pointDetailTradeCategory;
 
     @Column(name = "point_detail_trade_table_seq", length = 30, nullable = false)
-    private int pointDetailTradeTableSeq;
+    private Integer pointDetailTradeTableSeq;
 }
