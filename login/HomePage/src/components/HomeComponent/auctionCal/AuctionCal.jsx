@@ -4,7 +4,6 @@ import styles from '../mainpage3.module.scss'
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment';
-// import { Link } from 'react-router-dom';
 
 const AuctionCal = () => {
   const [value, onChange] = useState(new Date());
@@ -22,9 +21,9 @@ const AuctionCal = () => {
 
   return (
       <div>
-        {/* <Nav /> */}
         <div className={styles.container}>
         <div className={styles.schedule}>
+          <h2>경매 일정</h2>
           <div>
             <Calendar
               onChange={onChange}
@@ -49,9 +48,9 @@ const AuctionCal = () => {
                   </div>
                   <div className={styles.product_e}>
                     <div className={styles.product_info}>
-                      <p>작가 ㅇㅇㅇ</p>
-                      <p>상품명</p>
-                      <p>1월 24일 18:00</p> 
+                      <p>작가 김싸피</p>
+                      <p>상품명 싸피 도자기</p>
+                      <p>2월 5일 18:00</p> 
                     </div>
                     {/* <Link to="/auctionlive"> */}
                       <button className={styles.auction_btn}>참여</button>

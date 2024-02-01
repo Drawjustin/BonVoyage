@@ -168,7 +168,7 @@ const AuctionComingSoon = () => {
   
   return (
     <div>
-    <h2 className={styles.header} style={{ fontWeight: 'bold', textAlign: 'left' }}>경매 임박 작품</h2>
+    <h2 style={{ fontWeight: 'bold', textAlign: 'left', color: 'white' }}>경매 임박 작품</h2>
     <div className={`${styles.component} ${selectedArtwork ? styles.expanded : ''}`}>
         <div className={styles.artworkList}>
           {artworks.map((artwork) => (
