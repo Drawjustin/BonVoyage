@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/orderDetail")
 @RequiredArgsConstructor
 public class OrderDetail {
-
-    @Autowired
-    private final a
+    
 
 }
