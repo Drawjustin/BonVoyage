@@ -1,3 +1,4 @@
+'use client'
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { setActiveCategory } from '../../../../store/categories/categories.slice';
 import styles from './CategoryTab.module.scss';

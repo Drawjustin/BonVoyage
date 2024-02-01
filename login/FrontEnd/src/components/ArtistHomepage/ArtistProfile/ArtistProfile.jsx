@@ -1,3 +1,4 @@
+'use client'
 import React, { useRef, useState, useEffect } from 'react'
 import styles from './ArtistProfile.module.scss'
 import { Divider } from 'antd';

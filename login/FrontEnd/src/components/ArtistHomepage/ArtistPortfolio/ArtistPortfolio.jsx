@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react'
 import styles from './ArtistPortfolio.module.scss'
 import { Timeline } from 'antd';

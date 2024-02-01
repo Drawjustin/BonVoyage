@@ -5,17 +5,18 @@ import Rodal from 'rodal';
 import 'rodal/lib/rodal.css';
 
 // import { Link } from 'react-router-dom';
-import ChargePoint from '../../components/ChargePoint/ChargePoint';
+import ChargePoint from '../../components/MyPageComponent/ChargePoint/ChargePoint';
 import Navbar from '../../components/Navbar/Navbar';
 
 import accountinfo from './1.png';
 import purchaseinfo from './2.png';
 import faq from './3.png';
 import myauctioncal from './4.png';
-import AccountInfo from '../../components/AccountInfo/AccountInfo';
-import PurchaseInfo from '../../components/PurchaseInfo/PurchaseInfo';
-import Faq from '../../components/Faq/Faq';
-import MyAuctionCal from '../../components/MyAuctionCal/MyAuctionCal';
+import dynamic from 'next/dynamic';
+const AccountInfo = dynamic(() => import('../../components/MyPageComponent/AccountInfo/AccountInfo'), {ssr:false});
+const PurchaseInfo = dynamic(() => import('../../components/MyPageComponent/PurchaseInfo/PurchaseInfo'), {ssr:false});
+const Faq = dynamic(() => import('../../components/MyPageComponent/Faq/Faq'), {ssr:false});
+const MyAuctionCal = dynamic(() => import('../../components/MyPageComponent/MyAuctionCal/MyAuctionCal'), {ssr:false});
 
 // import React from 'react';
 // import {

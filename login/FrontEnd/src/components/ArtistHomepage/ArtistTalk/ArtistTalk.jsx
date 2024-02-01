@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useMemo } from 'react';
 import styles from './ArtistTalk.module.scss';
 import Rodal from 'rodal';

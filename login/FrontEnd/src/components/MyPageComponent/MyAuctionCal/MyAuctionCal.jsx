@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import styles from './MyAuctionCal.module.scss';
 import { Calendar } from 'react-calendar';

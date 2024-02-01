@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { useAppSelector } from '../../../hooks/redux'
 import styles from './CountProducts.module.scss';

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import styles from './WriteReview.module.scss';
 import "react-quill/dist/quill.snow.css";
