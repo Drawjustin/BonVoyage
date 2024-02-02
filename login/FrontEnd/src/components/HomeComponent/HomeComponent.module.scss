@@ -20,12 +20,13 @@
 }
 
 .popular_reviews {
+    color: #171de5;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 
     .popular_review-item {
-        border: 1px solid #ccc;
+        border: 1px solid #fff;
         padding: 15px;
         text-align: center;
 
@@ -61,7 +62,7 @@
     // background-color: #fff;
   
     .popular_reviews {
-      color: #fff;
+      color: #171de5;
       font-size: 30px;
       font-weight: bold;
     }

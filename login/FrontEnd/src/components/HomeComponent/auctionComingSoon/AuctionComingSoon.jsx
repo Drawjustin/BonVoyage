@@ -96,7 +96,7 @@ const AuctionComingSoon = () => {
   
   return (
     <div>
-    <h1 style={{ fontSize: '30px', fontWeight: 'bold', textAlign: 'left', color: 'white' }}>경매 임박 작품</h1>
+    <h1 style={{ fontSize: '30px', fontWeight: 'bold', textAlign: 'left', color: '#171de5' }}>경매 임박 작품</h1>
     <div className={`${styles.component} ${selectedArtwork ? styles.expanded : ''}`}>
         <div className={styles.artworkList}>
           {artworks.map((artwork) => (
@@ -109,7 +109,7 @@ const AuctionComingSoon = () => {
           ))}
         </div>
         {selectedArtwork && (
-          <div className={styles.content}>
+          <div className={styles.content} style={{ paddingBottom: '50px' }}>
             <h2>{selectedArtwork.title}</h2>
             <p>금액 <br />{selectedArtwork.amount}</p>
             <p>설명 <br />{selectedArtwork.description}</p>

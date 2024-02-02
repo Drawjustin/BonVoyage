@@ -10,10 +10,10 @@ const ArtistReview = dynamic(() => import('../../components/ArtistHomepage/Artis
 const ArtistProfile = dynamic(() => import('../../components/ArtistHomepage/ArtistProfile/ArtistProfile'), {ssr:false});
 
 const MAIN_DATA = [
-  { id: 1, name: 'portfolio', text: '' },
-  { id: 2, name: 'talk', text: '' },
-  { id: 3, name: 'calender', text: '' },
-  { id: 4, name: 'review', text: '' },
+  { id: 1, name: 'portfolio', text: '정보' },
+  { id: 2, name: 'talk', text: '소통' },
+  { id: 3, name: 'calender', text: '일정' },
+  { id: 4, name: 'review', text: '리뷰' },
 ];
 
 

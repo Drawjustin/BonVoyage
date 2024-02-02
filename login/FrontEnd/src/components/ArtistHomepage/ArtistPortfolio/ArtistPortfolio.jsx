@@ -75,7 +75,7 @@ const ArtistPortfolio = () => {
           </div>
           <div className={styles.history}>
             <div className={styles.title_btn}>
-              <div className={styles.title}>🎨 작가 이력</div>
+              <div className={styles.title} style={{ }}>🎨 작가 이력</div>
               {isEditMode ? (
                 <button className={styles.edit} onClick={() => setIsEditMode(false)}>
                   완료

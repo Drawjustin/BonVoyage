@@ -2,7 +2,7 @@
     max-width: 900px;
     margin: 0 auto;
     padding: 25px;
-    background-color: #cce8e8;
+    background-color: #f1efee;
     border-radius: 10px;
     box-shadow: 8px 8px 3px #bfbfbf;
 }
@@ -42,18 +42,20 @@
 }
 
 .selectbtn button:hover {
-    background-color: #8FCACA;
+    background-color: #171de5;
     border: none;
 }
 
 .selectbtn button:focus {
-    background-color: #8FCACA;
+    background-color: #171de5;
     border: none;
     outline: none;
 }
 
 .activebtn {
-    background-color: #8FCACA;
+    color: white; 
+    border: solid #171de5 1px;
+    background-color: #171de5;
 }
 
 .contents {
@@ -104,11 +106,11 @@
 
 .page_box::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #8FCACA; /* 스크롤바의 색상 */
+    background: #171de5; /* 스크롤바의 색상 */
     border-radius: 30px;
 }
 
 .page_box::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    background: rgba(36, 124, 248, 0.1);  /*스크롤바 뒷 배경 색상*/
     border-radius: 30px;
 }
