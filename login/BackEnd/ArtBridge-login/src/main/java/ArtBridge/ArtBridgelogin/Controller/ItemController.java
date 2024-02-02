@@ -40,8 +40,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public Item getItemById(@PathVariable int id) {
-        return itemService.getItemByID(id);
+    public Item getItemBySeq(@PathVariable int seq) {
+        return itemService.getItemBySeq(seq);
     }
 
     @PostMapping("/new")

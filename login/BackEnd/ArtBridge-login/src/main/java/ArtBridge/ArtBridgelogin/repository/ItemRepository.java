@@ -1,6 +1,10 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Item;
+import ArtBridge.ArtBridgelogin.domain.QArtist;
+import ArtBridge.ArtBridgelogin.domain.QItem;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -10,10 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Repository
+@RequiredArgsConstructor
 public class ItemRepository {
+
     private final EntityManager em;
+
+    private QItem qItem = QItem.item;
+
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() { queryFactory = new JPAQueryFactory(em);}
 
     @Transactional
     public Item create(Item item) {
@@ -22,48 +34,43 @@ public class ItemRepository {
     }
 
     @Transactional(readOnly = true)
-    public Item findByName(String itemName) {
-        String jpql = "SELECT a FROM Item a WHERE a.itemName = :itemName";
-        TypedQuery<Item> query = em.createQuery(jpql, Item.class);
-        query.setParameter("itemName", itemName);
-
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null; // 해당 조건에 맞는 결과가 없을 경우
-        }
-    }
-
-    @Transactional(readOnly = true)
     public List<Item> findAll(){
-        return em.createQuery("select m from Item m", Item.class)
-                .getResultList();
+        return queryFactory
+                .selectFrom(qItem)
+                .fetch();
     }
 
     @Transactional(readOnly = true)
-    public Item findById(int itemSeq){
-        return em.createQuery("select m from Item m where m.itemSeq = :itemSeq", Item.class)
-                .setParameter("itemSeq", itemSeq)
-                .getSingleResult();
+    public Item findBySeq(int itemSeq){
+        return queryFactory
+                .selectFrom(qItem)
+                .where(qItem.itemSeq.eq(itemSeq))
+                .fetchOne();
     }
 
     @Transactional
     public void deleteById(int itemSeq) {
-        em.createQuery("DELETE FROM Item m WHERE m.itemSeq = :itemSeq")
-                .setParameter("itemSeq", itemSeq)
-                .executeUpdate();
+        queryFactory
+                .delete(qItem)
+                .where(qItem.itemSeq.eq(itemSeq))
+                .execute();
+
     }
 
     public List<Item> findPopularItems() {
         //TODO : 제한 값을 따로 인자로 둬서 나중에 편하게 바꿀 수 있도록
-        return em.createQuery("select m from Item m order by item_like desc limit 100", Item.class)
-                .getResultList();
+        return queryFactory
+                .selectFrom(qItem)
+                .orderBy(qItem.itemLike.desc())
+                .fetch();
     }
 
-    public List<Item> findNewItems() {
+    public List<Item> findLastedItems() {
         //TODO : 제한 값을 따로 인자로 둬서 나중에 편하게 바꿀 수 있도록
-        return em.createQuery("select m from Item m order by item_created_date asc limit 100", Item.class)
-                .getResultList();
+        return queryFactory
+                .selectFrom(qItem)
+                .orderBy(qItem.itemCreatedDate.desc())
+                .fetch();
     }
 
     //TODO: join 해결 이후 진행 필요

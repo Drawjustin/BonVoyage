@@ -1,6 +1,8 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Item;
+import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,11 +26,17 @@ public class ItemServiceTest {
     ItemService itemService;
     @Autowired
     ItemRepository itemRepository;
+
+    @Autowired
+    ArtistRepository artistRepository;
+
     @Autowired
     EntityManager em;
 
     private Item createTestItem() {
         Item item = new Item();
+
+        Artist artist = artistRepository.findArtistById("123");
 
 //        item.setItemSeq(123);
 //        item.setArtistSeq(123);
@@ -39,6 +47,8 @@ public class ItemServiceTest {
         item.setItemSellPrice(123L);
         item.setItemIsSold(false);
         item.setItemCreatedDate(LocalDateTime.now());
+
+        item.setArtist(artist);
         return item;
     }
 
