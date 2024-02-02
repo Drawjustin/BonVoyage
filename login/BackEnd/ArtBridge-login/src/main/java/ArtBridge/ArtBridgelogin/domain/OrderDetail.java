@@ -16,18 +16,6 @@ public class OrderDetail implements Serializable {
     @Column(name = "order_detail_seq")
     private Long orderDetailSeq;
 
-    @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
-
-    @Column(name = "artist_seq", nullable = false)
-    private Integer artistSeq;
-
-    @Column(name = "item_seq", nullable = false)
-    private Integer itemSeq;
-
-    @Column(name = "auction_seq")
-    private Integer auctionSeq;
-
     @Column(name = "sorting_code_detail_seq", nullable = false)
     private Integer sortingCodeDetailSeq;
 
@@ -61,4 +49,23 @@ public class OrderDetail implements Serializable {
     @Column(name = "order_detail_canceled_date")
     private LocalDateTime orderDetailCanceledDate;
 
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    // Many-to-One relationship with Artist
+    @ManyToOne
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
+
+    // Many-to-One relationship with Item
+    @ManyToOne
+    @JoinColumn(name = "item_seq")
+    private Item item;
+
+    // Many-to-One relationship with Auction
+    @ManyToOne
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
 }

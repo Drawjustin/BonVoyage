@@ -17,7 +17,6 @@ public class Artist {
     @Column(name = "artist_seq")
     private Long artistSeq;
 
-
     @Column(name = "artist_name", length = 30, nullable = false)
     private String artistName;
 
@@ -59,9 +58,17 @@ public class Artist {
         }
     }
 
-//    @OneToMany(mappedBy = "artist")
-//    private List<ArtistMention> artistMentions;
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistMention> artistMentions;
 
-//    @OneToMany(mappedBy = "artist")
-//    private List<ArtistHomepageComment> artistHomepageComments;
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistHomepageComment> artistHomepageComments;
+
+    // One-to-Many relationship with OrderDetail
+    @OneToMany(mappedBy = "artist")
+    private List<OrderDetail> orderDetails;
+
+    // One-to-Many relationship with Item
+    @OneToMany(mappedBy = "artist")
+    private List<Item> items;
 }

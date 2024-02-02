@@ -16,12 +16,6 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_seq")
     private Long artistHomepageCommentSeq;
 
-    @Column(name = "artist_seq", insertable = false, updatable = false)
-    private String artistSeq;
-
-    @Column(name = "member_seq", insertable = false, updatable = false)
-    private String memberSeq;
-
     @Column(name = "artist_homepage_comment_content", updatable = false)
     private String artistHompageCommentContent;
 
@@ -34,13 +28,14 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_deleted_date")
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
+    // Many-to-One relationship with Artist
+    @ManyToOne
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
 
-//    @ManyToOne
-//    @JoinColumn(name = "artist_seq")
-//    private Artist artist;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "member_seq")
-//    private Member member;
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
 
 }

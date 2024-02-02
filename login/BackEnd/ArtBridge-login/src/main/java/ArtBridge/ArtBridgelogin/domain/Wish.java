@@ -15,9 +15,13 @@ public class Wish {
     @Column(name = "wish_seq", nullable = false)
     private Integer wishSeq;
 
-    @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
 
-    @Column(name = "item_seq",nullable = false)
-    private Integer itemSeq;
+    // Many-to-One relationship with Item
+    @ManyToOne
+    @JoinColumn(name = "item_seq")
+    private Item item;
 }

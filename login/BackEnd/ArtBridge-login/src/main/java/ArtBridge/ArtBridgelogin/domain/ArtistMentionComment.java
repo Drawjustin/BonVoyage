@@ -15,12 +15,6 @@ public class ArtistMentionComment {
     @Column(name = "artist_mention_comment_seq")
     private Long artistMentionCommentSeq;
 
-    @Column(name = "member_seq")
-    private Integer memberSeq;
-
-    @Column(name = "artist_mention_seq")
-    private String artistMentionSeq;
-
     @Column(name = "artist_homepage_comment_content")
     private String artistMentionCommentContent;
 
@@ -33,4 +27,13 @@ public class ArtistMentionComment {
     @Column(name = "artist_mention_comment_deleted_date")
     private LocalDateTime artistMentionCommentDeletedDate;
 
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    // Many-to-One relationship with ArtistMention
+    @ManyToOne
+    @JoinColumn(name = "artist_mention_seq")
+    private ArtistMention artistMention;
 }

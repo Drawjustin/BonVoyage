@@ -15,9 +15,6 @@ public class Review {
     @Column(name = "review_seq", nullable = false)
     private Integer reviewSeq;
 
-    @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
-
     @Column(name = "review_content",nullable = false)
     private Integer reviewContent;
 
@@ -26,4 +23,9 @@ public class Review {
 
     @Column(name = "review_created_date", nullable = false)
     private LocalDateTime reviewCreatedDate;
+
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
 }

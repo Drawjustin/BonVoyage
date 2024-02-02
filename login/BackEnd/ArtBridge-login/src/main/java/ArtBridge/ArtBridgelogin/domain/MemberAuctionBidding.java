@@ -14,11 +14,15 @@ public class MemberAuctionBidding {
     @Column(name = "member_auction_bidding_seq", nullable = false)
     private Long memberAuctionBiddingSeq;
 
-    @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
 
-    @Column(name = "auction_seq",nullable = false)
-    private Integer auctionSeq;
+    // Many-to-One relationship with Auction
+    @ManyToOne
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
 
     @Column(name = "member_auction_bidding_deposit",length = 255, nullable = false)
     private Integer memberAuctionBiddingDeposit;

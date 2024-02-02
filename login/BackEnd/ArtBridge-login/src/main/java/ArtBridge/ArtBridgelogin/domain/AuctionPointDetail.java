@@ -16,12 +16,6 @@ public class AuctionPointDetail implements Serializable {
     @Column(name = "auction_point_detail_seq")
     private Integer auctionPointDetailSeq;
 
-    @Column(name = "auction_seq", nullable = false)
-    private Integer auctionSeq;
-
-    @Column(name = "member_seq", nullable = false)
-    private Integer memberSeq;
-
     @Column(name = "auction_point_detail_point", nullable = false)
     private Integer auctionPointDetailPoint;
 
@@ -30,5 +24,15 @@ public class AuctionPointDetail implements Serializable {
 
     @Column(name = "auction_point_date", nullable = false)
     private LocalDateTime auctionPointDate;
+
+    // Many-to-One relationship with Member
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    // Many-to-One relationship with Auction
+    @ManyToOne
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
 
 }

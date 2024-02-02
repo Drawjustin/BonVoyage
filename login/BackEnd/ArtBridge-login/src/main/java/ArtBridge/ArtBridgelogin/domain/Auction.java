@@ -1,10 +1,12 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "auction")
@@ -15,8 +17,6 @@ public class Auction implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_seq")
     private Integer auctionSeq;
-
-
 
     @Column(name = "auction_scheduled_time", nullable = false)
     private LocalDateTime auctionScheduledTime;
@@ -50,5 +50,26 @@ public class Auction implements Serializable {
 
     @Column(name = "auction_win_date")
     private LocalDateTime auctionWinDate;
+
+    // Many-to-One relationship with Item
+    @ManyToOne
+    @JoinColumn(name = "item_seq")
+    private Item item;
+
+    // One-to-Many relationship with OrderDetail
+    @OneToMany(mappedBy = "auction")
+    private List<OrderDetail> orderDetails;
+
+    // One-to-Many relationship with AuctionLike
+    @OneToMany(mappedBy = "auction")
+    private List<AuctionLike> auctionLikes;
+
+    // One-to-Many relationship with MemberAuctionBidding
+    @OneToMany(mappedBy = "auction")
+    private List<MemberAuctionBidding> memberAuctionBiddings;
+
+    // One-to-Many relationship with AuctionPointDetail
+    @OneToMany(mappedBy = "auction")
+    private List<AuctionPointDetail> auctionPointDetails;
 }
 
