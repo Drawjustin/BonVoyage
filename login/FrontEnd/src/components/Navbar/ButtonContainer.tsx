@@ -1,6 +1,6 @@
 'use client'
 import { styled } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // import getCurrentUser from '@/app/actions/getCurrentUser';
 import { signOut, useSession } from 'next-auth/react';
@@ -57,17 +57,13 @@ interface buttonHandlerProps {}
 
 export const ButtonContainer = ({}: buttonHandlerProps) => {
 
-  let user;
-  
-  getCurrentUser().then(
-    (result) => {
-      user = result;
-    },
-    (error) => {
-      console.error("Promise rejected with error:", error);
-    }
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+    setIsLoggedIn(storedIsLoggedIn === 'true');
+  }, [])
 
 
   let buttonList = [
@@ -75,15 +71,16 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
     {text: '리뷰', func: () => navigate.push('/review')},
     {text: '작가', func: () => navigate.push('/ArtistHomePage')},
 ];
-  if (!user) {
+  if (!isLoggedIn) {
     buttonList.push(
-      { text: '로그인', func: () => navigate.push('/auth/LoginPage') },
+      { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
     );
   } else {
     buttonList.push(
-      { text: '로그아웃', func: () => signOut() },
+      { text: '장바구니', func: () => navigate.push('/CartPage') },
       { text: '마이페이지', func: () => navigate.push('/MyPage') },
+      { text: '로그아웃', func: () => sessionStorage.setItem('isLoggedIn', 'false') },
     );
   }
   

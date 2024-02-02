@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './MemberInputSignup.module.scss';
+import { useRouter } from 'next/navigation';
 
 const MemberInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -14,6 +15,8 @@ const MemberInputSignup = () => {
     const [errors, setErrors] = useState({});
 
     const backendUrl = 'http://43.200.244.3:8001'
+
+    const navigate = useRouter();
 
     // 이름 유효성 검사
     const validateUsername = (value) => {

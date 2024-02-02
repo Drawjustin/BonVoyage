@@ -19,8 +19,6 @@ const ArtistInputSignup = () => {
 
     const navigate = useRouter();
 
-    const backendUrl = 'http://43.200.244.3:8001'
-
     // 파일 첨부
     function changeImgText(event) { 
         const file = event.target.files[0];
@@ -124,7 +122,7 @@ const ArtistInputSignup = () => {
       
 
       try {
-        const response = await axios.post(`${backendUrl}/artists/new`, data, {
+        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
           headers: {
             'Content-Type': 'application/json;  charset=UTF-8',
           },

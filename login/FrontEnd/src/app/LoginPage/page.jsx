@@ -7,6 +7,7 @@ import { FaUser, FaLock } from 'react-icons/fa';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import axios from 'axios';
 
 const LoginPage = () => {
 
@@ -25,16 +26,77 @@ const LoginPage = () => {
         };
       
         const handleLogin = async () => {
-          const body = {
-            username: username,
-            Password: password
-          }
+
+          console.log(username, password);
       
-          try {
-            const data = await signIn('credentials', body);
-          } catch (error) {
-              console.log(error);
+          const backendUrl = "http://43.200.244.3:8001";
+
+          //     // axios 요청 넣어봄
+    if (isArtist) {
+
+      const loginData = {
+        "artistId": username,
+        "artistPwd": password,
+      };
+      // axios 요청 넣어봄
+      axios.post(`${backendUrl}/artists/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      })
+        .then(response => {
+
+          if (response.data === 'Login successful') {
+            console.log('로그인 성공 :', response.data);
+            sessionStorage.setItem('isLoggedIn', 'true');
+            navigate.push('/');
           }
+          else {
+            console.log('로그인 실패 :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
+          
+        });
+  } else {
+    const loginData = {
+      "memberId": username,
+      "memberPwd": password,
+    };
+    // axios 요청 넣어봄
+    axios.post(`${backendUrl}/members/login`, loginData, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    }).then(response => {
+
+      if (response.data === 'Login successful') {
+        console.log('로그인 성공 :', response.data);
+        sessionStorage.setItem('isLoggedIn', 'true');
+        navigate.push('/');
+      }
+      else {
+        console.log('로그인 실패 :', response.data);
+        setShowAlert(true);
+      }
+    })
+    .catch(error => {
+      console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+      // 로그인 실패하면 팝업 표시할 것
+      
+    });
+}
+          
+            
+
+          // try {
+          //   const data = await signIn('credentials', body);
+          // } catch (error) {
+          //     console.log(error);
+          // }
         };
       
         const handleAlertClose = () => {
@@ -87,7 +149,11 @@ const LoginPage = () => {
           <input
             type="text"
             placeholder={isArtist ? '작가 ID' : '개인 ID'}
-            onChange={setUsername}
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }
+          }
           />
         </div>
 
@@ -96,7 +162,11 @@ const LoginPage = () => {
           <input
             type="password"
             placeholder="Password"
-            onChange={setPassword}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }
+          }
             />
         </div>
       </div>
