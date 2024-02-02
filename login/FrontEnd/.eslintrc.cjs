@@ -22,7 +22,7 @@ module.exports = {
     "position-y", "intensity", "envMapIntensity", "onBeforeCompile"]}],
     "react/react-in-jsx-scope": "off"
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-paeser",
   
   // 이거 추가해야 react import할 떄 오류 안나더라~
   "extends" : ['eslint:recommended', 'plugin:react/recommended']

@@ -47,17 +47,17 @@ const LoginPage = () => {
         .then(response => {
 
           if (response.data === 'Login successful') {
-            console.log('로그인 성공 :', response.data);
+            alert('로그인에 성공하였습니다.');
             sessionStorage.setItem('isLoggedIn', 'true');
             navigate.push('/');
           }
           else {
-            console.log('로그인 실패 :', response.data);
+            alert('로그인에 실패하였습니다.');
             setShowAlert(true);
           }
         })
         .catch(error => {
-          console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+          alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
           // 로그인 실패하면 팝업 표시할 것
           
         });
@@ -74,17 +74,17 @@ const LoginPage = () => {
     }).then(response => {
 
       if (response.data === 'Login successful') {
-        console.log('로그인 성공 :', response.data);
+        alert('로그인에 성공하였습니다.');
         sessionStorage.setItem('isLoggedIn', 'true');
         navigate.push('/');
       }
       else {
-        console.log('로그인 실패 :', response.data);
+        alert('로그인에 실패하였습니다.');
         setShowAlert(true);
       }
     })
     .catch(error => {
-      console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+      alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
       // 로그인 실패하면 팝업 표시할 것
       
     });

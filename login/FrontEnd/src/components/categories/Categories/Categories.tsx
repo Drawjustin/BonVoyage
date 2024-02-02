@@ -3,7 +3,8 @@ import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import { GiWindmill } from 'react-icons/gi'
 import { TbBeach } from 'react-icons/tb'
-import CategoryBox from './CategoryBox'
+import CategoryBox from '../CategoryBox/CategoryBox'
+import styles from './Categories.module.scss'
 
 export const categories = [
     {
@@ -25,7 +26,7 @@ const Categories = () => {
     const category = params?.get('category');
     
   return (
-    <div className = 'flex flex-row items-center justify-between pt-4 overflow-x-auto'>
+    <div className = {styles.box}>
         {categories.map((item) => (
             <CategoryBox
                 key={item.label}
