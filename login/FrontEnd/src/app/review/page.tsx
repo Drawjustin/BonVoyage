@@ -20,7 +20,7 @@ const CAROUSEL_IMAGES = [
   'https://media.architecturaldigest.com/photos/6080a73d795a7b010f3dd2e0/2:1/w_2700,h_1350,c_limit/GettyImages-1213929929.jpg',
 ]
 
-export default async function Home({searchParams}: any) {
+export default async function Review({searchParams}: any) {
   
   // const page = searchParams?.page;
   // const pageNum = typeof page === 'string' ? Number(page) : 1;

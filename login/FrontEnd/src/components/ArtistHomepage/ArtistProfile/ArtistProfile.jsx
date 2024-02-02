@@ -46,7 +46,7 @@ const Profile = () => {
           className={styles.profile_img} />
         <div className={styles.profile_info}>
           <div className={styles.name}>
-            <div>작가 박슦껄</div>
+            <div style={{ paddingTop: '20px' }}>작가 박슦껄</div>
           </div>
           <Divider className={styles.devider}/>
           <div className={styles.info}>

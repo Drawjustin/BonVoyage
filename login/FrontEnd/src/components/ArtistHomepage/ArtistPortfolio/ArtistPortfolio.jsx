@@ -17,23 +17,23 @@ const ArtistPortfolio = () => {
   // const timelineItems = [
   const [timelineItems, setTimelineItems] = useState([
     {
-      color: '#8FCACA',
+      color: '#171de5',
       children: '2018 “코리안 팝아트”, 하남문화예술회관, 경기',
     },
     {
-      color: '#8FCACA',
+      color: '#171de5',
       children: '2017 “Soul of City” 특별전, UIA 2017 Seoul World Architects Congress, COEX Hall D, 서울',
     },
     {
-      color: '#8FCACA',
+      color: '#171de5',
       children: '2017 “미디어아트 인 울산 -과학과 예술의 융합”, 울산문화예술회관, 울산',
     },
     {
-      color: '#8FCACA',
+      color: '#171de5',
       children: '2016 “내 안의 또 다른 나”, 가일미술관, 경기',
     },
     {
-      color: '#8FCACA',
+      color: '#171de5',
       children: '2015 “사이공간”, 스페이스 비엠, 서울',
     },
   ]);
