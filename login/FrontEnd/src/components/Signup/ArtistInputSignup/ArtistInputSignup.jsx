@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // import {router} from 'react-router-dom';
 import axios from 'axios';
 import styles from './ArtistInputSignup.module.scss';
+import { useRouter } from 'next/navigation';
 
 const ArtistInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -12,8 +13,11 @@ const ArtistInputSignup = () => {
     const [penname, setPenname] = useState('');
     const [portfolio, setPortfolio] = useState("포트폴리오");
     const [email, setEmail] = useState('');
+    const [phonenum, setPhonenum] = useState('');
 
     const [errors, setErrors] = useState({});
+
+    const navigate = useRouter();
 
     // 파일 첨부
     function changeImgText(event) { 
@@ -92,29 +96,50 @@ const ArtistInputSignup = () => {
         return;
       }
       
-      const formData = new FormData();
-      formData.append("email", email);
-      formData.append("password", password);
-      formData.append("confirmPassword", confirmPassword);
-      formData.append("username", username);
-      formData.append("userid", userid);
-      formData.append("file", portfolio);
-      formData.append("penname", penname);
+      // const formData = new FormData();
+      // formData.append("email", email);
+      // formData.append("password", password);
+      // formData.append("confirmPassword", confirmPassword);
+      // formData.append("username", username);
+      // formData.append("userid", userid);
+      // formData.append("file", portfolio);
+      // formData.append("penname", penname);
+      
+      const data = {
+       "artistName": username,
+       "artistId": userid,
+       "artistPwd": password,
+      //  "chekedpw": confirmPassword,
+       "artistNickname": penname,
+       "artistEmail": email,
+       "artistContact": phonenum,
+       "artistPoint": 0,
+       "artistHistory": "할수 있어",
+       "artistIsDeleted" : false,
+       "artistCreatedDate" : '2024-01-29T04:54:33'
+      }
 
+      
 
       try {
-        const response = await axios.
-          post("url", formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
+        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
+          headers: {
+            'Content-Type': 'application/json;  charset=UTF-8',
+          },
+        });
 
         console.log(response.data);
-        
+        navigate.push('/');
       } catch (error) {
         console.error(error);
       }
+
+
+
+      // const formData = new FormData();
+      // formData.append("data", new Blob([JSON.stringify(data)], {
+      //   type: "application/json"
+      // }));
     };
 
     return (
@@ -189,7 +214,10 @@ const ArtistInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'/>
+                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    value={phonenum} onChange={(e) => {
+                      setPhonenum(e.target.value);
+                  }}/>
                         <button className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>

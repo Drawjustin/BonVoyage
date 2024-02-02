@@ -1,9 +1,10 @@
 'use client'
 import { styled } from '@mui/system';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+// import getCurrentUser from '@/app/actions/getCurrentUser';
+import { signOut, useSession } from 'next-auth/react';
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import { signOut } from 'next-auth/react';
 // import Link from 'next/link';
 
 const Container = styled('nav')({
@@ -54,25 +55,32 @@ const Underline = styled('ul')({
 
 interface buttonHandlerProps {}
 
-
-
 export const ButtonContainer = ({}: buttonHandlerProps) => {
-  
-  const currentUser = getCurrentUser();
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+    setIsLoggedIn(storedIsLoggedIn === 'true');
+  }, [])
+
+
   let buttonList = [
     {text: '경매', func: () => navigate.push('/AuctionLivePage')},
     {text: '리뷰', func: () => navigate.push('/review')},
     {text: '작가', func: () => navigate.push('/ArtistHomePage')},
 ];
-  if (!currentUser) {
+  if (!isLoggedIn) {
     buttonList.push(
       { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
     );
   } else {
     buttonList.push(
-      { text: '로그아웃', func: () => signOut() },
+      { text: '장바구니', func: () => navigate.push('/CartPage') },
       { text: '마이페이지', func: () => navigate.push('/MyPage') },
+      { text: '로그아웃', func: () => sessionStorage.setItem('isLoggedIn', 'false') },
     );
   }
   
