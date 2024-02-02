@@ -64,7 +64,7 @@ public class ArtistServiceTest {
         Artist chArtist = artistService.createArtist(artist);
 
         //then
-        assertEquals(chArtist, artistRepository.findArtistByName(chArtist.getArtistId()));
+        assertEquals(chArtist, artistRepository.findArtistById(chArtist.getArtistId()));
     }
 
     @Test

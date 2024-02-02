@@ -31,7 +31,7 @@ public class ItemServiceTest {
         Item item = new Item();
 
 //        item.setItemSeq(123);
-        item.setArtistSeq(123);
+//        item.setArtistSeq(123);
         item.setItemName("별이 빛나는 밤");
         item.setItemWidth(123);
         item.setItemHeight(123);

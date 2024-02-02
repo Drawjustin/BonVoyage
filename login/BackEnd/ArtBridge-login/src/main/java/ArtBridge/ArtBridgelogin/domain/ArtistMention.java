@@ -31,11 +31,9 @@ public class ArtistMention {
     @Column(name = "arist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
-    // One-to-Many relationship with ArtistMentionComment
     @OneToMany(mappedBy = "artistMention")
     private List<ArtistMentionComment> artistMentionComments;
 
-    // Many-to-One relationship with Artist
     @ManyToOne
     @JoinColumn(name = "artist_seq")
     private Artist artist;

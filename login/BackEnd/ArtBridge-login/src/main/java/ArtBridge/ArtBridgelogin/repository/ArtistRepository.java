@@ -1,6 +1,9 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.QArtist;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
@@ -15,6 +18,13 @@ import java.util.List;
 public class ArtistRepository {
 
     private final EntityManager em;
+    private QArtist qArtist = QArtist.artist;
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(em);
+    }
 
     @Transactional
     public Artist create(Artist artist) {
@@ -23,36 +33,35 @@ public class ArtistRepository {
     }
 
     @Transactional(readOnly = true)
-    public Artist findArtistByName(String artistId) {
-        String jpql = "SELECT a FROM Artist a WHERE a.artistId = :artistId";
-        TypedQuery<Artist> query = em.createQuery(jpql, Artist.class);
-        query.setParameter("artistId", artistId);
-
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null; // 해당 조건에 맞는 결과가 없을 경우
-        }
+    public Artist findArtistById(String artistId) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistId.eq(artistId))
+                .fetchOne();
     }
 
     @Transactional(readOnly = true)
-    public List<Artist> findAll(){
-        return em.createQuery("select m from Artist m", Artist.class)
-                .getResultList();
+    public List<Artist> findAll() {
+        return queryFactory
+                .selectFrom(qArtist)
+                .fetchAll()
+                .stream().toList();
     }
 
     @Transactional(readOnly = true)
-    public List<Artist> findByName(String name){
-        return em.createQuery("select m from Artist m where m.artistName = :name", Artist.class)
-                .setParameter("name", name)
-                .getResultList();
+    public Artist findByName(String name) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistName.eq(name))
+                .fetchOne();
     }
 
     @Transactional
     public void deleteById(String id) {
-        em.createQuery("DELETE FROM Artist m WHERE m.artistId = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+        queryFactory
+                .delete(qArtist)
+                .where(qArtist.artistId.eq(id))
+                .execute();
     }
 
 }

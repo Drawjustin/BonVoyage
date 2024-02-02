@@ -64,11 +64,9 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<ArtistHomepageComment> artistHomepageComments;
 
-    // One-to-Many relationship with OrderDetail
     @OneToMany(mappedBy = "artist")
     private List<OrderDetail> orderDetails;
 
-    // One-to-Many relationship with Item
     @OneToMany(mappedBy = "artist")
     private List<Item> items;
 }

@@ -56,19 +56,15 @@ public class Auction implements Serializable {
     @JoinColumn(name = "item_seq")
     private Item item;
 
-    // One-to-Many relationship with OrderDetail
     @OneToMany(mappedBy = "auction")
     private List<OrderDetail> orderDetails;
 
-    // One-to-Many relationship with AuctionLike
     @OneToMany(mappedBy = "auction")
     private List<AuctionLike> auctionLikes;
 
-    // One-to-Many relationship with MemberAuctionBidding
     @OneToMany(mappedBy = "auction")
     private List<MemberAuctionBidding> memberAuctionBiddings;
 
-    // One-to-Many relationship with AuctionPointDetail
     @OneToMany(mappedBy = "auction")
     private List<AuctionPointDetail> auctionPointDetails;
 }

@@ -28,12 +28,10 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_deleted_date")
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
-    // Many-to-One relationship with Artist
     @ManyToOne
     @JoinColumn(name = "artist_seq")
     private Artist artist;
 
-    // Many-to-One relationship with Member
     @ManyToOne
     @JoinColumn(name = "member_seq")
     private Member member;

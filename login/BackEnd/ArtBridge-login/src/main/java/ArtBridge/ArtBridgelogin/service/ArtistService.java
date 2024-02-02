@@ -28,20 +28,23 @@ public class ArtistService {
 
     @Transactional(readOnly = true)
     public Artist findOne(String id) {
-        return artistRepository.findArtistByName(id);
+        return artistRepository.findArtistById(id);
     }
 
     @Transactional
     public Artist createArtist(Artist artist) {
+        if (artistRepository.findArtistById(artist.getArtistId()) != null) {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        }
         return artistRepository.create(artist);
     }
 
-    @PostMapping("/login")
+    //@PostMapping("/login")
     @Transactional
     public ResponseEntity<?> login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
         // 로그인 처리 로직
 
-        Artist foundArtist = artistRepository.findArtistByName(userId);
+        Artist foundArtist = artistRepository.findArtistById(userId);
 
         if (foundArtist != null && foundArtist.getArtistPwd().equals(password)) {
             // 로그인 성공 시 Member 정보와 함께 응답
@@ -54,7 +57,7 @@ public class ArtistService {
 
     @Transactional
     public Artist updateArtist(String id, Artist updatedArtist) {
-        Artist existingArtist = artistRepository.findArtistByName(id);
+        Artist existingArtist = artistRepository.findArtistById(id);
 
         if (existingArtist != null) {
             // 업데이트할 정보를 새로운 정보로 설정
