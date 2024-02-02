@@ -1,14 +1,10 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -16,8 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemService {
 
-    @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional(readOnly = true)
     public List<Item> getAllItems() {
@@ -25,37 +20,32 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public Item getItemByName(String name) {
-        return itemRepository.findByName(name);
-    }
-
-    @Transactional(readOnly = true)
-    public Item getItemByID(int id) {
-        return itemRepository.findById(id);
+    public Item getItemBySeq(int seq) {
+        return itemRepository.findBySeq(seq);
     }
 
     @Transactional
     public Item createItem(Item item) {
         return itemRepository.create(item);
     }
+
     @Transactional
     public Item updateItem(int itemSeq, Item updatedItem) {
-        Item existingItem = itemRepository.findById(itemSeq);
+        Item existingItem = itemRepository.findBySeq(itemSeq);
 
         if (existingItem != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
+            // Update fields directly
             existingItem.setItemName(updatedItem.getItemName());
             existingItem.setItemHeight(updatedItem.getItemHeight());
             existingItem.setItemWidth(updatedItem.getItemWidth());
-            //existingItem.setItemLike(updatedItem.setItemLike());
             existingItem.setItemIsSold(updatedItem.isItemIsSold());
             existingItem.setItemSellPrice(updatedItem.getItemSellPrice());
 
-            // 저장
-            itemRepository.create(existingItem);
+            // No need to create a new item, just return the updated item
             return existingItem;
         } else {
-            // 예외 처리 또는 적절한 로직 추가
+            // Handle the case where the item with given id doesn't exist
+            // You might throw an exception or return null, depending on your design
             return null;
         }
     }
@@ -70,12 +60,11 @@ public class ItemService {
     }
 
     public List<Item> getNewItems() {
-        return itemRepository.findNewItems();
+        return itemRepository.findLastedItems();
     }
 
-    //TODO: artist_seq 조인 해결 이후
+    //TODO: Implement this method after resolving artist_seq join
 //    public List<Item> getItemsBySameAuthor(String authorId) {
-//
-//        return itemRepository.findSameAuthorItems();
+//        return itemRepository.findSameAuthorItems(authorId);
 //    }
 }
