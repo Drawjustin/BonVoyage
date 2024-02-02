@@ -50,7 +50,7 @@ public class ArtistMentionService {
     }
 
     @Transactional
-    public void deleteArtistMention(Long id) {
-        artistMentionRepository.deleteById(id);
+    public void deleteArtistMention(Long mentionSeq) {
+        artistMentionRepository.deleteBySeq(mentionSeq);
     }
 }

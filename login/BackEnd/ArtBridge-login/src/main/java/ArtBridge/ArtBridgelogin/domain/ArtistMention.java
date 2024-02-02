@@ -19,16 +19,16 @@ public class ArtistMention {
     @Column(name = "artist_mention_content", nullable = false)
     private String artistMentionContent;
 
-    @Column(name = "artist_metion_subject", nullable = false)
+    @Column(name = "artist_mention_subject", nullable = false)
     private String artistMentionSubject;
 
-    @Column(name = "artis_mention_created_date")
+    @Column(name = "artist_mention_created_date")
     private LocalDateTime artistMentionCreatedDate;
 
     @Column(name = "artist_mention_isremoved")
     private boolean artistMentionIsremoved;
 
-    @Column(name = "arist_mention_deleted_date")
+    @Column(name = "artist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
     @OneToMany(mappedBy = "artistMention")

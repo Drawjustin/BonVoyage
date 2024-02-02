@@ -14,7 +14,7 @@ import java.util.List;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "item_seq", nullable = false)
+    @Column(name = "item_seq", nullable = false, insertable = false, updatable = false)
     private int itemSeq;
 
     @Column(name = "item_name", nullable = false, length = 100)
