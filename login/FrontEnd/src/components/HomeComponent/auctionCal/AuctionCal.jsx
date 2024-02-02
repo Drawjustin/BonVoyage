@@ -5,9 +5,12 @@ import styles from '../mainpage3.module.scss'
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment';
+import { useRouter } from 'next/navigation';
 // import { Link } from 'react-router-dom';
 
 const AuctionCal = () => {
+  const navigate = useRouter();
+
   const [value, onChange] = useState(new Date());
 
   const generateDateContent = (date) => {
@@ -55,9 +58,7 @@ const AuctionCal = () => {
                       <p>진짜아니야</p>
                       <p>2월 5일 18:00</p> 
                     </div>
-                    {/* <Link to="/auctionlive"> */}
-                      <button className={styles.auction_btn}>참여</button>
-                    {/* </Link> */}
+                      <button className={styles.auction_btn} onClick={() => navigate.push('/AuctionLivePage')}>참여</button>
                   </div>
                 </div>
               </div>
@@ -74,7 +75,7 @@ const AuctionCal = () => {
                       <p>포스터</p>
                       <p>2월 20일 18:00</p> 
                     </div>
-                    <button className={styles.auction_btn}>참여</button>
+                    <button className={styles.auction_btn} onClick={() => navigate.push('/AuctionLivePage')}>참여</button>
                   </div>
                 </div>
               </div>

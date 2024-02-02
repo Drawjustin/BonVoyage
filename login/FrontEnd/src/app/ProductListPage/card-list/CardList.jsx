@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux'
 import { fetchProducts } from '../../../store/products/products.slice';
-import CardSkeleton from '../card-skeleton/CardSkeleton';
 import CardItem from './card-item/CardItem';
 import styles from './CardList.module.scss';
 const CardList = () => {
@@ -16,7 +15,7 @@ const CardList = () => {
     }, [category])
 
 
-    if (isLoading) return <CardSkeleton />;
+    if (isLoading) return <h1>Loading..</h1>
 
     return (
         <ul className={styles.card_list}>
