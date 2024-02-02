@@ -22,7 +22,7 @@ const FRICTION_DISTANCE = 42;
 const Background = dynamic(() => import("./Background"), { ssr: false });
 const Ship = dynamic(() => import("./Ship"), { ssr: false });
 const Cloud = dynamic(() => import("./Cloud"), { ssr: false });
-const TextSection = dynamic(() => import("./TextSection"), { ssr: false });
+// const TextSection = dynamic(() => import("./TextSection"), { ssr: false });
 
 const Experience = () => {
   const curvePoints = useMemo(
@@ -46,49 +46,49 @@ const Experience = () => {
     return new THREE.CatmullRomCurve3(curvePoints, false, "catmullrom", 0.5);
   }, []);
 
-  const textSections = useMemo(() => {
-    return [
-      {
-      cameraRailDist: -1,
-      position: new Vector3(
-        curvePoints[1].x - 3,
-        curvePoints[1].y,
-        curvePoints[1].z
-      ),
-      subtitle: `Bon Voyage`
-    },
-    {
-      cameraRailDist: 1.5,
-      position: new Vector3(
-        curvePoints[2].x + 2,
-        curvePoints[2].y,
-        curvePoints[2].z
-      ),
-      title: "메인 페이지1",
-      subtitle: `메인 페이지1`,
-    },
-    {
-      cameraRailDist: -1,
-      position: new Vector3(
-        curvePoints[3].x - 3,
-        curvePoints[3].y,
-        curvePoints[3].z
-      ),
-      title: "메인 페이지2",
-      subtitle: `메인 페이지2`,
-    },
-    {
-      cameraRailDist: 1.5,
-      position: new Vector3(
-        curvePoints[4].x + 3.5,
-        curvePoints[4].y,
-        curvePoints[4].z - 12
-      ),
-      title: "메인 페이지3",
-      subtitle: `메인 페이지3`,
-    },
-    ];
-  }, []);
+  // const textSections = useMemo(() => {
+  //   return [
+  //     {
+  //     cameraRailDist: -1,
+  //     position: new Vector3(
+  //       curvePoints[1].x - 3,
+  //       curvePoints[1].y,
+  //       curvePoints[1].z
+  //     ),
+  //     subtitle: `Bon Voyage`
+  //   },
+  //   {
+  //     cameraRailDist: 1.5,
+  //     position: new Vector3(
+  //       curvePoints[2].x + 2,
+  //       curvePoints[2].y,
+  //       curvePoints[2].z
+  //     ),
+  //     title: "main~1",
+  //     subtitle: `It's main!`,
+  //   },
+  //   {
+  //     cameraRailDist: -1,
+  //     position: new Vector3(
+  //       curvePoints[3].x - 3,
+  //       curvePoints[3].y,
+  //       curvePoints[3].z
+  //     ),
+  //     title: "main~1",
+  //     subtitle: `It's main!`,
+  //   },
+  //   {
+  //     cameraRailDist: 1.5,
+  //     position: new Vector3(
+  //       curvePoints[4].x + 3.5,
+  //       curvePoints[4].y,
+  //       curvePoints[4].z - 12
+  //     ),
+  //     title: "main~1",
+  //     subtitle: `It's main!`,
+  //   },
+  //   ];
+  // }, []);
 
   const clouds = useMemo(
     () => [
@@ -322,62 +322,62 @@ const Experience = () => {
 
     const scrollOffset =  Math.max(0, scroll.offset);
 
-    let friction = 1;
-    let resetCameraRail = true;
+    // let friction = 1;
+    // let resetCameraRail = true;
 
-    textSections.forEach((textSection) => {
-      const distance = textSection.position.distanceTo(
-        cameraGroup.current.position
-      );
+    // textSections.forEach((textSection) => {
+    //   const distance = textSection.position.distanceTo(
+    //     cameraGroup.current.position
+    //   );
 
-      if (distance < FRICTION_DISTANCE) {
-        friction = Math.max(distance / FRICTION_DISTANCE, 0.1);
-        const targetCameraQuaternion = new Vector3(
-          (1 - distance / FRICTION_DISTANCE) * textSection.cameraRailDist,
-          0,
-          0,
-        );
-        cameraRail.current.position.lerp(targetCameraQuaternion, delta);
-        resetCameraRail = false;
-      }
-    });
-    if (resetCameraRail) {
-      const targetCameraRailPosition = new Vector3(0, 0, 0);
-      cameraRail.current.position.lerp(targetCameraRailPosition, delta);
-    }
+    //   if (distance < FRICTION_DISTANCE) {
+    //     friction = Math.max(distance / FRICTION_DISTANCE, 0.1);
+    //     const targetCameraQuaternion = new Vector3(
+    //       (1 - distance / FRICTION_DISTANCE) * textSection.cameraRailDist,
+    //       0,
+    //       0,
+    //     );
+    //     cameraRail.current.position.lerp(targetCameraQuaternion, delta);
+    //     resetCameraRail = false;
+    //   }
+    // });
+    // if (resetCameraRail) {
+    //   const targetCameraRailPosition = new Vector3(0, 0, 0);
+    //   cameraRail.current.position.lerp(targetCameraRailPosition, delta);
+    // }
 
-    let lerpedScrollOffset = THREE.MathUtils.lerp(
-      lastScroll.current,
-      scrollOffset, 
-      delta*friction
-    );
+    // let lerpedScrollOffset = THREE.MathUtils.lerp(
+    //   lastScroll.current,
+    //   scrollOffset, 
+    //   delta*friction
+    // );
 
-    lerpedScrollOffset = Math.min(lerpedScrollOffset, 1);
-    lerpedScrollOffset = Math.max(lerpedScrollOffset, 0);
+    // lerpedScrollOffset = Math.min(lerpedScrollOffset, 1);
+    // lerpedScrollOffset = Math.max(lerpedScrollOffset, 0);
 
-    lastScroll.current = lerpedScrollOffset;
-    tl.current.seek(lerpedScrollOffset * tl.current.duration());
+    // lastScroll.current = lerpedScrollOffset;
+    // tl.current.seek(lerpedScrollOffset * tl.current.duration());
 
-    const curPoint = curve.getPoint(scrollOffset);
+    // const curPoint = curve.getPoint(scrollOffset);
 
-    cameraGroup.current.position.lerp(curPoint, delta * 24);
+    // cameraGroup.current.position.lerp(curPoint, delta * 24);
 
-    const lookAtPoint = curve.getPoint(
-      Math.min(scrollOffset + CURVE_AHEAD_CAMERA, 1)
-    );
+    // const lookAtPoint = curve.getPoint(
+    //   Math.min(scrollOffset + CURVE_AHEAD_CAMERA, 1)
+    // );
 
-    const currentLookAt = cameraGroup.current.getWorldDirection(
-      new THREE.Vector3()
-    );
+    // const currentLookAt = cameraGroup.current.getWorldDirection(
+    //   new THREE.Vector3()
+    // );
 
-    const targetLookAt = new THREE.Vector3()
-      .subVectors(curPoint, lookAtPoint)
-      .normalize();
+    // const targetLookAt = new THREE.Vector3()
+    //   .subVectors(curPoint, lookAtPoint)
+    //   .normalize();
 
-    const lookAt = currentLookAt.lerp(targetLookAt, delta * 24);
-    cameraGroup.current.lookAt(
-      cameraGroup.current.position.clone().add(lookAt)
-    );
+    // const lookAt = currentLookAt.lerp(targetLookAt, delta * 24);
+    // cameraGroup.current.lookAt(
+    //   cameraGroup.current.position.clone().add(lookAt)
+    // );
 
     // Airplane rotation
 
@@ -523,9 +523,44 @@ const Experience = () => {
       </group>
 
       {/* TEXT */}
-      {textSections.map((textSection, index) => (
+      {/* <{textSections.map((textSection, index) => (
           <TextSection {...textSection} key={index} />
-      ))}
+      ))}> */}
+      <group position={[-3, 0, -100]}>
+        <Text
+          color="white"
+          anchorX={"left"}
+          anchorY="middle"
+          fontSize={0.22}
+          maxWidth={2.5}
+        >
+          Welcome to Wawatmos!{"\n"}
+          Have a seat and enjoy the ride!
+        </Text>
+      </group>
+
+      <group position={[-10, 1, -200]}>
+        <Text
+          color="white"
+          anchorX={"left"}
+          anchorY="center"
+          fontSize={0.52}
+          maxWidth={2.5}
+        >
+          Services
+        </Text>
+        <Text
+          color="white"
+          anchorX={"left"}
+          anchorY="top"
+          position-y={-0.66}
+          fontSize={0.22}
+          maxWidth={2.5}
+        >
+          Do you want a drink?{"\n"}
+          We have a wide range of beverages!
+        </Text>
+      </group>
 
       {/* LINE */}
       <group position-y={-2}>

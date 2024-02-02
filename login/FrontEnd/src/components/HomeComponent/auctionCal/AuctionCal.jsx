@@ -1,4 +1,5 @@
 'use client'
+
 import React, { useState } from 'react'
 import styles from '../mainpage3.module.scss'
 import { Calendar } from 'react-calendar';
@@ -21,10 +22,11 @@ const AuctionCal = () => {
   };
 
   return (
-      <div>
+      <div><h1 style={{ fontSize: '30px', fontWeight: 'bold', textAlign: 'left', color: 'white' }}>경매 일정</h1>
         {/* <Nav /> */}
         <div className={styles.container}>
         <div className={styles.schedule}>
+          
           <div>
             <Calendar
               onChange={onChange}
@@ -49,9 +51,9 @@ const AuctionCal = () => {
                   </div>
                   <div className={styles.product_e}>
                     <div className={styles.product_info}>
-                      <p>작가 ㅇㅇㅇ</p>
-                      <p>상품명</p>
-                      <p>1월 24일 18:00</p> 
+                      <p>작가 이바보야</p>
+                      <p>진짜아니야</p>
+                      <p>2월 5일 18:00</p> 
                     </div>
                     {/* <Link to="/auctionlive"> */}
                       <button className={styles.auction_btn}>참여</button>
@@ -68,9 +70,9 @@ const AuctionCal = () => {
                   </div>
                   <div className={styles.product_e}>
                     <div className={styles.product_info}>
-                      <p>작가 ㅇㅇㅇ</p>
-                      <p>상품명</p>
-                      <p>1월 24일 18:00</p> 
+                      <p>작가 김싸피</p>
+                      <p>포스터</p>
+                      <p>2월 20일 18:00</p> 
                     </div>
                     <button className={styles.auction_btn}>참여</button>
                   </div>

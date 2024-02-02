@@ -22,8 +22,8 @@ const CAROUSEL_IMAGES = [
 
 export default async function Home({searchParams}: any) {
   
-  //const page = searchParams?.page;
-  //const pageNum = typeof page === 'string' ? Number(page) : 1;
+  // const page = searchParams?.page;
+  // const pageNum = typeof page === 'string' ? Number(page) : 1;
 
 
   // const reviews = await getReviews(searchParams)
@@ -51,9 +51,9 @@ export default async function Home({searchParams}: any) {
           </div>
         </>
       } */}
-      {/* <div className={styles.Pagination}>
-      <Pagination page={pageNum} totalItems={reviews.totalItems} />
-      </div> */}
+      <div className={styles.Pagination}>
+      {/* <Pagination page={pageNum} totalItems={reviews.totalItems} /> */}
+      </div>
       
       {/* <FloatingButton
       href="/review/upload">

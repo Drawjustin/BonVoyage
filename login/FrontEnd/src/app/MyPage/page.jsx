@@ -99,7 +99,7 @@ const MyPage = () => {
         <div>
         <Navbar />
         <div className={styles.my_page}>
-        <h2 style={{textAlign: 'left'}}>마이 페이지</h2>
+        <h2 style={{textAlign: 'left', color: 'white' }}>마이 페이지</h2>
             <div className={styles.profile_container}>
                 <div className={styles.profile_picture_container} onClick={() => document.getElementById('fileInput').click()}>
                     <div className={styles.profile_picture} style={{ backgroundImage: `url(${profilePicture})` }}>

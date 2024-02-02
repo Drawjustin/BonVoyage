@@ -13,7 +13,7 @@ const TextSection = ({ title, subtitle, ...props }) => {
           fontSize={0.52}
           maxWidth={2.5}
           lineHeight={1}
-          font={"./fonts/NotoSansKR-Bold.ttf"}
+          // font={"./fonts/NotoSansKR-Bold.ttf"}
         >
           {title}
           <meshStandardMaterial
@@ -29,7 +29,7 @@ const TextSection = ({ title, subtitle, ...props }) => {
         anchorY="top"
         fontSize={0.2}
         maxWidth={2.5}
-        font={"./fonts/NotoSansKR-Regular.ttf"}
+        // font={"./fonts/NotoSansKR-Regular.ttf"}
       >
         {subtitle}
         <meshStandardMaterial

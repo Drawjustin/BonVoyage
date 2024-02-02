@@ -41,7 +41,7 @@ const Profile = () => {
             name='profile_img'
             onChange={onChange}
             ref={fileInput}/>
-        <img src={Image} 
+        <img src={Image}
           onClick={()=>{fileInput.current.click()}} 
           className={styles.profile_img} />
         <div className={styles.profile_info}>
