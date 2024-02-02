@@ -19,7 +19,6 @@ RUN npm install @emotion/styled
 # Copy the local source files to the working directory
 COPY . .
 RUN rm -rf /etc/nginx/conf.d
-COPY ./nginx.conf /etc/nginx/nginx.conf
 # Build the React app
 RUN npx next build
 
@@ -28,7 +27,7 @@ FROM nginx:latest
 
 # Copy the custom nginx.conf file to the nginx configuration directory
 
-
+COPY default.conf /etc/nginx/conf.d/default.conf
 # Copy the build output from the build environment to the nginx directory
 COPY --from=build /out /usr/share/nginx/html
 
