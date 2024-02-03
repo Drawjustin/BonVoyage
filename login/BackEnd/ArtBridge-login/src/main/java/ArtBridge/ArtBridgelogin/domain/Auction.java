@@ -51,7 +51,6 @@ public class Auction implements Serializable {
     @Column(name = "auction_win_date")
     private LocalDateTime auctionWinDate;
 
-    // Many-to-One relationship with Item
     @ManyToOne
     @JoinColumn(name = "item_seq")
     private Item item;

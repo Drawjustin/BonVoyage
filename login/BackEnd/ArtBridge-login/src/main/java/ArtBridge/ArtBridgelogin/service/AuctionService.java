@@ -20,8 +20,8 @@ public class AuctionService {
     }
 
     @Transactional(readOnly = true)
-    public Auction findOne(Long id) {
-        return auctionRepository.findOne(id);
+    public Auction findOne(int seq) {
+        return auctionRepository.findOne(seq);
     }
 
     @Transactional
@@ -30,24 +30,25 @@ public class AuctionService {
     }
 
     @Transactional
-    public Auction updateAuction(Long id, Auction updatedAuction) {
-        Auction existingAuction = auctionRepository.findOne(id);
+    public Auction updateAuction(int seq, Auction updatedAuction) {
+        Auction existingAuction = auctionRepository.findOne(seq);
 
         if (existingAuction != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
-//            existingAuction.setAuctionContent(updatedAuction.getAuctionContent());
-//            existingAuction.setAuctionSubject(updatedAuction.getAuctionSubject());
-            // 저장
-            auctionRepository.create(existingAuction);
+            existingAuction.setAuctionScheduledTime(updatedAuction.getAuctionScheduledTime());
+            existingAuction.setAuctionStatus(updatedAuction.getAuctionStatus());
+            existingAuction.setAuctionStartPoint(updatedAuction.getAuctionStartPoint());
+            existingAuction.setAuctionAskPoint(updatedAuction.getAuctionAskPoint());
+            existingAuction.setAuctionSellPoint(updatedAuction.getAuctionSellPoint());
+            auctionRepository.updateAuction(existingAuction);
             return existingAuction;
         } else {
-            // 예외 처리 또는 적절한 로직 추가
             return null;
         }
     }
 
+
     @Transactional
-    public void deleteAuction(Long id) {
-        auctionRepository.deleteById(id);
+    public void deleteAuction(int seq) {
+        auctionRepository.deleteById(seq);
     }
 }

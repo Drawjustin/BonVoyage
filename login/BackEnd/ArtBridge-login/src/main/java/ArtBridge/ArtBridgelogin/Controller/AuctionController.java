@@ -21,7 +21,7 @@ public class AuctionController {
     public List<Auction> getAlLAuction() {return auctionService.getAllAuction();}
 
     @GetMapping("/{id}")
-    public Auction AuctionById(@PathVariable Long id) {return auctionService.findOne(id);}
+    public Auction findAuctionById(@PathVariable int seq) {return auctionService.findOne(seq);}
 
     @PostMapping("/new")
     public Auction createAuction(@RequestBody Auction Auction) {
@@ -29,12 +29,12 @@ public class AuctionController {
     }
 
     @PutMapping("/{id}")
-    public Auction updateAuction(@PathVariable Long id, @RequestBody Auction updatedAuction) {
-        return auctionService.updateAuction(id, updatedAuction);
+    public Auction updateAuction(@PathVariable int seq, @RequestBody Auction updatedAuction) {
+        return auctionService.updateAuction(seq, updatedAuction);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAuction(@PathVariable Long id) {
-        auctionService.deleteAuction(id);
+    public void deleteAuction(@PathVariable int seq) {
+        auctionService.deleteAuction(seq);
     }
 }
