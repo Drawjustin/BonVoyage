@@ -122,7 +122,7 @@ const ArtistInputSignup = () => {
       
 
       try {
-        const response = await axios.post('http://43.200.244.3:8001/artists/new', data, {
+        const response = await axios.post('http://i10a207.p.ssafy.io:80/api/artists/new', data, {
           headers: {
             'Content-Type': 'application/json;  charset=UTF-8',
           },

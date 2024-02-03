@@ -29,7 +29,7 @@ const LoginPage = () => {
 
           console.log(username, password);
       
-          const backendUrl = "http://43.200.244.3:8001";
+          const backendUrl = "http://i10a207.p.ssafy.io:80/api";
 
           //     // axios 요청 넣어봄
     if (isArtist) {
