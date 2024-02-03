@@ -28,7 +28,7 @@ const InputLogin = () => {
       Password: password
     }
     // 로그인 처리 로직 추가
-    const backendUrl = 'http://43.200.244.3:8001'
+    const backendUrl = 'https://i10a207.p.ssafy.io:80/api'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     try {

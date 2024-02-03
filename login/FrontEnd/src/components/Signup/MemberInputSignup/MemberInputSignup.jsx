@@ -14,7 +14,7 @@ const MemberInputSignup = () => {
     const [phonenum, setPhoneNumber] = useState('');
     const [errors, setErrors] = useState({});
 
-    const backendUrl = 'http://43.200.244.3:8001'
+    const backendUrl = 'https://i10a207.p.ssafy.io:80/api'
 
     const navigate = useRouter();
 
