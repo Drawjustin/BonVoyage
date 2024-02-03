@@ -25,7 +25,7 @@ export const authOptions : NextAuthOptions = {
             console.log('error');
             return null;
           }
-          const backendUrl = "http://i10a207.p.ssafy.io:80/api";
+          const backendUrl = "https://i10a207.p.ssafy.io:80/api";
 
           // Artist
           const userResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/artists/login`, credentials, {

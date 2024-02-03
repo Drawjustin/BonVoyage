@@ -15,7 +15,7 @@ export default async function getCurrentUser() {
                 return null;
             }
 
-        const backendUrl = 'http://i10a207.p.ssafy.io:80/api';
+        const backendUrl = 'https://i10a207.p.ssafy.io:80/api';
         const response = await axios.get(`${backendUrl}/artists?artistsId=${session.user}`);
         
         console.log(response);
