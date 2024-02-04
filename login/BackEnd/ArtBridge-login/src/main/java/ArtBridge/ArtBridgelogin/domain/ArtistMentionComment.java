@@ -15,7 +15,7 @@ public class ArtistMentionComment {
     @Column(name = "artist_mention_comment_seq")
     private Long artistMentionCommentSeq;
 
-    @Column(name = "artist_homepage_comment_content")
+    @Column(name = "artist_mention_comment_content")
     private String artistMentionCommentContent;
 
     @Column(name = "artist_mention_comment_isdeleted")

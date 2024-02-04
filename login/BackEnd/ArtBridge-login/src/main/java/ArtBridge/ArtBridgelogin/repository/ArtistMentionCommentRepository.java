@@ -1,6 +1,11 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
+import ArtBridge.ArtBridgelogin.domain.Auction;
+import ArtBridge.ArtBridgelogin.domain.QArtistMention;
+import ArtBridge.ArtBridgelogin.domain.QArtistMentionComment;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -14,25 +19,53 @@ public class ArtistMentionCommentRepository {
 
     private final EntityManager em;
 
+    private QArtistMentionComment qArtistMentionComment = QArtistMentionComment.artistMentionComment;
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(em);
+    }
+
     @Transactional
-    public ArtistMentionComment create(ArtistMentionComment artistMentionComment){
+    public ArtistMentionComment create(ArtistMentionComment artistMentionComment) {
         em.persist(artistMentionComment);
         return artistMentionComment;
     }
 
     @Transactional(readOnly = true)
-    public ArtistMentionComment findOne(Long id){return em.find(ArtistMentionComment.class, id);}
+    public ArtistMentionComment findOne(Long seq) {
+        return queryFactory
+                .selectFrom(qArtistMentionComment)
+                .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
+                .fetchOne();
+    }
 
     @Transactional(readOnly = true)
-    public List<ArtistMentionComment> findAll(){
-        return em.createQuery("select m from ArtistMentionComment m", ArtistMentionComment.class)
-                .getResultList();
+    public List<ArtistMentionComment> findAll() {
+        return queryFactory
+                .selectFrom(qArtistMentionComment)
+                .fetch();
     }
 
     @Transactional
-    public void deleteById(Long id) {
-        em.createQuery("DELETE FROM ArtistMentionComment m WHERE m.artistId = :id")
-                .setParameter("artistId", id)
-                .executeUpdate();
+    public void deleteById(Long seq) {
+        queryFactory
+                .delete(qArtistMentionComment)
+                .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
+                .execute();
+    }
+
+    @Transactional
+    public ArtistMentionComment updateArtistMentionComment(Long seq, ArtistMentionComment updatedComment) {
+        queryFactory
+                .update(qArtistMentionComment)
+                .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
+                .set(qArtistMentionComment.artistMentionCommentContent, updatedComment.getArtistMentionCommentContent())
+                .execute();
+
+        return queryFactory.selectFrom(qArtistMentionComment)
+                .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
+                .fetchOne();
     }
 }
