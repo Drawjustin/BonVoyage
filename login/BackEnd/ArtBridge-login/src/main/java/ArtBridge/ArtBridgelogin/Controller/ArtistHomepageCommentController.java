@@ -19,10 +19,14 @@ public class ArtistHomepageCommentController {
     private ArtistHomepageCommentService artistHomepageCommentService;
 
     @GetMapping
-    public List<ArtistHomepageComment> getAlLArtistHomepageComment() {return artistHomepageCommentService.getAllArtistsHomepageComment();}
+    public List<ArtistHomepageComment> getAlLArtistHomepageComment() {
+        return artistHomepageCommentService.getAllArtistsHomepageComment();
+    }
 
     @GetMapping("/{id}")
-    public ArtistHomepageComment getArtistMentionById(@PathVariable Long id) {return artistHomepageCommentService.findOne(id);}
+    public ArtistHomepageComment getArtistMentionById(@PathVariable Long seq) {
+        return artistHomepageCommentService.findOne(seq);
+    }
 
     @PostMapping("/new")
     public ArtistHomepageComment createArtistHomepageComment(@RequestBody ArtistHomepageComment artistHomepageComment) {
@@ -30,12 +34,12 @@ public class ArtistHomepageCommentController {
     }
 
     @PutMapping("/{id}")
-    public ArtistHomepageComment updateArtistHomepageComment(@PathVariable Long id, @RequestBody ArtistHomepageComment updatedArtistHomepageComment) {
-        return artistHomepageCommentService.updateArtistHomepageComment(id, updatedArtistHomepageComment);
+    public ArtistHomepageComment updateArtistHomepageComment(@PathVariable Long seq, @RequestBody ArtistHomepageComment updatedArtistHomepageComment) {
+        return artistHomepageCommentService.updateArtistHomepageComment(seq, updatedArtistHomepageComment);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtistHomepageComment(@PathVariable Long id) {
-        artistHomepageCommentService.deleteArtistHomepageComment(id);
+    public void deleteArtistHomepageComment(@PathVariable Long seq) {
+        artistHomepageCommentService.deleteArtistHomepageComment(seq);
     }
 }

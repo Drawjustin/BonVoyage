@@ -22,8 +22,8 @@ public class ArtistHomepageCommentService {
     }
 
     @Transactional(readOnly = true)
-    public ArtistHomepageComment findOne(Long id) {
-        return artistHomepageCommentRepository.findOne(id);
+    public ArtistHomepageComment findOne(Long seq) {
+        return artistHomepageCommentRepository.findOne(seq);
     }
 
     @Transactional
@@ -32,24 +32,21 @@ public class ArtistHomepageCommentService {
     }
 
     @Transactional
-    public ArtistHomepageComment updateArtistHomepageComment(Long id, ArtistHomepageComment updatedArtistHomepageComment) {
-        ArtistHomepageComment existingArtistHomepageComment = artistHomepageCommentRepository.findOne(id);
+    public ArtistHomepageComment updateArtistHomepageComment(Long seq, ArtistHomepageComment updatedArtistHomepageComment) {
+        ArtistHomepageComment existingArtistHomepageComment = artistHomepageCommentRepository.findOne(seq);
 
         if (existingArtistHomepageComment != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
             existingArtistHomepageComment.setArtistHompageCommentContent(updatedArtistHomepageComment.getArtistHompageCommentContent());
-            // 저장
-            artistHomepageCommentRepository.create(existingArtistHomepageComment);
+            artistHomepageCommentRepository.updateArtistHomepageComment(seq, existingArtistHomepageComment);
             return existingArtistHomepageComment;
         } else {
-            // 예외 처리 또는 적절한 로직 추가
             return null;
         }
     }
 
     @Transactional
-    public void deleteArtistHomepageComment(Long id) {
-        artistHomepageCommentRepository.deleteById(id);
+    public void deleteArtistHomepageComment(Long seq) {
+        artistHomepageCommentRepository.deleteBySeq(seq);
     }
 
 }
