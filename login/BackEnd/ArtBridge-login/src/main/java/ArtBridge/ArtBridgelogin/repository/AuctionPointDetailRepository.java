@@ -34,17 +34,14 @@ public class AuctionPointDetailRepository {
     }
 
     @Transactional(readOnly = true)
-<<<<<<< HEAD
     public AuctionPointDetail findOne(Long id){return em.find(AuctionPointDetail.class, id);}
  
-=======
     public AuctionPointDetail findOne(int seq){
         return queryFactory.selectFrom(auctionPointDetail)
                 .where(auctionPointDetail.auctionPointDetailSeq.eq(seq))
                 .fetchOne();
     }
 
->>>>>>> ece6102412c50642288b6a4665018a3647f6a951
     @Transactional(readOnly = true)
     public List<AuctionPointDetail> findAll(){
         return queryFactory.selectFrom(auctionPointDetail)
