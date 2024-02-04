@@ -22,8 +22,8 @@ public class AuctionPointDetailService {
     }
 
     @Transactional(readOnly = true)
-    public AuctionPointDetail findOne(Long id) {
-        return auctionPointDetailRepository.findOne(id);
+    public AuctionPointDetail findOne(int seq) {
+        return auctionPointDetailRepository.findOne(seq);
     }
 
     @Transactional
@@ -31,25 +31,13 @@ public class AuctionPointDetailService {
         return auctionPointDetailRepository.create(auctionPointDetail);
     }
 
-    @Transactional
-    public AuctionPointDetail updateAuctionPointDetail(Long id, AuctionPointDetail updatedAuctionPointDetail) {
-        AuctionPointDetail existingAuctionPointDetail = auctionPointDetailRepository.findOne(id);
-
-        if (existingAuctionPointDetail != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
-//            existingAuctionPointDetail.setAuctionPointDetailContent(updatedAuctionPointDetail.getAuctionPointDetailContent());
-//            existingAuctionPointDetail.setAuctionPointDetailSubject(updatedAuctionPointDetail.getAuctionPointDetailSubject());
-            // 저장
-            auctionPointDetailRepository.create(existingAuctionPointDetail);
-            return existingAuctionPointDetail;
+    public void updateWinner(int seq, boolean isWin) {
+        AuctionPointDetail auctionPointDetail = auctionPointDetailRepository.findOne(seq);
+        if (auctionPointDetail != null) {
+            auctionPointDetail.setAuctionPointDetailIsWin(isWin);
+            auctionPointDetailRepository.create(auctionPointDetail);
         } else {
-            // 예외 처리 또는 적절한 로직 추가
-            return null;
+            throw new IllegalArgumentException("해당 seq의 AuctionPointDetail이 존재하지 않습니다.");
         }
-    }
-
-    @Transactional
-    public void deleteAuctionPointDetail(Long id) {
-        auctionPointDetailRepository.deleteById(id);
     }
 }
