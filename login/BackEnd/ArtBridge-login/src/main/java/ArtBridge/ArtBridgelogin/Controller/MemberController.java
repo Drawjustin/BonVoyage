@@ -23,9 +23,10 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public Member getMemberById(@PathVariable Long id) {
-        return memberService.findOne(id);
+    public ResponseEntity<?> getMemberById(@PathVariable String id) {
+        return memberService.findMemberId(id);
     }
+
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody MemberLoginForm memberLoginForm) {return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
