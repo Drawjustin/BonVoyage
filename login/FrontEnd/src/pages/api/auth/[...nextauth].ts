@@ -1,70 +1,60 @@
-
 import NextAuth, { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import {NextApiRequest} from "next";
-import bcrypt from 'bcryptjs';
+import { NextApiRequest } from "next";
 import axios, { AxiosResponse } from "axios";
 
-type User = {
-  name: string;
-  id: string;
-};
-
-export const authOptions : NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      id: "credentials",
       name: "Credentials",
       credentials: {
         username: { label: "username", type: "text", placeholder: "ID 입력" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        try {
+          console.log("크레덴셜", credentials);
           if (!credentials?.username || !credentials?.password) {
             console.log('error');
             return null;
           }
+
           const backendUrl = "https://i10a207.p.ssafy.io:80/api";
 
           // Artist
           const userResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/artists/login`, credentials, {
-                     headers: {
-                       'Content-Type': 'application/json;charset=UTF-8'
-                     }
-                   });
-          const userConfirm = userResponse.data;
-
-          if (userConfirm !== 'Login Successful') {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
+          });
+          console.log("유저 리스폰스", userResponse);
+          if (userResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
             // Member
             const memberResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/members/login`, credentials, {
-                       headers: {
-                         'Content-Type': 'application/json;charset=UTF-8'
-                       }
-                     });
-            const memberConfirm = memberResponse.data;
+              headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+              }
+            });
 
-            if (memberConfirm !== 'Login Successful') {
+            if (memberResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
               console.log('error');
               return null;
             }
 
-            const memberData:User = await axios.get(`${backendUrl}/members?membersId=${credentials.username}`)
-
-              return memberData;
-            
+            return {
+              name: memberResponse.data.memberNickname,
+              id: memberResponse.data.memberId,
+            };
           }
-          const userData:User = await axios.get(`${backendUrl}/artists?artistsId=${credentials.username}`)
-          return userData;
-        } catch (error) {
-          console.error("Authorization error:", error);
-          return null;
-        }
+
+          return {
+            name: userResponse.data.artistName,
+            id: userResponse.data.artistId,
+          };
       },
     }),
   ],
   session: {
-    strategy:'jwt'
+    strategy: 'jwt'
   },
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -74,14 +64,14 @@ export const authOptions : NextAuthOptions = {
     signIn: '/LoginPage',
   },
   callbacks: {
-    async jwt({token, user}) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
       }
       return token;
     },
-    async session({session, token}) {
+    async session({ session, token }) {
       session.user = token;
       return session;
     },
@@ -89,6 +79,7 @@ export const authOptions : NextAuthOptions = {
 };
 
 export default NextAuth(authOptions);
+
 
 // import NextAuth, { NextAuthOptions } from "next-auth"
 // import GoogleProvider from "next-auth/providers/google"

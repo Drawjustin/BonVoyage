@@ -26,77 +26,90 @@ const LoginPage = () => {
         };
       
         const handleLogin = async () => {
+          
+          const body = {
+            username:username,
+            password:password
+          }
 
-          console.log(username, password);
-      
-          const backendUrl = "https://i10a207.p.ssafy.io:80/api";
+          //const backendUrl = "https://i10a207.p.ssafy.io:80/api";
 
           //     // axios 요청 넣어봄
-    if (isArtist) {
+//     if (isArtist) {
 
-      const loginData = {
-        "artistId": username,
-        "artistPwd": password,
-      };
-      // axios 요청 넣어봄
-      axios.post(`${backendUrl}/artists/login`, loginData, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      })
-        .then(response => {
+//       const loginData = {
+//         "artistId": username,
+//         "artistPwd": password,
+//       };
+//       // axios 요청 넣어봄
+//       axios.post(`${backendUrl}/artists/login`, loginData, {
+//         headers: {
+//           'Content-Type': 'application/json;charset=UTF-8'
+//         }
+//       })
+//         .then(response => {
 
-          if (response.data === 'Login successful') {
-            alert('로그인에 성공하였습니다.');
-            sessionStorage.setItem('isLoggedIn', 'true');
-            navigate.push('/');
-          }
-          else {
-            alert('로그인에 실패하였습니다.');
-            setShowAlert(true);
-          }
-        })
-        .catch(error => {
-          alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
-          // 로그인 실패하면 팝업 표시할 것
+//           if (response.data) {
+//             alert('로그인에 성공하였습니다.');
+//             sessionStorage.setItem('isLoggedIn', 'true');
+//             navigate.push('/');
+//           }
+//           else {
+//             alert('로그인에 실패하였습니다.');
+//             setShowAlert(true);
+//           }
+//         })
+//         .catch(error => {
+//           alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
+//           // 로그인 실패하면 팝업 표시할 것
           
-        });
-  } else {
-    const loginData = {
-      "memberId": username,
-      "memberPwd": password,
-    };
-    // axios 요청 넣어봄
-    axios.post(`${backendUrl}/members/login`, loginData, {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(response => {
+//         });
+//   } else {
+//     const loginData = {
+//       "memberId": username,
+//       "memberPwd": password,
+//     };
+//     // axios 요청 넣어봄
+//     axios.post(`${backendUrl}/members/login`, loginData, {
+//       headers: {
+//         'Content-Type': 'application/json;charset=UTF-8'
+//       }
+//     }).then(response => {
 
-      if (response.data === 'Login successful') {
-        alert('로그인에 성공하였습니다.');
-        sessionStorage.setItem('isLoggedIn', 'true');
-        navigate.push('/');
-      }
-      else {
-        alert('로그인에 실패하였습니다.');
-        setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
-      // 로그인 실패하면 팝업 표시할 것
+//       if (response.data === 'Login successful') {
+//         alert('로그인에 성공하였습니다.');
+//         sessionStorage.setItem('isLoggedIn', 'true');
+//         navigate.push('/');
+//       }
+//       else {
+//         alert('로그인에 실패하였습니다.');
+//         setShowAlert(true);
+//       }
+//     })
+//     .catch(error => {
+//       alert('로그인 실패(에러)', error.response ? error.response.data : error.message);
+//       // 로그인 실패하면 팝업 표시할 것
       
-    });
-}
+//     });
+// }
           
             
 
-          // try {
-          //   const data = await signIn('credentials', body);
-          // } catch (error) {
-          //     console.log(error);
-          // }
+          try {
+            console.log("바디", body);
+            const data = await signIn('credentials', body);
+            console.log("데이터", data);
+            if (data) {
+                alert("로그인 성공.");
+                navigate.push('/');              
+            }
+            else {
+              alert("로그인 실패");
+            }
+
+          } catch (error) {
+              console.log(error);
+          }
         };
       
         const handleAlertClose = () => {
