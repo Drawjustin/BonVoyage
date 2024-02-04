@@ -50,22 +50,22 @@ public class OrderDetail implements Serializable {
     private LocalDateTime orderDetailCanceledDate;
 
     // Many-to-One relationship with Member
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Artist
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_seq")
     private Artist artist;
 
     // Many-to-One relationship with Item
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_seq")
     private Item item;
 
     // Many-to-One relationship with Auction
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 }

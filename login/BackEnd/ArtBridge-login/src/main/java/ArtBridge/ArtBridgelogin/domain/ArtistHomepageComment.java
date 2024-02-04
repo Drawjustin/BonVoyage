@@ -28,11 +28,11 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_deleted_date")
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_seq")
     private Artist artist;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 

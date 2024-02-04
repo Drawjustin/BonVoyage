@@ -34,7 +34,7 @@ public class ArtistMention {
     @OneToMany(mappedBy = "artistMention")
     private List<ArtistMentionComment> artistMentionComments;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_seq")
     private Artist artist;
 }

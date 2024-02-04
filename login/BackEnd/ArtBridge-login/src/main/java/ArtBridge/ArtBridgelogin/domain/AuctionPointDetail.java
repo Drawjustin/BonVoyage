@@ -25,11 +25,11 @@ public class AuctionPointDetail implements Serializable {
     @Column(name = "auction_point_date", nullable = false)
     private LocalDateTime auctionPointDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 

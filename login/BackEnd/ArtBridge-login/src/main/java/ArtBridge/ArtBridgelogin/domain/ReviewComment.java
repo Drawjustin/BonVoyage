@@ -22,12 +22,12 @@ public class ReviewComment {
     private LocalDateTime reviewCommentCreatedDate;
 
     // Many-to-One relationship with Member
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Review
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_seq")
     private Review review;
 }

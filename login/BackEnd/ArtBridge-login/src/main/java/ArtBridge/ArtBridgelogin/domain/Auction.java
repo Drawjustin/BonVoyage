@@ -51,7 +51,7 @@ public class Auction implements Serializable {
     @Column(name = "auction_win_date")
     private LocalDateTime auctionWinDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_seq")
     private Item item;
 

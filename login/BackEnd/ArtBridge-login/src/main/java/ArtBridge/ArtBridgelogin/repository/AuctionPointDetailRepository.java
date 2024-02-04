@@ -22,7 +22,7 @@ public class AuctionPointDetailRepository {
 
     @Transactional(readOnly = true)
     public AuctionPointDetail findOne(Long id){return em.find(AuctionPointDetail.class, id);}
-
+ 
     @Transactional(readOnly = true)
     public List<AuctionPointDetail> findAll(){
         return em.createQuery("select m from AuctionPointDetail m", AuctionPointDetail.class)

@@ -25,7 +25,7 @@ public class Review {
     private LocalDateTime reviewCreatedDate;
 
     // Many-to-One relationship with Member
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 }

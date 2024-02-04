@@ -15,12 +15,12 @@ public class MemberAuctionBidding {
     private Long memberAuctionBiddingSeq;
 
     // Many-to-One relationship with Member
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Auction
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 

@@ -16,12 +16,12 @@ public class Wish {
     private Integer wishSeq;
 
     // Many-to-One relationship with Member
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Item
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_seq")
     private Item item;
 }
