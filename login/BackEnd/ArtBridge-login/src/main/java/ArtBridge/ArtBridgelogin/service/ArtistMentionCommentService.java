@@ -34,17 +34,15 @@ public class ArtistMentionCommentService {
     }
 
     @Transactional
-    public ArtistMentionComment updateArtistMentionComment(Long id, ArtistMentionComment updatedArtistMentionComment) {
-        ArtistMentionComment existingArtistMentionComment = artistMentionCommentRepository.findOne(id);
+    public ArtistMentionComment updateArtistMentionComment(Long seq, ArtistMentionComment updatedArtistMentionComment) {
+        ArtistMentionComment existingArtistMentionComment = artistMentionCommentRepository.findOne(seq);
 
         if (existingArtistMentionComment != null) {
             // 업데이트할 정보를 새로운 정보로 설정
             existingArtistMentionComment.setArtistMentionCommentContent(updatedArtistMentionComment.getArtistMentionCommentContent());
-            // 저장
-            artistMentionCommentRepository.create(existingArtistMentionComment);
+            artistMentionCommentRepository.updateArtistMentionComment(seq, existingArtistMentionComment);
             return existingArtistMentionComment;
         } else {
-            // 예외 처리 또는 적절한 로직 추가
             return null;
         }
     }
