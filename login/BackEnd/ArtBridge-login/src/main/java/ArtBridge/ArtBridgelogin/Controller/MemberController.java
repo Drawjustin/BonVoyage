@@ -29,7 +29,9 @@ public class MemberController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@RequestBody MemberLoginForm memberLoginForm) {return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
+    public ResponseEntity<?> login(@RequestBody MemberLoginForm memberLoginForm) {
+        System.out.println(memberLoginForm);
+        return memberService.login(memberLoginForm.getId(),memberLoginForm.getPw());}
 
     @PostMapping("/new")
     public Member createMember(@RequestBody Member member) {
