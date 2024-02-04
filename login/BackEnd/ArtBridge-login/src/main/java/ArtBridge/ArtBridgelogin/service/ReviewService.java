@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ReviewService {
 
     private EntityManager em;
 
+    @Transactional
     public ResponseEntity<?> getReviewById(Integer reviewId) {
 
         // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
@@ -32,49 +34,23 @@ public class ReviewService {
         }
     }
 
-    // 리뷰 등록
+    @Transactional
     public void createReview(Review review) {
         // 데이터베이스에 review를 저장하는 로직을 추가합니다.
         reviewRepository.create(review);
     }
 
-    // 리뷰 수정
-//    public boolean updateReview(Long reviewId, Review updatedReview) {
-//        // 데이터베이스에서 reviewId에 해당하는 리뷰를 찾아 updatedReview로 업데이트하는 로직을 추가합니다.
-//        // 업데이트에 성공하면 true, 실패하면 false를 반환합니다.
-//        Review existingReview = reviewRepository.findOne(reviewId);
-//
-//        if (existingReview != null) {
-//            // 업데이트할 정보를 새로운 정보로 설정
-//            existingReview.setReviewContent(updatedReview.getReviewContent());
-//            reviewRepository.create(existingReview);
-//            return true;
-//        } else {
-//            // 예외 처리 또는 적절한 로직 추가
-//            return false;
-//        }
-//    }
+    @Transactional
+    public Review updateReview(Integer reviewSeq, Review updatedReview) {
+        return reviewRepository.updateReview(reviewSeq, updatedReview);
+    }
 
-    // 리뷰 삭제
-//    public boolean deleteReview(Long reviewId) {
-//        // 데이터베이스에서 reviewId에 해당하는 리뷰를 삭제하는 로직을 추가합니다.
-//        // 삭제에 성공하면 true, 실패하면 false를 반환합니다.
-//        Review existingReview = reviewRepository.findOne(reviewId);
-//
-//        if (existingReview != null) {
-//            reviewRepository.deleteById(reviewId);
-//            return true;
-//        } else {
-//            // 예외 처리 또는 적절한 로직 추가
-//            return false;
-//        }
-//
-//
-//
-//        return false;
-//    }
+    @Transactional
+    public void deleteById(Integer id) {
+        reviewRepository.deleteById(id);
+    }
 
-    // 모든 리뷰 조회
+    @Transactional
     public List<Review> getAllReviews() {
         // 데이터베이스에서 모든 리뷰를 조회하는 로직을 추가합니다.
         // 예시로 비어있는 리스트를 반환합니다.

@@ -31,6 +31,7 @@ public class AuctionPointDetailService {
         return auctionPointDetailRepository.create(auctionPointDetail);
     }
 
+    @Transactional
     public void updateWinner(int seq, boolean isWin) {
         AuctionPointDetail auctionPointDetail = auctionPointDetailRepository.findOne(seq);
         if (auctionPointDetail != null) {

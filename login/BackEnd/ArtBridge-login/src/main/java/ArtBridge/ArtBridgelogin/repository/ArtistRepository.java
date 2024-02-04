@@ -5,9 +5,11 @@ import ArtBridge.ArtBridgelogin.domain.QArtist;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,13 +28,11 @@ public class ArtistRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    @Transactional
     public Artist create(Artist artist) {
         em.persist(artist);
         return artist;
     }
 
-    @Transactional(readOnly = true)
     public Artist findArtistById(String artistId) {
         return queryFactory
                 .selectFrom(qArtist)
@@ -40,7 +40,6 @@ public class ArtistRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public List<Artist> findAll() {
         return queryFactory
                 .selectFrom(qArtist)
@@ -48,7 +47,33 @@ public class ArtistRepository {
                 .stream().toList();
     }
 
-    @Transactional(readOnly = true)
+    public Artist updateArtist(String artistId, Artist updatedArtist) {
+        long updatedCount = queryFactory
+                .update(QArtist.artist)
+                .set(QArtist.artist.artistName, updatedArtist.getArtistName())
+                .set(QArtist.artist.artistPwd, updatedArtist.getArtistPwd())
+                .set(QArtist.artist.artistNickname, updatedArtist.getArtistNickname())
+                .set(QArtist.artist.artistEmail, updatedArtist.getArtistEmail())
+                .set(QArtist.artist.artistContact, updatedArtist.getArtistContact())
+                .set(QArtist.artist.artistPoint, updatedArtist.getArtistPoint())
+                .set(QArtist.artist.artistIsdeleted, updatedArtist.isArtistIsdeleted())
+                .set(QArtist.artist.artistDeletedDate, updatedArtist.getArtistDeletedDate())
+                .set(QArtist.artist.artistCreatedDate, updatedArtist.getArtistCreatedDate())
+                .where(QArtist.artist.artistId.eq(artistId))
+                .execute();
+
+        if (updatedCount > 0) {
+            return queryFactory
+                    .selectFrom(QArtist.artist)
+                    .where(QArtist.artist.artistId.eq(artistId))
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .fetchOne();
+        } else {
+            return null;
+        }
+    }
+
+
     public Artist findByName(String name) {
         return queryFactory
                 .selectFrom(qArtist)
@@ -56,11 +81,11 @@ public class ArtistRepository {
                 .fetchOne();
     }
 
-    @Transactional
     public void deleteById(String id) {
         queryFactory
                 .delete(qArtist)
                 .where(qArtist.artistId.eq(id))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .execute();
     }
 

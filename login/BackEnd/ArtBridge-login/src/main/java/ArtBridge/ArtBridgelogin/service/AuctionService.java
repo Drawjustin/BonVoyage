@@ -31,19 +31,8 @@ public class AuctionService {
 
     @Transactional
     public Auction updateAuction(int seq, Auction updatedAuction) {
-        Auction existingAuction = auctionRepository.findOne(seq);
-
-        if (existingAuction != null) {
-            existingAuction.setAuctionScheduledTime(updatedAuction.getAuctionScheduledTime());
-            existingAuction.setAuctionStatus(updatedAuction.getAuctionStatus());
-            existingAuction.setAuctionStartPoint(updatedAuction.getAuctionStartPoint());
-            existingAuction.setAuctionAskPoint(updatedAuction.getAuctionAskPoint());
-            existingAuction.setAuctionSellPoint(updatedAuction.getAuctionSellPoint());
-            auctionRepository.updateAuction(existingAuction);
-            return existingAuction;
-        } else {
-            return null;
-        }
+        auctionRepository.updateAuction(seq, updatedAuction);
+        return auctionRepository.findOne(seq);
     }
 
 

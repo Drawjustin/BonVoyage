@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.LockModeType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +29,10 @@ public class ReviewRepository {
         this.em = em;
     }
 
-    @Transactional
     public void create(Review review) {
         em.persist(review);
     }
 
-    @Transactional(readOnly = true)
     public Review findById(Integer seq) {
 
         return queryFactory
@@ -42,35 +41,44 @@ public class ReviewRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public List<Review> findAll() {
         return queryFactory
                 .selectFrom(qReview)
                 .fetch();
     }
 
-    @Transactional
-    public void updateReview(Integer id, String newContent, String newVisit) {
-        Review review = queryFactory
-                .selectFrom(qReview)
-                .where(qReview.reviewSeq.eq(id))
+    public Review updateReview(Integer reviewSeq, Review updatedReview) {
+        Review detachedReview = queryFactory
+                .selectFrom(QReview.review)
+                .where(QReview.review.reviewSeq.eq(reviewSeq))
                 .fetchOne();
 
-        if (review == null) {
-            throw new EntityNotFoundException("Review with ID " + id + " not found");
+        if (detachedReview == null) {
+            throw new IllegalArgumentException("Review with id " + reviewSeq + " not found");
         }
 
-        review.setReviewContent(newContent);
-        review.setReviewVisit(newVisit);
+        Review managedReview = queryFactory
+                .selectFrom(QReview.review)
+                .where(QReview.review.reviewSeq.eq(reviewSeq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .fetchOne();
 
-        em.persist(review);
+        if (managedReview == null) {
+            throw new IllegalArgumentException("Review with id " + reviewSeq + " not found");
+        }
+
+        // Update fields directly
+        managedReview.setReviewContent(updatedReview.getReviewContent());
+        managedReview.setReviewVisit(updatedReview.getReviewVisit());
+
+        return managedReview;
     }
 
-    @Transactional
     public void deleteById(Integer id) {
         Review review = queryFactory
                 .selectFrom(qReview)
                 .where(qReview.reviewSeq.eq(id))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .fetchOne();
 
         if (review == null) {

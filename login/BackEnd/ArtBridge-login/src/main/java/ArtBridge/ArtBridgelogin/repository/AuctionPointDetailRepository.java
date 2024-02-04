@@ -5,6 +5,7 @@ import ArtBridge.ArtBridgelogin.domain.QAuctionPointDetail;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +28,11 @@ public class AuctionPointDetailRepository {
     }
 
 
-    @Transactional
     public AuctionPointDetail create(AuctionPointDetail auctionPointDetail){
         em.persist(auctionPointDetail);
         return auctionPointDetail;
     }
 
-    @Transactional(readOnly = true)
     public AuctionPointDetail findOne(Long id){return em.find(AuctionPointDetail.class, id);}
  
     public AuctionPointDetail findOne(int seq){
@@ -42,17 +41,16 @@ public class AuctionPointDetailRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public List<AuctionPointDetail> findAll(){
         return queryFactory.selectFrom(auctionPointDetail)
                 .fetch();
     }
 
-    @Transactional
     public void updateWinner(int seq, boolean isWin){
         queryFactory.update(auctionPointDetail)
                 .set(auctionPointDetail.auctionPointDetailIsWin, isWin)
                 .where(auctionPointDetail.auctionPointDetailSeq.eq(seq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .execute();
     }
 }

@@ -3,8 +3,10 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -57,27 +59,7 @@ public class ArtistService {
 
     @Transactional
     public Artist updateArtist(String id, Artist updatedArtist) {
-        Artist existingArtist = artistRepository.findArtistById(id);
-
-        if (existingArtist != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
-            existingArtist.setArtistName(updatedArtist.getArtistName());
-            existingArtist.setArtistPwd(updatedArtist.getArtistPwd());
-            existingArtist.setArtistNickname(updatedArtist.getArtistNickname());
-            existingArtist.setArtistEmail(updatedArtist.getArtistEmail());
-            existingArtist.setArtistContact(updatedArtist.getArtistContact());
-            existingArtist.setArtistPoint(updatedArtist.getArtistPoint());
-            existingArtist.setArtistIsdeleted(updatedArtist.isArtistIsdeleted());
-            existingArtist.setArtistDeletedDate(updatedArtist.getArtistDeletedDate());
-            existingArtist.setArtistCreatedDate(updatedArtist.getArtistCreatedDate());
-
-            // 저장
-            artistRepository.create(existingArtist);
-            return existingArtist;
-        } else {
-            // 예외 처리 또는 적절한 로직 추가
-            return null;
-        }
+        return artistRepository.updateArtist(id, updatedArtist);
     }
 
     @Transactional

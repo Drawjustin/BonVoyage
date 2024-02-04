@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ItemRepository {
@@ -82,6 +83,28 @@ public class ItemRepository {
                 .orderBy(qItem.itemCreatedDate.desc())
                 .fetch();
     }
+
+    public Item findAndUpdateItem(int itemSeq, Item updatedItem) {
+        return Optional.ofNullable(
+                queryFactory
+                        .selectFrom(QItem.item)
+                        .where(QItem.item.itemSeq.eq(itemSeq))
+                        .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                        .fetchOne()
+        ).map(existingItem -> {
+            // Update fields directly
+            existingItem.setItemName(updatedItem.getItemName());
+            existingItem.setItemHeight(updatedItem.getItemHeight());
+            existingItem.setItemWidth(updatedItem.getItemWidth());
+            existingItem.setItemIsSold(updatedItem.isItemIsSold());
+            existingItem.setItemSellPrice(updatedItem.getItemSellPrice());
+
+            // No need to create a new item, just return the updated item
+            return existingItem;
+        }).orElseThrow(() -> new IllegalArgumentException("Item with id " + itemSeq + " not found"));
+    }
+
+
 
     // 작가의 아이템 조회 메서드
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)

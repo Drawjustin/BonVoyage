@@ -56,25 +56,40 @@ public class MemberRepository {
     }
 
     @Transactional
-    public void updateMember(Long id, String newUsername, String newPassword) {
-        // Querydsl 사용하여 해당 ID에 해당하는 Member 조회
-        QMember qMember = QMember.member;
-        Member member = queryFactory
-                .selectFrom(qMember)
-                .where(qMember.memberSeq.eq(id))
+    public Member updateMember(String id, Member updatedMember) {
+        Member existingMember = queryFactory
+                .selectFrom(QMember.member)
+                .where(QMember.member.memberId.eq(id))
                 .fetchOne();
 
-        // 해당 ID에 해당하는 Member가 없으면 예외 처리
-        if (member == null) {
-            throw new EntityNotFoundException("Member with ID " + id + " not found");
+        if (existingMember == null) {
+            // 예외 처리 또는 적절한 로직 추가
+            throw new RuntimeException("Member with id " + id + " not found");
         }
 
-        // 수정할 필드 업데이트
-        member.setMemberName(newUsername);
-        member.setMemberPwd(newPassword);
+        long updatedCount = queryFactory
+                .update(QMember.member)
+                .set(QMember.member.memberName, updatedMember.getMemberName())
+                .set(QMember.member.memberPwd, updatedMember.getMemberPwd())
+                .set(QMember.member.memberNickname, updatedMember.getMemberNickname())
+                .set(QMember.member.memberEmail, updatedMember.getMemberEmail())
+                .set(QMember.member.memberContact, updatedMember.getMemberContact())
+                .set(QMember.member.memberPoint, updatedMember.getMemberPoint())
+                .set(QMember.member.memberIsDeleted, updatedMember.isMemberIsDeleted())
+                .set(QMember.member.memberDeletedDate, updatedMember.getMemberDeletedDate())
+                .set(QMember.member.memberCreatedDate, updatedMember.getMemberCreatedDate())
+                .where(QMember.member.memberId.eq(id))
+                .execute();
 
-        // 업데이트된 Member를 저장
-        em.persist(member);
+        if (updatedCount > 0) {
+            return queryFactory
+                    .selectFrom(QMember.member)
+                    .where(QMember.member.memberId.eq(id))
+                    .fetchOne();
+        } else {
+            // 예외 처리 또는 적절한 로직 추가
+            throw new RuntimeException("Failed to update Member with id " + id);
+        }
     }
 
     @Transactional

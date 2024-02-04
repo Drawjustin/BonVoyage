@@ -31,23 +31,7 @@ public class ItemService {
 
     @Transactional
     public Item updateItem(int itemSeq, Item updatedItem) {
-        Item existingItem = itemRepository.findBySeq(itemSeq);
-
-        if (existingItem != null) {
-            // Update fields directly
-            existingItem.setItemName(updatedItem.getItemName());
-            existingItem.setItemHeight(updatedItem.getItemHeight());
-            existingItem.setItemWidth(updatedItem.getItemWidth());
-            existingItem.setItemIsSold(updatedItem.isItemIsSold());
-            existingItem.setItemSellPrice(updatedItem.getItemSellPrice());
-
-            // No need to create a new item, just return the updated item
-            return existingItem;
-        } else {
-            // Handle the case where the item with given id doesn't exist
-            // You might throw an exception or return null, depending on your design
-            return null;
-        }
+        return itemRepository.findAndUpdateItem(itemSeq, updatedItem);
     }
 
     @Transactional

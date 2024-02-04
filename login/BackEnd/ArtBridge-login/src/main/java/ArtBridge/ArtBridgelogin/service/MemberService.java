@@ -44,28 +44,8 @@ public class MemberService {
     }
 
     @Transactional
-    public Member updateMember(Long id, Member updatedMember) {
-        Member existingMember = memberRepository.findOne(id);
-
-        if (existingMember != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
-            existingMember.setMemberName(updatedMember.getMemberName());
-            existingMember.setMemberPwd(updatedMember.getMemberPwd());
-            existingMember.setMemberNickname(updatedMember.getMemberNickname());
-            existingMember.setMemberEmail(updatedMember.getMemberEmail());
-            existingMember.setMemberContact(updatedMember.getMemberContact());
-            existingMember.setMemberPoint(updatedMember.getMemberPoint());
-            existingMember.setMemberIsDeleted(updatedMember.isMemberIsDeleted());
-            existingMember.setMemberDeletedDate(updatedMember.getMemberDeletedDate());
-            existingMember.setMemberCreatedDate(updatedMember.getMemberCreatedDate());
-
-            // 저장
-            memberRepository.create(existingMember);
-            return existingMember;
-        } else {
-            // 예외 처리 또는 적절한 로직 추가
-            return null;
-        }
+    public Member updateMember(String id, Member updatedMember) {
+        return memberRepository.updateMember(id, updatedMember);
     }
     @PostMapping("/login")
     @Transactional

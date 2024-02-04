@@ -30,6 +30,7 @@ public class ArtistServiceTest {
     @Autowired
     EntityManager em;
 
+
     private Artist createArtist(String name, String id, String pwd, String nickname, String email,
                                 String contact, long point, boolean isDelete, String content,
                                 LocalDateTime deletedDate, LocalDateTime createdDate) {
