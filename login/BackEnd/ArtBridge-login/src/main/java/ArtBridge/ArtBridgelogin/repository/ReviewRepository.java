@@ -1,53 +1,82 @@
 package ArtBridge.ArtBridgelogin.repository;
 
+import ArtBridge.ArtBridgelogin.domain.QReview;
 import ArtBridge.ArtBridgelogin.domain.Review;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class ReviewRepository {
+
     private final EntityManager em;
-    public Review create(Review review) {
+    private QReview qReview;
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        this.qReview = QReview.review;
+        this.queryFactory = new JPAQueryFactory(em);
+    }
+
+    public ReviewRepository(EntityManager em) {
+        this.em = em;
+    }
+
+    @Transactional
+    public void create(Review review) {
         em.persist(review);
-        return review;
-    }
-//    public Review updateTeamInfo(Review review) {
-//        Review newreview = em.find(Review.class, review.getReviewSeq());
-//
-//
-//        return newreview;
-//    }
-
-    public Review findOne(Long id) {
-        return em.find(Review.class, id);
     }
 
+    @Transactional(readOnly = true)
+    public Review findById(Integer seq) {
+
+        return queryFactory
+                .selectFrom(qReview)
+                .where(qReview.reviewSeq.eq(seq))
+                .fetchOne();
+    }
+
+    @Transactional(readOnly = true)
     public List<Review> findAll() {
-        return em.createQuery("SELECT r FROM Review r", Review.class)
-                .getResultList();
+        return queryFactory
+                .selectFrom(qReview)
+                .fetch();
     }
 
-//    public Review findReviewId(String reviewId) {
-//        String jpql = "SELECT r FROM Review r WHERE r.reviewSeq = :reviewId";
-//        TypedQuery<Review> query = em.createQuery(jpql, Review.class);
-//        query.setParameter("reviewId", reviewId);
-//
-//        try {
-//            return query.getSingleResult();
-//        } catch (NoResultException e) {
-//            return null;
-//        }
-//    }
+    @Transactional
+    public void updateReview(Integer id, String newContent, String newVisit) {
+        Review review = queryFactory
+                .selectFrom(qReview)
+                .where(qReview.reviewSeq.eq(id))
+                .fetchOne();
 
-//    public void deleteById(String reviewId) {
-//        em.createQuery("DELETE FROM Review r WHERE r.reviewSeq = :reviewId")
-//                .setParameter("reviewId", reviewId)
-//                .executeUpdate();
-//    }
+        if (review == null) {
+            throw new EntityNotFoundException("Review with ID " + id + " not found");
+        }
+
+        review.setReviewContent(newContent);
+        review.setReviewVisit(newVisit);
+
+        em.persist(review);
+    }
+
+    @Transactional
+    public void deleteById(Integer id) {
+        Review review = queryFactory
+                .selectFrom(qReview)
+                .where(qReview.reviewSeq.eq(id))
+                .fetchOne();
+
+        if (review == null) {
+            throw new EntityNotFoundException("Review with ID " + id + " not found");
+        }
+
+        em.remove(review);
+    }
 }

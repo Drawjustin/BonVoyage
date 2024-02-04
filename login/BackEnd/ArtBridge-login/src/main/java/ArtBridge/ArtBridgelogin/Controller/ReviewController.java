@@ -15,15 +15,8 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
     @GetMapping("/{reviewId}")
-    public ResponseEntity<Review> getReview(@PathVariable Long reviewId) {
-        // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
-        Review review = reviewService.getReviewById(reviewId);
-
-        if (review != null) {
-            return new ResponseEntity<>(review, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<?> getReview(@PathVariable Integer reviewId) {
+        return reviewService.getReviewById(reviewId);
     }
 
     // 리뷰 등록 API

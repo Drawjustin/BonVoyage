@@ -3,8 +3,11 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.repository.ReviewRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,12 +17,19 @@ import java.util.List;
 public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
-    public Review getReviewById(Long reviewId) {
-        // 데이터베이스에서 reviewId에 해당하는 리뷰 조회 로직을 추가합니다.
-        // 예시로 비어있는 Review 객체를 반환합니다.
 
-        return reviewRepository.findOne(reviewId);
+    private EntityManager em;
 
+    public ResponseEntity<?> getReviewById(Integer reviewId) {
+
+        // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
+        Review review = em.find(Review.class, reviewId);
+
+        if (review != null) {
+            return new ResponseEntity<>(review, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // 리뷰 등록

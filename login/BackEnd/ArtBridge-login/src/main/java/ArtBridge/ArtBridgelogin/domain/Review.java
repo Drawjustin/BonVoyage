@@ -16,7 +16,7 @@ public class Review {
     private Integer reviewSeq;
 
     @Column(name = "review_content",nullable = false)
-    private Integer reviewContent;
+    private String reviewContent;
 
     @Column(name = "review_visit",length = 255, nullable = false)
     private String reviewVisit;
