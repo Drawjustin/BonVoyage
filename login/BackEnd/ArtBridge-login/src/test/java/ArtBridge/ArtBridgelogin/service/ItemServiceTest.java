@@ -38,8 +38,6 @@ public class ItemServiceTest {
 
         Artist artist = artistRepository.findArtistById("123");
 
-//        item.setItemSeq(123);
-//        item.setArtistSeq(123);
         item.setItemName("별이 빛나는 밤");
         item.setItemWidth(123);
         item.setItemHeight(123);
@@ -60,7 +58,7 @@ public class ItemServiceTest {
         Item createdItem = itemService.createItem(testItem);
 
         //then
-        assertEquals(createdItem, itemRepository.findById(createdItem.getItemSeq()));
+        assertEquals(createdItem, itemRepository.findBySeq(createdItem.getItemSeq()));
     }
 
     @Test
@@ -71,7 +69,7 @@ public class ItemServiceTest {
         Item createdItem = itemService.createItem(testItem);
 
         //when
-        Item foundItem = itemService.getItemByID(createdItem.getItemSeq());
+        Item foundItem = itemService.getItemBySeq(createdItem.getItemSeq());
 
         //then
         assertEquals(createdItem, foundItem);
@@ -90,7 +88,7 @@ public class ItemServiceTest {
         itemService.updateItem(createdItem.getItemSeq(), createdItem);
 
         //then
-        assertEquals(newName, itemRepository.findById(createdItem.getItemSeq()).getItemName());
+        assertEquals(newName, itemRepository.findBySeq(createdItem.getItemSeq()).getItemName());
     }
 
     @Test
@@ -105,6 +103,6 @@ public class ItemServiceTest {
 
         //then
 
-//        assertNull(itemRepository.findById(createdItem.getItemSeq()));
+        assertNull(itemRepository.findBySeq(createdItem.getItemSeq()));
     }
 }
