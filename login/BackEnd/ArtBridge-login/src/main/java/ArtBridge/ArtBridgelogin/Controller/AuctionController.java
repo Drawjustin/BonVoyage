@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
-@Controller
-@RestController("/auction")
+@RestController
+@RequestMapping("/auction")
 public class AuctionController {
 
     @Autowired
