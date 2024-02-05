@@ -46,13 +46,18 @@ const Profile = () => {
           className={styles.profile_img} />
         <div className={styles.profile_info}>
           <div className={styles.name}>
-            <div>작가 박슦껄</div>
+            <div style={{ paddingTop: '10px' }}>작가 박슦껄</div>
           </div>
           <Divider className={styles.devider}/>
           <div className={styles.info}>
-            <button className={styles.port_btn}>📁 작가의 포트폴리오</button>
+            <button className={styles.port_btn} style={{ border: '#171de5 solid 1px', borderRadius: '8px', color: '#f1efee', fontFamily: 'Gowun Dodum' }}>📁 작가의 포트폴리오</button>
             <div>Email : abcd123@naver.com </div>
-            <button className = {styles.edit_btn}>프로필 수정</button>
+            <div>
+              <div>상태 메세지</div>
+              <div style={{ width: '135px', height: '30px', backgroundColor: '#a2a5f7', color: '#6e6e6e' }}>
+
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const PurchaseDetail = ({ isOpen, onClose }) => {
     };
       
     return (
-      <div>
+      <div style={{ fontFamily: 'Gowun Dodum' }}>
       <h3 className={styles.title}>결제 상세</h3>
       <div className={styles.purchase_details_container}>
         <div className={styles.product_details}>

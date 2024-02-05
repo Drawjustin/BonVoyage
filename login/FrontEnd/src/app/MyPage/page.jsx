@@ -99,7 +99,7 @@ const MyPage = () => {
         <div>
         <Navbar />
         <div className={styles.my_page}>
-        <h2 style={{textAlign: 'left', color: 'white' }}>마이 페이지</h2>
+        <h2 style={{textAlign: 'left', color: '#f1efee' }}>마이 페이지</h2>
             <div className={styles.profile_container}>
                 <div className={styles.profile_picture_container} onClick={() => document.getElementById('fileInput').click()}>
                     <div className={styles.profile_picture} style={{ backgroundImage: `url(${profilePicture})` }}>
@@ -134,22 +134,22 @@ const MyPage = () => {
             <div className={styles.navigation_container}>
                 <div className={styles.nav_button} onClick={() => handleButtonClick('accountInfo')}>
                     <img className={styles.image} src={accountinfo} alt="계정 정보" />
-                    <div>계정 정보</div>
+                    <div style={{ color: '#f1efee' }}>계정 정보</div>
                 </div>
                     
                 <div className={styles.nav_button} onClick={() => handleButtonClick('purchaseInfo')}>
                     <img className={styles.image} src={purchaseinfo} alt="구매 내역" />
-                    <div>구매 내역</div>
+                    <div style={{ color: '#f1efee' }}>구매 내역</div>
                 </div>
                 
                 <div className={styles.nav_button} onClick={() => handleButtonClick('faq')}>
                     <img className={styles.image} src={faq} alt="FAQ" />
-                    <div>FAQ</div>
+                    <div style={{ color: '#f1efee' }}>FAQ</div>
                 </div>
                 
                 <div className={styles.nav_button} onClick={() => handleButtonClick('myAuctionCal')}>
                     <img className={styles.image} src={myauctioncal} alt="나의 경매 일정" />
-                    <div>나의 경매 일정</div>
+                    <div style={{ color: '#f1efee' }}>나의 경매 일정</div>
                 </div>
             
             </div>

@@ -4,10 +4,12 @@ import styles from './MyAuctionCal.module.scss';
 import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from 'moment';
+import axios from "axios";
 
 const MyAuctionCal = () => {
 
   const [value, onChange] = useState(new Date());
+
 
     const generateDateContent = (date) => {
         const contents = [];
@@ -23,7 +25,7 @@ const MyAuctionCal = () => {
 
     return (
         <div>
-            <div className={styles.title}><h3 style={{ paddingLeft: '20px'}}>나의 경매 일정</h3></div>
+            <div className={styles.title}><h3 style={{ paddingLeft: '20px', color: '#f1efee', fontFamily: 'Gowun Dodum' }}>나의 경매 일정</h3></div>
             
             <div>
             <div className={styles.container}>

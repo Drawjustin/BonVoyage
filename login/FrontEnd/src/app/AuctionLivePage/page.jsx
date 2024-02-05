@@ -1,6 +1,7 @@
 'use client'
-import React, { useState } from 'react'
-import styles from './AuctionLivePage.module.scss'
+import React, { useState } from 'react';
+import styles from './AuctionLivePage.module.scss';
+import Navbar from '@/components/Navbar/Navbar';
 import Modal from 'react-modal';
 import YouTube from 'react-youtube';
 import Link from 'next/link';
@@ -45,6 +46,7 @@ const AuctionLivePage = () => {
 
   return (
     <div className={styles.container}>
+      <Navbar />
       {/* <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
@@ -76,6 +78,7 @@ const AuctionLivePage = () => {
         />
       </div>
       </Modal> */}
+      <div>
       <div className={styles.isLive}>
         <div className={styles.dot}></div>
         <p>00 작가 경매 Live</p>
@@ -137,7 +140,7 @@ const AuctionLivePage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div></div>
   )
 }
 

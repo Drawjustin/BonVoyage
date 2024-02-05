@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import styles from './ResetPw.module.scss';
 import axios from 'axios';
+import Navbar from '@/components/Navbar/Navbar';
+
 
 const ResetPw = () => {
     const [showResetForm, setShowResetForm] = useState(false);
@@ -43,6 +45,7 @@ const ResetPw = () => {
 
     return (
         <div className={styles.password_reset_container}>
+            <Navbar />
             <h2>비밀번호 재설정</h2>
             {showResetForm ? (
             <>
@@ -80,7 +83,7 @@ const ResetPw = () => {
                 {/* 아이디 입력 */}
                 <div className={styles.input_container}>
                     <label htmlFor="userId">ID</label>
-                    <input 
+                    <input
                         type="text" 
                         id='userId' 
                         name='userId' 

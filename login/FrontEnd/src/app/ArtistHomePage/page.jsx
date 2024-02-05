@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styles from './ArtistHomePage.module.scss'
 import dynamic from 'next/dynamic';
+import Navbar from "@/components/Navbar/Navbar";
 
 const ArtistPortfolio = dynamic(() => import('../../components/ArtistHomepage/ArtistPortfolio/ArtistPortfolio'), {ssr:false});
 const ArtistTalk = dynamic(() => import('../../components/ArtistHomepage/ArtistTalk/ArtistTalk'), {ssr:false});
@@ -39,7 +40,9 @@ const ArtistHomePage = () => {
   };
 
   return (
-      <div className={styles.container}>
+    <div>
+        <Navbar />
+      <div style={{ marginTop: '5vh' }} className={styles.container}>
         <div className={styles.contents}>
           <div className={styles.profile}>
               <ArtistProfile />
@@ -47,7 +50,6 @@ const ArtistHomePage = () => {
           <div className={styles.content}>
             <div className={styles.inner_content}>
               <div className={styles.title}>
-                <div className={styles.pagetitle}>안녕하세용 ⸜( ˙ ˘ ˙)⸝♡</div>
                 <div className={styles.selectbtn}>
                   {MAIN_DATA.map((data) => (
                     <button onClick={handleClickButton} name={data.name} key={data.id}
@@ -66,6 +68,7 @@ const ArtistHomePage = () => {
           </div>
         </div>
       </div>
+    </div>
   )
 }
 

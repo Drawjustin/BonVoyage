@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './ArtistInputSignup.module.scss';
 import { useRouter } from 'next/navigation';
+import { Button, Modal, Space } from 'antd';
 
 const ArtistInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -27,6 +28,16 @@ const ArtistInputSignup = () => {
             setPortfolio(file.name)
         } else {console.log("파일 없음");}
     }
+
+    // 회원가입 성공 모달
+    const success = () => {
+      Modal.success({
+        content: '회원가입이 완료되었습니다!',
+        onOk: () => {
+          navigate.push('/LoginPage');  // 로그인 페이지로 이동
+        },
+      });
+    };
 
     // 이름 유효성 검사
     const validateUsername = (value) => {
@@ -197,7 +208,7 @@ const ArtistInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>포트폴리오</div>
                     <div className={styles.form_inputbtn}>
-                        <input placeholder={portfolio} className={styles.form_input_3}/>
+                        <input placeholder={portfolio} className={styles.form_input_3} style={{ padding: '10px'}}/>
                         <input type="file" id = "portfolio" onChange={changeImgText} className={styles.file}/>
                         <label htmlFor="portfolio" className={styles.input_btn2}>파일 첨부</label>
                     </div>
@@ -223,7 +234,7 @@ const ArtistInputSignup = () => {
                 </div>
             </div>
             <div>
-                <button type="submit" className={styles.submit_btn}>가입하기</button>
+                <button type="submit" className={styles.submit_btn} onClick={success}>가입하기</button>
             </div>
         </form>
     )

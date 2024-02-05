@@ -6,9 +6,16 @@ import { Calendar } from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 // import { Link } from 'react-router-dom';
 
-const AuctionCal = () => {
+async function AuctionCal() {
+
+  async function Handle(){
+    const response = await axios.get(`https://i10a207.p.ssafy.io/api/auction`);
+    console.log(response.data);
+  }
+
   const navigate = useRouter();
 
   const [value, onChange] = useState(new Date());
@@ -25,7 +32,7 @@ const AuctionCal = () => {
   };
 
   return (
-      <div><h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'left', color: '#171de5' }}>경매 일정</h1>
+      <div><h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'left', color: '#f1efee' }}>경매 일정</h1>
         {/* <Nav /> */}
         <div className={styles.container}>
         <div className={styles.schedule}>
@@ -53,7 +60,7 @@ const AuctionCal = () => {
                     {/* 상품 사진 */}
                   </div>
                   <div className={styles.product_e}>
-                    <div className={styles.product_info}>
+                    <div className={styles.product_info} onClick={Handle}>
                       <p>작가 이바보야</p>
                       <p>진짜아니야</p>
                       <p>2월 5일 18:00</p> 

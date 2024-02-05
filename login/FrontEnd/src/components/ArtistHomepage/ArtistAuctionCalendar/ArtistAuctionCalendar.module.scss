@@ -5,12 +5,13 @@
 }
 
 .schedule {
+    padding-left: 7px;
     align-items: center;
     width: 100%;
     // height: 100%;
     display: flex;
     // flex-direction: row;
-    justify-content: space-between;
+    // justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -31,12 +32,13 @@
 
 .dot {
     border-radius: 100%;
-    background-color: #8FCACA;
+    background-color: #171de5;
     width: 7px;
     height: 7px;
 }
 
-.schedule_list {
+.schedule_list {    
+    margin-left: 25px;
     align-items: center;
     background-color: #f5f5f5;
     border-radius: 10px;

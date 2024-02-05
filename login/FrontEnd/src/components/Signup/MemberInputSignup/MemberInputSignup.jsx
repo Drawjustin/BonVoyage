@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import styles from './MemberInputSignup.module.scss';
 import { useRouter } from 'next/navigation';
+import { Button, Modal, Space } from 'antd';
 
 const MemberInputSignup = () => {
     const [username, setUsername] = useState('');
@@ -13,6 +14,7 @@ const MemberInputSignup = () => {
     const [email, setEmail] = useState('');
     const [phonenum, setPhoneNumber] = useState('');
     const [errors, setErrors] = useState({});
+
 
     const backendUrl = 'https://i10a207.p.ssafy.io/api'
 
@@ -76,6 +78,16 @@ const MemberInputSignup = () => {
         }
       };
 
+    // 회원가입 성공 모달
+    const success = () => {
+      Modal.success({
+        content: '회원가입이 완료되었습니다!',
+        onOk: () => {
+          navigate.push('/LoginPage');  // 로그인 페이지로 이동
+        },
+      });
+    };
+
     const signUpSubmit = async (e) => {
       e.preventDefault();
 
@@ -112,10 +124,13 @@ const MemberInputSignup = () => {
       } catch (error) {
         console.error(error);
       }
+
+    
     
     };
 
     return (
+      <div>
         <form className={styles.form} onSubmit={signUpSubmit}>
             <div className={styles.form_title}>개인 회원가입</div>
             <div>
@@ -177,18 +192,20 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input} placeholder='연락처'
+                    <input style={{ width: '200px' }} type="text" className={styles.form_input} placeholder='연락처'
                     value={phonenum} onChange={(e) => {
                         setPhoneNumber(e.target.value);
                     }}/>
-                        <button className={styles.input_btn}>인증하기</button>
+                        <button style={{ paddingLeft: '1opx'}} className={styles.input_btn}>인증하기</button>
                     </div>
                 </div>
             </div>
             <div>
-                <button type="submit" className={styles.submit_btn}>가입하기</button>
+                <button type="submit" className={styles.submit_btn} onClick={success}>가입하기</button>
             </div>
         </form>
+        
+      </div>
     )
 }
 

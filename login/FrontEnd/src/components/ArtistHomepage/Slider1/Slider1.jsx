@@ -85,11 +85,11 @@ const Slider1 = () => {
         }
 
         .slick-prev:before {
-            color: #8FCACA;
+            color: #171de5;
         }
 
         .slick-next:before {
-            color: #8FCACA;
+            color: #171de5;
         }
     `;
 

@@ -9,7 +9,7 @@ const Faq = () => {
   return (
     <div className={styles.frame_parent}>
     <div className={styles.plz}>
-    <h3 className={styles.title}>FAQ</h3>
+    <h3 className={styles.title} style={{ color: '#f1efee' }}>FAQ</h3>
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>Q. 경매는 어떻게 진행 되나요?</Accordion.Header>
