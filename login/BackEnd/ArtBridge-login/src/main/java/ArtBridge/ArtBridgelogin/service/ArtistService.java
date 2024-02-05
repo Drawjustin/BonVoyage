@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import jakarta.persistence.LockModeType;
@@ -66,4 +67,6 @@ public class ArtistService {
     public void deleteArtist(String id) {
         artistRepository.deleteById(id);
     }
+
+
 }

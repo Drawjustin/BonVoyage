@@ -23,12 +23,28 @@ public class ReviewCommentService {
     // 리뷰 등록
     @Transactional
     public void createReview(ReviewComment reviewComment) {
-        reviewCommentRepository.create(reviewComment);
+        reviewCommentRepository.createReviewComment(reviewComment);
     }
 
     @Transactional
-    public List<ReviewComment> getAllReviews() {
-        return reviewCommentRepository.findAll();
+    public List<ReviewComment> getAllReviewComment(int seq) {
+        return reviewCommentRepository.findAll(seq);
 
+    }
+
+    public ReviewComment findOne(Long seq) {
+        return reviewCommentRepository.findOne(seq);
+    }
+
+    public ReviewComment createReviewComment(ReviewComment reviewComment) {
+        return reviewCommentRepository.createReviewComment(reviewComment);
+    }
+
+    public ReviewComment updateReviewComment(Long seq, ReviewComment updatedReviewComment) {
+        return reviewCommentRepository.updateReviewComment(seq,updatedReviewComment);
+    }
+
+    public void deleteReviewComment(Long seq) {
+        reviewCommentRepository.deleteReviewComment(seq);
     }
 }

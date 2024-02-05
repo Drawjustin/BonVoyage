@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.Controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -46,10 +47,18 @@ public class ItemService {
     public List<Item> getNewItems() {
         return itemRepository.findLastedItems();
     }
+    public List<Item> getItemsBySameAuthor(UserAcessForm userAcessForm) {
+        if(userAcessForm.getIsArtist()==1){
+            return itemRepository.getItemsBySameArtist(userAcessForm.getArtist().getArtistSeq());
+        }
+        else{
+            return itemRepository.getItemsBySameMember(userAcessForm.getMember().getMemberSeq());
+        }
 
-    public List<Item> getItemsBySameAuthor(Long authorId) {
-        return itemRepository.getItemsBySameAuthor(authorId);
     }
+
+
+
 
     //TODO: Implement this method after resolving artist_seq join
 //    public List<Item> getItemsBySameAuthor(String authorId) {

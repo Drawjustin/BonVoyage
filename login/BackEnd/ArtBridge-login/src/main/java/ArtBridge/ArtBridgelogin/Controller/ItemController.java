@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
+import ArtBridge.ArtBridgelogin.Controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
@@ -62,9 +63,10 @@ public class ItemController {
     //작품 작가가 만든 다른 상품들도 조회한다.
     //TODO: join 해결 이후 진행 필요
     @GetMapping("/mypage/{authorId}")
-    public List<Item> getItemsByAuthor(@PathVariable Long authorId) {
-        return itemService.getItemsBySameAuthor(authorId);
+    public List<Item> getItemsByAuthor(@PathVariable("authorId") UserAcessForm userAcessForm) {
+        return itemService.getItemsBySameAuthor(userAcessForm);
     }
+
 
     //TODO: 작품 좋아요를 추가한다???
 }

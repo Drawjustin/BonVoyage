@@ -3,6 +3,7 @@ package ArtBridge.ArtBridgelogin.Controller;
 import ArtBridge.ArtBridgelogin.Controller.form.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -49,4 +50,6 @@ public class ArtistController {
     @DeleteMapping("/{id}")
     public void deleteArtist(@PathVariable String id)
     {artistService.deleteArtist(id);}
+
+
 }

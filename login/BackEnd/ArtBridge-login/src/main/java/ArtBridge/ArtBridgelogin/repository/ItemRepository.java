@@ -3,6 +3,7 @@ package ArtBridge.ArtBridgelogin.repository;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.QItem;
 import ArtBridge.ArtBridgelogin.domain.QMember;
+import ArtBridge.ArtBridgelogin.domain.QOrderDetail;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,7 @@ public class ItemRepository {
     private final QItem qItem = QItem.item;
 
     private final QMember qMember = QMember.member;
+    private final QOrderDetail qOrderDetail = QOrderDetail.orderDetail;
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -124,10 +126,18 @@ public class ItemRepository {
     }
 
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> getItemsBySameAuthor(Long authorId) {
+    public List<Item> getItemsBySameMember(Long authorId) {
         return queryFactory
-                .selectFrom(qItem)
-                .where(qMember.memberSeq.eq(authorId))
+                .selectFrom(QItem.item)
+                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
                 .fetch();
     }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> getItemsBySameArtist(Long authorId) {
+        return queryFactory
+                .selectFrom(QItem.item)
+                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
+                .fetch();
+    }
+
 }

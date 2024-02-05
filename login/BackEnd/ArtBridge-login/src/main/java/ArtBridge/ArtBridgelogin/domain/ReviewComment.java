@@ -14,7 +14,7 @@ public class ReviewComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_comment_seq", nullable = false)
-    private Integer reviewCommentSeq;
+    private Long reviewCommentSeq;
 
     @Column(name = "review_comment_content",length = 255, nullable = false)
     private String reviewCommentContent;

@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.Auction;
+import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,13 @@ public class AuctionService {
     @Transactional
     public void deleteAuction(int seq) {
         auctionRepository.deleteById(seq);
+    }
+
+    public List<Auction> getAuctionsBySameAuthor(Long authorId) {
+        return auctionRepository.getAuctionsBySameAuthor(authorId);
+    }
+
+    public void deleteAuctionByAuthor(int seq) {
+        auctionRepository.deleteAuctionByMember(seq);
     }
 }

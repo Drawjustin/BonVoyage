@@ -1,8 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.Auction;
-import ArtBridge.ArtBridgelogin.domain.QArtist;
-import ArtBridge.ArtBridgelogin.domain.QAuction;
+import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +21,8 @@ public class AuctionRepository {
 
     private final EntityManager em;
     private QAuction qAuction = QAuction.auction;
+    private QMemberAuctionBidding qMemberAuctionBidding = QMemberAuctionBidding.memberAuctionBidding;
+
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -90,6 +90,28 @@ public class AuctionRepository {
         queryFactory
                 .delete(qAuction)
                 .where(qAuction.auctionSeq.eq(seq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .execute();
+    }
+
+    public List<Auction> getAuctionsBySameAuthor(Long authorId) {
+        return queryFactory
+                .selectFrom(qAuction)
+                .where(qMemberAuctionBidding.member.memberSeq.eq(authorId))
+                .fetch();
+    }
+
+    public void deleteAuctionByMember(int seq) {
+        queryFactory
+                .delete(qAuction)
+                .where(qMemberAuctionBidding.auction.auctionSeq.eq(seq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .execute();
+    }
+    public void deleteAuctionByArtist(int seq) {
+        queryFactory
+                .delete(qAuction)
+                .where(qMemberAuctionBidding.auction.auctionSeq.eq(seq))
                 .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .execute();
     }

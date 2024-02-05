@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.Auction;
+import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.AuctionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,15 @@ public class AuctionController {
     @DeleteMapping("/{id}")
     public void deleteAuction(@PathVariable int seq) {
         auctionService.deleteAuction(seq);
+    }
+
+    @GetMapping("/mypage/{authorId}")
+    public List<Auction> getAuctionsByAuthor(@PathVariable Long authorId) {
+        return auctionService.getAuctionsBySameAuthor(authorId);
+    }
+
+    @DeleteMapping("/mypage/{authorId}")
+    public void deleteAuctionByAuthor(@PathVariable int seq){
+        auctionService.deleteAuctionByAuthor(seq);
     }
 }

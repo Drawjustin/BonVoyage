@@ -1,14 +1,12 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.QOrderDetail;
-import ArtBridge.ArtBridgelogin.domain.QReviewComment;
-import ArtBridge.ArtBridgelogin.domain.Review;
-import ArtBridge.ArtBridgelogin.domain.ReviewComment;
+import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,22 +24,45 @@ public class ReviewCommentRepository {
     @PostConstruct
     public void init() {queryFactory = new JPAQueryFactory(em);}
 
-
-    public ReviewComment create(ReviewComment reviewComment) {
-        em.persist(reviewComment);
-        return reviewComment;
-    }
-
+    @Transactional(readOnly = true)
     public ReviewComment findOne(Long Commentid) {
         return em.find(ReviewComment.class, Commentid);
     }
-
-    public List<ReviewComment> findAll() {
+    @Transactional(readOnly = true)
+    public List<ReviewComment> findAll(int seq) {
 
         List<ReviewComment> reviewComments = queryFactory
                 .selectFrom(qReviewComment)
+                .where(QReview.review.reviewSeq.eq(seq))
                 .fetch();
 
         return reviewComments;
     }
+    @Transactional
+    public ReviewComment createReviewComment(ReviewComment reviewComment) {
+        em.persist(reviewComment);
+        return reviewComment;
+    }
+    @Transactional
+    public ReviewComment updateReviewComment(Long seq, ReviewComment updatedReviewComment) {
+
+        queryFactory
+                .update(qReviewComment)
+                .where(qReviewComment.member.memberSeq.eq(seq))
+                .set(qReviewComment.reviewCommentContent, updatedReviewComment.getReviewCommentContent())
+                .execute();
+
+        return queryFactory.selectFrom(qReviewComment)
+                .where(qReviewComment.reviewCommentSeq.eq(seq))
+                .fetchOne();
+    }
+    @Transactional
+    public void deleteReviewComment(Long seq) {
+        queryFactory
+                .delete(qReviewComment)
+                .where(qReviewComment.reviewCommentSeq.eq(seq))
+                .execute();
+    }
+
+
 }

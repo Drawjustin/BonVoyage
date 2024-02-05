@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/ReviewComment")
@@ -15,26 +17,29 @@ public class ReviewCommentController {
     // 리뷰 조회 API
     @Autowired
     private ReviewCommentService reviewCommentService;
-    @GetMapping("/{reviewCommentId}")
-    public ResponseEntity<?> getReviewComment(@PathVariable Long reviewCommentId) {
-        // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
-        ReviewComment reviewComment = reviewCommentService.getReviewById(reviewCommentId);
-
-        if (reviewComment != null) {
-            return new ResponseEntity<>(reviewComment, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/{id}")
+    public List<ReviewComment> getAlLReviewComment(@PathVariable int seq) {
+        return reviewCommentService.getAllReviewComment(seq);
     }
 
-    // 리뷰 등록 API
-    @PostMapping
-    public ResponseEntity<?> createReviewComment(@RequestBody ReviewComment review) {
-        // 실제로는 전달받은 review를 데이터베이스에 저장하는 로직이 들어갑니다.
-        reviewCommentService.createReview(review);
+//    @GetMapping("/{id}")
+//    public ReviewComment getReviewCommentById(@PathVariable Long seq) {
+//        return reviewCommentService.findOne(seq);
+//    }
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping("/new")
+    public ReviewComment createReviewComment(@RequestBody ReviewComment reviewComment) {
+        return reviewCommentService.createReviewComment(reviewComment);
     }
 
+    @PutMapping("/{id}")
+    public ReviewComment updateReviewComment(@PathVariable Long seq, @RequestBody ReviewComment updatedReviewComment) {
+        return reviewCommentService.updateReviewComment(seq, updatedReviewComment);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteReviewComment(@PathVariable Long seq) {
+        reviewCommentService.deleteReviewComment(seq);
+    }
 
 }
