@@ -47,6 +47,10 @@ public class ItemService {
         return itemRepository.findLastedItems();
     }
 
+    public List<Item> getItemsBySameAuthor(Long authorId) {
+        return itemRepository.getItemsBySameAuthor(authorId);
+    }
+
     //TODO: Implement this method after resolving artist_seq join
 //    public List<Item> getItemsBySameAuthor(String authorId) {
 //        return itemRepository.findSameAuthorItems(authorId);

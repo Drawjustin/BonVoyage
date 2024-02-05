@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.QItem;
+import ArtBridge.ArtBridgelogin.domain.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -22,6 +23,7 @@ public class ItemRepository {
 
     private final QItem qItem = QItem.item;
 
+    private final QMember qMember = QMember.member;
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -119,5 +121,13 @@ public class ItemRepository {
     @Transactional
     public Item findByIdWithPessimisticLock(int itemId) {
         return em.find(Item.class, itemId, LockModeType.PESSIMISTIC_WRITE);
+    }
+
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> getItemsBySameAuthor(Long authorId) {
+        return queryFactory
+                .selectFrom(qItem)
+                .where(qMember.memberSeq.eq(authorId))
+                .fetch();
     }
 }
