@@ -1,5 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -27,5 +29,6 @@ public class Review {
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_seq")
+    @JsonIgnore
     private Member member;
 }

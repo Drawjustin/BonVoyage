@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
 import ArtBridge.ArtBridgelogin.domain.Connection.SaleLike;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
