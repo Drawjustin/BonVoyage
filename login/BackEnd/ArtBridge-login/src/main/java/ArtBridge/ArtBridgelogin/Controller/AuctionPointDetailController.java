@@ -11,7 +11,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/auctionPointDetail")
+@RequestMapping("/api/auctionPointDetail")
 public class AuctionPointDetailController {
 
     @Autowired

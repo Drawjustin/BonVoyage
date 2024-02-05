@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/artistMentions")
+@RequestMapping("/api/artistMentions")
 @RequiredArgsConstructor
 public class ArtistMentionController {
 

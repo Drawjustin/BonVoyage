@@ -12,7 +12,7 @@ import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "*")
-@RequestMapping("/artistHomepageComment")
+@RequestMapping("/api/artistHomepageComment")
 public class ArtistHomepageCommentController {
 
     @Autowired

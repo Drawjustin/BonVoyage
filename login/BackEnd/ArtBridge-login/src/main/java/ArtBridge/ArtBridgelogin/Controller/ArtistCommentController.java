@@ -10,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/artistMention")
+@RequestMapping("/api/artistMention")
 @RequiredArgsConstructor
 public class ArtistCommentController {
 
