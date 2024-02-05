@@ -31,6 +31,10 @@
     }
 
     .add_btn {
+        background-color: #171de5;
+        border-radius: 8px;
+        border: #171de5;
+        color: #f1efee;
         height: 30px;
         font-size: 12px;
         text-align: center;
@@ -81,7 +85,12 @@
 
 .a_btn {
     // width: 100%;
-    font-weight: bold;
+    // font-weight: bold;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: #f1efee;
+    color: #171de5;
+    background-color: #f1efee;
 }
 
 .a_btn:hover {
@@ -128,7 +137,7 @@
 
 .talk_list::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #8FCACA; /* 스크롤바의 색상 */
+    background: #171de5; /* 스크롤바의 색상 */
     border-radius: 30px;
 }
 
@@ -157,7 +166,7 @@
 }
 
 .close_btn {
-    background-color: white;
+    background-color: #f1efee;
     padding: 0;
     margin: 0 5px 0 0;
     font-weight: bold;
@@ -171,7 +180,7 @@
 .modal_form {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 450px;
 
     input {
         outline: none;
@@ -181,7 +190,7 @@
 .add_title {
     // background-color: #e9e9e9;
     border-radius: 10px;
-    border: 2px solid #cce8e8;
+    border: 2px solid #171de5;
     margin-bottom: 10px;
     height: 5%;
     padding: 10px 13px;
@@ -229,7 +238,7 @@
 
 .add_content_inner::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #8FCACA; /* 스크롤바의 색상 */
+    background: #171de5; /* 스크롤바의 색상 */
     border-radius: 30px;
 }
 
@@ -250,8 +259,8 @@
     width: 70px;
     // height: 10%;
     border-radius: 10px;
-    background-color: #8FCACA;
-    color: #fff;
+    background-color: #171de5;
+    color: #f1efee;
     margin: 0;
     outline: none;
 }
@@ -275,7 +284,7 @@
 
 .talk_list_detail::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
-    background: #8FCACA; /* 스크롤바의 색상 */
+    background: #171de5; /* 스크롤바의 색상 */
     border-radius: 30px;
 }
 

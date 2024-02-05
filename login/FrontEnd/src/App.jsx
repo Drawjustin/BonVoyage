@@ -16,6 +16,7 @@ import MyPage from './pages/MyPage';
 import './pages/HomePage/logo.png';
 import Layout from './components/layout/Layout';
 import ChargePoint from './components/ChargePoint/ChargePoint';
+// import CartPage from './app/CartPage/CartPage'
 
 import dynamic from 'next/dynamic';
 const ThreejsMainPage = dynamic(() => import("../pages/ThreejsMainPage"), { ssr: false });

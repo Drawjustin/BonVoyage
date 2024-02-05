@@ -109,7 +109,7 @@ const PurchaseInfo = () => {
     return (
         <div className={styles.frame_parent}>
         <div className={styles.frame}>
-            <h3 className={styles.title}>구매 내역</h3>
+            <h3 className={styles.title} style={{ color: '#f1efee', fontFamily: 'Gowun Dodum' }}>구매 내역</h3>
             <div className={styles.bigContainer}>
                 <div className={styles.status}>{orderStatus}</div>
                 <div className={`${styles.purchaseContainer} ${orderStatus === '결제 완료' ? styles.completed : styles.shipping}`}>

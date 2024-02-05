@@ -23,7 +23,7 @@ const MyAuctionCal = () => {
 
     return (
         <div>
-            <div className={styles.title}><h3 style={{ paddingLeft: '20px'}}>나의 경매 일정</h3></div>
+            <div className={styles.title}><h3 style={{ paddingLeft: '20px', color: '#f1efee', fontFamily: 'Gowun Dodum' }}>나의 경매 일정</h3></div>
             
             <div>
             <div className={styles.container}>

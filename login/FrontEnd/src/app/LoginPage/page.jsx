@@ -8,6 +8,8 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
+import KakaoLoginButton from './KakaoLoginButton';
+import GoogleLoginButton from './GoogleLoginButton';
 
 const LoginPage = () => {
 
@@ -106,8 +108,22 @@ const LoginPage = () => {
           setPassword('');
         };
 
+
+
+
+        const [loading, setLoading] = useState(false);
+        const [active, setActive] = useState(false);
+
+        const handleButtonClick = () => {
+          setLoading(true);
+          setTimeout(() => {
+            setActive(true);
+          }, 1500);
+        };
+
     return (
-        <div>
+      
+        <div style={{ marginTop: "25vh" }}>
             <Navbar />
     <div className={styles.login_container}>
       {showAlert && (
@@ -121,7 +137,7 @@ const LoginPage = () => {
         <label>
           <button 
             onClick={handleArtistToggle}
-            style={{ backgroundColor: isArtist ? '#7377b6' : 'white',
+            style={{ backgroundColor: isArtist ? '#171de5' : '#f1efee',
             color: isArtist ? 'white' : 'black' }}
             >
             작가</button>
@@ -131,7 +147,7 @@ const LoginPage = () => {
         <label>
           <button
             onClick={handlePersonalToggle}
-            style={{ backgroundColor: !isArtist ? '#7377b6' : 'white',
+            style={{ backgroundColor: !isArtist ? '#171de5' : '#f1efee',
             color: !isArtist ? 'white' : 'black' }}
           >
           개인
@@ -175,6 +191,12 @@ const LoginPage = () => {
         로그인
       </button></div>
     </div>
+
+    <div>
+      <KakaoLoginButton />
+      <GoogleLoginButton />
+
+    </div>
       
       <div className={styles.search_user_info_div}>
         <Link href='/FindId'>아이디 찾기</Link>
@@ -184,6 +206,10 @@ const LoginPage = () => {
 
     </div>
         </div>
+
+
+
+
     )
       }
 

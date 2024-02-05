@@ -25,7 +25,7 @@ const AuctionCal = () => {
   };
 
   return (
-      <div><h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'left', color: '#171de5' }}>경매 일정</h1>
+      <div><h1 style={{ fontSize: '30px', fontWeight: 'bolder', textAlign: 'left', color: '#f1efee' }}>경매 일정</h1>
         {/* <Nav /> */}
         <div className={styles.container}>
         <div className={styles.schedule}>

@@ -10,7 +10,7 @@ const SignupPage = () => {
     return (
         <div>
             <Navbar />
-            <div className={styles.title}>회원가입</div>
+            <div className={styles.title} style={{ color: '#f1efee' }}>회원가입</div>
             <div className={styles.cards}>
                 <div className={styles.card}>
                     <Link href="/SignupPage/SignupArtistPage"><ArtistCard /></Link>

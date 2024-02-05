@@ -42,7 +42,7 @@ const ArtistHomePage = () => {
   return (
     <div>
         <Navbar />
-      <div className={styles.container}>
+      <div style={{ marginTop: '5vh' }} className={styles.container}>
         <div className={styles.contents}>
           <div className={styles.profile}>
               <ArtistProfile />
@@ -50,7 +50,6 @@ const ArtistHomePage = () => {
           <div className={styles.content}>
             <div className={styles.inner_content}>
               <div className={styles.title}>
-                <div className={styles.pagetitle}>안녕하세용 ⸜( ˙ ˘ ˙)⸝♡</div>
                 <div className={styles.selectbtn}>
                   {MAIN_DATA.map((data) => (
                     <button onClick={handleClickButton} name={data.name} key={data.id}

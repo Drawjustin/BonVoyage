@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@700&display=swap');
+
+
 .container {
+    color: #f1efee;
+    min-height: 70vh;
+    margin-top: 20px;
     width: 1000px;
     height: 550px;
     position: relative;
     margin: 0 auto;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 .live_video {
@@ -66,7 +71,7 @@
     // width: 200px;
     height: 150px;
     // background-color: aliceblue;
-    background-color: rgba(0, 0, 0, 0.03);
+    background-color: #f1efee;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     text-align: left;
@@ -79,6 +84,7 @@
     // z-index: 5;
 
     .chat_title {
+        color: #171de5;
         height: 15%;
         font-weight: bold;
     }
@@ -100,7 +106,7 @@
 }
 
 .live_top {
-    background-color: rgba(204, 232, 232, 0.5);
+    background-color: #f1efee;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1);
     // background-color: #cce8e8;
     border-radius: 10px;
@@ -111,6 +117,7 @@
     margin-bottom: 10px;
 
     .title {
+        color: #171de5;
         font-weight: bold;
         margin-bottom: 10px;
     }
@@ -142,7 +149,7 @@
     
     .history::-webkit-scrollbar-thumb {
         height: 30%; /* 스크롤바의 길이 */
-        background: #8FCACA; /* 스크롤바의 색상 */
+        background: #171de5; /* 스크롤바의 색상 */
         border-radius: 30px;
     }
     
@@ -153,7 +160,7 @@
 }
 
 .live_price {
-    background-color: rgba(204, 232, 232, 0.5);
+    background-color: #f1efee;
     box-shadow: 4px 4px 2px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     font-size: 13px;
@@ -161,6 +168,7 @@
     padding: 10px 15px;
 
     .title {
+        color: #171de5;
         font-weight: bold;
         margin-bottom: 10px;
     }
@@ -179,9 +187,35 @@
     .price_btn {
         display: flex;
         justify-content: space-between;
+        font-family: 'Gowun Dodum', sans-serif;
+        color: #f1efee;
+        background-color: #171de5;
+        border: #171de5 solid 1px;
+        padding: 5px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.5s;    
+        display: inline-block;
+        letter-spacing: 0px;
 
         button {
+            font-family: 'Gowun Dodum', sans-serif;
+            color: #f1efee;
+            background-color: #171de5;
+            border: #171de5 solid 1px;
             padding: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.5s;    
+            display: inline-block;
+            letter-spacing: 0px;
+        }
+
+    
+        .button:hover{
+            background: #f1efee;
+            color: #171de5;
+            transition: all 0.5s;
         }
     }
 }

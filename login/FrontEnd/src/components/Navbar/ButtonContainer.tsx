@@ -67,9 +67,10 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
 
 
   let buttonList = [
-    {text: '경매', func: () => navigate.push('/AuctionLivePage')},
+    {text: '판매', func: () => navigate.push('/ProductListPage')},
+    {text: '경매', func: () => navigate.push('/AuctionListPage')},
     {text: '리뷰', func: () => navigate.push('/review')},
-    {text: '작가', func: () => navigate.push('/ArtistHomePage')},
+    {text: '작가', func: () => navigate.push('/ArtistListPage')},
 ];
   if (!isLoggedIn) {
     buttonList.push(
