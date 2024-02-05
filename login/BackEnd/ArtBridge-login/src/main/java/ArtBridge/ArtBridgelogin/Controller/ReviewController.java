@@ -39,7 +39,9 @@ public class ReviewController {
         } else {
             return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
         }
-        System.out.println(reviews);
+        for(int i=0; i<reviews.size(); i++){
+            System.out.println(reviews.get(i));
+        }
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
     // 리뷰 등록 API
