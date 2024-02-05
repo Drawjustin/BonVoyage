@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/Review")
+@RequestMapping("/api/Review")
 public class ReviewController {
     // 리뷰 조회 API
     @Autowired
