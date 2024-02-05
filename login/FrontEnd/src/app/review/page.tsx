@@ -4,11 +4,12 @@ import Container from "@/components/Container";
 import EmptyState from "@/components/EmptyState";
 // import getCurrentUser from "../actions/getCurrentUser";
 // import FloatingButton from "@/components/FloatingButton";
-// import ReviewCard from "@/components/review/ReviewCard";
+import ReviewCard from "@/components/review/ReviewCard";
 // import Pagination from "@/components/Pagination";
 import Carousel from '@/components/carousel/Carousel';
 import styles from './review.module.scss'
 import Navbar from "@/components/Navbar/Navbar";
+import axios from "axios";
 
 // interface ReviewPageProps {
 //   searchParams: ReviewsParams
@@ -26,7 +27,8 @@ export default async function Review({searchParams}: any) {
   // const pageNum = typeof page === 'string' ? Number(page) : 1;
 
 
-  // const reviews = await getReviews(searchParams)
+  const reviews = await axios.get('https://i10a207.p.ssafy.io/api/Review');
+  const reviewsData = reviews.data;
   // const currentUser = await getCurrentUser();
   return (
     <Container>
@@ -34,23 +36,23 @@ export default async function Review({searchParams}: any) {
       <Carousel
             carouselList={CAROUSEL_IMAGES}
           />
-      {/* {
+      {
         reviews.data?.length === 0
         ?
         <EmptyState showReset />
         :
         <>
           <div className={styles.Cards}>
-            {reviews.data?.map((review) =>
+            {reviewsData.map((review:any) =>
             <ReviewCard
-              currentUser={currentUser}
-              key={review.id}
+              currentUser={true}
+              key={review.reviewSeq}
               data={review}
             />)}
             
           </div>
         </>
-      } */}
+      }
       <div className={styles.Pagination}>
       {/* <Pagination page={pageNum} totalItems={reviews.totalItems} /> */}
       </div>

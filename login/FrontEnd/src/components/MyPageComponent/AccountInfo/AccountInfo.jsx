@@ -62,7 +62,7 @@ const AccountInfo = () => {
         setPasswordMatchError('');
     };
 
-    const handlePasswordConfirm = () => {
+    async function handlePasswordConfirm(){
         if (accountData.password === currentPassword) {
             setEditableFields({
                 password: true,

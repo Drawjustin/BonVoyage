@@ -59,6 +59,16 @@ const ArtistPortfolio = () => {
         children: newItemText,
       };
 
+      // axios.post(`${process.env.BACKEND_URL}/timeline`, newItem)
+      //   .then((response) => {
+      //     setTimelineItems((prevItems) => [...prevItems, response.data]);
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error:', error);
+      //   });
+
+      console.log(newItem)
+
       setTimelineItems((prevItems) => [...prevItems, newItem]);
       setNewItemText('');
       setIsEditMode(false);

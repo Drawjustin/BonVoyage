@@ -7,10 +7,12 @@ export const fetchProducts = createAsyncThunk(
         try {
             let response;
             if (category) {
-                response = await axios.get(`https://fakestoreapi.com/products/category/${category}`);
+                response = await axios.get('https://i10a207.p.ssafy.io:80/api/item');
             } else {
-                response = await axios.get("https://fakestoreapi.com/products");
+                response = await axios.get('https://i10a207.p.ssafy.io:80/api/item');
             }
+
+            console.log(response);
 
             return response.data; //payload
         } catch (error) {

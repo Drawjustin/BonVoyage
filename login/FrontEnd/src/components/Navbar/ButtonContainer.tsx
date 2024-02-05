@@ -57,13 +57,15 @@ interface buttonHandlerProps {}
 
 export const ButtonContainer = ({}: buttonHandlerProps) => {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const {data: session, status} = useSession() || {data:null};
 
-  useEffect(() => {
-    const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    setIsLoggedIn(storedIsLoggedIn === 'true');
-  }, [])
+  // useEffect(() => {
+  //   const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+
+  //   setIsLoggedIn(storedIsLoggedIn === 'true');
+  // }, [])
 
 
   let buttonList = [
@@ -72,7 +74,7 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
     {text: '리뷰', func: () => navigate.push('/review')},
     {text: '작가', func: () => navigate.push('/ArtistListPage')},
 ];
-  if (!isLoggedIn) {
+  if (!session) {
     buttonList.push(
       { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
@@ -81,7 +83,7 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
     buttonList.push(
       { text: '장바구니', func: () => navigate.push('/CartPage') },
       { text: '마이페이지', func: () => navigate.push('/MyPage') },
-      { text: '로그아웃', func: () => sessionStorage.setItem('isLoggedIn', 'false') },
+      { text: '로그아웃', func: () => signOut() },
     );
   }
   

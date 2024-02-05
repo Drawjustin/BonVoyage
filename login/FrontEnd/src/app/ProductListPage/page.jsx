@@ -3,9 +3,19 @@ import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
 import store from '@/store';
 import Categories from '@/components/categories/Categories/Categories';
-import Navbar from '../../components/Navbar/Navbar';
+import axios from 'axios';
 
-const ProductListPage = () => {
+export default async function ProductListPage () {
+
+  try{
+    const response = await axios.get('https://i10a207.p.ssafy.io/api/item');
+    //console.log(response.data);
+  } catch (error) {
+    console.log("에러", error);
+  }
+  
+  
+
   return (
     <div className='page'>
       <Navbar />
@@ -16,5 +26,3 @@ const ProductListPage = () => {
     </div>
   );
 };
-
-export default ProductListPage;
