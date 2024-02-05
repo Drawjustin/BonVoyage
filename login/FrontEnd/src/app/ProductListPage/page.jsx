@@ -7,7 +7,6 @@ import axios from 'axios';
 
 export default async function ProductListPage () {
 
-  console.log('Check');
   try{
     const response = await axios.get('https://i10a207.p.ssafy.io/api/item');
     //console.log(response.data);
