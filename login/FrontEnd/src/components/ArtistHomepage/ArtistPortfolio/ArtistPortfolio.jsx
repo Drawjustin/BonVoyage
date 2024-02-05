@@ -50,7 +50,7 @@ const ArtistPortfolio = () => {
         children: newItemText,
       };
 
-      // axios.post('http://localhost:8080/api/timeline', newItem)
+      // axios.post(`${process.env.BACKEND_URL}/timeline`, newItem)
       //   .then((response) => {
       //     setTimelineItems((prevItems) => [...prevItems, response.data]);
       //   })

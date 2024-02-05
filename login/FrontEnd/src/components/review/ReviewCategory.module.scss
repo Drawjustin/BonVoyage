@@ -1,0 +1,28 @@
+.myComponent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4rem;
+  
+    &__icon {
+      font-size: 2.5rem; // Adjust as needed
+      color: #6b7280; // Adjust color as needed
+    }
+  
+    &__content {
+      display: flex;
+      flex-direction: column;
+  
+      &__label {
+        font-size: 1.5rem; // Adjust as needed
+        font-weight: bold;
+      }
+  
+      &__description {
+        font-size: 1rem; // Adjust as needed
+        font-weight: light;
+        color: #6b7280; // Adjust color as needed
+      }
+    }
+  }
+  

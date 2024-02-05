@@ -69,6 +69,7 @@ export const ButtonContainer = ({}: buttonHandlerProps) => {
 
 
   let buttonList = [
+    {text: '상품', func: () => navigate.push('/ProductListPage')},
     {text: '경매', func: () => navigate.push('/AuctionLivePage')},
     {text: '리뷰', func: () => navigate.push('/review')},
     {text: '작가', func: () => navigate.push('/ArtistHomePage')},
