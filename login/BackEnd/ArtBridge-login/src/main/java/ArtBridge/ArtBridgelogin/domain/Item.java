@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.SaleLike;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -41,6 +42,7 @@ public class Item {
 
     // Many-to-One relationship with Artist
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "artist_seq", nullable = false)
     private Artist artist;
 

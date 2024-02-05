@@ -69,6 +69,5 @@ public class Artist {
     private List<OrderDetail> orderDetails;
 
     @OneToMany(mappedBy = "artist")
-    @JsonIgnore
     private List<Item> items;
 }
