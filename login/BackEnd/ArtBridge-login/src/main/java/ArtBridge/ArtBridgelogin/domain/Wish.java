@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -17,11 +18,13 @@ public class Wish {
 
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Item
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "item_seq")
     private Item item;
 }

@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -52,6 +53,7 @@ public class Auction implements Serializable {
     private LocalDateTime auctionWinDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "item_seq")
     private Item item;
 

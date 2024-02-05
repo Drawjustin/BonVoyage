@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -29,10 +30,12 @@ public class ArtistHomepageComment {
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "artist_seq")
     private Artist artist;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "member_seq")
     private Member member;
 

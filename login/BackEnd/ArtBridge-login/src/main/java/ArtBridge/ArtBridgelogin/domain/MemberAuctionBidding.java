@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,11 +17,13 @@ public class MemberAuctionBidding {
 
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Auction
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 
