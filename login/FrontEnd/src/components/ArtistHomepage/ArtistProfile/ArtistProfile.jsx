@@ -54,7 +54,7 @@ const Profile = () => {
             <div>Email : abcd123@naver.com </div>
             <div>
               <div>상태 메세지</div>
-              <div style={{ width: '135px', height: '30px', backgroundColor: '#a2a5f7' }}>
+              <div style={{ width: '135px', height: '30px', backgroundColor: '#a2a5f7', color: '#6e6e6e' }}>
 
               </div>
             </div>
