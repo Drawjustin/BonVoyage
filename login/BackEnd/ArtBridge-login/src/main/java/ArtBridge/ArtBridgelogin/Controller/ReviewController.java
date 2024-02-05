@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
+import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/Review")
+@RequestMapping("/api/Review")
 public class ReviewController {
     // 리뷰 조회 API
     @Autowired
@@ -19,7 +22,28 @@ public class ReviewController {
     public ResponseEntity<?> getReview(@PathVariable Integer reviewId) {
         return reviewService.getReviewById(reviewId);
     }
+    @GetMapping
+    public ResponseEntity<?> getAllReviews(@RequestParam(required = false) String sort) {
+        List<Review> reviews;
 
+
+        if (sort == null) {
+            // 전체 아이템 조회 로직
+            reviews = reviewService.getAllReviews();
+        } else if (sort.equals("popular")) {
+            // 인기 아이템 조회 로직
+            reviews = reviewService.getAllReviews();
+        } else if (sort.equals("new")) {
+            // 최신 아이템 조회 로직
+            reviews = reviewService.getAllReviews();
+        } else {
+            return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
+        }
+        for(int i=0; i<reviews.size(); i++){
+            System.out.println(reviews.get(i));
+        }
+        return new ResponseEntity<>(reviews, HttpStatus.OK);
+    }
     // 리뷰 등록 API
     @PostMapping
     public ResponseEntity<Void> createReview(@RequestBody Review review) {

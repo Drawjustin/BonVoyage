@@ -17,6 +17,9 @@ public class Review {
     @Column(name = "review_seq", nullable = false)
     private Integer reviewSeq;
 
+    @Column(name="review_title",nullable = true)
+    private String reviewTitle;
+
     @Column(name = "review_content",nullable = false)
     private String reviewContent;
 
