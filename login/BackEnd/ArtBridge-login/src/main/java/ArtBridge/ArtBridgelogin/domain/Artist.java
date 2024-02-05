@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -68,5 +69,6 @@ public class Artist {
     private List<OrderDetail> orderDetails;
 
     @OneToMany(mappedBy = "artist")
+    @JsonIgnore
     private List<Item> items;
 }
