@@ -26,6 +26,7 @@ public class ReviewController {
     public ResponseEntity<?> getAllReviews(@RequestParam(required = false) String sort) {
         List<Review> reviews;
 
+
         if (sort == null) {
             // 전체 아이템 조회 로직
             reviews = reviewService.getAllReviews();
@@ -38,7 +39,7 @@ public class ReviewController {
         } else {
             return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
         }
-
+        System.out.println(reviews);
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
     // 리뷰 등록 API
