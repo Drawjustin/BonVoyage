@@ -52,15 +52,9 @@ const Profile = () => {
           <div className={styles.info}>
             <button className={styles.port_btn} style={{ border: '#171de5 solid 1px', borderRadius: '8px', color: '#f1efee', fontFamily: 'Gowun Dodum' }}>📁 작가의 포트폴리오</button>
             <div>Email : abcd123@naver.com </div>
-            <div>
-              <div>상태 메세지</div>
-              <div style={{ width: '135px', height: '30px', backgroundColor: '#a2a5f7', color: '#6e6e6e' }}>
-
-              </div>
             </div>
           </div>
         </div>
-      </div>
   )
 }
 

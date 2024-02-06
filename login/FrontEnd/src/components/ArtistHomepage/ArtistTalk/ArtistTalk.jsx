@@ -137,30 +137,31 @@ const ArtistTalk = () => {
               </button>
               <Rodal visible={visible} onClose={hide} showCloseButton={false}
                 customStyles={{
-                  width: '700px',
-                  height: '600px',
-                  padding: '30px 30px 0px 30px',
+                  width: '65%',
+                  height: '80%',
+                  padding: '30px',
                   borderRadius: '20px',
+                  overflow: 'hidden',
                 }}>
                 <div className={styles.modal_title}>
                   <div>글 작성하기</div>
-                  <button className={styles.close_btn} onClick={hide}>x</button>
+                  <button className={styles.close_btn} onClick={hide}>X</button>
                 </div>
-                <form className={styles.modal_form}>
-                  <input type="text" className={styles.add_title} placeholder="제목을 입력하세요." />
-                  <div className={styles.add_content2}>
-                    <ReactQuill
-                      theme="snow"
-                      modules={modules}
-                      formats={formats}
-                      className={styles.quill_style}
-                      value={quillValue || ""}
-                      onChange={handleQuillChange}
-                    />
-                  </div>
-                  <div className={styles.submit}>
-                    <input type="submit" className={styles.submit_btn} />
-                  </div>
+                <form className={styles.modal_form} style={{ display: 'flex', flexDirection: 'column', height: '92%' }}>
+                <input type="text" className={styles.add_title} placeholder="제목을 입력하세요." />
+                <div className={`${styles.add_content2} ql-container ql-snow`} style={{ flex: 1, overflowY: 'auto' }}>
+                  <ReactQuill
+                    theme="snow"
+                    modules={modules}
+                    formats={formats}
+                    className={styles.quill_style}
+                    value={quillValue || ""}
+                    onChange={handleQuillChange}
+                  />
+                </div>
+                <div className={styles.submit} style={{ marginTop: '10px', textAlign: 'center' }}>
+                  <input type="submit" className={styles.submit_btn} />
+                </div>
                 </form>
               </Rodal>
             </div>

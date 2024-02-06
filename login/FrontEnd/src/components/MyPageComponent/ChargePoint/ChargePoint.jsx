@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from './ChargePoint.module.scss';
+import axios from 'axios';
 
 import kakao from './kakaopay.png';
 import naver from './/naverpay.png';
@@ -21,14 +22,37 @@ const ChargePoint = () => {
         setChargedPoints(roundedPoints);
     };
 
-    const handleChargePoints = () => {
-        const enteredPoints = parseInt(inputValue, 10) || 0; 
-        const roundedPoints = Math.floor(enteredPoints / 1000) * 1000;
-        setChargedPoints(chargedPoints + roundedPoints);
-        setRemainingPoints(remainingPoints + roundedPoints);
-        setInputValue('');
+    const handleChargePoints = async () => {
+        const enteredPoints = parseInt(inputValue, 10) || 0;
 
-        updateRemainingPoints(remainingPoints + roundedPoints);
+        // 서버에 결제 요청 보내기
+        try {
+            const response = await axios.post('http://localhost:3001/charge/kakao', {
+              amount: enteredPoints,  // 결제할 금액 정보 등 필요한 정보 전달
+              // 다른 결제 정보들도 필요한 경우 추가
+            });
+
+            // 서버 응답으로 받은 카카오페이 결제 창 URL로 이동
+            window.location.href = response.data.next_redirect_pc_url;
+        } catch (error) {
+            console.error('카카오페이 결제 요청 실패:', error);
+        }
+    }
+
+    const handleNaverPayClick = async () => {
+        // 네이버페이 간편 결제로 이동하는 코드 작성
+        try {
+            // 네이버페이 간편 결제에 필요한 정보를 서버에 전달
+            const response = await axios.post('http://localhost:3001/charge/naver', {
+              amount: chargedPoints,  // 네이버페이에 전달할 결제 금액
+              // 다른 결제 정보들도 필요한 경우 추가
+            });
+
+            // 서버 응답으로 받은 네이버페이 간편 결제 URL로 이동
+            window.location.href = response.data.naverPayUrl;
+        } catch (error) {
+            console.error('네이버페이 간편 결제 요청 실패:', error);
+        }
     };
 
     return (
@@ -57,7 +81,7 @@ const ChargePoint = () => {
                 <div className={styles.pointsContainer}><p className={styles.points}>남은 포인트</p><p className={styles.points}>{remainingPoints}</p></div>
                 <div className={styles.pointsContainer}><p className={styles.points}>충전 후 포인트</p><p className={styles.points}>{chargedPoints}</p></div>    
                 <br />
-                <button className={styles.point_button} onClick={handleChargePoints}>충전</button>
+
             </div>
 
             
@@ -72,10 +96,10 @@ const ChargePoint = () => {
                         <div>  
                             <div className={styles.pay_align}>
                                 <div className={styles.nav_button}>
-                                    <img className={styles.pay} src={kakao} alt="카카오" />
+                                    <img className={styles.pay} src={kakao} alt="카카오"  onClick={handleChargePoints} />
                                 </div>
                                 <div className={styles.nav_button}>
-                                    <img className={styles.pay} src={naver} alt="네이버" />
+                                    <img className={styles.pay} src={naver} alt="네이버" onClick={handleNaverPayClick}/>
                                 </div>
                                 <div className={styles.nav_button}>
                                     <img className={styles.pay} src={toss} alt="토스" />

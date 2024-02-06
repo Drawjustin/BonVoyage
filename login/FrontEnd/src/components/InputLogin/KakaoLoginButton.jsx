@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import KakaoLogin from 'react-kakao-login';
 import kakaobutton from './kakao_login.png';

@@ -1,4 +1,5 @@
 .title {
+    font-size: calc(1.3rem + 0.6vw);
     font-size: 24px;
     padding-left: 20px;
     text-align: left;
@@ -18,7 +19,9 @@
 }
 // PurchaseHistory.scss
 .bigContainer {
-  width: 600px;
+  display: flex;
+  flex-direction: column;
+  width: 650px;
   background-color: #f1efee;
   padding: 20px;
   margin-bottom: 20px;
@@ -53,6 +56,7 @@
         width: 10px; /* 사진의 너비 조절 */
         height: auto; /* 높이 자동 조절 */
         margin-right: 10px;
+        padding-right: 10px;
       }
   
       .additionalInfo {

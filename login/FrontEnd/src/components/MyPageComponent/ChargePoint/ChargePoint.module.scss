@@ -1,12 +1,17 @@
-.point_charge {
+.charge_point {
   color: white;
+  margin-left: 25px;
 }
 
 .payment {
   text-align: left;
+  font-size: large;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .payment_container {
+  font-family: 'Gowun Dodum', sans-serif;
   color: black;
   width: 100%;
   height: 80%;
@@ -75,8 +80,8 @@
   justify-content: center;
   width: 55px;
   height: 50px;
-  border: 2.2px solid rgb(62, 62, 62); 
-  border-radius: 20%;
+  border: 2px solid #171de5; 
+  border-radius: 8px;
 }
 
 .pay_align {
@@ -88,7 +93,8 @@
 }
 
 .choice {
-  margin-left: 40px;
+  font-size: medium;
+  margin-left: 25px;
   margin-right: 40px;
   text-align: left;
 }
@@ -101,6 +107,8 @@
 }
 
 .point_input {
+  margin-bottom: 5px;
+  height: 10%;
   width: 75%;
   padding: 10px;
   border: 3px solid white; 
@@ -109,7 +117,7 @@
   outline: none;
   box-sizing: border-box;
   color: white;
-  margin-left: 10px;
+  margin-left: 25px;
   margin-right: 10px;
 }
 
@@ -121,6 +129,12 @@
 }
 
 .point_button {
+  font-family: 'Gowun Dodum', sans-serif;
+  border: #f1efee solid 1px;
+  color: #171de5;
+  background-color: #f1efee;
+  border-radius: 8px;
+  margin-left: 140px;
   font-size: small;
 
 }
@@ -132,7 +146,7 @@
 
 .info {
   font-size: small;
-  margin-left: 40px;
+  margin-left: 25px;
   margin-right: 40px;
   text-align: left;
 }
