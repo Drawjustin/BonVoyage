@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from './ChargePoint.module.scss';
+import axios from 'axios';
 
 import kakao from './kakaopay.png';
 import naver from './/naverpay.png';
@@ -37,6 +38,22 @@ const ChargePoint = () => {
             console.error('카카오페이 결제 요청 실패:', error);
         }
     }
+
+    const handleNaverPayClick = async () => {
+        // 네이버페이 간편 결제로 이동하는 코드 작성
+        try {
+            // 네이버페이 간편 결제에 필요한 정보를 서버에 전달
+            const response = await axios.post('http://localhost:3001/charge/naver', {
+              amount: chargedPoints,  // 네이버페이에 전달할 결제 금액
+              // 다른 결제 정보들도 필요한 경우 추가
+            });
+
+            // 서버 응답으로 받은 네이버페이 간편 결제 URL로 이동
+            window.location.href = response.data.naverPayUrl;
+        } catch (error) {
+            console.error('네이버페이 간편 결제 요청 실패:', error);
+        }
+    };
 
     return (
         <div className={styles.payment_page}>
@@ -82,7 +99,7 @@ const ChargePoint = () => {
                                     <img className={styles.pay} src={kakao} alt="카카오"  onClick={handleChargePoints} />
                                 </div>
                                 <div className={styles.nav_button}>
-                                    <img className={styles.pay} src={naver} alt="네이버" />
+                                    <img className={styles.pay} src={naver} alt="네이버" onClick={handleNaverPayClick}/>
                                 </div>
                                 <div className={styles.nav_button}>
                                     <img className={styles.pay} src={toss} alt="토스" />

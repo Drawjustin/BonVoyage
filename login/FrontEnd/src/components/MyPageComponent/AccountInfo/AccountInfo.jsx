@@ -90,11 +90,14 @@ const AccountInfo = () => {
     };
 
     
-
-
+    
+    
     return (
         <div style={{ width: '600px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent:'space-between'}}>
         <h3 className={styles.title} style={{ color: '#f1efee', fontSize: 'calc(1.3rem + .6vw)' }}>계정 정보</h3>
+        <button onClick={handleSave}>전체 저장</button>
+        </div>
         <div  className={styles.account_info}>
             <div>
             <div className={styles.info_item}>
@@ -112,29 +115,36 @@ const AccountInfo = () => {
             <div className={styles.info_item}>
                 <p>비밀번호</p>
                 {editableFields.password ? (
-                    <>
-                    <input
-                      type="password"
-                      placeholder="기존 비밀번호 입력"
-                      value={currentPassword}
-                      onChange={(e) => setCurrentPassword(e.target.value)}
-                    />
-                    <button onClick={handlePasswordConfirm}>확인</button>
-                    {passwordMatchError && <span style={{ color: 'red' }}>{passwordMatchError}</span>}
-                    <input
-                      type="password"
-                      placeholder="새로운 비밀번호 입력"
-                      value={newPassword}
-                      onChange={handleNewPasswordChange}
-                    />
-                    <input
-                      type="password"
-                      placeholder="새로운 비밀번호 확인"
-                      value={confirmNewPassword}
-                      onChange={handleConfirmNewPasswordChange}
-                      onBlur={handleConfirmPasswordMatch}
-                    />
-                  </>
+                    <div>
+                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                            <input
+                            type="password"
+                            placeholder="기존 비밀번호 입력"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            />
+                            <button onClick={handlePasswordConfirm}>확인</button>
+                        </div>
+
+                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                            {passwordMatchError && <span style={{ color: 'red', fontFamily: 'Gowun Dodum' }}>{passwordMatchError}</span>}
+                            <input
+                            type="password"
+                            placeholder="새로운 비밀번호 입력"
+                            value={newPassword}
+                            onChange={handleNewPasswordChange}
+                            />
+                        </div>
+                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                            <input
+                            type="password"
+                            placeholder="새로운 비밀번호 확인"
+                            value={confirmNewPassword}
+                            onChange={handleConfirmNewPasswordChange}
+                            onBlur={handleConfirmPasswordMatch}
+                            />
+                        </div>
+                  </div>
                 ) : (
                     <span className={styles.container}></span>
                 )}
@@ -162,11 +172,10 @@ const AccountInfo = () => {
                 ) : (
                     <span className={styles.container}>{accountData.nickname}</span>
                 )}
-                <button onClick={() => toggleEdit('nickname')}>
+                <button onClick={() => toggleEdit('nickname')} style={{ width: '45px' }}>
                     {editableFields.nickname ? '저장' : '수정'}
                 </button>
             </div>
-            <button onClick={handleSave}>전체 저장</button>
             </div>
         </div>
     </div>
