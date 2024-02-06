@@ -53,11 +53,11 @@ public class QItem extends EntityPathBase<Item> {
     }
 
     public QItem(Path<? extends Item> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QItem(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QItem(PathMetadata metadata, PathInits inits) {

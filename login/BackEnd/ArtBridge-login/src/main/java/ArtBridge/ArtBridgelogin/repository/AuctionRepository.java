@@ -36,11 +36,11 @@ public class AuctionRepository {
         return auction;
     }
 
-    public Auction findOne(int seq){
+    public Auction readOne(int seq){
         return em.find(Auction.class, seq);
     }
 
-    public List<Auction> findAll() {
+    public List<Auction> readAll() {
         return queryFactory
                 .selectFrom(qAuction)
                 .fetch();
@@ -88,7 +88,7 @@ public class AuctionRepository {
                 .execute();
     }
 
-    public List<Auction> getAuctionsBySameAuthor(Long authorId) {
+    public List<Auction> readAuctionsBySameAuthor(Long authorId) {
         return queryFactory
                 .selectFrom(qAuction)
                 .where(qMemberAuctionBidding.member.memberSeq.eq(authorId))

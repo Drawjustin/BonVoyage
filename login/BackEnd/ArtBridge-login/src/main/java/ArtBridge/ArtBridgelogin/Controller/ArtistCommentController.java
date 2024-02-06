@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
-import ArtBridge.ArtBridgelogin.service.ArtistMentionService;
+import ArtBridge.ArtBridgelogin.test.ArtistMentionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ public class ArtistCommentController {
     private final ArtistMentionService artistMentionService;
 
     @GetMapping
-    public List<ArtistMention> getAllMArtistMention() {
-        return artistMentionService.getAllArtistsMention();
+    public List<ArtistMention> readAllMArtistMention() {
+        return artistMentionService.readAllArtistsMention();
     }
 
     @GetMapping("/{id}")
-    public ArtistMention getArtistMentionById(@PathVariable Long id) {
-        return artistMentionService.findOne(id);
+    public ArtistMention readArtistMentionById(@PathVariable Long id) {
+        return artistMentionService.readOne(id);
     }
 
     @PostMapping("/new")

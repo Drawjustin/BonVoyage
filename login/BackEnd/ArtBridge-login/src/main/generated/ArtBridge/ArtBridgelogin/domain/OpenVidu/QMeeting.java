@@ -33,11 +33,11 @@ public class QMeeting extends EntityPathBase<Meeting> {
     }
 
     public QMeeting(Path<? extends Meeting> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QMeeting(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QMeeting(PathMetadata metadata, PathInits inits) {
@@ -46,7 +46,7 @@ public class QMeeting extends EntityPathBase<Meeting> {
 
     public QMeeting(Class<? extends Meeting> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.auction = inits.isInitialized("auction") ? new ArtBridge.ArtBridgelogin.domain.QAuction(forProperty("auction"), inits.get("auction")) : null;
+        this.auction = inits.isInitialized("auction") ? new ArtBridge.ArtBridgelogin.domain.QAuction(forProperty("auction"), inits.read("auction")) : null;
     }
 
 }

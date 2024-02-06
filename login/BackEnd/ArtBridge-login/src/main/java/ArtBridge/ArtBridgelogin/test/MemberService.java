@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.service;
+package ArtBridge.ArtBridgelogin.test;
 
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
@@ -9,11 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,34 +20,30 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Transactional(readOnly = true)
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
-    }
 
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public Member findOne(Long seq) {
-        return memberRepository.findOne(seq);
-    }
-
+    //Todo: CREATE
     @Transactional
     public Member createMember(Member member) {
         return memberRepository.create(member);
     }
 
+
+    //Todo: READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public ResponseEntity<?> findMemberId(String memberId){
-        return memberRepository.findMemberById(memberId);
+    public Member readOne(Long seq) {
+        return memberRepository.readOne(seq);
     }
-
-    @Transactional
-    public Member updateMember(String id, Member updatedMember) {
-        return memberRepository.updateMember(id, updatedMember);
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Member> readAllMembers() {
+        return memberRepository.readAll();
     }
-
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public ResponseEntity<?> readMemberId(String memberId){
+        return memberRepository.readMemberById(memberId);
+    }
     @Transactional
     public ResponseEntity<?> login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
-        Member member = (Member) memberRepository.findMemberById(userId).getBody();
+        Member member = (Member) memberRepository.readMemberById(userId).getBody();
 
         if (member != null) {
             if (member.getMemberPwd().equals(password)) {
@@ -65,8 +59,17 @@ public class MemberService {
         }
     }
 
+
+    //Todo: UPDATE
+    @Transactional
+    public Member updateMember(String id, Member updatedMember) {
+        return memberRepository.updateMember(id, updatedMember);
+    }
+
+
+    //Todo: DELETE
+    @Transactional
     public void deleteMember(Long id) {
         memberRepository.deleteById(id);
     }
-
 }

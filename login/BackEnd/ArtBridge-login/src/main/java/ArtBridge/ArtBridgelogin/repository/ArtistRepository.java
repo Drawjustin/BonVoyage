@@ -33,14 +33,14 @@ public class ArtistRepository {
         return artist;
     }
 
-    public Artist findArtistById(String artistId) {
+    public Artist readArtistById(String artistId) {
         return queryFactory
                 .selectFrom(qArtist)
                 .where(qArtist.artistId.eq(artistId))
                 .fetchOne();
     }
 
-    public List<Artist> findAll() {
+    public List<Artist> readAll() {
         return queryFactory
                 .selectFrom(qArtist)
                 .fetchAll()
@@ -73,7 +73,7 @@ public class ArtistRepository {
     }
 
 
-    public Artist findByName(String name) {
+    public Artist readByName(String name) {
         return queryFactory
                 .selectFrom(qArtist)
                 .where(qArtist.artistName.eq(name))

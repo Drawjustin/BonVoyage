@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.service;
+package ArtBridge.ArtBridgelogin.test;
 
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
@@ -54,7 +54,7 @@ public class MemberServiceTest {
         Member chMember = memberService.createMember(member);
 
         //then
-        assertEquals(chMember, memberRepository.findOne(chMember.getMemberSeq()));
+        assertEquals(chMember, memberRepository.readOne(chMember.getMemberSeq()));
     }
 
     @Test

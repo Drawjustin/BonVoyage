@@ -34,14 +34,14 @@ public class ArtistMentionCommentRepository {
     }
 
     @Transactional(readOnly = true)
-    public ArtistMentionComment findOne(Long seq) {
+    public ArtistMentionComment readOne(Long seq) {
         return queryFactory
                 .selectFrom(qArtistMentionComment)
                 .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
                 .fetchOne();
     }
 
-    public List<ArtistMentionComment> findAll() {
+    public List<ArtistMentionComment> readAll() {
         return queryFactory
                 .selectFrom(qArtistMentionComment)
                 .fetch();

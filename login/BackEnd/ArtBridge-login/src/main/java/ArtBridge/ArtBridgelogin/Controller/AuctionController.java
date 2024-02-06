@@ -1,11 +1,8 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.Auction;
-import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.service.AuctionService;
-import lombok.RequiredArgsConstructor;
+import ArtBridge.ArtBridgelogin.test.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,10 +16,10 @@ public class AuctionController {
     private AuctionService auctionService;
 
     @GetMapping
-    public List<Auction> getAlLAuction() {return auctionService.getAllAuction();}
+    public List<Auction> readAlLAuction() {return auctionService.readAllAuction();}
 
     @GetMapping("/{id}")
-    public Auction findAuctionById(@PathVariable int seq) {return auctionService.findOne(seq);}
+    public Auction readAuctionById(@PathVariable int seq) {return auctionService.readOne(seq);}
 
     @PostMapping("/new")
     public Auction createAuction(@RequestBody Auction Auction) {
@@ -40,12 +37,9 @@ public class AuctionController {
     }
 
     @GetMapping("/mypage/{authorId}")
-    public List<Auction> getAuctionsByAuthor(@PathVariable Long authorId) {
-        return auctionService.getAuctionsBySameAuthor(authorId);
+    public List<Auction> readAuctionsByAuthor(@PathVariable Long authorId) {
+        return auctionService.readAuctionsBySameAuthor(authorId);
     }
 
-    @DeleteMapping("/mypage/{authorId}")
-    public void deleteAuctionByAuthor(@PathVariable int seq){
-        auctionService.deleteAuctionByAuthor(seq);
-    }
+
 }

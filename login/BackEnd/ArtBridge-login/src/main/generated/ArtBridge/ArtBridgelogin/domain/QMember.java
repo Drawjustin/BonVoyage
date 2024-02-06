@@ -67,7 +67,7 @@ public class QMember extends EntityPathBase<Member> {
     }
 
     public QMember(Path<? extends Member> path) {
-        super(path.getType(), path.getMetadata());
+        super(path.readType(), path.readMetadata());
     }
 
     public QMember(PathMetadata metadata) {

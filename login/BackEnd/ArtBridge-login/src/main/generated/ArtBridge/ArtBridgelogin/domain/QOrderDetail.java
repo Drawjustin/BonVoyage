@@ -59,11 +59,11 @@ public class QOrderDetail extends EntityPathBase<OrderDetail> {
     }
 
     public QOrderDetail(Path<? extends OrderDetail> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QOrderDetail(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QOrderDetail(PathMetadata metadata, PathInits inits) {
@@ -73,8 +73,8 @@ public class QOrderDetail extends EntityPathBase<OrderDetail> {
     public QOrderDetail(Class<? extends OrderDetail> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.artist = inits.isInitialized("artist") ? new QArtist(forProperty("artist")) : null;
-        this.auction = inits.isInitialized("auction") ? new QAuction(forProperty("auction"), inits.get("auction")) : null;
-        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.get("item")) : null;
+        this.auction = inits.isInitialized("auction") ? new QAuction(forProperty("auction"), inits.read("auction")) : null;
+        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.read("item")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 

@@ -30,20 +30,20 @@ public class ArtistMentionRepository {
         return artistMention;
     }
 
-    public ArtistMention findOne(Long artistMentionSeq) {
+    public ArtistMention readOne(Long artistMentionSeq) {
         ArtistMention artistMention = queryFactory
                 .selectFrom(qArtistMention)
                 .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
                 .fetchOne();
 
         if (artistMention == null) {
-            throw new IllegalStateException("Cannot find ArtistMention with id: " + artistMentionSeq);
+            throw new IllegalStateException("Cannot read ArtistMention with id: " + artistMentionSeq);
         }
 
         return artistMention;
     }
 
-    public List<ArtistMention> findAll() {
+    public List<ArtistMention> readAll() {
         return queryFactory
                 .selectFrom(qArtistMention)
                 .stream().toList();

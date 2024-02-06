@@ -33,17 +33,17 @@ public class OrderDetailRepository {
         return orderDetail;
     }
 
-    public OrderDetail findOne(Long id){return em.find(OrderDetail.class, id);}
+    public OrderDetail readOne(Long id){return em.find(OrderDetail.class, id);}
 
-    public List<OrderDetail> findAll(){
-        List<OrderDetail> orderDetails = queryFactory
+    public List<OrderDetail> readAll(){
+        List<OrderDetail> orderDetails =
+                queryFactory
                 .selectFrom(qOderdetail)
                 .fetch();
 
         return orderDetails;
     }
 
-    // TODO: Upate
     public void updateMember(Long id, String newUsername, String newPassword) {
         // Querydsl 사용하여 해당 ID에 해당하는 Member 조회
         QMember qMember = QMember.member;

@@ -36,14 +36,14 @@ public class MemberRepository {
         return member;
     }
 
-    public Member findOne(Long id){return em.find(Member.class, id);}
+    public Member readOne(Long id){return em.find(Member.class, id);}
 
-    public List<Member> findAll(){
+    public List<Member> readAll(){
         return queryFactory
                 .selectFrom(qMember)
                 .fetch();
     }
-    public ResponseEntity<?> findMemberById(String memberId) {
+    public ResponseEntity<?> readMemberById(String memberId) {
         Member member = queryFactory
                 .selectFrom(qMember)
                 .where(qMember.memberId.eq(memberId))

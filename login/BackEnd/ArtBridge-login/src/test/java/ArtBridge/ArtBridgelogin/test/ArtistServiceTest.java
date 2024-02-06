@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.service;
+package ArtBridge.ArtBridgelogin.test;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
@@ -11,9 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -65,7 +63,7 @@ public class ArtistServiceTest {
         Artist chArtist = artistService.createArtist(artist);
 
         //then
-        assertEquals(chArtist, artistRepository.findArtistById(chArtist.getArtistId()));
+        assertEquals(chArtist, artistRepository.readArtistById(chArtist.getArtistId()));
     }
 
     @Test

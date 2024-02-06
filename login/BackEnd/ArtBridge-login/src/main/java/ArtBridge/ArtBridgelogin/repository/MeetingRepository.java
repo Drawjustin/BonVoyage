@@ -31,14 +31,14 @@ public class MeetingRepository {
         return meeting;
     }
 
-    public Meeting findMeetingBySeq(int meetingSeq) {
+    public Meeting readMeetingBySeq(int meetingSeq) {
         return queryFactory
                 .selectFrom(qMeeting)
                 .where(qMeeting.meetingSeq.eq(meetingSeq))
                 .fetchOne();
     }
 
-    public Meeting findMeetingBySession(String sessionId) {
+    public Meeting readMeetingBySession(String sessionId) {
         return queryFactory
                 .selectFrom(qMeeting)
                 .where(qMeeting.meetingSessionId.eq(sessionId))

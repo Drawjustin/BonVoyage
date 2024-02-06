@@ -41,11 +41,11 @@ public class QMemberAuctionBidding extends EntityPathBase<MemberAuctionBidding> 
     }
 
     public QMemberAuctionBidding(Path<? extends MemberAuctionBidding> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QMemberAuctionBidding(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QMemberAuctionBidding(PathMetadata metadata, PathInits inits) {
@@ -54,7 +54,7 @@ public class QMemberAuctionBidding extends EntityPathBase<MemberAuctionBidding> 
 
     public QMemberAuctionBidding(Class<? extends MemberAuctionBidding> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.auction = inits.isInitialized("auction") ? new QAuction(forProperty("auction"), inits.get("auction")) : null;
+        this.auction = inits.isInitialized("auction") ? new QAuction(forProperty("auction"), inits.read("auction")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 

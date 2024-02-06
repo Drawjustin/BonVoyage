@@ -38,7 +38,7 @@ public class QPoint extends EntityPathBase<Point> {
     }
 
     public QPoint(Path<? extends Point> path) {
-        super(path.getType(), path.getMetadata());
+        super(path.readType(), path.readMetadata());
     }
 
     public QPoint(PathMetadata metadata) {

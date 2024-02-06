@@ -1,10 +1,8 @@
-package ArtBridge.ArtBridgelogin.service;
+package ArtBridge.ArtBridgelogin.test;
 
-import ArtBridge.ArtBridgelogin.Controller.ArtistMentionController;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +35,7 @@ public class ArtistMentionServiceTest {
 
     @BeforeEach
     public void setup() {
-        Artist artist = artistRepository.findArtistById("123");
+        Artist artist = artistRepository.readArtistById("123");
         this.artistMention = new ArtistMention();
 
         artistMention.setArtistMentionContent("Content");
@@ -48,15 +46,15 @@ public class ArtistMentionServiceTest {
 
     @Test
     public void getAllArtistsMention() {
-        List<ArtistMention> artistMentions = artistMentionService.getAllArtistsMention();
+        List<ArtistMention> artistMentions = artistMentionService.readAllArtistsMention();
         assertNotNull(artistMentions);
     }
 
     @Test
-    public void findOne() {
+    public void readOne() {
         artistMentionService.createArtistMention(artistMention);
         Long id = artistMention.getArtistMentionSeq();  // 데이터베이스에 존재하는 ArtistMention의 id
-        ArtistMention artistMention = artistMentionService.findOne(id);
+        ArtistMention artistMention = artistMentionService.readOne(id);
         assertNotNull(artistMention);
     }
 
@@ -83,6 +81,6 @@ public class ArtistMentionServiceTest {
         Long mentionSeq = artistMention.getArtistMentionSeq();  // 데이터베이스에 존재하는 ArtistMention의 mentionSeq
         artistMentionService.deleteArtistMention(mentionSeq);
 
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> artistMentionService.findOne(mentionSeq));
+        assertThrows(InvalidDataAccessApiUsageException.class, () -> artistMentionService.readOne(mentionSeq));
     }
 }

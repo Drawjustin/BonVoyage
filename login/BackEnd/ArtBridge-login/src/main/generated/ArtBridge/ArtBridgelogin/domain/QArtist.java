@@ -57,7 +57,7 @@ public class QArtist extends EntityPathBase<Artist> {
     }
 
     public QArtist(Path<? extends Artist> path) {
-        super(path.getType(), path.getMetadata());
+        super(path.readType(), path.readMetadata());
     }
 
     public QArtist(PathMetadata metadata) {

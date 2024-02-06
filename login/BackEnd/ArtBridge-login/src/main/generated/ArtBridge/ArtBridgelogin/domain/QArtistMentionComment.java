@@ -41,11 +41,11 @@ public class QArtistMentionComment extends EntityPathBase<ArtistMentionComment> 
     }
 
     public QArtistMentionComment(Path<? extends ArtistMentionComment> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QArtistMentionComment(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QArtistMentionComment(PathMetadata metadata, PathInits inits) {
@@ -54,7 +54,7 @@ public class QArtistMentionComment extends EntityPathBase<ArtistMentionComment> 
 
     public QArtistMentionComment(Class<? extends ArtistMentionComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.artistMention = inits.isInitialized("artistMention") ? new QArtistMention(forProperty("artistMention"), inits.get("artistMention")) : null;
+        this.artistMention = inits.isInitialized("artistMention") ? new QArtistMention(forProperty("artistMention"), inits.read("artistMention")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 

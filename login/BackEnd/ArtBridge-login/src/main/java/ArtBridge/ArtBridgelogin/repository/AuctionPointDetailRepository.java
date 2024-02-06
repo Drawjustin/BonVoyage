@@ -33,15 +33,15 @@ public class AuctionPointDetailRepository {
         return auctionPointDetail;
     }
 
-    public AuctionPointDetail findOne(Long id){return em.find(AuctionPointDetail.class, id);}
+    public AuctionPointDetail readOne(Long id){return em.find(AuctionPointDetail.class, id);}
  
-    public AuctionPointDetail findOne(int seq){
+    public AuctionPointDetail readOne(int seq){
         return queryFactory.selectFrom(auctionPointDetail)
                 .where(auctionPointDetail.auctionPointDetailSeq.eq(seq))
                 .fetchOne();
     }
 
-    public List<AuctionPointDetail> findAll(){
+    public List<AuctionPointDetail> readAll(){
         return queryFactory.selectFrom(auctionPointDetail)
                 .fetch();
     }

@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
-import ArtBridge.ArtBridgelogin.service.ArtistMentionService;
+import ArtBridge.ArtBridgelogin.test.ArtistMentionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,14 +16,14 @@ public class ArtistMentionController {
     private final ArtistMentionService artistMentionService;
 
     @GetMapping
-    public ResponseEntity<List<ArtistMention>> getAllArtistMentions() {
-        List<ArtistMention> artistMentions = artistMentionService.getAllArtistsMention();
+    public ResponseEntity<List<ArtistMention>> readAllArtistMentions() {
+        List<ArtistMention> artistMentions = artistMentionService.readAllArtistsMention();
         return ResponseEntity.ok(artistMentions);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArtistMention> getArtistMention(@PathVariable Long id) {
-        ArtistMention artistMention = artistMentionService.findOne(id);
+    public ResponseEntity<ArtistMention> readArtistMention(@PathVariable Long id) {
+        ArtistMention artistMention = artistMentionService.readOne(id);
         return ResponseEntity.ok(artistMention);
     }
 

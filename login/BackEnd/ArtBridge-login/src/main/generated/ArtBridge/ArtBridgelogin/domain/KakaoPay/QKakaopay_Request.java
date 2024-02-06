@@ -46,7 +46,7 @@ public class QKakaopay_Request extends EntityPathBase<Kakaopay_Request> {
     }
 
     public QKakaopay_Request(Path<? extends Kakaopay_Request> path) {
-        super(path.getType(), path.getMetadata());
+        super(path.readType(), path.readMetadata());
     }
 
     public QKakaopay_Request(PathMetadata metadata) {

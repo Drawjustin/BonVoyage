@@ -33,11 +33,11 @@ public class QWish extends EntityPathBase<Wish> {
     }
 
     public QWish(Path<? extends Wish> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QWish(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QWish(PathMetadata metadata, PathInits inits) {
@@ -46,7 +46,7 @@ public class QWish extends EntityPathBase<Wish> {
 
     public QWish(Class<? extends Wish> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.get("item")) : null;
+        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.read("item")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 

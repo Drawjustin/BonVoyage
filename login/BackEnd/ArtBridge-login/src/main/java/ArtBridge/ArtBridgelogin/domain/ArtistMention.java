@@ -26,8 +26,8 @@ public class ArtistMention {
     @Column(name = "artist_mention_created_date")
     private LocalDateTime artistMentionCreatedDate;
 
-    @Column(name = "artist_mention_isremoved")
-    private boolean artistMentionIsremoved;
+    @Column(name = "artist_mention_isdeleted")
+    private boolean artistMentionIsdeleted;
 
     @Column(name = "artist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;

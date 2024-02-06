@@ -39,11 +39,11 @@ public class QReview extends EntityPathBase<Review> {
     }
 
     public QReview(Path<? extends Review> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QReview(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QReview(PathMetadata metadata, PathInits inits) {

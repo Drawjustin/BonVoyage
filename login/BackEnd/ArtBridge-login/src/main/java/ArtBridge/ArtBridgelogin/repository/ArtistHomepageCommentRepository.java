@@ -30,14 +30,14 @@ public class ArtistHomepageCommentRepository {
         return artistHomepageComment;
     }
 
-    public ArtistHomepageComment findOne(Long seq){
+    public ArtistHomepageComment readOne(Long seq){
         return queryFactory
                 .selectFrom(qArtistHomepageComment)
                 .where(qArtistHomepageComment.artistHomepageCommentSeq.eq(seq))
                 .fetchOne();
     }
 
-    public List<ArtistHomepageComment> findAll(){
+    public List<ArtistHomepageComment> readAll(){
         return queryFactory
                 .selectFrom(qArtistHomepageComment)
                 .fetch();

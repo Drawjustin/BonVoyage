@@ -1,11 +1,8 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
-import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.domain.ReviewComment;
-import ArtBridge.ArtBridgelogin.service.ReviewCommentService;
+import ArtBridge.ArtBridgelogin.test.ReviewCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +15,18 @@ public class ReviewCommentController {
     @Autowired
     private ReviewCommentService reviewCommentService;
     @GetMapping("/{id}")
-    public List<ReviewComment> getAlLReviewComment(@PathVariable int seq) {
-        return reviewCommentService.getAllReviewComment(seq);
+    public List<ReviewComment> readAlLReviewComment(@PathVariable int seq) {
+        return reviewCommentService.readAllReviewComment(seq);
     }
 
-//    @GetMapping("/{id}")
-//    public ReviewComment getReviewCommentById(@PathVariable Long seq) {
-//        return reviewCommentService.findOne(seq);
+//    @readMapping("/{id}")
+//    public ReviewComment readReviewCommentById(@PathVariable Long seq) {
+//        return reviewCommentService.readOne(seq);
 //    }
 
     @PostMapping("/new")
-    public ReviewComment createReviewComment(@RequestBody ReviewComment reviewComment) {
-        return reviewCommentService.createReviewComment(reviewComment);
+    public void createReviewComment(@RequestBody ReviewComment reviewComment) {
+        reviewCommentService.createReviewComment(reviewComment);
     }
 
     @PutMapping("/{id}")

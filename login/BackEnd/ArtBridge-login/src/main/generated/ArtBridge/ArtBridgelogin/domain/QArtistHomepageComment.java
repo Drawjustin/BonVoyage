@@ -41,11 +41,11 @@ public class QArtistHomepageComment extends EntityPathBase<ArtistHomepageComment
     }
 
     public QArtistHomepageComment(Path<? extends ArtistHomepageComment> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QArtistHomepageComment(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QArtistHomepageComment(PathMetadata metadata, PathInits inits) {

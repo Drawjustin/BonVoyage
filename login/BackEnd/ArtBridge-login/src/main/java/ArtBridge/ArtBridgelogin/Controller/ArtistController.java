@@ -3,9 +3,7 @@ package ArtBridge.ArtBridgelogin.Controller;
 import ArtBridge.ArtBridgelogin.Controller.form.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.service.ArtistService;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import ArtBridge.ArtBridgelogin.test.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +22,8 @@ public class ArtistController {
     private MemberLoginForm memberForm;
 
     @GetMapping
-    public List<Artist> getAllArtists() {
-        return artistService.getAllArtists();
+    public List<Artist> readAllArtists() {
+        return artistService.readAllArtists();
     }
 
     @PostMapping("/login")
@@ -37,8 +35,8 @@ public class ArtistController {
 
 
     @GetMapping("/{id}")
-    public Artist getArtistById(@PathVariable String id)
-    {return artistService.findOne(id);}
+    public Artist readArtistById(@PathVariable String id)
+    {return artistService.readOne(id);}
 
     @PostMapping("/new")
     public Artist createArtist(@RequestBody Artist artist)

@@ -24,22 +24,17 @@ public class ReviewCommentRepository {
     @PostConstruct
     public void init() {queryFactory = new JPAQueryFactory(em);}
 
-    public ReviewComment findOne(Long Commentid) {
-        return em.find(ReviewComment.class, Commentid);
+    public void createReviewComment(ReviewComment reviewComment) {
+        em.persist(reviewComment);
     }
-    public List<ReviewComment> findAll(int seq) {
 
-        List<ReviewComment> reviewComments = queryFactory
+    public List<ReviewComment> readAll(int seq) {
+        return queryFactory
                 .selectFrom(qReviewComment)
                 .where(QReview.review.reviewSeq.eq(seq))
                 .fetch();
+    }
 
-        return reviewComments;
-    }
-    public ReviewComment createReviewComment(ReviewComment reviewComment) {
-        em.persist(reviewComment);
-        return reviewComment;
-    }
     public ReviewComment updateReviewComment(Long seq, ReviewComment updatedReviewComment) {
 
         queryFactory
@@ -48,7 +43,8 @@ public class ReviewCommentRepository {
                 .set(qReviewComment.reviewCommentContent, updatedReviewComment.getReviewCommentContent())
                 .execute();
 
-        return queryFactory.selectFrom(qReviewComment)
+        return queryFactory
+                .selectFrom(qReviewComment)
                 .where(qReviewComment.reviewCommentSeq.eq(seq))
                 .fetchOne();
     }

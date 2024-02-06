@@ -31,11 +31,11 @@ public class QSaleLike extends EntityPathBase<SaleLike> {
     }
 
     public QSaleLike(Path<? extends SaleLike> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QSaleLike(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QSaleLike(PathMetadata metadata, PathInits inits) {
@@ -44,7 +44,7 @@ public class QSaleLike extends EntityPathBase<SaleLike> {
 
     public QSaleLike(Class<? extends SaleLike> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.item = inits.isInitialized("item") ? new ArtBridge.ArtBridgelogin.domain.QItem(forProperty("item"), inits.get("item")) : null;
+        this.item = inits.isInitialized("item") ? new ArtBridge.ArtBridgelogin.domain.QItem(forProperty("item"), inits.read("item")) : null;
         this.member = inits.isInitialized("member") ? new ArtBridge.ArtBridgelogin.domain.QMember(forProperty("member")) : null;
     }
 

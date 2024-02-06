@@ -1,10 +1,9 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
-import ArtBridge.ArtBridgelogin.service.AuctionService;
-import ArtBridge.ArtBridgelogin.service.MeetingService;
+import ArtBridge.ArtBridgelogin.test.AuctionService;
+import ArtBridge.ArtBridgelogin.test.MeetingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.OpenVidu;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "/openvidu")
@@ -70,10 +68,10 @@ public class OpenViduController {
 
         Meeting meeting = new Meeting();
         meeting.setMeetingSessionId(session.getSessionId());
-        meeting.setAuction(auctionService.findOne(auctionSeq));
+        meeting.setAuction(auctionService.readOne(auctionSeq));
 
         try {
-//            meetingService.deleteAllSessionConsultantId(params.get("ConsultantId").toString());
+//            meetingService.deleteAllSessionConsultantId(params.read("ConsultantId").toString());
 //            logger.info("*** deleteAllSessionConsultantId 호출");
 
             meetingService.createMeeting(meeting);
@@ -83,7 +81,7 @@ public class OpenViduController {
             check.put("sessionId", session.getSessionId());
 //
 //            logger.info("*** createSession 메소드 종료");
-//            logger.info("*** 세션 생성 : " + session.getSessionId());
+//            logger.info("*** 세션 생성 : " + session.readSessionId());
             return ResponseEntity.status(HttpStatus.OK).body(check);
         } catch (Exception e) {
 
@@ -106,30 +104,30 @@ public class OpenViduController {
 
 //        logger.info("*** createConnection 메소드 호출");
 
-        Session targetSession = openvidu.getActiveSession(sessionId);
+        Session tarreadSession = openvidu.getActiveSession(sessionId);
 
-        if (targetSession == null) {
+        if (tarreadSession == null) {
             // 세션이 없다
             check.put("msg", "fail");
 //            logger.info("*** createConnection 메소드 오류");
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(check);
         } else {
             ConnectionProperties properties = ConnectionProperties.fromJson(params).build();
-            Connection connection = targetSession.createConnection(properties);
+            Connection connection = tarreadSession.createConnection(properties);
 
             try {
-                Meeting meeting = meetingService.findMeetingBySession(targetSession.getSessionId());
-//                logger.info("*** getMeeting 호출");
+                Meeting meeting = meetingService.readMeetingBySession(tarreadSession.getSessionId());
+//                logger.info("*** readMeeting 호출");
 
 //                meetingService.updateMeeting(meetingDto);
 
                 check.put("msg", "success");
-                check.put("sessionId", targetSession.getSessionId());
+                check.put("sessionId", tarreadSession.getSessionId());
                 check.put("token", connection.getToken());
 
 //                    logger.info("*** createConnection 종료");
-//                    logger.info("*** sessionId : {}", session.getSessionId());
-//                    logger.info("*** token : {}", connection.getToken());
+//                    logger.info("*** sessionId : {}", session.readSessionId());
+//                    logger.info("*** token : {}", connection.readToken());
                 return ResponseEntity.status(HttpStatus.OK).body(check);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

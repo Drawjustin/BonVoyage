@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.service;
+package ArtBridge.ArtBridgelogin.test;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Auction;
@@ -68,8 +68,8 @@ public class AuctionServiceTest {
     }
 
     @Test
-    void findOneTest() {
-        Auction foundAuction = auctionService.findOne(auction.getAuctionSeq());
+    void readOneTest() {
+        Auction foundAuction = auctionService.readOne(auction.getAuctionSeq());
         assertNotNull(foundAuction);
         assertEquals(1, foundAuction.getAuctionStatus());
     }
@@ -91,7 +91,7 @@ public class AuctionServiceTest {
     @Test
     void deleteAuctionTest() {
         auctionService.deleteAuction(auction.getAuctionSeq());
-        Auction foundAuction = auctionService.findOne(auction.getAuctionSeq());
+        Auction foundAuction = auctionService.readOne(auction.getAuctionSeq());
         assertNull(foundAuction);
     }
 }

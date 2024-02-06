@@ -31,11 +31,11 @@ public class QAuctionLike extends EntityPathBase<AuctionLike> {
     }
 
     public QAuctionLike(Path<? extends AuctionLike> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QAuctionLike(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QAuctionLike(PathMetadata metadata, PathInits inits) {
@@ -44,7 +44,7 @@ public class QAuctionLike extends EntityPathBase<AuctionLike> {
 
     public QAuctionLike(Class<? extends AuctionLike> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.auction = inits.isInitialized("auction") ? new ArtBridge.ArtBridgelogin.domain.QAuction(forProperty("auction"), inits.get("auction")) : null;
+        this.auction = inits.isInitialized("auction") ? new ArtBridge.ArtBridgelogin.domain.QAuction(forProperty("auction"), inits.read("auction")) : null;
         this.member = inits.isInitialized("member") ? new ArtBridge.ArtBridgelogin.domain.QMember(forProperty("member")) : null;
     }
 

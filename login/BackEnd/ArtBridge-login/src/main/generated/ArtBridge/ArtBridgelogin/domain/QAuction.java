@@ -63,11 +63,11 @@ public class QAuction extends EntityPathBase<Auction> {
     }
 
     public QAuction(Path<? extends Auction> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QAuction(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QAuction(PathMetadata metadata, PathInits inits) {
@@ -76,7 +76,7 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public QAuction(Class<? extends Auction> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.get("item")) : null;
+        this.item = inits.isInitialized("item") ? new QItem(forProperty("item"), inits.read("item")) : null;
     }
 
 }

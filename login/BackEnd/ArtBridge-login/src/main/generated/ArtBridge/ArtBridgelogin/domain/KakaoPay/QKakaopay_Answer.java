@@ -38,7 +38,7 @@ public class QKakaopay_Answer extends EntityPathBase<Kakaopay_Answer> {
     }
 
     public QKakaopay_Answer(Path<? extends Kakaopay_Answer> path) {
-        super(path.getType(), path.getMetadata());
+        super(path.readType(), path.readMetadata());
     }
 
     public QKakaopay_Answer(PathMetadata metadata) {

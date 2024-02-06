@@ -37,11 +37,11 @@ public class QReviewComment extends EntityPathBase<ReviewComment> {
     }
 
     public QReviewComment(Path<? extends ReviewComment> path) {
-        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
+        this(path.readType(), path.readMetadata(), PathInits.readFor(path.readMetadata(), INITS));
     }
 
     public QReviewComment(PathMetadata metadata) {
-        this(metadata, PathInits.getFor(metadata, INITS));
+        this(metadata, PathInits.readFor(metadata, INITS));
     }
 
     public QReviewComment(PathMetadata metadata, PathInits inits) {
@@ -51,7 +51,7 @@ public class QReviewComment extends EntityPathBase<ReviewComment> {
     public QReviewComment(Class<? extends ReviewComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
-        this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.get("review")) : null;
+        this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.read("review")) : null;
     }
 
 }

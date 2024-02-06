@@ -32,7 +32,7 @@ public class QArtistMention extends EntityPathBase<ArtistMention> {
 
     public final DateTimePath<java.time.LocalDateTime> artistMentionDeletedDate = createDateTime("artistMentionDeletedDate", java.time.LocalDateTime.class);
 
-    public final BooleanPath artistMentionIsremoved = createBoolean("artistMentionIsremoved");
+    public final BooleanPath artistMentionIsdeleted = createBoolean("artistMentionIsdeleted");
 
     public final NumberPath<Long> artistMentionSeq = createNumber("artistMentionSeq", Long.class);
 

@@ -29,19 +29,18 @@ public class ReviewRepository {
         this.em = em;
     }
 
-    public void create(Review review) {
+    public void createReview(Review review) {
         em.persist(review);
     }
 
-    public Review findById(Integer seq) {
-
+    public Review readById(Integer seq) {
         return queryFactory
                 .selectFrom(qReview)
                 .where(qReview.reviewSeq.eq(seq))
                 .fetchOne();
     }
 
-    public List<Review> findAll() {
+    public List<Review> readAll() {
         return queryFactory
                 .selectFrom(qReview)
                 .fetch();
