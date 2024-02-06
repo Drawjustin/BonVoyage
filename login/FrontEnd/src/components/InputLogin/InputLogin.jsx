@@ -6,6 +6,9 @@ import Link from 'next/link';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import KakaoLoginButton from './KakaoLoginButton';
+import GoogleLoginButton from './GoogleLoginButton';
+
 
 const InputLogin = () => {
   const [isArtist, setIsArtist] = useState(false);
@@ -117,8 +120,8 @@ const InputLogin = () => {
         <label>
           <button 
             onClick={handleArtistToggle}
-            style={{ backgroundColor: isArtist ? '#7377b6' : 'white',
-            color: isArtist ? 'white' : 'black' }}
+            style={{ backgroundColor: isArtist ? '#171de5' : '#f1efee',
+            color: isArtist ? '#f1efee' : '#171de5' }}
             >
             작가</button>
         </label>
@@ -127,8 +130,8 @@ const InputLogin = () => {
         <label>
           <button
             onClick={handlePersonalToggle}
-            style={{ backgroundColor: !isArtist ? '#7377b6' : 'white',
-            color: !isArtist ? 'white' : 'black' }}
+            style={{ backgroundColor: !isArtist ? '#171de5' : '#f1efee',
+            color: !isArtist ? '#f1efee' : '#171de5' }}
           >
           개인
           </button>
@@ -166,6 +169,11 @@ const InputLogin = () => {
         <Link href='/FindId'>아이디 찾기</Link>
         <span> | </span>
         <Link href='/ResetPw'>비밀번호 찾기</Link>
+      </div>
+      
+      <div style={{ marginTop: '10px' }}>
+        <KakaoLoginButton />
+        <GoogleLoginButton />
       </div>
 
     </div>
