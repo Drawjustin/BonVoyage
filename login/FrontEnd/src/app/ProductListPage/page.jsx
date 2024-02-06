@@ -11,8 +11,8 @@ import styles from './ProductListPage.module.scss'
 export default async function ProductListPage () {
 
   
-    const products = await axios.get('https://i10a207.p.ssafy.io/api/item');
-    console.log(products.data);
+    // const products = await axios.get('https://i10a207.p.ssafy.io/api/item');
+    // console.log(products.data);
 
   return (
     <div className='page'>
