@@ -9,10 +9,19 @@ import Heading from '@/components/Heading/Heading';
 import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import { formatTime } from '@/helpers/dayjs';
 import dayjs from 'dayjs';
 
-const ProductUploadPage = () => {
+const AuctionUploadPage = () => {
+
+    const [selectedDate, setSelectedDate] = useState('');
+  
+    const handleDateChange = (event:any) => {
+      const inputDate = event.target.value;
+      // dayjs를 사용하여 입력받은 날짜를 처리
+      const formattedDate = dayjs(inputDate).format('YYYY-MM-DD');
+      setSelectedDate(formattedDate);
+    };
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,8 +50,6 @@ const ProductUploadPage = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    const now = dayjs();
-
     data = {
         itemSeq:12,
         itemName:data.title,
@@ -54,7 +61,7 @@ const ProductUploadPage = () => {
         itemCreatedDate: dayjs()
     }
 
-    axios.post('https://i10a207.p.ssafy.io/api/item/new', data)
+    axios.post('https://i10a207.p.ssafy.io/api/auction/new', data)
       .then(response => {
         // router.push(`/products/${response.data.id}`);
         console.log('성공', response.data);
@@ -91,16 +98,29 @@ const ProductUploadPage = () => {
           <Input id="description" label="Description" disabled={isLoading} register={register} errors={errors} required />
           <hr />
 
-          <Input id="price" label="Price" formatPrice disabled={isLoading} register={register} errors={errors} required />
+          <div>
+            <label htmlFor="datepicker">날짜 선택:</label>
+            <input
+              type="date"
+              id="datepicker"
+              value={selectedDate}
+              onChange={handleDateChange}
+            />
+            {selectedDate && (
+              <p>선택한 날짜: {selectedDate}</p>
+            )}
+          </div>
           <hr />
           
           <div className={styles.button}>
-            <Button label="상품 생성하기" />
+            <Button label="경매 생성하기" />
           </div>
         </form>
       </div>
+      
+
     </Container>
   );
 };
 
-export default ProductUploadPage;
+export default AuctionUploadPage;

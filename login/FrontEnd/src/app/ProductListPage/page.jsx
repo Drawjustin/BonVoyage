@@ -1,12 +1,11 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
-import store from '@/store';
-import Categories from '@/components/categories/Categories/Categories';
 import axios from 'axios';
 import Navbar from '@/components/Navbar/Navbar';
 import EmptyState from '@/components/EmptyState';
 import styles from './ProductListPage.module.scss'
+import FloatingButton from '@/components/FloatingButton/FloatingButton'
 
 export default async function ProductListPage () {
 
@@ -19,7 +18,6 @@ export default async function ProductListPage () {
       <Navbar />
       <div className='container'>
         <h1  style={{ color: '#f1efee'}}>Products</h1>
-            <Categories />
 
             {
               products.data?.length === 0
@@ -38,6 +36,10 @@ export default async function ProductListPage () {
               </>
             }
       </div>
+      <FloatingButton
+      href="/ProductUploadPage">
+        +
+      </FloatingButton>
     </div>
   );
 };
