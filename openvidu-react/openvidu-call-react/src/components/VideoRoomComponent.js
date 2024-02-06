@@ -12,7 +12,7 @@ import ToolbarComponent from './toolbar/ToolbarComponent';
 
 var localUser = new UserModel();
 // const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
-const APPLICATION_SERVER_URL = 'https://43.200.244.3:3331/';
+const APPLICATION_SERVER_URL = 'https://i10a207.p.ssafy.io:5443/';
 
 
 class VideoRoomComponent extends Component {

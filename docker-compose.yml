@@ -15,6 +15,6 @@ services:
       - openvidu-server
 
   openvidu-server:
-    image: openvidu/openvidu-server-kms:latest
+    image: openvidu/openvidu-server:2.29.0
     ports:
       - 4443:4443
