@@ -56,7 +56,7 @@ const ProductUploadPage = () => {
         itemCreatedDate: dayjs()
     }
 
-    axios.post('https://i10a207.p.ssafy.io/api/item/', data)
+    axios.post('https://i10a207.p.ssafy.io/api/item/new', data)
       .then(response => {
         // router.push(`/products/${response.data.id}`);
         console.log('성공', response.data);
