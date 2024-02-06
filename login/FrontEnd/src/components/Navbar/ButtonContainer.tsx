@@ -71,7 +71,7 @@ export const ButtonContainer = ({currentUser}: any) => {
 ];
   if (!currentUser) {
     buttonList.push(
-      { text: '로그인', func: () => signIn() },
+      { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
     );
   } else {

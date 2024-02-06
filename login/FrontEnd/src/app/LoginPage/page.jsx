@@ -138,6 +138,7 @@ const LoginPage = () => {
     <div>
 
     <div>
+      <Navbar/>
       <InputLogin/>
       <KakaoLoginButton />
       <GoogleLoginButton />
