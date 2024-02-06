@@ -7,7 +7,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 const Auction_Text = (props) => {
-  const { nodes, materials } = useGLTF('./texts/Auction_text.glb')
+  const { nodes, materials } = useGLTF('./texts/auction_text.glb')
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.인기리뷰.geometry} material={materials.매테리얼} position={[-1.124, 0.861, 0.007]} rotation={[1.527, 0, 0]} />
