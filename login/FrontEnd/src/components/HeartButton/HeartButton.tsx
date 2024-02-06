@@ -1,7 +1,7 @@
 import useFavorite from '@/hooks/useFavorite';
 import React from 'react'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
-import styles from './HeartButtonForReview.module.scss';
+import styles from './HeartButton.module.scss';
 
 interface HeartButtonProps {
     productId: string;

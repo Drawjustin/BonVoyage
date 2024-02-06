@@ -1,6 +1,6 @@
 import Image from "next/image";
 // import getReviews, { ReviewsParams } from "../actions/getReviews";
-import Container from "@/components/Container";
+import Container from "@/components/Container/Container";
 import EmptyState from "@/components/EmptyState";
 // import getCurrentUser from "../actions/getCurrentUser";
 // import FloatingButton from "@/components/FloatingButton";

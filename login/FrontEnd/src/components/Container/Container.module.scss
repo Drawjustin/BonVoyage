@@ -1,0 +1,26 @@
+$container-max-width: 2520px; /* Adjust the max-width as needed */
+
+.container {
+  max-width: $container-max-width;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 4rem; /* Adjust the left padding as needed */
+  padding-right: 4rem; /* Adjust the right padding as needed */
+  padding-top: 1.5rem; /* Adjust the top padding as needed */
+  padding-bottom: 1.5rem; /* Adjust the bottom padding as needed */
+
+  @media (min-width: 640px) {
+    padding-left: 2rem; /* Adjust the left padding for medium screens */
+    padding-right: 2rem; /* Adjust the right padding for medium screens */
+  }
+
+  @media (min-width: 768px) {
+    padding-left: 10px; /* Adjust the left padding for large screens */
+    padding-right: 10px; /* Adjust the right padding for large screens */
+  }
+
+  @media (min-width: 1024px) {
+    padding-left: 20px; /* Adjust the left padding for extra-large screens */
+    padding-right: 20px; /* Adjust the right padding for extra-large screens */
+  }
+}
