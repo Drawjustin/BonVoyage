@@ -36,14 +36,10 @@ public class AuctionRepository {
         return auction;
     }
 
-
-    public Auction findOne(int seq) {
-        return queryFactory
-                .selectFrom(qAuction)
-                .where(qAuction.auctionSeq.eq(seq))
-                .fetchOne();
+    @Transactional(readOnly = true)
+    public Auction findOne(int seq){
+        return em.find(Auction.class, seq);
     }
-
 
     public List<Auction> findAll() {
         return queryFactory

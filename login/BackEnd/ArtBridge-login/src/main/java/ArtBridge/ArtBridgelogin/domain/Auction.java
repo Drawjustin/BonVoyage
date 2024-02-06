@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -68,5 +69,8 @@ public class Auction implements Serializable {
 
     @OneToMany(mappedBy = "auction")
     private List<AuctionPointDetail> auctionPointDetails;
+
+    @OneToMany(mappedBy = "auction")
+    private List<Meeting> meetings;
 }
 
