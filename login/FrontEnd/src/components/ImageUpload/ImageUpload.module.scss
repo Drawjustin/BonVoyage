@@ -1,0 +1,19 @@
+/* ImageUpload.module.scss */
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+
+.uploadContainer {
+    @apply relative flex flex-col items-center justify-center gap-4 p-20 transition border-2 border-dashed cursor-pointer hover:opacity-70 border-neutral-300 text-neutral-300;
+  }
+  
+  .icon {
+    @apply text-rose-500;
+  }
+  
+  .imagePreview {
+    @apply absolute inset-0 w-full h-full;
+  }
+  
