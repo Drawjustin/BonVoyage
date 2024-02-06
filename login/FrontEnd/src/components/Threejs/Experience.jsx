@@ -1,13 +1,13 @@
 'use client'
-import { Float, PerspectiveCamera, useScroll } from "@react-three/drei";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
-import { useFrame } from "@react-three/fiber";
-// import Background from "./Background";
+import { useRouter } from 'next/navigation';
+import { Float, PerspectiveCamera, useScroll, Html, OrbitControls } from "@react-three/drei";
+import { useEffect, useLayoutEffect, useMemo, useRef, Suspense } from "react";
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { useFrame, extend } from "@react-three/fiber";
 import { Group, Vector3, Euler } from "three";
-// import { Ship } from "./Ship";
-// import { Cloud } from "./Cloud";
+import { Scene, Mesh, Object3D, MeshStandardMaterial } from 'three';
 import * as THREE from "three";
-// import TextSection from "./TextSection";
 import { gsap } from "gsap";
 import { usePlay } from "../Threejs/contexts/PlayProvider"
 import dynamic from 'next/dynamic';
@@ -15,14 +15,21 @@ import dynamic from 'next/dynamic';
 const LINE_NB_POINTS = 1000;
 const CURVE_DISTANCE = 250;
 const CURVE_AHEAD_CAMERA = 0.008;
-const CURVE_AHEAD_AIRPLANE = 0.02;
-const AIRPLANE_MAX_ANGLE = 35;
+const CURVE_AHEAD_SHIP = 0.02;
+const SHIP_MAX_ANGLE = 35;
 const FRICTION_DISTANCE = 42;
 
 const Background = dynamic(() => import("./Background"), { ssr: false });
 const Ship = dynamic(() => import("./Ship"), { ssr: false });
-const Cloud = dynamic(() => import("./Cloud"), { ssr: false });
-// const TextSection = dynamic(() => import("./TextSection"), { ssr: false });
+// const Cloud = dynamic(() => import("./Cloud"), { ssr: false });
+const Island_1 = dynamic(() => import("./Island_1"), { ssr: false });
+const Island_2 = dynamic(() => import("./Island_2"), { ssr: false });
+const Island_3 = dynamic(() => import("./Island_3"), { ssr: false });
+const Island_4 = dynamic(() => import("./Island_4"), { ssr: false });
+const Review_Text = dynamic(() => import("./Review_text"), { ssr: false });
+const Auction_Text = dynamic(() => import("./Auction_text"), { ssr: false });
+const Artist_Text = dynamic(() => import("./Artist_text"), { ssr: false });
+const Rock_1 = dynamic(() => import("./Rock_1"), { ssr: false });
 
 const Experience = () => {
   const curvePoints = useMemo(
@@ -46,51 +53,7 @@ const Experience = () => {
     return new THREE.CatmullRomCurve3(curvePoints, false, "catmullrom", 0.5);
   }, []);
 
-  // const textSections = useMemo(() => {
-  //   return [
-  //     {
-  //     cameraRailDist: -1,
-  //     position: new Vector3(
-  //       curvePoints[1].x - 3,
-  //       curvePoints[1].y,
-  //       curvePoints[1].z
-  //     ),
-  //     subtitle: `Bon Voyage`
-  //   },
-  //   {
-  //     cameraRailDist: 1.5,
-  //     position: new Vector3(
-  //       curvePoints[2].x + 2,
-  //       curvePoints[2].y,
-  //       curvePoints[2].z
-  //     ),
-  //     title: "main~1",
-  //     subtitle: `It's main!`,
-  //   },
-  //   {
-  //     cameraRailDist: -1,
-  //     position: new Vector3(
-  //       curvePoints[3].x - 3,
-  //       curvePoints[3].y,
-  //       curvePoints[3].z
-  //     ),
-  //     title: "main~1",
-  //     subtitle: `It's main!`,
-  //   },
-  //   {
-  //     cameraRailDist: 1.5,
-  //     position: new Vector3(
-  //       curvePoints[4].x + 3.5,
-  //       curvePoints[4].y,
-  //       curvePoints[4].z - 12
-  //     ),
-  //     title: "main~1",
-  //     subtitle: `It's main!`,
-  //   },
-  //   ];
-  // }, []);
-
-  const clouds = useMemo(
+  const islands = useMemo(
     () => [
       // STARTING
       {
@@ -102,7 +65,7 @@ const Experience = () => {
       {
         scale: new Vector3(4, 4, 4),
         position: new Vector3(-18, 0.2, -68),
-        rotation: new Euler(-Math.PI / 5, Math.PI / 6, 0),
+        // rotation: new Euler(-Math.PI / 5, Math.PI / 6, 0),
       },
       {
         scale: new Vector3(2.5, 2.5, 2.5),
@@ -124,10 +87,10 @@ const Experience = () => {
           curvePoints[1].y + 4,
           curvePoints[1].z + 28
         ),
-        rotation: new Euler(0, Math.PI / 7, 0),
+        // rotation: new Euler(0, Math.PI / 7, 0),
       },
       {
-        rotation: new Euler(0, Math.PI / 7, Math.PI / 5),
+        // rotation: new Euler(0, Math.PI / 7, Math.PI / 5),
         scale: new Vector3(5, 5, 5),
         position: new Vector3(
           curvePoints[1].x - 13,
@@ -136,7 +99,7 @@ const Experience = () => {
         ),
       },
       {
-        rotation: new Euler(Math.PI / 2, Math.PI / 2, Math.PI / 3),
+        // rotation: new Euler(Math.PI / 2, Math.PI / 2, Math.PI / 3),
         scale: new Vector3(5, 5, 5),
         position: new Vector3(
           curvePoints[1].x + 54,
@@ -176,7 +139,7 @@ const Experience = () => {
           curvePoints[2].y + 1,
           curvePoints[2].z - 86
         ),
-        rotation: new Euler(Math.PI / 4, 0, Math.PI / 3),
+        // rotation: new Euler(Math.PI / 4, 0, Math.PI / 3),
       },
       // THIRD POINT
       {
@@ -194,7 +157,7 @@ const Experience = () => {
           curvePoints[3].y,
           curvePoints[3].z + 30
         ),
-        rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
+        // rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
       },
       {
         scale: new Vector3(4, 4, 4),
@@ -203,7 +166,7 @@ const Experience = () => {
           curvePoints[3].y - 5,
           curvePoints[3].z - 8
         ),
-        rotation: new Euler(Math.PI, 0, Math.PI / 5),
+        // rotation: new Euler(Math.PI, 0, Math.PI / 5),
       },
       {
         scale: new Vector3(5, 5, 5),
@@ -212,15 +175,15 @@ const Experience = () => {
           curvePoints[3].y - 5,
           curvePoints[3].z - 98
         ),
-        rotation: new Euler(0, Math.PI / 3, 0),
+        // rotation: new Euler(0, Math.PI / 3, 0),
       },
       // FOURTH POINT
       {
-        scale: new Vector3(2, 2, 2),
+        scale: new Vector3(3, 3, 3),
         position: new Vector3(
-          curvePoints[4].x + 3,
-          curvePoints[4].y - 10,
-          curvePoints[4].z + 2
+          curvePoints[4].x,
+          curvePoints[4].y,
+          curvePoints[4].z
         ),
       },
       {
@@ -230,7 +193,7 @@ const Experience = () => {
           curvePoints[4].y - 6,
           curvePoints[4].z - 42
         ),
-        rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
+        // rotation: new Euler(Math.PI / 4, 0, Math.PI / 5),
       },
       {
         scale: new Vector3(3, 3, 3),
@@ -239,7 +202,7 @@ const Experience = () => {
           curvePoints[4].y + 9,
           curvePoints[4].z - 62
         ),
-        rotation: new Euler(Math.PI / 3, 0, Math.PI / 3),
+        // rotation: new Euler(Math.PI / 3, 0, Math.PI / 3),
       },
       // FINAL
       {
@@ -249,7 +212,7 @@ const Experience = () => {
           curvePoints[7].y - 5,
           curvePoints[7].z + 60
         ),
-        rotation: new Euler(-Math.PI / 4, -Math.PI / 6, 0),
+        // rotation: new Euler(-Math.PI / 4, -Math.PI / 6, 0),
       },
       {
         scale: new Vector3(3, 3, 3),
@@ -258,7 +221,7 @@ const Experience = () => {
           curvePoints[7].y + 5,
           curvePoints[7].z + 120
         ),
-        rotation: new Euler(Math.PI / 4, Math.PI / 6, 0),
+        // rotation: new Euler(Math.PI / 4, Math.PI / 6, 0),
       },
     ],
     []
@@ -322,8 +285,8 @@ const Experience = () => {
 
     const scrollOffset =  Math.max(0, scroll.offset);
 
-    // let friction = 1;
-    // let resetCameraRail = true;
+    let friction = 1;
+    let resetCameraRail = true;
 
     // textSections.forEach((textSection) => {
     //   const distance = textSection.position.distanceTo(
@@ -346,42 +309,42 @@ const Experience = () => {
     //   cameraRail.current.position.lerp(targetCameraRailPosition, delta);
     // }
 
-    // let lerpedScrollOffset = THREE.MathUtils.lerp(
-    //   lastScroll.current,
-    //   scrollOffset, 
-    //   delta*friction
-    // );
+    let lerpedScrollOffset = THREE.MathUtils.lerp(
+      lastScroll.current,
+      scrollOffset, 
+      delta*friction
+    );
 
-    // lerpedScrollOffset = Math.min(lerpedScrollOffset, 1);
-    // lerpedScrollOffset = Math.max(lerpedScrollOffset, 0);
+    lerpedScrollOffset = Math.min(lerpedScrollOffset, 1);
+    lerpedScrollOffset = Math.max(lerpedScrollOffset, 0);
 
-    // lastScroll.current = lerpedScrollOffset;
-    // tl.current.seek(lerpedScrollOffset * tl.current.duration());
+    lastScroll.current = lerpedScrollOffset;
+    tl.current.seek(lerpedScrollOffset * tl.current.duration());
 
-    // const curPoint = curve.getPoint(scrollOffset);
+    const curPoint = curve.getPoint(scrollOffset);
 
-    // cameraGroup.current.position.lerp(curPoint, delta * 24);
+    cameraGroup.current.position.lerp(curPoint, delta * 24);
 
-    // const lookAtPoint = curve.getPoint(
-    //   Math.min(scrollOffset + CURVE_AHEAD_CAMERA, 1)
-    // );
+    const lookAtPoint = curve.getPoint(
+      Math.min(scrollOffset + CURVE_AHEAD_CAMERA, 1)
+    );
 
-    // const currentLookAt = cameraGroup.current.getWorldDirection(
-    //   new THREE.Vector3()
-    // );
+    const currentLookAt = cameraGroup.current.getWorldDirection(
+      new THREE.Vector3()
+    );
 
-    // const targetLookAt = new THREE.Vector3()
-    //   .subVectors(curPoint, lookAtPoint)
-    //   .normalize();
+    const targetLookAt = new THREE.Vector3()
+      .subVectors(curPoint, lookAtPoint)
+      .normalize();
 
-    // const lookAt = currentLookAt.lerp(targetLookAt, delta * 24);
-    // cameraGroup.current.lookAt(
-    //   cameraGroup.current.position.clone().add(lookAt)
-    // );
+    const lookAt = currentLookAt.lerp(targetLookAt, delta * 24);
+    cameraGroup.current.lookAt(
+      cameraGroup.current.position.clone().add(lookAt)
+    );
 
-    // Airplane rotation
+    // Ship rotation
 
-    const tangent = curve.getTangent(scrollOffset + CURVE_AHEAD_AIRPLANE);
+    const tangent = curve.getTangent(scrollOffset + CURVE_AHEAD_SHIP);
 
     const nonLerpLookAt = new Group();
     nonLerpLookAt.position.copy(curPoint);
@@ -396,113 +359,135 @@ const Experience = () => {
     angle = -Math.PI / 2 + angle;
 
     let angleDegrees = (angle * 180) / Math.PI;
-    angleDegrees *= 2.4;
+    angleDegrees *= 0.5;
 
     if (angleDegrees < 0) {
-      angleDegrees = Math.max(angleDegrees, -AIRPLANE_MAX_ANGLE);
+      angleDegrees = Math.max(angleDegrees, -SHIP_MAX_ANGLE);
     }
     if (angleDegrees < 0) {
-      angleDegrees = Math.min(angleDegrees, AIRPLANE_MAX_ANGLE);
+      angleDegrees = Math.min(angleDegrees, SHIP_MAX_ANGLE);
     }
 
     angle = (angleDegrees * Math.PI) / 180;
 
-    const targetAirplaneQuaternion = new THREE.Quaternion().setFromEuler(
+    const targetShipQuaternion = new THREE.Quaternion().setFromEuler(
       new THREE.Euler(
-        airplane.current.rotation.x,
-        airplane.current.rotation.y,
+        ship.current.rotation.x,
+        ship.current.rotation.y,
         angle
       )
     );
 
-    airplane.current.quaternion.slerp(targetAirplaneQuaternion, delta * 2);
+    ship.current.quaternion.slerp(targetShipQuaternion, delta * 2);
 
     if (
       cameraGroup.current.position.z <
       curvePoints[curvePoints.length - 1].z + 100
     ) {
       setEnd(true);
-      planeOutTl.current.play();
+      shipOutTl.current.play();
     }
   });
 
-  const airplane = useRef();
+  const ship = useRef();
 
   const tl = useRef();
   const backgroundColors = useRef({
-    colorA: "#3535cc",
-    colorB: "#abaadd",
+    colorA: "#84D1FE",
+    colorB: "#ffffff",
   })
 
-  const planeInTl = useRef();
-  const planeOutTl = useRef();
+  const shipInTl = useRef();
+  const shipOutTl = useRef();
 
   useLayoutEffect(() => {
     tl.current = gsap.timeline();
 
     tl.current.to(backgroundColors.current, {
       duration: 1,
-      colorA: "#6f35cc",
-      colorB: "#ffad30",
+      colorA: "#84D1FE",
+      colorB: "#ffffff",
     });
     tl.current.to(backgroundColors.current, {
       duration: 1,
-      colorA: "#424242",
-      colorB: "#ffcc00",
+      colorA: "#84D1FE",
+      colorB: "#ffffff",
     });
     tl.current.to(backgroundColors.current, {
       duration: 1,
-      colorA: "#81318b",
-      colorB: "#55ab8f",
+      colorA: "#84D1FE",
+      colorB: "#ffffff",
     });
 
     tl.current.pause();
 
-    planeInTl.current = gsap.timeline();
-    planeInTl.current.pause();
-    planeInTl.current.from(airplane.current.position, {
+    shipInTl.current = gsap.timeline();
+    shipInTl.current.pause();
+    shipInTl.current.from(ship.current.position, {
       duration: 3,
       z: 5,
-      y: -2,
+      // y: -2,
     });
 
-    planeOutTl.current = gsap.timeline();
-    planeOutTl.current.pause();
+    shipOutTl.current = gsap.timeline();
+    shipOutTl.current.pause();
 
-    planeOutTl.current.to(
-      airplane.current.position,
+    shipOutTl.current.to(
+      ship.current.position,
       {
-        duration: 10,
+        duration: 20,
         z: -250,
-        y: 10,
+        y: -1,
       },
       0
     );
 
-    planeOutTl.current.to(
+    shipOutTl.current.to(
       cameraRail.current.position,
       {
-        duration: 8,
-        y: 12,
+        duration: 10,
+        y: -1,
       },
       0
     );
 
-    planeOutTl.current.to(airplane.current.position, {
+    shipOutTl.current.to(ship.current.position, {
       duration: 1,
       z: -1000,
+      y: -2
     });
   }, []);
 
   useEffect(() => {
     if (play) {
-      planeInTl.current.play();
+      shipInTl.current.play();
     }
   }, [play]);
 
+  const navigate = useRouter();
+
+  // 리뷰
+  const handleIslandClick1 = () => {
+    navigate.push('/review')
+  };
+
+  // 경매 
+  const handleIslandClick2 = () => {
+    navigate.push('/AuctionLivePage')
+  };
+
+  // 작가
+  const handleIslandClick3 = () => {
+    navigate.push('/ArtistHomePage')
+  }
+
+  // const handleIslandClick4 = () => {
+  //   navigate.push('/ArtistHomePage')
+  // }
 
   return useMemo(() => (
     <>
+      {/* <OrbitControls /> */}
       <directionalLight position={[0, 3, 1]} intensity={0.1} />
       <group ref={cameraGroup}>
         <Background backgroundColors={backgroundColors}/>
@@ -514,52 +499,12 @@ const Experience = () => {
             makeDefault 
           />
         </group>
-        <group ref={airplane}>
+        <group ref={ship}>
           <Float floatIntensity={1} speed={1.5} rotationIntensity={0.5}>
-            <Ship rotation-y={Math.PI * 1.5} scale={[0.01, 0.01, 0.01]}
-            position-y={-0.8} />
+            <Ship rotation-y={Math.PI * 1.5} scale={[0.015, 0.015, 0.015]}
+            position-y={-1.3} />
           </Float>
         </group>
-      </group>
-
-      {/* TEXT */}
-      {/* <{textSections.map((textSection, index) => (
-          <TextSection {...textSection} key={index} />
-      ))}> */}
-      <group position={[-3, 0, -100]}>
-        <Text
-          color="white"
-          anchorX={"left"}
-          anchorY="middle"
-          fontSize={0.22}
-          maxWidth={2.5}
-        >
-          Welcome to Wawatmos!{"\n"}
-          Have a seat and enjoy the ride!
-        </Text>
-      </group>
-
-      <group position={[-10, 1, -200]}>
-        <Text
-          color="white"
-          anchorX={"left"}
-          anchorY="center"
-          fontSize={0.52}
-          maxWidth={2.5}
-        >
-          Services
-        </Text>
-        <Text
-          color="white"
-          anchorX={"left"}
-          anchorY="top"
-          position-y={-0.66}
-          fontSize={0.22}
-          maxWidth={2.5}
-        >
-          Do you want a drink?{"\n"}
-          We have a wide range of beverages!
-        </Text>
       </group>
 
       {/* LINE */}
@@ -578,7 +523,7 @@ const Experience = () => {
             <meshStandardMaterial 
               color={"white"}
               ref={lineMaterialRef}
-              opacity={1} 
+              opacity={0.5}
               transparent
               envMapIntensity={2}
             />
@@ -586,11 +531,58 @@ const Experience = () => {
       </group>
 
       {/* CLOUDS */}
-      {clouds.map((cloud, index) => (
-        <Cloud sceneOpacity={sceneOpacity} {...cloud} key={index} />
-      ))}
+      {/* {islands.map((island, index) => (
+        <mesh onClick={() => handleIslandClick()}>
+          <Island_1 sceneOpacity={sceneOpacity} {...island} key={index} 
+          scale={[0.01, 0.01, 0.01]} position-y={-2}/>
+        </mesh>
+      ))} */}
+
+      {/* Island 1 */}
+      <mesh onClick={() => handleIslandClick1()}>
+        <Island_1 sceneOpacity={sceneOpacity} position={islands[8].position}
+        scale={[0.075, 0.075, 0.075]} position-y={-4} position-x={-6.5}/>
+      </mesh>
+
+      <mesh onClick={() => handleIslandClick1()}>
+        <Review_Text sceneOpacity={sceneOpacity} position={islands[8].position}
+        scale={[1, 1, 1]} position-y={2} position-x={-1}/>
+      </mesh>
+
+      {/* Island 2 */}
+      <mesh onClick={() => handleIslandClick2()}>
+        <Island_2 sceneOpacity={sceneOpacity} position={islands[9].position}
+        scale={[0.075, 0.075, 0.075]} position-y={-4} position-x={110}/>
+      </mesh>
+
+      <mesh onClick={() => handleIslandClick2()}>
+        <Auction_Text sceneOpacity={sceneOpacity} position={islands[9].position}
+        scale={[1, 1, 1]} position-y={2} position-x={102} rotation-y={-0.5}/>
+      </mesh>
+
+      {/* Island 3 */}
+      <mesh onClick={() => handleIslandClick3()}>
+        <Island_3 sceneOpacity={sceneOpacity} position={islands[12].position}
+        scale={[0.15, 0.15, 0.15]} position-y={-2.5} position-x={-70}/>
+      </mesh>
+
+      <mesh onClick={() => handleIslandClick3()}>
+        <Artist_Text sceneOpacity={sceneOpacity} position={islands[12].position}
+        scale={[1, 1, 1]} position-y={2} position-x={-75} rotation-y={0.7} />
+      </mesh>
+
+      {/* Island 4 */}
+      <mesh onClick={() => handleIslandClick3()}>
+        <Island_4 sceneOpacity={sceneOpacity} position={islands[17].position}
+        scale={[1.5, 1.5, 1.5]} position-y={-3} position-x={90}/>
+      </mesh>
+
+      <mesh onClick={() => handleIslandClick3()}>
+        <Rock_1 sceneOpacity={sceneOpacity} position={islands[1].position}
+        scale={[0.5, 0.5, 0.5]} position-y={-3}/>
+      </mesh>
     </>
-  ), 
+  ),
   []);
 };
 

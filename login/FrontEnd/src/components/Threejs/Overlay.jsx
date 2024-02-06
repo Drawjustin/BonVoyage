@@ -26,7 +26,15 @@ const Overlay = () => {
             </div>
             )}
             <div className={`outro ${end ? "outro--appear" : ""}`}>
-                <p className="outro__text"></p>
+                <p className="outro__text">
+                </p>
+                <button 
+                    className="restart_btn"
+                    onClick={() => {
+                        window.location.reload();
+                    }}>
+                    Restart
+                </button>
             </div>
         </div>
     )
