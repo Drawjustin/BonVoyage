@@ -22,7 +22,7 @@ const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
       onUpload={handleUpload}
       uploadPreset={uploadPreset}
       options={{
-        maxFiles: 1,
+        maxFiles: 3,
       }}
     >
       {({ open }) => (
