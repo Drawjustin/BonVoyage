@@ -11,6 +11,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { formatTime } from '@/helpers/dayjs';
 import dayjs from 'dayjs';
+import Navbar from '@/components/Navbar/Navbar';
+// import './ProductUploadPage.sass';
 
 const ProductUploadPage = () => {
   const router = useRouter();
@@ -31,7 +33,8 @@ const ProductUploadPage = () => {
       description: '',
       category: 'auction',
       imageSrc: '',
-      price: 1
+      size: '',
+      price: '(원)'
     }
   });
 
@@ -65,40 +68,97 @@ const ProductUploadPage = () => {
       .finally(() => {
         setIsLoading(false);
       });
-
+      
       console.log(data);
-  };
-
-  const setCustomValue = (id: string, value: any) => {
-    setValue(id, value);
-  };
-
-  return (
-    <Container>
+    };
+    
+    const setCustomValue = (id: string, value: any) => {
+      setValue(id, value);
+    };
+    
+    return (
+      <Container>
+      <Navbar />
       <div className={styles.productUploadContainer}>
+        {/* <form>
+              <h1>일반 판매 작품 등록</h1>
+              <div className="question">
+                <input type="text" required />
+                <label>작품명</label>
+              </div>
+              <div className="question">
+                <input type="text" required />
+                <label>상세 설명</label>
+              </div>
+              <div className="question">
+                <input type="text" required />
+                <label>규격</label>
+              </div>
+              <div className="question">
+                <input type="text" required />
+                <label>가격</label>
+              </div>
+              <button>등록하기</button>
+        </form> */}
+        
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.heading}>
-            <Heading title="Product Upload" subtitle="upload your product" />
+            <h1 style={{ color: '#f1efee' }}>일반 판매 작품 등록</h1>
+            <div style={{ color: '#f1efee' }}>일반 판매할 작품의 정보를 등록해주세요!</div>
           </div>
 
           <div className={styles.imageUploadContainer}>
             <ImageUpload onChange={(value) => setCustomValue('imageSrc', value)} value={imageSrc} />
           </div>
 
-          <Input id="title" label="Title" disabled={isLoading} register={register} errors={errors} required />
-          <hr />
+          <div>
+            <div>작품명</div>
+            <input
+              id="title" 
+              placeholder="작품명을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('title', { required: true })} 
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>          
+          </div>
 
-          <Input id="description" label="Description" disabled={isLoading} register={register} errors={errors} required />
-          <hr />
+          <div>
+            <div>설명</div>
+            <input
+              id="description" 
+              placeholder="작품 설명을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('description', { required: true })}
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }} />
+          </div>
 
-          <Input id="price" label="Price" formatPrice disabled={isLoading} register={register} errors={errors} required />
-          <hr />
-          
-          <div className={styles.button}>
-            <Button label="상품 생성하기" />
+          <div>
+            <div>규격</div>
+            <input 
+              id="size" 
+              placeholder="예) 가로 * 세로 53.0 * 40.9 cm"
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('size', { required: true })} 
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>
+          </div>
+
+          <div>
+            <div>가격</div>
+            <input
+              id="price"
+              placeholder="가격을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('price', { required: true })}
+              // 필요한 경우 추가 속성이나 이벤트 핸들러를 추가합니다
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}
+              /> 
+          </div>
+          <div>
+            <button className={styles.btn}>작품 등록</button>
           </div>
         </form>
-      </div>
+
+</div>
+
     </Container>
   );
 };

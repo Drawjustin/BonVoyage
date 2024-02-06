@@ -10,6 +10,7 @@ import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
+import Navbar from '@/components/Navbar/Navbar';
 
 const AuctionUploadPage = () => {
 
@@ -40,7 +41,9 @@ const AuctionUploadPage = () => {
       description: '',
       category: 'auction',
       imageSrc: '',
-      price: 1
+      size: '',
+      date: '',
+      price: '(원)'
     }
   });
 
@@ -82,43 +85,82 @@ const AuctionUploadPage = () => {
 
   return (
     <Container>
+      <Navbar />
       <div className={styles.productUploadContainer}>
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.heading}>
-            <Heading title="Product Upload" subtitle="upload your product" />
+            <h1 style={{ color: '#f1efee' }}>경매 작품 등록</h1>
+            <div style={{ color: '#f1efee' }}>경매에 참가할 작품의 정보를 등록해주세요!</div>
           </div>
 
           <div className={styles.imageUploadContainer}>
             <ImageUpload onChange={(value) => setCustomValue('imageSrc', value)} value={imageSrc} />
           </div>
 
-          <Input id="title" label="Title" disabled={isLoading} register={register} errors={errors} required />
-          <hr />
-
-          <Input id="description" label="Description" disabled={isLoading} register={register} errors={errors} required />
-          <hr />
+          <div>
+            <div>작품명</div>
+            <input
+              id="title" 
+              placeholder="작품명을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('title', { required: true })} 
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>          
+          </div>
 
           <div>
-            <label htmlFor="datepicker">날짜 선택:</label>
+            <div>설명</div>
             <input
-              type="date"
+              id="description" 
+              placeholder="작품 설명을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('description', { required: true })}
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }} />
+          </div>
+
+          <div>
+            <div>규격</div>
+            <input 
+              id="size" 
+              placeholder="예) 가로 * 세로 53.0 * 40.9 cm"
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('size', { required: true })} 
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>
+          </div>
+
+          <div>
+            <div>경매 일정</div>
+            <input
               id="datepicker"
+              type="date"
               value={selectedDate}
-              onChange={handleDateChange}
-            />
-            {selectedDate && (
+              // onChange={handleDateChange}
+              // placeholder="경매 날짜를 선택하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('date', { required: true })}
+              // 필요한 경우 추가 속성이나 이벤트 핸들러를 추가합니다
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}
+              /> 
+              {selectedDate && (
               <p>선택한 날짜: {selectedDate}</p>
             )}
           </div>
-          <hr />
-          
-          <div className={styles.button}>
-            <Button label="경매 생성하기" />
+
+          <div>
+            <div>경매 시작가</div>
+            <input
+              id="price"
+              placeholder="경매 시작가를 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('price', { required: true })}
+              // 필요한 경우 추가 속성이나 이벤트 핸들러를 추가합니다
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}
+              /> 
+          </div>
+          <div>
+            <button className={styles.btn}>작품 등록</button>
           </div>
         </form>
       </div>
-      
-
     </Container>
   );
 };

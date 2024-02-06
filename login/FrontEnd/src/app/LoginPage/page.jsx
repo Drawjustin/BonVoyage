@@ -137,7 +137,7 @@ const LoginPage = () => {
 
     <div>
       <Navbar/>
-      <div style={{ marginTop: '7vh' }}>
+      <div style={{ marginTop: '10vh' }}>
         <InputLogin/>
       </div>
     </div>

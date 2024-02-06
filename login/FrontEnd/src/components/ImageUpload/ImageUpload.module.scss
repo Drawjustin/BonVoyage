@@ -1,4 +1,6 @@
 .uploadContainer {
+  margin: 20px;
+    max-width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
   gap: 1rem;
   padding: 5rem;
   transition: all 0.3s ease;
-  border: 2px dashed #cbd5e0;
+  border: 2px dashed #f1efee;
   cursor: pointer;
 
   &:hover {
@@ -16,7 +18,7 @@
 }
 
 .icon {
-  color: #ed64a6;
+  color: #171de5;
 }
 
 .imagePreview {

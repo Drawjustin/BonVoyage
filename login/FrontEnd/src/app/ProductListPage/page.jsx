@@ -16,8 +16,8 @@ export default async function ProductListPage () {
   return (
     <div className='page'>
       <Navbar />
-      <div className='container'>
-        <h1  style={{ color: '#f1efee'}}>Products</h1>
+      <div className='container' style={{ marginTop: '10px' }}>
+        <h1  style={{ color: '#f1efee', textAlign: 'left'}}>Products</h1>
 
             {
               products.data?.length === 0
