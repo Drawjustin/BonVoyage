@@ -4,20 +4,24 @@ import React from 'react';
 import styles from './ThreejsMainPage.module.scss';
 import { Canvas } from "@react-three/fiber";
 // import Experience from "../../components/Threejs/Experience";
-import { ScrollControls } from '@react-three/drei';
+import { ScrollControls, Html } from '@react-three/drei';
 import { EffectComposer, Noise } from '@react-three/postprocessing';
 // import Overlay from "../../components/Threejs/Overlay";
 import { usePlay } from "../../components/Threejs/contexts/PlayProvider";
+import Navbar from "../../components/Navbar/Navbar"
 import dynamic from 'next/dynamic';
 
 const Experience = dynamic(() => import("../../components/Threejs/Experience"), { ssr: false });
 const Overlay = dynamic(() => import("../../components/Threejs/Overlay"), { ssr: false });
+const Ocean = dynamic(() => import("../../components/Threejs/Ocean"), { ssr: false });
+// const Ocean3 = dynamic(() => import("../../components/Threejs/Ocean3"), { ssr: false });
 
 const ThreejsMainPage = () => {
     const { play, end } = usePlay();
 
     return (
         <div className={styles.container}>
+        <Navbar />
         <Canvas>
             <color attach="background" args={["#ececec"]} />
             <ScrollControls 
@@ -36,8 +40,9 @@ const ThreejsMainPage = () => {
             >
                 <Experience />
             </ScrollControls>
+            <Ocean />
             <EffectComposer>
-                <Noise opacity={0.2} />
+                <Noise opacity={0.1} />
             </EffectComposer>
         </Canvas>
         <Overlay />
