@@ -31,6 +31,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+
+
 	//swagger
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 
@@ -42,6 +44,13 @@ dependencies {
 
 	//openvidu 설정
 	implementation 'io.openvidu:openvidu-java-client:2.29.0'
+	//Spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security:6.0.0' // Spring Security 6 추가
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2' // jjwt-api 추가
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2' // jjwt-impl 추가
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2' // jjwt-jackson 추가
+	implementation 'org.springframework.boot:spring-boot-starter-web' // 웹 애플리케이션을 위한 Spring Boot Starter 추가
+
 }
 
 tasks.named('test') {

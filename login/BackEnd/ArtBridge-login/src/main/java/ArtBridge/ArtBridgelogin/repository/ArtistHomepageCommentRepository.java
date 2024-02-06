@@ -25,13 +25,11 @@ public class ArtistHomepageCommentRepository {
     public void init() {
         queryFactory = new JPAQueryFactory(em);
     }
-    @Transactional
     public ArtistHomepageComment create(ArtistHomepageComment artistHomepageComment){
         em.persist(artistHomepageComment);
         return artistHomepageComment;
     }
 
-    @Transactional(readOnly = true)
     public ArtistHomepageComment findOne(Long seq){
         return queryFactory
                 .selectFrom(qArtistHomepageComment)
@@ -39,14 +37,12 @@ public class ArtistHomepageCommentRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public List<ArtistHomepageComment> findAll(){
         return queryFactory
                 .selectFrom(qArtistHomepageComment)
                 .fetch();
      }
 
-    @Transactional
     public void deleteBySeq(Long seq) {
         queryFactory
                 .delete(qArtistHomepageComment)
@@ -54,7 +50,6 @@ public class ArtistHomepageCommentRepository {
                 .execute();
     }
 
-    @Transactional
     public ArtistHomepageComment updateArtistHomepageComment(Long seq, ArtistHomepageComment updatedComment) {
         queryFactory
                 .update(qArtistHomepageComment)
