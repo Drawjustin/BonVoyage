@@ -31,6 +31,10 @@ public class AuctionService {
     public Auction readOne(int seq) {
         return auctionRepository.readOne(seq);
     }
+    @Transactional
+    public List<Auction> readAuctionsBySameAuthor(Long authorId) {
+        return auctionRepository.readAuctionsBySameAuthor(authorId);
+    }
 
 
     //Todo: UPDATE
@@ -47,8 +51,4 @@ public class AuctionService {
         auctionRepository.deleteById(seq);
     }
 
-    @Transactional
-    public List<Auction> readAuctionsBySameAuthor(Long authorId) {
-        return auctionRepository.readAuctionsBySameAuthor(authorId);
-    }
 }
