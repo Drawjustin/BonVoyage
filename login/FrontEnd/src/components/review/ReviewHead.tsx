@@ -1,5 +1,5 @@
 import React from 'react'
-import Heading from '../Heading';
+import Heading from '../Heading/Heading';
 import Image from 'next/image';
 import { User } from '@prisma/client';
 // import HeartButtonForReview from '../HeartButtonForReview';
