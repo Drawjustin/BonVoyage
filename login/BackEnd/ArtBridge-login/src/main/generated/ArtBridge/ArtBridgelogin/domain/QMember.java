@@ -28,6 +28,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final ListPath<AuctionPointDetail, QAuctionPointDetail> auctionPointDetails = this.<AuctionPointDetail, QAuctionPointDetail>createList("auctionPointDetails", AuctionPointDetail.class, QAuctionPointDetail.class, PathInits.DIRECT2);
 
+    public final BooleanPath isArtist = createBoolean("isArtist");
+
     public final ListPath<MemberAuctionBidding, QMemberAuctionBidding> memberAuctionBiddings = this.<MemberAuctionBidding, QMemberAuctionBidding>createList("memberAuctionBiddings", MemberAuctionBidding.class, QMemberAuctionBidding.class, PathInits.DIRECT2);
 
     public final StringPath memberContact = createString("memberContact");

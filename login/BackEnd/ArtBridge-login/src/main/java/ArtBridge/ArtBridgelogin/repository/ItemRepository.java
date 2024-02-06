@@ -38,14 +38,12 @@ public class ItemRepository {
     }
 
     // 아이템 생성 메서드
-    @Transactional
     public Item create(Item item) {
         em.persist(item);
         return item;
     }
 
     // 모든 아이템 조회 메서드
-    @Transactional(readOnly = true)
     public List<Item> findAll() {
         return queryFactory
                 .selectFrom(qItem)
@@ -53,7 +51,6 @@ public class ItemRepository {
     }
 
     // 아이템 일련번호로 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public Item findBySeq(int itemSeq) {
         return queryFactory
                 .selectFrom(qItem)
@@ -62,7 +59,6 @@ public class ItemRepository {
     }
 
     // 아이템 삭제 메서드
-    @Transactional
     public void deleteById(int itemSeq) {
         queryFactory
                 .delete(qItem)
@@ -71,7 +67,6 @@ public class ItemRepository {
     }
 
     // 인기 아이템 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Item> findPopularItems() {
         return queryFactory
                 .selectFrom(qItem)
@@ -80,7 +75,6 @@ public class ItemRepository {
     }
 
     // 최신 아이템 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Item> findLastedItems() {
         return queryFactory
                 .selectFrom(qItem)

@@ -28,9 +28,7 @@ public class MeetingService {
     }
 
     @Transactional
-    public void updateMeetingBySeq(int meetingSeq, String newSessionId) {
-        meetingRepository.updateBySeq(meetingSeq, newSessionId);
-    }
+    public void updateMeetingBySeq(int meetingSeq, String newSessionId) {meetingRepository.updateBySeq(meetingSeq, newSessionId);}
 
     @Transactional
     public void deleteMeetingBySession(String sessionId) {

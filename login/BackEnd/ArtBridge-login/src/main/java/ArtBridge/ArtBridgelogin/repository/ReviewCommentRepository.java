@@ -24,11 +24,9 @@ public class ReviewCommentRepository {
     @PostConstruct
     public void init() {queryFactory = new JPAQueryFactory(em);}
 
-    @Transactional(readOnly = true)
     public ReviewComment findOne(Long Commentid) {
         return em.find(ReviewComment.class, Commentid);
     }
-    @Transactional(readOnly = true)
     public List<ReviewComment> findAll(int seq) {
 
         List<ReviewComment> reviewComments = queryFactory
@@ -38,12 +36,10 @@ public class ReviewCommentRepository {
 
         return reviewComments;
     }
-    @Transactional
     public ReviewComment createReviewComment(ReviewComment reviewComment) {
         em.persist(reviewComment);
         return reviewComment;
     }
-    @Transactional
     public ReviewComment updateReviewComment(Long seq, ReviewComment updatedReviewComment) {
 
         queryFactory
@@ -56,7 +52,6 @@ public class ReviewCommentRepository {
                 .where(qReviewComment.reviewCommentSeq.eq(seq))
                 .fetchOne();
     }
-    @Transactional
     public void deleteReviewComment(Long seq) {
         queryFactory
                 .delete(qReviewComment)

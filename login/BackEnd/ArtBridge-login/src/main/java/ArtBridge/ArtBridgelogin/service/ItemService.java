@@ -5,6 +5,7 @@ import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -15,12 +16,12 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Item> getAllItems() {
         return itemRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public Item getItemBySeq(int seq) {
         return itemRepository.findBySeq(seq);
     }
@@ -40,28 +41,23 @@ public class ItemService {
         itemRepository.deleteById(itemSeq);
     }
 
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Item> getPopularItems() {
         return itemRepository.findPopularItems();
     }
 
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Item> getNewItems() {
         return itemRepository.findLastedItems();
     }
+
+
     public List<Item> getItemsBySameAuthor(UserAcessForm userAcessForm) {
-        if(userAcessForm.getIsArtist()==1){
+        if (userAcessForm.getIsArtist() == 1) {
             return itemRepository.getItemsBySameArtist(userAcessForm.getArtist().getArtistSeq());
-        }
-        else{
+        } else {
             return itemRepository.getItemsBySameMember(userAcessForm.getMember().getMemberSeq());
         }
 
     }
-
-
-
-
-    //TODO: Implement this method after resolving artist_seq join
-//    public List<Item> getItemsBySameAuthor(String authorId) {
-//        return itemRepository.findSameAuthorItems(authorId);
-//    }
 }

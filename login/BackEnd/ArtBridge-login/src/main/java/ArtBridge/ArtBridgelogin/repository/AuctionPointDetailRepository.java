@@ -46,7 +46,6 @@ public class AuctionPointDetailRepository {
                 .fetch();
     }
 
-
     public void updateWinner(int seq, boolean isWin){
         queryFactory.update(auctionPointDetail)
                 .set(auctionPointDetail.auctionPointDetailIsWin, isWin)

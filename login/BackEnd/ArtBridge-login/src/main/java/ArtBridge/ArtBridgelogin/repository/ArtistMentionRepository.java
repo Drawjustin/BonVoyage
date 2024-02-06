@@ -25,13 +25,11 @@ public class ArtistMentionRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    @Transactional
     public ArtistMention create(ArtistMention artistMention) {
         em.persist(artistMention);
         return artistMention;
     }
 
-    @Transactional(readOnly = true)
     public ArtistMention findOne(Long artistMentionSeq) {
         ArtistMention artistMention = queryFactory
                 .selectFrom(qArtistMention)
@@ -45,23 +43,19 @@ public class ArtistMentionRepository {
         return artistMention;
     }
 
-    @Transactional(readOnly = true)
     public List<ArtistMention> findAll() {
         return queryFactory
                 .selectFrom(qArtistMention)
                 .stream().toList();
     }
 
-    @Transactional
     public void deleteBySeq(Long seq) {
         queryFactory
                 .delete(qArtistMention)
                 .where(qArtistMention.artistMentionSeq.eq(seq))
                 .execute();
     }
-    @Transactional
     public ArtistMention artistMention(Long artistMentionSeq, ArtistMention updatedArtistMention) {
-
 
         ArtistMention managedArtistMention = queryFactory
                 .selectFrom(QArtistMention.artistMention)

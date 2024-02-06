@@ -41,14 +41,12 @@ public class ArtistMentionCommentRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public List<ArtistMentionComment> findAll() {
         return queryFactory
                 .selectFrom(qArtistMentionComment)
                 .fetch();
     }
 
-    @Transactional
     public void deleteById(Long seq) {
         queryFactory
                 .delete(qArtistMentionComment)
@@ -56,7 +54,6 @@ public class ArtistMentionCommentRepository {
                 .execute();
     }
 
-    @Transactional
     public ArtistMentionComment updateArtistMentionComment(Long seq, ArtistMentionComment updatedComment) {
         queryFactory
                 .update(qArtistMentionComment)

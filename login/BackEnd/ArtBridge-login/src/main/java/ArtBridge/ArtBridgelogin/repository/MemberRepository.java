@@ -11,6 +11,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,32 +31,31 @@ public class MemberRepository {
     @PostConstruct
     public void init() {queryFactory = new JPAQueryFactory(em);}
 
-    @Transactional
     public Member create(Member member) {
         em.persist(member);
         return member;
     }
 
-    @Transactional(readOnly = true)
     public Member findOne(Long id){return em.find(Member.class, id);}
 
-    @Transactional(readOnly = true)
     public List<Member> findAll(){
         return queryFactory
                 .selectFrom(qMember)
                 .fetch();
     }
-    @Transactional(readOnly = true)
-    public Optional<Member> findMemberById(String memberId) {
+    public ResponseEntity<?> findMemberById(String memberId) {
         Member member = queryFactory
                 .selectFrom(qMember)
                 .where(qMember.memberId.eq(memberId))
                 .fetchOne();
 
-        return Optional.ofNullable(member);
+        if (member != null) {
+            return ResponseEntity.ok().body(member);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @Transactional
     public Member updateMember(String id, Member updatedMember) {
         Member existingMember = queryFactory
                 .selectFrom(QMember.member)
@@ -92,7 +92,6 @@ public class MemberRepository {
         }
     }
 
-    @Transactional
     public void deleteById(Long id) {
         // Querydsl 사용하여 해당 ID에 해당하는 Member 조회
         Member member = queryFactory

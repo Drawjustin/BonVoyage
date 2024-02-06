@@ -36,7 +36,6 @@ public class AuctionRepository {
         return auction;
     }
 
-    @Transactional(readOnly = true)
     public Auction findOne(int seq){
         return em.find(Auction.class, seq);
     }
@@ -46,7 +45,6 @@ public class AuctionRepository {
                 .selectFrom(qAuction)
                 .fetch();
     }
-
 
     public Auction updateAuction(int seq, Auction updatedAuction) {
         // Pessimistic write lock 설정

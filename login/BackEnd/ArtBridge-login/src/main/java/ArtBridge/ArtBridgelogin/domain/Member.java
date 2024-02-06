@@ -19,6 +19,9 @@ public class Member {
     @Column(name = "member_seq")
     private Long memberSeq;
 
+    @Column(name = "is_artist")
+    private boolean isArtist;
+
     @Column(name = "member_id", length = 30, nullable = false)
     private String memberId;
 

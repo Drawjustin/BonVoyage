@@ -26,13 +26,11 @@ public class MeetingRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
-    @Transactional
     public Meeting create(Meeting meeting) {
         em.persist(meeting);
         return meeting;
     }
 
-    @Transactional(readOnly = true)
     public Meeting findMeetingBySeq(int meetingSeq) {
         return queryFactory
                 .selectFrom(qMeeting)
@@ -40,7 +38,6 @@ public class MeetingRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
     public Meeting findMeetingBySession(String sessionId) {
         return queryFactory
                 .selectFrom(qMeeting)
@@ -48,7 +45,6 @@ public class MeetingRepository {
                 .fetchOne();
     }
 
-    @Transactional
     public void updateBySeq(int meetingSeq, String newSessionId) {
         queryFactory
                 .update(qMeeting)
@@ -57,7 +53,6 @@ public class MeetingRepository {
                 .execute();
     }
 
-    @Transactional
     public void deleteMeetingBySession(String sessionId) {
         queryFactory
                 .delete(qMeeting)

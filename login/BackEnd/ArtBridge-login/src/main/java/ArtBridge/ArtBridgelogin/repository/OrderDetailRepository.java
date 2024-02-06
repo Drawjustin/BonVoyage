@@ -28,16 +28,13 @@ public class OrderDetailRepository {
     @PostConstruct
     public void init() {queryFactory = new JPAQueryFactory(em);}
 
-    @Transactional
     public OrderDetail create(OrderDetail orderDetail){
         em.persist(orderDetail);
         return orderDetail;
     }
 
-    @Transactional(readOnly = true)
     public OrderDetail findOne(Long id){return em.find(OrderDetail.class, id);}
 
-    @Transactional(readOnly = true)
     public List<OrderDetail> findAll(){
         List<OrderDetail> orderDetails = queryFactory
                 .selectFrom(qOderdetail)
@@ -47,7 +44,6 @@ public class OrderDetailRepository {
     }
 
     // TODO: Upate
-    @Transactional
     public void updateMember(Long id, String newUsername, String newPassword) {
         // Querydsl 사용하여 해당 ID에 해당하는 Member 조회
         QMember qMember = QMember.member;
