@@ -93,8 +93,8 @@ const AccountInfo = () => {
 
 
     return (
-        <div style={{ width: '600px'}}>
-        <h3 className={styles.title} style={{ color: '#f1efee' }}>계정 정보</h3>
+        <div style={{ width: '600px', alignItems: 'center' }}>
+        <h3 className={styles.title} style={{ color: '#f1efee', fontSize: 'calc(1.3rem + .6vw)' }}>계정 정보</h3>
         <div  className={styles.account_info}>
             <div>
             <div className={styles.info_item}>

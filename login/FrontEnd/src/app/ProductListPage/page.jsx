@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import store from '@/store';
 import Categories from '@/components/categories/Categories/Categories';
 import axios from 'axios';
+import Navbar from '@/components/Navbar/Navbar';
 
 export default async function ProductListPage () {
 

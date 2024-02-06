@@ -8,7 +8,7 @@ const Faq = () => {
 
   return (
     <div className={styles.frame_parent}>
-    <div className={styles.plz}>
+    <div className={styles.plz} style={{ fontFamily: 'Gowun Dodum' }}>
     <h3 className={styles.title} style={{ color: '#f1efee' }}>FAQ</h3>
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
