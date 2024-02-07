@@ -10,15 +10,22 @@ import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
 
 
-const ProductPagination = () => {
+const ProductPagination = ({PageLink}) => {
   
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);
   const [Sort, setSortBy] = useState('Like');
   const [currentPage, setCurrentPage] = useState(1);
   const [products, setProducts] = useState([]);
-  const [searchParams] = useSearchParams();
-  const page = searchParams ? searchParams.get("page") : null;
+  const searchParams = useSearchParams();
+  const [page, setProductId] = useState('');
+
+  useEffect(() => {
+    const id = searchParams.get("page");
+    if (id) {
+      setProductId(id);
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (typeof window !== 'undefined'){

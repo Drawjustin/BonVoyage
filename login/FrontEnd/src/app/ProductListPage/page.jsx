@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
 import styles from './ProductListPage.module.scss'
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
-import { Routes, Route } from 'react-router-dom';
 
 const ProductListPage = () => {
   const router = useRouter();
@@ -13,10 +12,10 @@ const ProductListPage = () => {
       
       <div className={styles.container}>
         <Navbar />
-                  
-                        <Routes>
-                            <Route path={router} element={<ProductPagination/>} />
-                        </Routes>
+
+                <ProductPagination PageLink={router}/>
+              
+
             
         <FloatingButton href="/ProductUploadPage">+</FloatingButton>
       </div>
