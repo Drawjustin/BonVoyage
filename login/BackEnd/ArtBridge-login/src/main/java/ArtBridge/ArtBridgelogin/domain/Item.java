@@ -10,7 +10,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
-@JsonIgnoreProperties({"artist"})
+
 @Entity
 @Table(name="item")
 @Data
