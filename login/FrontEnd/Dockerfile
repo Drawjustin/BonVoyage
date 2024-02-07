@@ -20,11 +20,11 @@ RUN npm install @emotion/styled
 COPY . .
 RUN rm -rf /etc/nginx/conf.d
 # Build the React app
-RUN npx next build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
+RUN npx next build
 # Copy the custom nginx.conf file to the nginx configuration directory
 
 COPY default.conf /etc/nginx/conf.d/default.conf
