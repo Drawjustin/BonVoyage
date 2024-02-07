@@ -27,7 +27,10 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0' // 최신 버전으로 업데이트 가능
+	//implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0' // 최신 버전으로 업데이트 가능
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
