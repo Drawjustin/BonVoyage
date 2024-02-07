@@ -52,7 +52,6 @@ public class Item {
     // Many-to-One relationship with Artist
     @ManyToOne
     @JoinColumn(name = "artist_seq", nullable = false)
-    @JsonBackReference
     private Artist artist;
 
     // One-to-Many relationship with OrderDetail
