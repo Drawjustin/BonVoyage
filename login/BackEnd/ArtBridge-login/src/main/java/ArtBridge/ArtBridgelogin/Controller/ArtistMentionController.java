@@ -28,7 +28,7 @@ public class ArtistMentionController {
         return ResponseEntity.ok(artistMention);
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public ResponseEntity<ArtistMention> createArtistMention(@RequestBody ArtistMention artistMention) {
         ArtistMention createdArtistMention = artistMentionService.createArtistMention(artistMention);
         return ResponseEntity.ok(createdArtistMention);
