@@ -2,14 +2,13 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.*;
-@JsonIgnoreProperties({"item"})
+
 @Entity
 @Table(name = "artist")
 @Data
@@ -18,7 +17,6 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_seq")
-    @JsonManagedReference
     private Long artistSeq;
 
     @Column(name = "artist_name", length = 30, nullable = false)
@@ -71,6 +69,7 @@ public class Artist {
     @OneToMany(mappedBy = "artist")
     private List<OrderDetail> orderDetails;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
     private List<Item> items;
 }
