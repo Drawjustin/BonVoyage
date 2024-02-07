@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import styles from './ResetPw.module.scss';
 import axios from 'axios';
 import Navbar from '@/components/Navbar/Navbar';
-
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ResetPw = () => {
+    const currentUser = getCurrentUser();
     const [showResetForm, setShowResetForm] = useState(false);
     // axios 요청을 넣기 위해 하는 코드
     const [userId, setUserId] = useState('');
@@ -45,7 +46,7 @@ const ResetPw = () => {
 
     return (
         <div className={styles.password_reset_container}>
-            <Navbar />
+      <Navbar/>
             <h2>비밀번호 재설정</h2>
             {showResetForm ? (
             <>

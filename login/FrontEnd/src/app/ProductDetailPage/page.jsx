@@ -6,9 +6,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addToCart } from '../../store/cart/cart.slice';
 import { fetchProduct } from '../../store/products/product.slice';
 import styles from './ProductDetailPage.module.scss';
+import Navbar from '../../components/Navbar/Navbar';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ProductDetailPage = () => {
-
+  const currentUser = getCurrentUser();
   // const { id } = useParams();
   // const productId = Number(id);
   // const dispatch = useAppDispatch();
@@ -29,7 +31,7 @@ const ProductDetailPage = () => {
 
 
   return (
-    <h1>상품 페이지</h1>
+    <Navbar/>
     // <div className='page'>
     //   {isLoading ? (
     //     <Loader />

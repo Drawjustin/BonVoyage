@@ -11,8 +11,11 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const AuctionUploadPage = () => {
+
+    const currentUser = getCurrentUser();
 
     const [selectedDate, setSelectedDate] = useState('');
   

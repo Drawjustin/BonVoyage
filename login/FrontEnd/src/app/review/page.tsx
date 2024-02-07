@@ -4,7 +4,7 @@ import Image from "next/image";
 import axios from "axios";
 // import getReviews, { ReviewsParams } from "../actions/getReviews";
 import Container from "@/components/Container/Container";
-import EmptyState from "@/components/EmptyState";
+import EmptyState from "@/components/EmptyState/EmptyState";
 // import getCurrentUser from "../actions/getCurrentUser";
 // import FloatingButton from "@/components/FloatingButton";
 import ReviewCard from "@/components/review/ReviewCard";
@@ -13,6 +13,7 @@ import Carousel from '@/components/carousel/Carousel';
 import styles from './review.module.scss'
 import Navbar from "@/components/Navbar/Navbar";
 import PurchaseInfo from "@/components/MyPageComponent/PurchaseInfo/PurchaseInfo";
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 // interface ReviewPageProps {
 //   searchParams: ReviewsParams
@@ -32,6 +33,8 @@ interface Review {
 
 export default function Review() {
   const [reviewsData, setReviewsData] = useState<Review[]>([]); // State to store reviews data
+
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
     // Fetch reviews data from the API
@@ -59,7 +62,7 @@ export default function Review() {
       ) : (
         <div className={styles.Cards}>
           {reviewsData.map((review) => (
-            <ReviewCard currentUser={true} key={review.reviewSeq} data={review} />
+            <ReviewCard currentUser={currentUser} key={review.reviewSeq} data={review} />
           ))}
         </div>
       )}</div>

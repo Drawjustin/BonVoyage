@@ -5,6 +5,7 @@ import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 import { PlayProvider } from '@/components/Threejs/contexts/PlayProvider';
 import getCurrentUser from './actions/getCurrentUser';
+import AuthSession from './AuthSession';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,10 +26,12 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
           </Head>
           <body>
             <main>
-            <PlayProvider>
-                <ToastProvider />
-              {children}
-            </PlayProvider>
+              <AuthSession>
+                <PlayProvider>
+                  <ToastProvider />
+                    {children}
+                </PlayProvider>
+              </AuthSession>
             </main>
           </body>
 

@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import styles from './FindId.module.scss';
 import Navbar from '@/components/Navbar/Navbar';
-
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const FindId = () => {
+  const currentUser = getCurrentUser();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');

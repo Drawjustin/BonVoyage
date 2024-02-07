@@ -1,5 +1,4 @@
 'use client'
-
 import React from 'react';
 import styles from './ThreejsMainPage.module.scss';
 import { Canvas } from "@react-three/fiber";
@@ -10,6 +9,7 @@ import { EffectComposer, Noise } from '@react-three/postprocessing';
 import { usePlay } from "../../components/Threejs/contexts/PlayProvider";
 import Navbar from "../../components/Navbar/Navbar"
 import dynamic from 'next/dynamic';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const Experience = dynamic(() => import("../../components/Threejs/Experience"), { ssr: false });
 const Overlay = dynamic(() => import("../../components/Threejs/Overlay"), { ssr: false });
@@ -17,7 +17,7 @@ const Ocean = dynamic(() => import("../../components/Threejs/Ocean"), { ssr: fal
 
 const HomePage = () => {
     const { play, end } = usePlay();
-    
+    const currentUser = getCurrentUser();
 
     return (
         <div className={styles.container}>

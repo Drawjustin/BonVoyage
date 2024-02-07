@@ -6,9 +6,11 @@ import Modal from 'react-modal';
 import YouTube from 'react-youtube';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const AuctionLivePage = () => {
   const [modalOpen, setModalOpen] = useState(true);
+  const currentUser = getCurrentUser();
 
   const navigate = useRouter();
 
@@ -46,7 +48,7 @@ const AuctionLivePage = () => {
 
   return (
     <div className={styles.container}>
-      <Navbar />
+      <Navbar/>
       {/* <Modal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}

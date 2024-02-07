@@ -1,12 +1,13 @@
-'use client'
 import React from "react";
 import styles from './AuctionListPage.module.scss';
 import Navbar from '../../components/Navbar/Navbar';
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
 import axios from 'axios'
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
+const AuctionListPage = async () => {
 
-const AuctionListPage = () => {
+    const currentUser = await getCurrentUser();
 
     const auctions = {} // await axios.get('https://i10a207.p.ssafy.io/api/item');
     // console.log(products.data);

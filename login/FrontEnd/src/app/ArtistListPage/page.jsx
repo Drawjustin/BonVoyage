@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import Navbar from '../../components/Navbar/Navbar';
 import axios from 'axios';
 import styles from './ArtistListPage.module.scss'
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
-const ArtistListPage = () => {
+const ArtistListPage = async () => {
 
+  const currentUser = await getCurrentUser();
   const Artists = {} // await axios.get('https://i10a207.p.ssafy.io/api/artists');
     // console.log(Artists.data);
 

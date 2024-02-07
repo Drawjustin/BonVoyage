@@ -6,42 +6,51 @@ import Navbar from '@/components/Navbar/Navbar';
 import EmptyState from '@/components/EmptyState/EmptyState';
 import styles from './ProductListPage.module.scss'
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 export default async function ProductListPage () {
+  
+  const currentUser = await getCurrentUser();
 
-    
-    const products = await axios.get('https://i10a207.p.ssafy.io/api/item')
-          .then((response) => {return response})
-          .catch((error) => {console.log(error)});
-    console.log(products);
+  try {
+    const response = await axios.get('https://i10a207.p.ssafy.io/api/item');
+    const products = response.data;
 
-  return (
-    <div className='page'>
-      <Navbar />
-      <div className='container' style={{ marginTop: '10px' }}>
-        <h1  style={{ color: '#f1efee', textAlign: 'left'}}>Products</h1>
+    return (
+      <div className="page">
+        <Navbar />
+        <div className="container" style={{ marginTop: '10px' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left' }}>Products</h1>
 
-            {
-              products?.data?.length === 0 || !products
-              ?
-              <EmptyState showReset />
-              :
-              <>
-              <div className={styles.grid}>
-              {products?.data?.map((product) =>
-                  <ProductCard
-                    currentUser={'퍄퍄퍄'}
-                    key={product.itemSeq}
-                    data={product}
-                  />)}
-              </div>
-              </>
-            }
+          {Array.isArray(products) && products.length > 0 ? (
+            <div className={styles.grid}>
+              {products.map((product) => (
+                <ProductCard
+                  currentUser={'퍄퍄퍄'}
+                  key={product.itemSeq}
+                  data={product}
+                />
+              ))}
+            </div>
+          ) : (
+            <EmptyState showReset />
+          )}
+        </div>
+        <FloatingButton href="/ProductUploadPage">+</FloatingButton>
       </div>
-      <FloatingButton
-      href="/ProductUploadPage">
-        +
-      </FloatingButton>
-    </div>
-  );
+    );
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    // Handle the error as needed
+    return (
+      <div className="page">
+        <Navbar />
+        <div className="container" style={{ marginTop: '10px' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left' }}>Products</h1>
+          <EmptyState showReset />
+        </div>
+        <FloatingButton href="/ProductUploadPage">+</FloatingButton>
+      </div>
+    );
+  }
 };
