@@ -7,8 +7,6 @@ export default async function getCurrentUser() {
     try {
         const session = await getServerSession(authOptions);
 
-        const session = await getSession();
-
             if (!session) {
                 return null;
             }
