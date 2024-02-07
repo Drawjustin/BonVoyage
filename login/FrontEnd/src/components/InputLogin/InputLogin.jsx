@@ -28,11 +28,11 @@ const InputLogin = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    // const body = {
-    //   username:username,
-    //   password:password,
-    //   redirect: false,
-    // }
+    const body = {
+      username:username,
+      password:password,
+      redirect: false,
+    }
     // 로그인 처리 로직 추가
     // const backendUrl = 'https://i10a207.p.ssafy.io/api'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
