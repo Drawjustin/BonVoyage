@@ -24,16 +24,12 @@ RUN rm -rf /etc/nginx/conf.d
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
-RUN apt-get update && apt-get install -y curl
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt-get install -y nodejs
-
-RUN npm run build
+RUN npx next build
 # Copy the custom nginx.conf file to the nginx configuration directory
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 # Copy the build output from the build environment to the nginx directory
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /out /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 3000
