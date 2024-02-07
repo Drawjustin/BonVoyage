@@ -243,7 +243,7 @@ const PurchaseInfo = () => {
                     />
                   </div>
                   <div className={styles.submitButtonWrapper}>
-                    <input type='submit' onClick={handleSubmit} style={{ color: '#f1efee', backgroundColor: '#171de5', borderRadius: '8px', border: '#171de5 solid 1px', fontSize: 'medium' }}>제출</input>
+                    <input type='submit' onClick={handleSubmit} style={{ color: '#f1efee', backgroundColor: '#171de5', borderRadius: '8px', border: '#171de5 solid 1px', fontSize: 'medium' }}></input>
                   </div>
                 </div>
               </Rodal></div>

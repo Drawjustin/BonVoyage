@@ -52,9 +52,10 @@ const ProductUploadPage = () => {
         itemWidth:230,
         itemHeight:460,
         itemLike:0,
-        itemSe1lPrice:data.price,
+        itemSellPrice:data.price,
         itemIsSold:false,
-        itemCreatedDate: dayjs()
+        itemCreatedDate: dayjs(),
+        itemImageUrl: data.imageSrc, 
     }
 
     axios.post('https://i10a207.p.ssafy.io/api/item/new', data)

@@ -30,7 +30,7 @@ const ImageUpload = ({ onChange, value }: ImageUploadProps) => {
           <TbPhotoPlus size={50} className={styles.icon} />
           {value && (
             <div className={styles.imagePreview}>
-              <Image fill style={{ objectFit: 'cover' }} src={value} alt="" />
+              <Image src={value} alt="" width={210} height={210} />
             </div>
           )}
         </div>
