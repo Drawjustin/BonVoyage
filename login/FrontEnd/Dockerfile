@@ -24,6 +24,10 @@ RUN rm -rf /etc/nginx/conf.d
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
 
+RUN apt-get update && apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+
 RUN npm run build
 # Copy the custom nginx.conf file to the nginx configuration directory
 
