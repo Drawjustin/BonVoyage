@@ -4,8 +4,16 @@ import { Provider } from 'react-redux';
 import store from '@/store';
 import Navbar from '../../components/Navbar/Navbar';
 import Categories from '@/components/categories/Categories/Categories';
+import axios from 'axios';
 
 const ArtistListPage = () => {
+
+  async function Handle() {
+    ArtistList = axios.get('https://i10a207.p.ssafy.io/api/artists');
+    console.log(ArtistList);
+  }
+  
+
   return (
     <div style={{ width: '1200px' }}>
       <Navbar />

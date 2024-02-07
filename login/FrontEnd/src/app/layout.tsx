@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 import { PlayProvider } from '@/components/Threejs/contexts/PlayProvider';
+import getCurrentUser from './actions/getCurrentUser';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,8 +15,9 @@ export const metadata = {
 
 export default async function RootLayout({children}:Readonly<{children: React.ReactNode;}>)
 {
+
   return (
-    <>
+    <html>
 
         <Head>
             <title>{metadata.title}</title>
@@ -31,6 +33,6 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
           </body>
 
       
-    </>
+    </html>
   );
 }

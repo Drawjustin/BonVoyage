@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
 const InputLogin = () => {
+  
   const [isArtist, setIsArtist] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,80 +23,97 @@ const InputLogin = () => {
     setIsArtist(false);
   };
 
-  const handleLogin = async () => {
-    const body = {
-      username: username,
-      Password: password
-    }
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // const body = {
+    //   username:username,
+    //   password:password,
+    //   redirect: false,
+    // }
     // 로그인 처리 로직 추가
-    const backendUrl = 'https://i10a207.p.ssafy.io:80/api'
+    // const backendUrl = 'https://i10a207.p.ssafy.io/api'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     try {
       const data = await signIn('credentials', body);
+      
+      if (data.error) {
+        alert(data.error);
+        navigate.reload();
+      }
+      else {
+        console.log(data);
+        alert("로그인 성공");
+        navigate.push('/');
+      }
+      
     } catch (error) {
         console.log(error);
     }
 
-//     // axios 요청 넣어봄
-//     if (isArtist) {
+    // axios 요청 넣어봄
+  //   if (isArtist) {
 
-//       const loginData = {
-//         artistId: username,
-//         artistPwd: password,
-//       };
-//       // axios 요청 넣어봄
-//       axios.post(`${backendUrl}/artists/login`, loginData, {
-//         headers: {
-//           'Content-Type': 'application/json;charset=UTF-8'
-//         }
-//       })
-//         .then(response => {
+  //     const loginData = {
+  //       "id": username,
+  //       "pw": password,
+  //     };
+  //     // axios 요청 넣어봄
 
-//           if (response.data === 'Login successful') {
-//             console.log('로그인 성공 :', response.data);
-//             navigate.push('/');
-//           }
-//           else {
-//             console.log('로그인 실패 :', response.data);
-//             setShowAlert(true);
-//           }
-//         })
-//         .catch(error => {
-//           console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-//           // 로그인 실패하면 팝업 표시할 것
+  //     axios.post(`${backendUrl}/artists/login`, loginData, {
+  //       headers: {
+  //         'Content-Type': 'application/json;charset=UTF-8'
+  //       }
+  //     })
+  //       .then(response => {
+
+  //         if (response.data === 'Login successful') {
+  //           console.log('로그인 성공 :', response.data);
+  //           navigate.push('/');
+  //         }
+  //         else {
+  //           console.log('로그인 실패 :', response.data);
+  //           setShowAlert(true);
+  //         }
+  //       })
+  //       .catch(error => {
+  //         console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+  //         // 로그인 실패하면 팝업 표시할 것
           
-//         });
-//   } else {
-//     const loginData = {
-//       memberId: username,
-//       memberPwd: password,
-//     };
-//     // axios 요청 넣어봄
-//     axios.post(`${backendUrl}/members/login`, loginData, {
-//       headers: {
-//         'Content-Type': 'application/json;charset=UTF-8'
-//       }
-//     }).then(response => {
+  //       });
+  // } else {
+  //   const loginData = {
+  //     "id": username,
+  //     "pw": password,
+  //   };
 
-//       if (response.data === 'Login successful') {
-//         console.log('로그인 성공 :', response.data);
-//         navigate.push('/');
-//       }
-//       else {
-//         console.log('로그인 실패 :', response.data);
-//         setShowAlert(true);
-//       }
-//     })
-//     .catch(error => {
-//       console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-//       // 로그인 실패하면 팝업 표시할 것
+  //   console.log(loginData);
+
+  //   // axios 요청 넣어봄
+  //   axios.post(`${backendUrl}/members/login`, loginData, {
+  //     headers: {
+  //       'Content-Type': 'application/json;charset=UTF-8'
+  //     }
+  //   }).then(response => {
+
+  //     if (response.data === 'Login successful') {
+  //       console.log('로그인 성공 :', response.data);
+  //       navigate.push('/');
+  //     }
+  //     else {
+  //       console.log('로그인 실패 :', response.data);
+  //       setShowAlert(true);
+  //     }
+  //   })
+  //   .catch(error => {
+  //     console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+  //     // 로그인 실패하면 팝업 표시할 것
       
-//     });
-// }
+  //   });
+//}
 
+  }
 
-  };
 
   const handleAlertClose = () => {
     // 팝업 닫기 및 상태 초기화
@@ -115,7 +133,7 @@ const InputLogin = () => {
       <h2>Login</h2>
       <div className={styles.toggle_container}>
         <label>
-          <button 
+          <button type='button'
             onClick={handleArtistToggle}
             style={{ backgroundColor: isArtist ? '#7377b6' : 'white',
             color: isArtist ? 'white' : 'black' }}
@@ -125,7 +143,7 @@ const InputLogin = () => {
         <br />
 
         <label>
-          <button
+          <button type='button'
             onClick={handlePersonalToggle}
             style={{ backgroundColor: !isArtist ? '#7377b6' : 'white',
             color: !isArtist ? 'white' : 'black' }}
@@ -145,6 +163,7 @@ const InputLogin = () => {
           <input
             type="text"
             placeholder={isArtist ? '작가 ID' : '개인 ID'}
+            onChange={(e)=>setUsername(e.target.value)}
           />
         </div>
 
@@ -153,6 +172,7 @@ const InputLogin = () => {
           <input
             type="password"
             placeholder="Password"
+            onChange={(e)=>setPassword(e.target.value)}
             />
         </div>
       </div>
