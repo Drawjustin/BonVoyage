@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.test;
+package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
 import ArtBridge.ArtBridgelogin.repository.MeetingRepository;

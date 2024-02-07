@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ReviewComment;
-import ArtBridge.ArtBridgelogin.test.ReviewCommentService;
+import ArtBridge.ArtBridgelogin.service.ReviewCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

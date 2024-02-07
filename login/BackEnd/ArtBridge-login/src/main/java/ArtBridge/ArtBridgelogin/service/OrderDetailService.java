@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.test;
+package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.OrderDetail;
 import ArtBridge.ArtBridgelogin.repository.OrderDetailRepository;

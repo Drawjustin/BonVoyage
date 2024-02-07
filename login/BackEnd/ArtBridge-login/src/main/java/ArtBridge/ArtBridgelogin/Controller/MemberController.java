@@ -4,7 +4,7 @@ import java.util.*;
 
 import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Member;
-import ArtBridge.ArtBridgelogin.test.MemberService;
+import ArtBridge.ArtBridgelogin.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

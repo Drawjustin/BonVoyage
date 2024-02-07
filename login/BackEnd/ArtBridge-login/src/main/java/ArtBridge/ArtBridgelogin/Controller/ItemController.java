@@ -2,7 +2,7 @@ package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.Controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.test.ItemService;
+import ArtBridge.ArtBridgelogin.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.Auction;
-import ArtBridge.ArtBridgelogin.test.AuctionService;
+import ArtBridge.ArtBridgelogin.service.AuctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

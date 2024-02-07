@@ -3,7 +3,7 @@ package ArtBridge.ArtBridgelogin.Controller;
 import ArtBridge.ArtBridgelogin.Controller.form.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.test.ArtistService;
+import ArtBridge.ArtBridgelogin.service.ArtistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

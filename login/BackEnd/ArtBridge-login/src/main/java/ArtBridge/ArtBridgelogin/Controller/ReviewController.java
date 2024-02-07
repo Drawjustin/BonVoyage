@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.Review;
-import ArtBridge.ArtBridgelogin.test.ReviewService;
+import ArtBridge.ArtBridgelogin.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
-import ArtBridge.ArtBridgelogin.test.ArtistMentionService;
+import ArtBridge.ArtBridgelogin.service.ArtistMentionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
-import ArtBridge.ArtBridgelogin.test.AuctionService;
-import ArtBridge.ArtBridgelogin.test.MeetingService;
+import ArtBridge.ArtBridgelogin.service.AuctionService;
+import ArtBridge.ArtBridgelogin.service.MeetingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.openvidu.java.client.ConnectionProperties;
 import io.openvidu.java.client.Connection;

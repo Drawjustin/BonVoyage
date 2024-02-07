@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.test;
+package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;

@@ -1,7 +1,7 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistHomepageComment;
-import ArtBridge.ArtBridgelogin.test.ArtistHomepageCommentService;
+import ArtBridge.ArtBridgelogin.service.ArtistHomepageCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
