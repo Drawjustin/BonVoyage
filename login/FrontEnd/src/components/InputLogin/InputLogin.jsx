@@ -27,93 +27,93 @@ const InputLogin = () => {
   };
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    const body = {
-      username:username,
-      password:password,
-      redirect: false,
-    }
+    // e.preventDefault();
+    // const body = {
+    //   username:username,
+    //   password:password,
+    //   redirect: false,
+    // }
     // 로그인 처리 로직 추가
-    // const backendUrl = 'https://i10a207.p.ssafy.io/api'
+    const backendUrl = 'https://i10a207.p.ssafy.io/api'
     // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
-    try {
-      const data = await signIn('credentials', body);
+    // try {
+    //   const data = await signIn('credentials', body);
       
-      if (data.error) {
-        alert(data.error);
-        navigate.reload();
-      }
-      else {
-        console.log(data);
-        alert("로그인 성공");
-        navigate.push('/');
-      }
+    //   if (data.error) {
+    //     alert(data.error);
+    //     navigate.reload();
+    //   }
+    //   else {
+    //     console.log(data);
+    //     alert("로그인 성공");
+    //     navigate.push('/');
+    //   }
       
-    } catch (error) {
-        console.log(error);
-    }
+    // } catch (error) {
+    //     console.log(error);
+    // }
 
     // axios 요청 넣어봄
-  //   if (isArtist) {
+    if (isArtist) {
 
-  //     const loginData = {
-  //       "id": username,
-  //       "pw": password,
-  //     };
-  //     // axios 요청 넣어봄
+      const loginData = {
+        "id": username,
+        "pw": password,
+      };
+      // axios 요청 넣어봄
 
-  //     axios.post(`${backendUrl}/artists/login`, loginData, {
-  //       headers: {
-  //         'Content-Type': 'application/json;charset=UTF-8'
-  //       }
-  //     })
-  //       .then(response => {
+      axios.post(`${backendUrl}/artists/login`, loginData, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      })
+        .then(response => {
 
-  //         if (response.data === 'Login successful') {
-  //           console.log('로그인 성공 :', response.data);
-  //           navigate.push('/');
-  //         }
-  //         else {
-  //           console.log('로그인 실패 :', response.data);
-  //           setShowAlert(true);
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-  //         // 로그인 실패하면 팝업 표시할 것
+          if (response.data !== '바보 멍텅구리 로그인 실패했잔요') {
+            console.log('로그인 성공 :', response.data);
+            navigate.push('/');
+          }
+          else {
+            console.log('로그인 실패 :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
           
-  //       });
-  // } else {
-  //   const loginData = {
-  //     "id": username,
-  //     "pw": password,
-  //   };
+        });
+  } else {
+    const loginData = {
+      "id": username,
+      "pw": password,
+    };
 
-  //   console.log(loginData);
+    console.log(loginData);
 
-  //   // axios 요청 넣어봄
-  //   axios.post(`${backendUrl}/members/login`, loginData, {
-  //     headers: {
-  //       'Content-Type': 'application/json;charset=UTF-8'
-  //     }
-  //   }).then(response => {
+    // axios 요청 넣어봄
+    axios.post(`${backendUrl}/members/login`, loginData, {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8'
+      }
+    }).then(response => {
 
-  //     if (response.data === 'Login successful') {
-  //       console.log('로그인 성공 :', response.data);
-  //       navigate.push('/');
-  //     }
-  //     else {
-  //       console.log('로그인 실패 :', response.data);
-  //       setShowAlert(true);
-  //     }
-  //   })
-  //   .catch(error => {
-  //     console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-  //     // 로그인 실패하면 팝업 표시할 것
+      if (response.data !== '바보 멍텅구리 로그인 실패했잔요') {
+        console.log('로그인 성공 :', response.data);
+        navigate.push('/');
+      }
+      else {
+        console.log('로그인 실패 :', response.data);
+        setShowAlert(true);
+      }
+    })
+    .catch(error => {
+      console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
+      // 로그인 실패하면 팝업 표시할 것
       
-  //   });
-//}
+    });
+}
 
   }
 
