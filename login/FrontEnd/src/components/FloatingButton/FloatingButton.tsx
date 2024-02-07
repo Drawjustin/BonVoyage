@@ -9,10 +9,8 @@ interface FloatingButtonProps {
 
 export default function FloatingButton({ children, href }: FloatingButtonProps) {
   return (
-    <Link href={href}>
-      <a className={styles.floatingButton}>
+    <Link href={href} className={styles.floatingButton}>
         {children}
-      </a>
     </Link>
   );
 }

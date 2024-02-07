@@ -3,15 +3,17 @@ import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 import Navbar from '@/components/Navbar/Navbar';
-import EmptyState from '@/components/EmptyState';
+import EmptyState from '@/components/EmptyState/EmptyState';
 import styles from './ProductListPage.module.scss'
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
 
 export default async function ProductListPage () {
 
-  
-    const products = {} // await axios.get('https://i10a207.p.ssafy.io/api/item');
-    // console.log(products.data);
+    
+    const products = await axios.get('https://i10a207.p.ssafy.io/api/item')
+          .then((response) => {return response})
+          .catch((error) => {console.log(error)});
+    console.log(products);
 
   return (
     <div className='page'>
@@ -20,13 +22,13 @@ export default async function ProductListPage () {
         <h1  style={{ color: '#f1efee', textAlign: 'left'}}>Products</h1>
 
             {
-              products.data?.length === 0
+              products?.data?.length === 0 || !products
               ?
               <EmptyState showReset />
               :
               <>
               <div className={styles.grid}>
-              {products.data?.map((product) =>
+              {products?.data?.map((product) =>
                   <ProductCard
                     currentUser={'퍄퍄퍄'}
                     key={product.itemSeq}
