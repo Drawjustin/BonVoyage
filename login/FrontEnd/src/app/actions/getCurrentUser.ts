@@ -1,13 +1,11 @@
+"use server"
 import axios from 'axios';
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-
-export async function getSession() {
-    return await getServerSession(authOptions);
-}
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export default async function getCurrentUser() {
     try {
+        const session = await getServerSession(authOptions);
 
         const session = await getSession();
 
