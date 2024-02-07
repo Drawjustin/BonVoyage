@@ -49,7 +49,7 @@ public class Item {
     }
 
     // Many-to-One relationship with Artist
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "artist_seq", nullable = false)
     @JsonBackReference
     private Artist artist;
