@@ -26,12 +26,12 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
           </Head>
           <body>
             <main>
-              <AuthSession>
-                <PlayProvider>
-                  <ToastProvider />
-                    {children}
-                </PlayProvider>
-              </AuthSession>
+                <AuthSession>
+                  <PlayProvider>
+                    <ToastProvider />
+                        {children}
+                  </PlayProvider>
+                </AuthSession>
             </main>
           </body>
 

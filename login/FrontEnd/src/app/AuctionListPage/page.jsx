@@ -4,13 +4,13 @@ import Navbar from '../../components/Navbar/Navbar';
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
 import axios from 'axios'
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import AuctionCard from '@/components/Auctions/AuctionCard/AuctionCard'
 
 const AuctionListPage = async () => {
 
     const currentUser = await getCurrentUser();
 
-    const auctions = {} // await axios.get('https://i10a207.p.ssafy.io/api/item');
-    // console.log(products.data);
+    const auctions = await axios.get('https://i10a207.p.ssafy.io/api/auction');
 
     return (
         <div style={{ width: '1200px' }}>
@@ -20,17 +20,17 @@ const AuctionListPage = async () => {
             </div>
 
             {
-              auctions.data?.length === 0
+              (auctions.data?.length === 0 || !auctions.data)
               ?
               <EmptyState showReset />
               :
               <>
               <div className={styles.grid}>
-              {auctions.data?.map((auction) =>
-                  <ProductCard
-                    currentUser={'퍄퍄퍄'}
-                    key={auction.itemSeq}
-                    data={product}
+              {auctions?.data?.map((auction) =>
+                  <AuctionCard
+                    currentUser={currentUser}
+                    key={auction.auctionSeq}
+                    data={auction}
                   />)}
               </div>
               </>

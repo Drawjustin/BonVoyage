@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Loader from '../../components/loader/Loader';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { addToCart } from '../../store/cart/cart.slice';

@@ -11,9 +11,9 @@ import axios from 'axios';
 import InputLogin from '@/components/InputLogin/InputLogin';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
-const LoginPage = async () => {
+const LoginPage = () => {
 
-  const currentUser = await getCurrentUser();
+  const currentUser = getCurrentUser();
 
     return (
       
