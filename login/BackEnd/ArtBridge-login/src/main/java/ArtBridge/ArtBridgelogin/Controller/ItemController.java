@@ -38,13 +38,15 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{seq}")
     public Item readItemBySeq(@PathVariable int seq) {
         return itemService.readItemBySeq(seq);
     }
 
     @PostMapping("/new")
     public Item createItem(@RequestBody Item item) {
+
+        System.out.println(item);
         return itemService.createItem(item);
     }
 
