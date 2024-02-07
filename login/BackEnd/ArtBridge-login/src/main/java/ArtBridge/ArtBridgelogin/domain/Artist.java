@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class Artist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "artist_seq")
+    @JsonManagedReference
     private Long artistSeq;
 
     @Column(name = "artist_name", length = 30, nullable = false)
