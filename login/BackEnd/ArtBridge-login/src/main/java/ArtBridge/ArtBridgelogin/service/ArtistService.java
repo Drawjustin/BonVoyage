@@ -50,7 +50,7 @@ public class ArtistService {
             return ResponseEntity.ok(foundArtist);
         } else {
             // 로그인 실패 시 401 상태 코드와 실패 메시지 응답
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("바보 멍텅구리 로그인 실패했잔요");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패 하였습니다.");
         }
     }
 

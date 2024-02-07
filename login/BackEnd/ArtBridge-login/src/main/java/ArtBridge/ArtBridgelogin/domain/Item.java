@@ -39,6 +39,13 @@ public class Item {
     @Column(name = "item_created_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime itemCreatedDate;
+    // 다른 필드 및 메서드들...
+    @PrePersist
+    protected void onCreate() {
+        if (itemCreatedDate == null) {
+            itemCreatedDate = LocalDateTime.now();
+        }
+    }
 
     // Many-to-One relationship with Artist
     @ManyToOne(fetch = FetchType.LAZY)
