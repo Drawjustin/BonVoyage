@@ -1,38 +1,29 @@
-# Use an official Node runtime as a base image
-FROM node:latest as build
+# Use an official Node.js image as base
+FROM node:latest
 
-# Set the working directory to /app
-WORKDIR /
+# Install necessary system dependencies
+RUN apt-get update && apt-get install -y nginx
 
-# Copy package.json and package-lock.json to the working directory
+# Set up working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
+# Install npm dependencies
 RUN npm install
 
-RUN npm install @mui/system 
-
-RUN npm install @emotion/react 
-
-RUN npm install @emotion/styled
-
-# Copy the local source files to the working directory
+# Copy the application code into the container
 COPY . .
-RUN rm -rf /etc/nginx/conf.d
-# Build the React app
 
-# Use an official Nginx runtime as a base image
-FROM nginx:latest
-
+# Build the application using npx (assuming it's a Next.js project)
 RUN npx next build
-# Copy the custom nginx.conf file to the nginx configuration directory
 
-COPY default.conf /etc/nginx/conf.d/default.conf
-# Copy the build output from the build environment to the nginx directory
-COPY --from=build /out /usr/share/nginx/html
+# Copy the built files to the Nginx HTML directory
+RUN cp -r .next/* /usr/share/nginx/html
 
-# Expose port 80
+# Expose port 3000
 EXPOSE 3000
 
-# Start Nginx when the container starts
+# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
