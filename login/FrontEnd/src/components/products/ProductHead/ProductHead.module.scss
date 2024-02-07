@@ -1,0 +1,19 @@
+.product_head_container {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    position: relative;
+  
+    .image {
+      object-fit: cover;
+      width: 100%;
+    }
+  
+    .heart_button {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+    }
+  }
+  

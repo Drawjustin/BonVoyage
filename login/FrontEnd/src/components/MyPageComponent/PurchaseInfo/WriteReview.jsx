@@ -4,6 +4,10 @@ import styles from './WriteReview.module.scss';
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
+Quill.register('modules/imageActions', ImageActions);
+Quill.register('modules/imageFormats', ImageFormats);
+
+
 const WriteReview = ({ onSUbmit }) => {
     const [title, setTitle] = useState('');
     const [quillValue, setQuillValue] = useState("");
@@ -71,9 +75,6 @@ const WriteReview = ({ onSUbmit }) => {
                 />
 
             </div>
-
-
-            
             <ReactQuill
                 className={styles.write}
                 style={{ height: "200px" }}

@@ -1,0 +1,124 @@
+$blue: #171de5
+
+* 
+  font-family: 'Gowun Dodum', sans-serif
+  font-weight: large
+  -webkit-font-smoothing: antialiased
+
+html
+  background-color: transparent
+
+form
+  position: relative
+  display: inline-block
+  max-width: 700px
+  min-width: 500px
+  box-sizing: border-box
+  padding: 30px 25px
+  background-color: white
+  border-radius: 40px
+  margin: 20px 0
+  left: 50%
+  transform: translate(-50%, 0)
+
+  h1
+    color: $blue
+    font-weight: 100
+    letter-spacing: 0.01em
+    margin-left: 15px
+    margin-bottom: 35px
+    text-transform: uppercase
+
+  button
+    transition: all 0.25s cubic-bezier(.53, .01, .35, 1.5)
+    margin-top: 35px
+    background-color: white
+    border: 1px solid $blue
+    line-height: 0
+    font-size: 17px
+    display: inline-block
+    box-sizing: border-box
+    padding: 20px 15px
+    border-radius: 60px
+    color: $blue
+    font-weight: 100
+    letter-spacing: 0.01em
+    position: relative
+    z-index: 1
+
+    &:hover, &:focus
+      color: white
+      background-color: $blue
+
+  .question
+    position: relative
+    padding: 20px 0 
+
+    &:first-of-type
+      padding-top: 0
+
+    &:last-of-type
+      padding-bottom: 0
+    
+    div
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-bottom: 10px
+
+      label
+        transition: all 0.25s cubic-bezier(.53, .01, .35, 1.5)
+        transform-origin: left top 
+        color: $blue
+        font-weight: 100
+        letter-spacing: 0.01em
+        font-size: 17px
+        box-sizing: border-box
+        padding: 10px 15px
+        display: block
+        position: absolute
+        margin-top: -20px /* 수정: 더 위로 이동 */
+        z-index: 2
+        pointer-events: none
+        bottom: 0
+        /* 추가: 기본 상태에서는 아래에 두기 */
+        transform: translateY(0)
+
+        input[type="text"]
+          transition: all 0.25s cubic-bezier(.53, .01, .35, 1.5)
+          appearance: none
+          background-color: none
+          border: 1px solid $blue
+          line-height: 0
+          font-size: 17px
+          width: 100%
+          display: block
+          box-sizing: border-box
+          padding: 10px 15px
+          border-radius: 60px
+          color: $blue
+          font-weight: 100
+          letter-spacing: 0.01em
+          position: relative
+          z-index: 1
+
+          &:focus
+            outline: none
+            background: $blue
+            color: white
+            margin-top: 30px
+
+      
+
+          &:valid
+            margin-top: 30px
+              
+          &:focus ~ label
+            transform: translate(0, -30px) 
+
+          &:valid ~ label
+            text-transform: uppercase
+            font-style: italic
+            transform: translate(5px, -30px) scale(0.6) 
+
+

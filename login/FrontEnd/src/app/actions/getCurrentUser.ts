@@ -7,20 +7,30 @@ export default async function getCurrentUser() {
     try {
         const session = await getServerSession(authOptions);
 
-        if (!session?.user?.name) {
-            return null;
-        }
+        const session = await getSession();
 
-        const id = session.user.name;
+            if (!session) {
+                return null;
+            }
 
         const backendUrl = 'https://i10a207.p.ssafy.io/api';
-        const currentUser = await axios.get(`${backendUrl}/artists/${id}`)
+        const response = await axios.get(`${backendUrl}/artists?artistsId=${session.user}`);
         
-        if (!currentUser) {
+        console.log(response);
+
+        if (!response.data) {
+            // artists 엔드포인트에서 데이터가 없을 경우 members 엔드포인트 호출
+            const membersResponse = await axios.get(`${backendUrl}/members?membersID=${session.user}`);
+            return membersResponse.data || null;
+        }
+
+        const sessionData = response.data;
+
+        if (!sessionData) {
             return null;
         }
 
-        return currentUser;
+        return response.data;
     } catch (error) {
         // 오류가 발생하면 null 반환
         console.error("Error fetching user data:", error);

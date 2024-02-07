@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './HeartButtonForReview.module.scss';
-import useFavoriteForReview from '@/hooks/useFavoriteForReview';
+// import useFavoriteForReview from '@/hooks/useFavoriteForReview';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 
 
@@ -10,13 +10,12 @@ interface HeartButtonForReviewProps {
 }
 
 const HeartButtonForReview = ({
-  reviewId,
+  productId,
   currentUser
-}: HeartButtonForReviewProps) => {
-  const { hasFavorite, toggleFavorite } = useFavoriteForReview({
-    reviewId,
-    currentUser
-  });
+}: any) => {
+
+  const toggleFavorite = () => {console.log('클릭');}
+  const hasFavorite = false;
 
   return (
     <div

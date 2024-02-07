@@ -8,8 +8,6 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
-import KakaoLoginButton from './KakaoLoginButton';
-import GoogleLoginButton from './GoogleLoginButton';
 import InputLogin from '@/components/InputLogin/InputLogin';
 
 const LoginPage = () => {
@@ -138,18 +136,11 @@ const LoginPage = () => {
     <div>
 
     <div>
-      <InputLogin/>
-      <KakaoLoginButton />
-      <GoogleLoginButton />
-
-    </div>
-      
-      <div className={styles.search_user_info_div}>
-        <Link href='/FindId'>아이디 찾기</Link>
-        <span> | </span>
-        <Link href='/ResetPw'>비밀번호 찾기</Link>
+      <Navbar/>
+      <div style={{ marginTop: '10vh' }}>
+        <InputLogin/>
       </div>
-
+    </div>
     </div>
 
 
