@@ -55,18 +55,18 @@ public class Item {
     private Artist artist;
 
     // One-to-Many relationship with OrderDetail
-    @OneToMany(mappedBy = "item")
-    private List<OrderDetail> orderDetails;
-
-    // One-to-Many relationship with Wish
-    @OneToMany(mappedBy = "item")
-    private List<Wish> wishes;
-
-    // One-to-Many relationship with Auction
-    @OneToMany(mappedBy = "item")
-    private List<Auction> auctions;
-
-    // One-to-Many relationship with SaleLike
-    @OneToMany(mappedBy = "item")
-    private List<SaleLike> saleLikes;
+//    @OneToMany(mappedBy = "item")
+//    private List<OrderDetail> orderDetails;
+//
+//    // One-to-Many relationship with Wish
+//    @OneToMany(mappedBy = "item")
+//    private List<Wish> wishes;
+//
+//    // One-to-Many relationship with Auction
+//    @OneToMany(mappedBy = "item")
+//    private List<Auction> auctions;
+//
+//    // One-to-Many relationship with SaleLike
+//    @OneToMany(mappedBy = "item")
+//    private List<SaleLike> saleLikes;
 }
