@@ -1,7 +1,7 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
-import HeartButton from '../../HeartButton/HeartButton';
-import styles from './ProductCard.module.scss';
+import styles from './AuctionCard.module.scss';
 
 const AuctionCard = ({ data, currentUser }:any) => {
   const handleCardClick = () => {

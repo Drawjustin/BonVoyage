@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react';
-import styles from './ProductUploadPage.module.scss';
+import styles from './AuctionUploadPage.module.scss';
 import Input from '@/components/Input/Input';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '@/components/Button';
@@ -11,8 +11,11 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const AuctionUploadPage = () => {
+
+    const currentUser = getCurrentUser();
 
     const [selectedDate, setSelectedDate] = useState('');
   

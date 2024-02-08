@@ -9,8 +9,11 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import axios from 'axios';
 import InputLogin from '@/components/InputLogin/InputLogin';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const LoginPage = () => {
+
+  const currentUser = getCurrentUser();
 
     return (
       
@@ -18,7 +21,7 @@ const LoginPage = () => {
     <div>
 
     <div>
-      <Navbar/>
+      <Navbar />
       <div style={{ marginTop: '10vh' }}>
         <InputLogin/>
       </div>

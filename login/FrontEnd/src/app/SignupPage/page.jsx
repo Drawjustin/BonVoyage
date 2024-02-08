@@ -4,12 +4,13 @@ import ArtistCard from '../../components/Signup/ArtistSignup/ArtistSignup'
 import GuestCard from '../../components/Signup/MemberSignup/MemberSignup'
 import styles from './SignupPage.module.scss';
 import Navbar from '../../components/Navbar/Navbar';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
-
-const SignupPage = () => {
+const SignupPage = async () => {
+    const currentUser = await getCurrentUser();
     return (
         <div>
-            <Navbar />
+      <Navbar/>
             <div className={styles.title} style={{ color: '#f1efee' }}>회원가입</div>
             <div className={styles.cards}>
                 <div className={styles.card}>

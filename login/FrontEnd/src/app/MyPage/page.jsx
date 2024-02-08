@@ -13,6 +13,7 @@ import purchaseinfo from './2.png';
 import faq from './3.png';
 import myauctioncal from './4.png';
 import dynamic from 'next/dynamic';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 const AccountInfo = dynamic(() => import('../../components/MyPageComponent/AccountInfo/AccountInfo'), {ssr:false});
 const PurchaseInfo = dynamic(() => import('../../components/MyPageComponent/PurchaseInfo/PurchaseInfo'), {ssr:false});
 const Faq = dynamic(() => import('../../components/MyPageComponent/Faq/Faq'), {ssr:false});
@@ -33,7 +34,7 @@ const MyAuctionCal = dynamic(() => import('../../components/MyPageComponent/MyAu
 
 
 const MyPage = () => {
-
+    const currentUser = getCurrentUser();
     const [profileData, setProfileData] = useState({
         level: 'Basic',
         point: 1000,
@@ -97,7 +98,7 @@ const MyPage = () => {
     return (
         
         <div>
-        <Navbar />
+      <Navbar/>
         <div className={styles.my_page}>
         <h2 style={{textAlign: 'left', color: '#f1efee' }}>마이 페이지</h2>
             <div className={styles.profile_container}>

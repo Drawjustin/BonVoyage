@@ -1,11 +1,13 @@
 import React from 'react'
 import Form from '../../../components/Signup/ArtistInputSignup/ArtistInputSignup'
 import Navbar from '../../../components/Navbar/Navbar';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
-const SignupArtistPage = () => {
+const SignupArtistPage = async () => {
+  const currentUser = await getCurrentUser();
   return (
       <div>
-        <Navbar />
+      <Navbar/>
         <Form />
       </div>
   )

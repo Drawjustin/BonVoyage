@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styles from './ArtistHomePage.module.scss'
 import dynamic from 'next/dynamic';
 import Navbar from "@/components/Navbar/Navbar";
+import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ArtistPortfolio = dynamic(() => import('../../components/ArtistHomepage/ArtistPortfolio/ArtistPortfolio'), {ssr:false});
 const ArtistTalk = dynamic(() => import('../../components/ArtistHomepage/ArtistTalk/ArtistTalk'), {ssr:false});
@@ -20,6 +21,7 @@ const MAIN_DATA = [
 
 const ArtistHomePage = () => {
   // 카테고리
+  const currentUser = getCurrentUser();
   const selectComponent = {
     portfolio: <ArtistPortfolio />,
     talk: <ArtistTalk />,

@@ -1,47 +1,25 @@
+'use client'
 import React from 'react';
-import dynamic from 'next/dynamic';
-import { Provider } from 'react-redux';
-import axios from 'axios';
+import ProductPagination from './ProductPagination';
+import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar/Navbar';
-import EmptyState from '@/components/EmptyState/EmptyState';
 import styles from './ProductListPage.module.scss'
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
 
-export default async function ProductListPage () {
+const ProductListPage = () => {
+  const router = useRouter();
+    return (
+      
+      <div className={styles.container}>
+        <Navbar />
 
-    
-    const products = await axios.get('https://i10a207.p.ssafy.io/api/item')
-          .then((response) => {return response})
-          .catch((error) => {console.log(error)});
-    console.log(products);
+                <ProductPagination PageLink={router}/>
+              
 
-  return (
-    <div className='page'>
-      <Navbar />
-      <div className='container' style={{ marginTop: '10px' }}>
-        <h1  style={{ color: '#f1efee', textAlign: 'left'}}>Products</h1>
-
-            {
-              products?.data?.length === 0 || !products
-              ?
-              <EmptyState showReset />
-              :
-              <>
-              <div className={styles.grid}>
-              {products?.data?.map((product) =>
-                  <ProductCard
-                    currentUser={'퍄퍄퍄'}
-                    key={product.itemSeq}
-                    data={product}
-                  />)}
-              </div>
-              </>
-            }
+            
+        <FloatingButton href="/ProductUploadPage">+</FloatingButton>
       </div>
-      <FloatingButton
-      href="/ProductUploadPage">
-        +
-      </FloatingButton>
-    </div>
-  );
+    );
 };
+
+export default ProductListPage;

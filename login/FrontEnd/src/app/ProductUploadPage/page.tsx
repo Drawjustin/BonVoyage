@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { formatTime } from '@/helpers/dayjs';
 import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
-
+import getCurrentUser from '@/app/actions/getCurrentUser';
 // import './ProductUploadPage.sass';
 
 const ProductUploadPage = () => {
@@ -21,6 +21,7 @@ const ProductUploadPage = () => {
   const [isArtist, setIsArtist] = useState(false);
   const navigate = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const currentUser = getCurrentUser();
   const [showAlert, setShowAlert] = useState(false);
 
   const {
@@ -158,7 +159,7 @@ const ProductUploadPage = () => {
     
     return (
       <Container>
-      <Navbar />
+      <Navbar/>
       <div className={styles.productUploadContainer}>
         {/* <form>
               <h1>일반 판매 작품 등록</h1>
