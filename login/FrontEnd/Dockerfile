@@ -8,9 +8,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install
-
 RUN npm install react-scripts@latest typescript@latest
+
+RUN npm install --legacy-peer-deps
 
 RUN npm install @mui/system 
 
