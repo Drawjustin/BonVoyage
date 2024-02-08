@@ -2,7 +2,7 @@
 FROM node:latest as build
 
 # Set the working directory to /app
-WORKDIR /app
+WORKDIR /
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
@@ -30,9 +30,11 @@ FROM nginx:latest
 RUN rm -rf /etc/nginx/conf.d
 # Copy the custom nginx.conf file to the nginx configuration directory
 
+ENV NODE_ENV production
+
 COPY default.conf /etc/nginx/conf.d/default.conf
 # Copy the build output from the build environment to the nginx directory
-COPY --from=build /app/out /usr/share/nginx/html
+COPY --from=build /out /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 3000
