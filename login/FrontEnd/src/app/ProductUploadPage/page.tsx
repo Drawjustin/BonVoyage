@@ -1,4 +1,5 @@
 'use client'
+// import { useNavigation } from '@lucasmogari/react-pagination';
 import React, { useState } from 'react';
 import styles from './ProductUploadPage.module.scss';
 import Input from '@/components/Input/Input';
