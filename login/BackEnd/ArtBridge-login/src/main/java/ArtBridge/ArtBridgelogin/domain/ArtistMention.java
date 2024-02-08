@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -33,6 +34,9 @@ public class ArtistMention {
     @Column(name = "artist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
+    //    ----------------------------------------------------
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "artistMention")
     private List<ArtistMentionComment> artistMentionComments;
 

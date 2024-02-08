@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,13 +27,15 @@ public class AuctionPointDetail implements Serializable {
     @Column(name = "auction_point_date", nullable = false)
     private LocalDateTime auctionPointDate;
 
+    //    ----------------------------------------------------
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "member_seq")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 

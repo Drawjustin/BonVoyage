@@ -1,10 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.SaleLike;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -49,24 +46,31 @@ public class Item {
         }
     }
 
+    //    ----------------------------------------------------
+
     // Many-to-One relationship with Artist
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "artist_seq", nullable = false)
     private Artist artist;
 
     // One-to-Many relationship with OrderDetail
-//    @OneToMany(mappedBy = "item")
-//    private List<OrderDetail> orderDetails;
-//
-//    // One-to-Many relationship with Wish
-//    @OneToMany(mappedBy = "item")
-//    private List<Wish> wishes;
-//
-//    // One-to-Many relationship with Auction
-//    @OneToMany(mappedBy = "item")
-//    private List<Auction> auctions;
-//
-//    // One-to-Many relationship with SaleLike
-//    @OneToMany(mappedBy = "item")
-//    private List<SaleLike> saleLikes;
+    @OneToMany(mappedBy = "item")
+    @JsonManagedReference
+    private List<OrderDetail> orderDetails;
+
+    // One-to-Many relationship with Wish
+    @OneToMany(mappedBy = "item")
+    @JsonManagedReference
+    private List<Wish> wishes;
+
+    // One-to-Many relationship with Auction
+    @OneToMany(mappedBy = "item")
+    @JsonManagedReference
+    private List<Auction> auctions;
+
+    // One-to-Many relationship with SaleLike
+    @OneToMany(mappedBy = "item")
+    @JsonManagedReference
+    private List<SaleLike> saleLikes;
 }

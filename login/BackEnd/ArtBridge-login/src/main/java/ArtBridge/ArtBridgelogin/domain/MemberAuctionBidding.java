@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,18 +16,6 @@ public class MemberAuctionBidding {
     @Column(name = "member_auction_bidding_seq", nullable = false)
     private Long memberAuctionBiddingSeq;
 
-    // Many-to-One relationship with Member
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "member_seq")
-    private Member member;
-
-    // Many-to-One relationship with Auction
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinColumn(name = "auction_seq")
-    private Auction auction;
-
     @Column(name = "member_auction_bidding_deposit",length = 255, nullable = false)
     private Integer memberAuctionBiddingDeposit;
 
@@ -39,4 +28,17 @@ public class MemberAuctionBidding {
     @Column(name = "member_auction_bidding_isdeleted", nullable = true)
     private boolean memberAuctionBiddingIsdeleted;
 
+    //    ----------------------------------------------------
+
+    // Many-to-One relationship with Member
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    // Many-to-One relationship with Auction
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
 }

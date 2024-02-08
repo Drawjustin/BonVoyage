@@ -59,19 +59,23 @@ public class Artist {
             artistCreatedDate = LocalDateTime.now();
         }
     }
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "artist")
-//    private List<ArtistMention> artistMentions;
-//
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "artist")
-//    private List<ArtistHomepageComment> artistHomepageComments;
-//
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "artist")
-//    private List<OrderDetail> orderDetails;
-//
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "artist")
-//    private List<Item> items;
+
+
+    //    ----------------------------------------------------
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistMention> artistMentions;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "artist")
+    private List<ArtistHomepageComment> artistHomepageComments;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "artist")
+    private List<OrderDetail> orderDetails;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "artist")
+    private List<Item> items;
 }
