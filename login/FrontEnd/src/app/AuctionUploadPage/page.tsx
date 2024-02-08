@@ -17,10 +17,11 @@ const AuctionUploadPage = () => {
     const [selectedDate, setSelectedDate] = useState('');
   
     const handleDateChange = (event:any) => {
-      const inputDate = event.target.value;
-      // dayjs를 사용하여 입력받은 날짜를 처리
-      const formattedDate = dayjs(inputDate).format('YYYY-MM-DD');
-      setSelectedDate(formattedDate);
+      // const inputDate = event.target.value;
+      // // dayjs를 사용하여 입력받은 날짜를 처리
+      // const formattedDate = dayjs(inputDate).format('YYYY-MM-DD');
+      // setSelectedDate(formattedDate);
+      setSelectedDate(event.target.value);
     };
 
   const router = useRouter();
@@ -43,14 +44,14 @@ const AuctionUploadPage = () => {
       imageSrc: '',
       size: '',
       date: '',
-      price: '(원)'
+      price: ''
     }
   });
 
   const imageSrc = watch('imageSrc');
   const category = watch('category');
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
     data = {
@@ -63,20 +64,22 @@ const AuctionUploadPage = () => {
         itemIsSold:false,
         itemCreatedDate: dayjs()
     }
-
-    axios.post('https://i10a207.p.ssafy.io/api/auction/new', data)
-      .then(response => {
-        // router.push(`/products/${response.data.id}`);
-        console.log('성공', response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
+    
+    try {
+      const response = await axios.post('https://i10a207.p.ssafy.io/api/auction/new', data, {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        },
       });
 
-      console.log(data);
+      console.log('성공', response.data);
+       // 경매 목록 페이지로 이동
+       router.push('/auctionList'); // 경매 목록 페이지의 경로에 맞게 변경
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
   };
 
   const setCustomValue = (id: string, value: any) => {
@@ -133,10 +136,10 @@ const AuctionUploadPage = () => {
               id="datepicker"
               type="date"
               value={selectedDate}
-              // onChange={handleDateChange}
-              // placeholder="경매 날짜를 선택하세요."
+              onChange={handleDateChange}
+              placeholder="경매 날짜를 선택하세요."
               disabled={isLoading || Object.keys(errors).length > 0}
-              {...register('date', { required: true })}
+              // {...register('date', { required: true })}
               // 필요한 경우 추가 속성이나 이벤트 핸들러를 추가합니다
               style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}
               /> 

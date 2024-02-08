@@ -1,12 +1,14 @@
 /* Navbar.css */
 
 .navbar {
-  background-color: transparent;
-  color: white;
+  position: fixed;
+  background-color: #f1efee;
+  color: gray;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 1000;
   padding: 10px 10px; /* 네비게이션 바 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
@@ -26,8 +28,15 @@
   
   .logo {
     width: 80px;
+    max-width: 100px;
     height:80px;
     background-image: url(./logo.png);
     background-size: contain;
+    display: flex;
   }
   
+  .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

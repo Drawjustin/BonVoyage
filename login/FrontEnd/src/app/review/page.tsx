@@ -4,7 +4,7 @@ import Image from "next/image";
 import axios from "axios";
 // import getReviews, { ReviewsParams } from "../actions/getReviews";
 import Container from "@/components/Container/Container";
-import EmptyState from "@/components/EmptyState";
+import EmptyState from "@/components/EmptyState/EmptyState";
 // import getCurrentUser from "../actions/getCurrentUser";
 // import FloatingButton from "@/components/FloatingButton";
 import ReviewCard from "@/components/review/ReviewCard";

@@ -1,7 +1,9 @@
 import './App.css'
 import React from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-// import Navbar from './components/Navbar/Navbar';
+
+import navbar from './components/Navbar/navbar';
+import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage';
 
 import LoginPage from './pages/LoginPage';
@@ -16,8 +18,7 @@ import MyPage from './pages/MyPage';
 import './pages/HomePage/logo.png';
 import Layout from './components/layout/Layout';
 import ChargePoint from './components/ChargePoint/ChargePoint';
-// import CartPage from './app/CartPage/CartPage'
-
+// import CartPage from './app/CartPage/CartPage';
 import '../quill.custom.css';
 
 import dynamic from 'next/dynamic';
@@ -27,7 +28,7 @@ const App = () => {
 
   return (
   <div>
-
+    <navbar />
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}/>
@@ -43,6 +44,7 @@ const App = () => {
         <Route path='/threejs' element={<ThreejsMainPage />} />
       </Routes>
     </BrowserRouter>
+    <Footer />
   </div>
 
   )

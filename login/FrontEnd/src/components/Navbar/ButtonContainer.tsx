@@ -7,7 +7,9 @@ import { signIn, signOut } from 'next-auth/react';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 // import Link from 'next/link';
 
+
 const Container = styled('nav')({
+  
   width: '30vw',
   display: 'flex',
   background: 'transparent',

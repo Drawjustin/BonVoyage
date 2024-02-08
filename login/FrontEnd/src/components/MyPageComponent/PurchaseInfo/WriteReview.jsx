@@ -11,6 +11,7 @@ Quill.register('modules/imageFormats', ImageFormats);
 const WriteReview = ({ onSUbmit }) => {
     const [title, setTitle] = useState('');
     const [quillValue, setQuillValue] = useState("");
+    const [imageFile, setImageFile] = useState(null);
 
     const handleTitleChange = (e) => {
         setTitle(e.target.value);
@@ -20,12 +21,22 @@ const WriteReview = ({ onSUbmit }) => {
         setQuillValue(editor.getContents());
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImageFile(file);
+    };
+
     const handleSubmit = () => {
         console.log('제목', title);
         console.log('내용', quillValue);
-        onsubmit({ title, quillValue });
+        console.log('이미지 파일', imageFile);
+
+        // 제출을 처리하는 함수
+        onsubmit({ title, quillValue, imaggeFile });
+
         setTitle('');
         setQuillValue('');
+        setImageFile(null);
     };
 
     const modules = {
@@ -75,6 +86,12 @@ const WriteReview = ({ onSUbmit }) => {
                 />
 
             </div>
+            <input 
+                type="file"
+                onChange={handleImageChange}
+                accept="image/*" 
+            />
+
             <ReactQuill
                 className={styles.write}
                 style={{ height: "200px" }}
@@ -84,6 +101,7 @@ const WriteReview = ({ onSUbmit }) => {
                 value={quillValue || ""}
                 onChange={handleQuillChange}
             />
+            
             <button className={styles.button} onClick={handleSubmit}>제출</button>
         </div>
     );

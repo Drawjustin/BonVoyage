@@ -1,4 +1,5 @@
 'use client'
+import { useNavigation } from '@lucasmogari/react-pagination';
 import React, { useState } from 'react';
 import styles from './ProductUploadPage.module.scss';
 import Input from '@/components/Input/Input';
@@ -12,11 +13,15 @@ import { useRouter } from 'next/navigation';
 import { formatTime } from '@/helpers/dayjs';
 import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
+
 // import './ProductUploadPage.sass';
 
 const ProductUploadPage = () => {
-  const router = useRouter();
+
+  const [isArtist, setIsArtist] = useState(false);
+  const navigate = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const {
     register,
@@ -34,44 +39,118 @@ const ProductUploadPage = () => {
       category: 'auction',
       imageSrc: '',
       size: '',
-      price: '(원)'
+      price: ''
     }
   });
 
   const imageSrc = watch('imageSrc');
   const category = watch('category');
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
     const now = dayjs();
 
-    data = {
-        itemSeq:12,
-        itemName:data.title,
-        itemWidth:230,
-        itemHeight:460,
-        itemLike:0,
-        itemSellPrice:data.price,
-        itemIsSold:false,
-        itemCreatedDate: dayjs(),
-        itemImageUrl: data.imageSrc, 
-    }
+    const backendUrl = 'https://i10a207.p.ssafy.io/api/item'
 
-    axios.post('https://i10a207.p.ssafy.io/api/item/new', data)
-      .then(response => {
-        // router.push(`/products/${response.data.id}`);
-        console.log('성공', response.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-      
-      console.log(data);
-    };
+    try {
+      if (isArtist) {
+        const ProductUploadData = {
+          "itemName": "hjhjhj",
+          "itemWidth": 0,
+          "itemHeight": 0,
+          "itemLike": 0,
+          "itemSellPrice": 0,
+          "itemIsSold": false,
+          "artist": {
+            "artistSeq": 1
+          }
+        }
+  
+        const response = await axios.post(`${backendUrl}/new`, ProductUploadData, {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        }).then(response => {
+
+          if (response.data !== 'fail') {
+            console.log('success :', response.data);
+            navigate.push('/');
+          }
+          else {
+            console.log('fail :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error('error', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
+          
+        });
+  
+        // if (response.data !== '바보 멍텅구리 실패했잔요') {
+        //   console.log('성공 :', response.data);
+        //   navigate.push('/ProductListPage');
+        // } else {
+        //   console.log('실패 :', response.data);
+        //   setShowAlert(true);
+        // }
+      } 
+      else {
+        const ProductUploadData = {
+          "itemName": "hjhjhj",
+          "itemWidth": 0,
+          "itemHeight": 0,
+          "itemLike": 0,
+          "itemSellPrice": 0,
+          "itemIsSold": false,
+          "artist": {
+            "artistSeq": 1
+          }
+        }
+        
+        const response = await axios.post(`${backendUrl}/new`, ProductUploadData, {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+          },
+        }).then(response => {
+
+          if (response.data !== '실패') {
+            console.log('성공 :', response.data);
+            navigate.push('/ProductListPage');
+          }
+          else {
+            console.log('실패 :', response.data);
+            setShowAlert(true);
+          }
+        })
+        .catch(error => {
+          console.error(ProductUploadData);
+          console.error('에러', error.response ? error.response.data : error.message);
+          // 로그인 실패하면 팝업 표시할 것
+          
+        });
+  
+        // if (response.data !== '바보 실패했잔요') {
+        //   console.log(' 성공 :', response.data);
+        //   navigate.push('/ProductListPage');
+        // } else {
+        //   console.log('실패 :', response.data);
+        //   setShowAlert(true);
+        // }
+      }
+    } catch (error:any) {
+      console.error('에러 발생:', error.response ? error.response.data : error.message);
+      // 에러 처리 로직 추가
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  
+    
+    
+    
     
     const setCustomValue = (id: string, value: any) => {
       setValue(id, value);
