@@ -8,6 +8,8 @@ WORKDIR /
 COPY package*.json ./
 
 # Install dependencies
+RUN npm install react-scripts@latest typescript@latest
+
 RUN npm install
 
 RUN npm install @mui/system 
