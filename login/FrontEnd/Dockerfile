@@ -25,19 +25,20 @@ RUN npm run build
 # Build the React app
 
 # Use an official Nginx runtime as a base image
-FROM nginx:latest
+# FROM nginx:latest
 
-RUN rm -rf /etc/nginx/conf.d
+# RUN rm -rf /etc/nginx/conf.d
 # Copy the custom nginx.conf file to the nginx configuration directory
 
 ENV NODE_ENV production
 
-COPY default.conf /etc/nginx/conf.d/default.conf
+# COPY default.conf /etc/nginx/conf.d/default.conf
 # Copy the build output from the build environment to the nginx directory
-COPY --from=build /out /usr/share/nginx/html
+# COPY --from=build /out /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 3000
 
 # Start Nginx when the container starts
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
