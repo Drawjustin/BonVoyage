@@ -63,16 +63,17 @@ public class Artist {
 
     //    ----------------------------------------------------
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
+    @JsonManagedReference
     private List<ArtistMention> artistMentions;
 
-    @JsonManagedReference
+
     @OneToMany(mappedBy = "artist")
+    @JsonManagedReference
     private List<ArtistHomepageComment> artistHomepageComments;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
+    @JsonManagedReference
     private List<OrderDetail> orderDetails;
 
     @JsonManagedReference
