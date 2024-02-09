@@ -35,8 +35,8 @@ const InputLogin = () => {
       callbackUrl: "/",
     }
     // 로그인 처리 로직 추가
-    // const backendUrl = 'https://i10a207.p.ssafy.io/api'
-    // console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
+    const backendUrl = 'https://i10a207.p.ssafy.io/api'
+    console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
     try {
       const data = await signIn('credentials', body);
