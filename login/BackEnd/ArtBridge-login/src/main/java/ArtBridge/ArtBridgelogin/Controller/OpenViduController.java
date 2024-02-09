@@ -69,35 +69,49 @@ public class OpenViduController {
     public ResponseEntity<?> createSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
 
-        Map<String, Object> check = new HashMap<>();
-        String customSessionId = (String) params.get("customSessionId");
-        int auctionSeq = (int) params.get("auctionSeq");
+         Map<String, Object> check = new HashMap<>();
+//         String customSessionId = (String) params.get("customSessionId");
+//         int auctionSeq = (int) params.get("auctionSeq");
 
-//        logger.info("*** createSession 메소드 호출");
-        SessionProperties properties = SessionProperties.fromJson(params).build();
-        Session session = openvidu.createSession(properties);
+// //        logger.info("*** createSession 메소드 호출");
+//         SessionProperties properties = SessionProperties.fromJson(params).build();
+//         Session session = openvidu.createSession(properties);
 
-        Meeting meeting = new Meeting();
-        meeting.setMeetingSessionId(session.getSessionId());
-        meeting.setAuction(auctionService.readOne(auctionSeq));
+//         Meeting meeting = new Meeting();
+//         meeting.setMeetingSessionId(session.getSessionId());
+//         meeting.setAuction(auctionService.readOne(auctionSeq));
 
-        try {
-//            meetingService.deleteAllSessionConsultantId(params.read("ConsultantId").toString());
-//            logger.info("*** deleteAllSessionConsultantId 호출");
+//         try {
+// //            meetingService.deleteAllSessionConsultantId(params.read("ConsultantId").toString());
+// //            logger.info("*** deleteAllSessionConsultantId 호출");
 
-            meetingService.createMeeting(meeting);
-//            logger.info("*** createSession 호출");
-//
-            check.put("msg", "success");
-            check.put("sessionId", session.getSessionId());
-//
-//            logger.info("*** createSession 메소드 종료");
-//            logger.info("*** 세션 생성 : " + session.readSessionId());
-            return ResponseEntity.status(HttpStatus.OK).body(check);
-        } catch (Exception e) {
+//             meetingService.createMeeting(meeting);
+// //            logger.info("*** createSession 호출");
+// //
+//             check.put("msg", "success");
+//             check.put("sessionId", session.getSessionId());
+// //
+// //            logger.info("*** createSession 메소드 종료");
+// //            logger.info("*** 세션 생성 : " + session.readSessionId());
+//             return ResponseEntity.status(HttpStatus.OK).body(check);
+//         } catch (Exception e) {
 
-            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+//             return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+//         }
+        OpenVidu openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+        SessionProperties properties = new SessionProperties.Builder().build();
+        Session session = openVidu.createSession(properties);
+        ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
+            .role(OpenViduRole.PUBLISHER)
+            .data("Alice")
+            .build();
+        Connection connection = session.createConnection(connectionProperties);
+        String token = connection.getToken(); // Send this string to the client side
+        check.put("msg", "success");
+        check.put("sessionId", session.getSessionId());
+        check.put("token",token);
+        return ResponseEntity.status(HttpStatus.OK).body(check);
+
     }
 
     /**
