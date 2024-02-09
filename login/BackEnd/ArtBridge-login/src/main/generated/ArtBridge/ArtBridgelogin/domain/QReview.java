@@ -32,7 +32,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public final StringPath reviewTitle = createString("reviewTitle");
 
-    public final StringPath reviewVisit = createString("reviewVisit");
+    public final NumberPath<Integer> reviewVisit = createNumber("reviewVisit", Integer.class);
 
     public QReview(String variable) {
         this(Review.class, forVariable(variable), INITS);

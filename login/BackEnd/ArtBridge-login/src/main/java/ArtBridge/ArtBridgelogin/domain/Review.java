@@ -25,14 +25,13 @@ public class Review {
     private String reviewContent;
 
     @Column(name = "review_visit",length = 255, nullable = false)
-    private String reviewVisit;
+    private int reviewVisit;
 
     @Column(name = "review_created_date", nullable = false)
     private LocalDateTime reviewCreatedDate;
 
     //    ----------------------------------------------------
 
-    // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "member_seq")

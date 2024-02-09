@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
+import ArtBridge.ArtBridgelogin.Controller.Dto.ReviewResisterForm;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
@@ -41,22 +42,21 @@ public class ReviewController {
         return new ResponseEntity<>(reviews, HttpStatus.OK);
     }
     // 리뷰 등록 API
-    @PostMapping
-    public ResponseEntity<Void> createReview(@RequestBody Review review) {
-        // 실제로는 전달받은 review를 데이터베이스에 저장하는 로직이 들어갑니다.
-        reviewService.createReview(review);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<Void> createReview(@RequestBody Review review) {
+//        // 실제로는 전달받은 review를 데이터베이스에 저장하는 로직이 들어갑니다.
+//        reviewService.createReview(review);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 
-    @PutMapping("/{reviewSeq}")
-    public ResponseEntity<Review> updateReview(
-            @PathVariable Integer reviewSeq,
-            @RequestBody Review updatedReview) {
+    @PostMapping("/createReview")
+    public ResponseEntity<?> createReview(@RequestBody ReviewResisterForm reviewResisterForm) {
         try {
-            Review updated = reviewService.updateReview(reviewSeq, updatedReview);
-            return ResponseEntity.ok(updated);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            reviewService.createReview(reviewResisterForm);
+            return ResponseEntity.ok().body("Success message");
+        } catch (Exception e) {
+            // 실패할 경우 예외 메시지와 500 Internal Server Error 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed: " + e.getMessage());
         }
     }
 
