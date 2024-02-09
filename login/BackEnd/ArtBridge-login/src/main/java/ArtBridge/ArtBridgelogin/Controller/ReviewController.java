@@ -19,7 +19,9 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
     @GetMapping("/{reviewId}")
-    public ResponseEntity<?> readReview(@PathVariable Integer reviewId) {
+    public Review readReview(@PathVariable Integer reviewId) {
+
+
         return reviewService.readReviewById(reviewId);
     }
     @GetMapping

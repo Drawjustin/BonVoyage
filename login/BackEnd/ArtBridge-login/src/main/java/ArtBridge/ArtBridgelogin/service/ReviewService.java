@@ -3,6 +3,7 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.Controller.Dto.ReviewResisterForm;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.repository.ReviewRepository;
+import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,24 +50,28 @@ public class ReviewService {
             reviewRepository.createReview(review);
         } catch (DataAccessException e) {
             // 데이터베이스 예외 처리: 원하는 방식으로 예외를 다룹니다.
-            throw e;
+            throw new MyDataAccessException("수정할 수 없습니다.", e);
         }
     }
 
 
     //Todo: READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public ResponseEntity<?> readReviewById(Integer reviewId) {
+    public Review readReviewById(Integer reviewId) {
 
         // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
         Review review = reviewRepository.readById(reviewId);
 
-        if (review != null) {
-            return new ResponseEntity<>(review, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            return reviewRepository.readById(reviewId);
+
+        } catch (DataAccessException e) {
+            // 데이터베이스 예외 처리: 원하는 방식으로 예외를 다룹니다.
+            throw new MyDataAccessException("읽을 수 없습니다.", e);
         }
     }
+
+
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<Review> readAllReviews() {
         return reviewRepository.readAll();

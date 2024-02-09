@@ -4,7 +4,10 @@ import ArtBridge.ArtBridgelogin.Controller.form.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
+import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
+import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,33 +25,80 @@ public class ArtistController {
     private MemberLoginForm memberForm;
 
     @GetMapping
-    public List<Artist> readAllArtists() {
-        return artistService.readAllArtists();
+    public ResponseEntity<?> readAllArtists() {
+        try {
+            List<Artist> artists = artistService.readAllArtists();
+            return ResponseEntity.ok().body(artists);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No artists found");
+        }
     }
-
     @PostMapping("/login")
     @ResponseBody
-    public ResponseEntity<?> login(@RequestBody ArtistLoginForm artistLoginForm)
-    {return artistService.login(artistLoginForm.getId(),artistLoginForm.getPw());}
+    public ResponseEntity<?> login(@RequestBody ArtistLoginForm artistLoginForm) {
 
-    // 로그인 정보를 받기 위한 간단한 DTO 클래스
+        boolean loginResult = artistService.login(artistLoginForm.getId(), artistLoginForm.getPw());
 
+        if (loginResult) {
+            // 로그인 성공
+            return ResponseEntity.ok().body("로그인 성공");
+        } else {
+            // 로그인 실패
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
+    }
 
     @GetMapping("/{id}")
-    public Artist readArtistById(@PathVariable String id)
-    {return artistService.readOne(id);}
+    public ResponseEntity<String> readArtistById(@PathVariable String id) {
+        Artist artist = artistService.readOne(id);
+
+        if (artist != null) {
+            // 조회 성공 시 200 OK와 함께 메시지 반환
+            return ResponseEntity.ok("Artist found");
+        } else {
+            // 조회 실패 시 404 Not Found와 함께 메시지 반환
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+        }
+    }
+
 
     @PostMapping("/new")
-    public Artist createArtist(@RequestBody Artist artist)
-    {return artistService.createArtist(artist);}
+    public ResponseEntity<?> createArtist(@RequestBody Artist artist) {
+        Artist createdArtist = artistService.createArtist(artist);
+
+        if (createdArtist != null) {
+            // 추가 성공 시 200 OK와 함께 생성된 Artist 반환
+            return ResponseEntity.ok(createdArtist);
+        } else {
+            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create artist");
+        }
+    }
 
     @PutMapping("/{id}")
-    public Artist updateArtist(@PathVariable String id, @RequestBody Artist updatedArtist)
-    {return artistService.updateArtist(id, updatedArtist);}
+    public ResponseEntity<String> updateArtist(@PathVariable String id, @RequestBody Artist updatedArtist) {
+        Artist artist = artistService.updateArtist(id, updatedArtist);
+
+        if (artist != null) {
+            // 업데이트 성공 시 200 OK와 함께 메시지 반환
+            return ResponseEntity.ok("Artist updated");
+        } else {
+            // 업데이트 실패 시 404 Not Found와 함께 메시지 반환
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+        }
+    }
+
 
     @DeleteMapping("/{id}")
-    public void deleteArtist(@PathVariable String id)
-    {artistService.deleteArtist(id);}
+    public ResponseEntity<String> deleteArtist(@PathVariable String id) {
+        boolean deleted = artistService.deleteArtist(id);
 
-
+        if (deleted) {
+            // 삭제 성공 시 200 OK와 함께 메시지 반환
+            return ResponseEntity.ok("Artist deleted");
+        } else {
+            // 삭제 실패 시 404 Not Found와 함께 메시지 반환
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+        }
+    }
 }
