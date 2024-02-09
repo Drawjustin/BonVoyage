@@ -98,9 +98,9 @@ public class OpenViduController {
 
 //             return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
 //         }
-        OpenVidu openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
         SessionProperties properties = new SessionProperties.Builder().build();
         Session session = openVidu.createSession(properties);
+     
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
             .role(OpenViduRole.PUBLISHER)
             .data("Alice")
