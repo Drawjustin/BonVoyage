@@ -1,7 +1,10 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -52,21 +55,32 @@ public class Auction implements Serializable {
     @Column(name = "auction_win_date")
     private LocalDateTime auctionWinDate;
 
+    //    ----------------------------------------------------
+
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "item_seq")
     private Item item;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "auction")
     private List<OrderDetail> orderDetails;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "auction")
     private List<AuctionLike> auctionLikes;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "auction")
     private List<MemberAuctionBidding> memberAuctionBiddings;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "auction")
     private List<AuctionPointDetail> auctionPointDetails;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "auction")
+    private List<Meeting> meetings;
 }
 

@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -16,15 +17,17 @@ public class Wish {
     @Column(name = "wish_seq", nullable = false)
     private Integer wishSeq;
 
+    //    ----------------------------------------------------
+
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "member_seq")
     private Member member;
 
     // Many-to-One relationship with Item
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "item_seq")
     private Item item;
 }

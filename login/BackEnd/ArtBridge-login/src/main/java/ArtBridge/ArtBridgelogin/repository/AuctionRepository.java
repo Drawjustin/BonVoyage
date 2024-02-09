@@ -1,8 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.Auction;
-import ArtBridge.ArtBridgelogin.domain.QArtist;
-import ArtBridge.ArtBridgelogin.domain.QAuction;
+import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
@@ -23,6 +21,8 @@ public class AuctionRepository {
 
     private final EntityManager em;
     private QAuction qAuction = QAuction.auction;
+    private QMemberAuctionBidding qMemberAuctionBidding = QMemberAuctionBidding.memberAuctionBidding;
+
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -36,21 +36,15 @@ public class AuctionRepository {
         return auction;
     }
 
-
-    public Auction findOne(int seq) {
-        return queryFactory
-                .selectFrom(qAuction)
-                .where(qAuction.auctionSeq.eq(seq))
-                .fetchOne();
+    public Auction readOne(int seq){
+        return em.find(Auction.class, seq);
     }
 
-
-    public List<Auction> findAll() {
+    public List<Auction> readAll() {
         return queryFactory
                 .selectFrom(qAuction)
                 .fetch();
     }
-
 
     public Auction updateAuction(int seq, Auction updatedAuction) {
         // Pessimistic write lock 설정
@@ -90,6 +84,28 @@ public class AuctionRepository {
         queryFactory
                 .delete(qAuction)
                 .where(qAuction.auctionSeq.eq(seq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .execute();
+    }
+
+    public List<Auction> readAuctionsBySameAuthor(Long authorId) {
+        return queryFactory
+                .selectFrom(qAuction)
+                .where(qMemberAuctionBidding.member.memberSeq.eq(authorId))
+                .fetch();
+    }
+
+    public void deleteAuctionByMember(int seq) {
+        queryFactory
+                .delete(qAuction)
+                .where(qMemberAuctionBidding.auction.auctionSeq.eq(seq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .execute();
+    }
+    public void deleteAuctionByArtist(int seq) {
+        queryFactory
+                .delete(qAuction)
+                .where(qMemberAuctionBidding.auction.auctionSeq.eq(seq))
                 .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .execute();
     }

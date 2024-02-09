@@ -34,21 +34,19 @@ public class ArtistMentionCommentRepository {
     }
 
     @Transactional(readOnly = true)
-    public ArtistMentionComment findOne(Long seq) {
+    public ArtistMentionComment readOne(Long seq) {
         return queryFactory
                 .selectFrom(qArtistMentionComment)
                 .where(qArtistMentionComment.artistMentionCommentSeq.eq(seq))
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
-    public List<ArtistMentionComment> findAll() {
+    public List<ArtistMentionComment> readAll() {
         return queryFactory
                 .selectFrom(qArtistMentionComment)
                 .fetch();
     }
 
-    @Transactional
     public void deleteById(Long seq) {
         queryFactory
                 .delete(qArtistMentionComment)
@@ -56,7 +54,6 @@ public class ArtistMentionCommentRepository {
                 .execute();
     }
 
-    @Transactional
     public ArtistMentionComment updateArtistMentionComment(Long seq, ArtistMentionComment updatedComment) {
         queryFactory
                 .update(qArtistMentionComment)

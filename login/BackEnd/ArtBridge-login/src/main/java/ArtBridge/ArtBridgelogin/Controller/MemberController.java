@@ -18,13 +18,13 @@ public class MemberController {
     private MemberService memberService;
 
     @GetMapping
-    public List<Member> getAllMembers() {
-        return memberService.getAllMembers();
+    public List<Member> readAllMembers() {
+        return memberService.readAllMembers();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getMemberById(@PathVariable String id) {
-        return memberService.findMemberId(id);
+    public ResponseEntity<?> readMemberById(@PathVariable String id) {
+        return memberService.readMemberId(id);
     }
 
     @PostMapping("/login")

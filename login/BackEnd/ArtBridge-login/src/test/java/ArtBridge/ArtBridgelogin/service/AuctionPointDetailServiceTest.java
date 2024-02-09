@@ -1,7 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.domain.*;
-import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.repository.AuctionPointDetailRepository;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
@@ -35,8 +34,8 @@ public class AuctionPointDetailServiceTest {
 
     @BeforeEach
     public void setup() {
-        Member member = memberRepository.findOne(3L);
-        Auction auction = auctionRepository.findOne(7);
+        Member member = memberRepository.readOne(3L);
+        Auction auction = auctionRepository.readOne(7);
 
         auctionPointDetail = new AuctionPointDetail();
         auctionPointDetail.setAuctionPointDetailPoint(100);
@@ -48,15 +47,15 @@ public class AuctionPointDetailServiceTest {
 
     @Test
     public void getAllAuctionPointDetailTest() {
-        List<AuctionPointDetail> list = auctionPointDetailService.getAllAuctionPointDetail();
+        List<AuctionPointDetail> list = auctionPointDetailService.readAllAuctionPointDetail();
         assertNotNull(list);
     }
 
     @Test
-    public void findOneTest() {
+    public void readOneTest() {
         AuctionPointDetail created = auctionPointDetailService.create(auctionPointDetail);
 
-        AuctionPointDetail found = auctionPointDetailService.findOne(created.getAuctionPointDetailSeq());
+        AuctionPointDetail found = auctionPointDetailService.readOne(created.getAuctionPointDetailSeq());
         assertEquals(created.getAuctionPointDetailSeq(), found.getAuctionPointDetailSeq());
     }
 
@@ -72,7 +71,7 @@ public class AuctionPointDetailServiceTest {
 
         auctionPointDetailService.updateWinner(created.getAuctionPointDetailSeq(), true);
 
-        AuctionPointDetail updated = auctionPointDetailService.findOne(created.getAuctionPointDetailSeq());
+        AuctionPointDetail updated = auctionPointDetailService.readOne(created.getAuctionPointDetailSeq());
 
         assertTrue(updated.getAuctionPointDetailIsWin());
     }

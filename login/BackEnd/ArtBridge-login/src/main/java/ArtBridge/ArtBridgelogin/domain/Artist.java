@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -59,15 +60,22 @@ public class Artist {
         }
     }
 
+
+    //    ----------------------------------------------------
+
+    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
     private List<ArtistMention> artistMentions;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
     private List<ArtistHomepageComment> artistHomepageComments;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
     private List<OrderDetail> orderDetails;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "artist")
     private List<Item> items;
 }

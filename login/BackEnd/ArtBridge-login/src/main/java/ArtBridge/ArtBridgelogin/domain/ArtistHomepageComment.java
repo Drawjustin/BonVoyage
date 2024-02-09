@@ -29,6 +29,8 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_deleted_date")
     private LocalDateTime artistHompageCommentContentDeletedDate;
 
+    //    ----------------------------------------------------
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "artist_seq")

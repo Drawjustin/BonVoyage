@@ -19,6 +19,9 @@ public class Member {
     @Column(name = "member_seq")
     private Long memberSeq;
 
+    @Column(name = "is_artist")
+    private boolean isArtist;
+
     @Column(name = "member_id", length = 30, nullable = false)
     private String memberId;
 
@@ -49,39 +52,50 @@ public class Member {
     @Column(name = "member_created_date", nullable = false)
     private LocalDateTime memberCreatedDate;
 
+    //    ----------------------------------------------------
+
     // One-to-Many relationship with Review
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Review> reviews;
 
     // One-to-Many relationship with OrderDetail
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<OrderDetail> orderDetails;
 
     // One-to-Many relationship with ArtistHomepageComment
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<ArtistHomepageComment> artistHomepageComments;
 
     // One-to-Many relationship with ArtistMentionComment
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<ArtistMentionComment> artistMentionComments;
 
     // One-to-Many relationship with Wish
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<Wish> wishes;
 
     // One-to-Many relationship with SaleLike
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<SaleLike> saleLikes;
 
     // One-to-Many relationship with AuctionLike
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<AuctionLike> auctionLikes;
 
     // One-to-Many relationship with MemberAuctionBidding
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<MemberAuctionBidding> memberAuctionBiddings;
 
     // One-to-Many relationship with AuctionPointDetail
     @OneToMany(mappedBy = "member")
+    @JsonManagedReference
     private List<AuctionPointDetail> auctionPointDetails;
 }

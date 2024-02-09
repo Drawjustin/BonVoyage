@@ -3,6 +3,7 @@ package ArtBridge.ArtBridgelogin.repository;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.QItem;
 import ArtBridge.ArtBridgelogin.domain.QMember;
+import ArtBridge.ArtBridgelogin.domain.QOrderDetail;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,7 @@ public class ItemRepository {
     private final QItem qItem = QItem.item;
 
     private final QMember qMember = QMember.member;
+    private final QOrderDetail qOrderDetail = QOrderDetail.orderDetail;
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -36,23 +38,20 @@ public class ItemRepository {
     }
 
     // 아이템 생성 메서드
-    @Transactional
     public Item create(Item item) {
         em.persist(item);
         return item;
     }
 
     // 모든 아이템 조회 메서드
-    @Transactional(readOnly = true)
-    public List<Item> findAll() {
+    public List<Item> readAll() {
         return queryFactory
                 .selectFrom(qItem)
                 .fetch();
     }
 
     // 아이템 일련번호로 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public Item findBySeq(int itemSeq) {
+    public Item readBySeq(int itemSeq) {
         return queryFactory
                 .selectFrom(qItem)
                 .where(qItem.itemSeq.eq(itemSeq))
@@ -60,7 +59,6 @@ public class ItemRepository {
     }
 
     // 아이템 삭제 메서드
-    @Transactional
     public void deleteById(int itemSeq) {
         queryFactory
                 .delete(qItem)
@@ -69,8 +67,7 @@ public class ItemRepository {
     }
 
     // 인기 아이템 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> findPopularItems() {
+    public List<Item> readPopularItems() {
         return queryFactory
                 .selectFrom(qItem)
                 .orderBy(qItem.itemLike.desc())
@@ -78,15 +75,14 @@ public class ItemRepository {
     }
 
     // 최신 아이템 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> findLastedItems() {
+    public List<Item> readLastedItems() {
         return queryFactory
                 .selectFrom(qItem)
                 .orderBy(qItem.itemCreatedDate.desc())
                 .fetch();
     }
 
-    public Item findAndUpdateItem(int itemSeq, Item updatedItem) {
+    public Item readAndUpdateItem(int itemSeq, Item updatedItem) {
         return Optional.ofNullable(
                 queryFactory
                         .selectFrom(QItem.item)
@@ -106,11 +102,8 @@ public class ItemRepository {
         }).orElseThrow(() -> new IllegalArgumentException("Item with id " + itemSeq + " not found"));
     }
 
-
-
     // 작가의 아이템 조회 메서드
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> findSameAuthorItems(long artistSeq) {
+    public List<Item> readSameAuthorItems(long artistSeq) {
         return queryFactory
                 .selectFrom(qItem)
                 .where(qItem.artist.artistSeq.eq(artistSeq))
@@ -118,16 +111,21 @@ public class ItemRepository {
     }
 
     // 아이템 비관적 잠금 조회 메서드
-    @Transactional
-    public Item findByIdWithPessimisticLock(int itemId) {
+    public Item readByIdWithPessimisticLock(int itemId) {
         return em.find(Item.class, itemId, LockModeType.PESSIMISTIC_WRITE);
     }
 
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> getItemsBySameAuthor(Long authorId) {
+    public List<Item> readItemsBySameMember(Long authorId) {
         return queryFactory
-                .selectFrom(qItem)
-                .where(qMember.memberSeq.eq(authorId))
+                .selectFrom(QItem.item)
+                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
                 .fetch();
     }
+    public List<Item> readItemsBySameArtist(Long authorId) {
+        return queryFactory
+                .selectFrom(QItem.item)
+                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
+                .fetch();
+    }
+
 }

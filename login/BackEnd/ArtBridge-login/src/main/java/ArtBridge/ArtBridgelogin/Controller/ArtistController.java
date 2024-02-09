@@ -22,8 +22,8 @@ public class ArtistController {
     private MemberLoginForm memberForm;
 
     @GetMapping
-    public List<Artist> getAllArtists() {
-        return artistService.getAllArtists();
+    public List<Artist> readAllArtists() {
+        return artistService.readAllArtists();
     }
 
     @PostMapping("/login")
@@ -35,8 +35,8 @@ public class ArtistController {
 
 
     @GetMapping("/{id}")
-    public Artist getArtistById(@PathVariable String id)
-    {return artistService.findOne(id);}
+    public Artist readArtistById(@PathVariable String id)
+    {return artistService.readOne(id);}
 
     @PostMapping("/new")
     public Artist createArtist(@RequestBody Artist artist)
@@ -49,4 +49,6 @@ public class ArtistController {
     @DeleteMapping("/{id}")
     public void deleteArtist(@PathVariable String id)
     {artistService.deleteArtist(id);}
+
+
 }

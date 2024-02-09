@@ -1,6 +1,5 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
-import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;
@@ -19,23 +18,22 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
     @GetMapping("/{reviewId}")
-    public ResponseEntity<?> getReview(@PathVariable Integer reviewId) {
-        return reviewService.getReviewById(reviewId);
+    public ResponseEntity<?> readReview(@PathVariable Integer reviewId) {
+        return reviewService.readReviewById(reviewId);
     }
     @GetMapping
-    public ResponseEntity<?> getAllReviews(@RequestParam(required = false) String sort) {
+    public ResponseEntity<?> readAllReviews(@RequestParam(required = false) String sort) {
         List<Review> reviews;
-
 
         if (sort == null) {
             // 전체 아이템 조회 로직
-            reviews = reviewService.getAllReviews();
+            reviews = reviewService.readAllReviews();
         } else if (sort.equals("popular")) {
             // 인기 아이템 조회 로직
-            reviews = reviewService.getAllReviews();
+            reviews = reviewService.readAllReviews();
         } else if (sort.equals("new")) {
             // 최신 아이템 조회 로직
-            reviews = reviewService.getAllReviews();
+            reviews = reviewService.readAllReviews();
         } else {
             return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
         }
@@ -47,7 +45,6 @@ public class ReviewController {
     public ResponseEntity<Void> createReview(@RequestBody Review review) {
         // 실제로는 전달받은 review를 데이터베이스에 저장하는 로직이 들어갑니다.
         reviewService.createReview(review);
-
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

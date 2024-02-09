@@ -5,7 +5,6 @@ import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +35,7 @@ public class ItemServiceTest {
     private Item createTestItem() {
         Item item = new Item();
 
-        Artist artist = artistRepository.findArtistById("123");
+        Artist artist = artistRepository.readArtistById("123");
 
         item.setItemName("별이 빛나는 밤");
         item.setItemWidth(123);
@@ -58,7 +57,7 @@ public class ItemServiceTest {
         Item createdItem = itemService.createItem(testItem);
 
         //then
-        assertEquals(createdItem, itemRepository.findBySeq(createdItem.getItemSeq()));
+        assertEquals(createdItem, itemRepository.readBySeq(createdItem.getItemSeq()));
     }
 
     @Test
@@ -69,7 +68,7 @@ public class ItemServiceTest {
         Item createdItem = itemService.createItem(testItem);
 
         //when
-        Item foundItem = itemService.getItemBySeq(createdItem.getItemSeq());
+        Item foundItem = itemService.readItemBySeq(createdItem.getItemSeq());
 
         //then
         assertEquals(createdItem, foundItem);
@@ -88,7 +87,7 @@ public class ItemServiceTest {
         itemService.updateItem(createdItem.getItemSeq(), createdItem);
 
         //then
-        assertEquals(newName, itemRepository.findBySeq(createdItem.getItemSeq()).getItemName());
+        assertEquals(newName, itemRepository.readBySeq(createdItem.getItemSeq()).getItemName());
     }
 
     @Test
@@ -103,6 +102,6 @@ public class ItemServiceTest {
 
         //then
 
-        assertNull(itemRepository.findBySeq(createdItem.getItemSeq()));
+        assertNull(itemRepository.readBySeq(createdItem.getItemSeq()));
     }
 }

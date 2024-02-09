@@ -1,8 +1,6 @@
 package ArtBridge.ArtBridgelogin.Controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistHomepageComment;
-import ArtBridge.ArtBridgelogin.domain.ArtistMention;
-import ArtBridge.ArtBridgelogin.repository.ArtistHomepageCommentRepository;
 import ArtBridge.ArtBridgelogin.service.ArtistHomepageCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,13 +17,13 @@ public class ArtistHomepageCommentController {
     private ArtistHomepageCommentService artistHomepageCommentService;
 
     @GetMapping
-    public List<ArtistHomepageComment> getAlLArtistHomepageComment() {
-        return artistHomepageCommentService.getAllArtistsHomepageComment();
+    public List<ArtistHomepageComment> readAlLArtistHomepageComment() {
+        return artistHomepageCommentService.readAllArtistsHomepageComment();
     }
 
     @GetMapping("/{id}")
-    public ArtistHomepageComment getArtistMentionById(@PathVariable Long seq) {
-        return artistHomepageCommentService.findOne(seq);
+    public ArtistHomepageComment readArtistMentionById(@PathVariable Long seq) {
+        return artistHomepageCommentService.readOne(seq);
     }
 
     @PostMapping("/new")

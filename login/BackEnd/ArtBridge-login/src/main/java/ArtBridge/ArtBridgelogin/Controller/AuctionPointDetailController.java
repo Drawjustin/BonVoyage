@@ -4,7 +4,6 @@ import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
 import ArtBridge.ArtBridgelogin.service.AuctionPointDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,13 +17,13 @@ public class AuctionPointDetailController {
     private AuctionPointDetailService auctionPointDetailService;
 
     @GetMapping
-    public List<AuctionPointDetail> getAlLPointDetail() {
-        return auctionPointDetailService.getAllAuctionPointDetail();
+    public List<AuctionPointDetail> readAlLPointDetail() {
+        return auctionPointDetailService.readAllAuctionPointDetail();
     }
 
     @GetMapping("/{id}")
-    public AuctionPointDetail findDetailBySeq(@PathVariable int seq) {
-        return auctionPointDetailService.findOne(seq);
+    public AuctionPointDetail readDetailBySeq(@PathVariable int seq) {
+        return auctionPointDetailService.readOne(seq);
     }
 
     @PostMapping("/new")

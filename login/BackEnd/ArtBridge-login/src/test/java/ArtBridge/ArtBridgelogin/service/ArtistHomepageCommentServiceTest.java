@@ -40,8 +40,8 @@ public class ArtistHomepageCommentServiceTest {
     @BeforeEach
     public void setup() {
         artistHomepageComment = new ArtistHomepageComment();
-        Artist artist = artistRepository.findArtistById("123");
-        Member member = memberRepository.findOne(4L);
+        Artist artist = artistRepository.readArtistById("123");
+        Member member = memberRepository.readOne(4L);
 
         artistHomepageComment.setArtist(artist);
         artistHomepageComment.setMember(member);
@@ -53,13 +53,13 @@ public class ArtistHomepageCommentServiceTest {
 
 
     @Test
-    public void testFindOne() {
-        assertNotNull(artistHomepageCommentService.findOne(artistHomepageComment.getArtistHomepageCommentSeq()));
+    public void testreadOne() {
+        assertNotNull(artistHomepageCommentService.readOne(artistHomepageComment.getArtistHomepageCommentSeq()));
     }
 
     @Test
     public void testGetAllArtistsMentionComment() {
-        List<ArtistHomepageComment> comments = artistHomepageCommentService.getAllArtistsHomepageComment();
+        List<ArtistHomepageComment> comments = artistHomepageCommentService.readAllArtistsHomepageComment();
         assertTrue(comments.size() > 0);
     }
 
@@ -70,7 +70,7 @@ public class ArtistHomepageCommentServiceTest {
         updatedComment.setArtistHompageCommentContent("Updated Comment");
         artistHomepageCommentService.updateArtistHomepageComment(artistHomepageComment.getArtistHomepageCommentSeq(), updatedComment);
 
-        ArtistHomepageComment comment = artistHomepageCommentService.findOne(artistHomepageComment.getArtistHomepageCommentSeq());
+        ArtistHomepageComment comment = artistHomepageCommentService.readOne(artistHomepageComment.getArtistHomepageCommentSeq());
         assertEquals("Updated Comment", comment.getArtistHompageCommentContent());
     }
 
@@ -79,6 +79,6 @@ public class ArtistHomepageCommentServiceTest {
         Long seq = artistHomepageComment.getArtistHomepageCommentSeq();
         artistHomepageCommentService.deleteArtistHomepageComment(seq);
 
-        assertNull(artistHomepageCommentRepository.findOne(seq));
+        assertNull(artistHomepageCommentRepository.readOne(seq));
     }
 }

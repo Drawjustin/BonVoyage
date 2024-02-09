@@ -1,9 +1,11 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.Controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -14,45 +16,52 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
 
-    @Transactional(readOnly = true)
-    public List<Item> getAllItems() {
-        return itemRepository.findAll();
-    }
 
-    @Transactional(readOnly = true)
-    public Item getItemBySeq(int seq) {
-        return itemRepository.findBySeq(seq);
-    }
-
+    //Todo: CREATE
     @Transactional
     public Item createItem(Item item) {
         return itemRepository.create(item);
     }
 
-    @Transactional
-    public Item updateItem(int itemSeq, Item updatedItem) {
-        return itemRepository.findAndUpdateItem(itemSeq, updatedItem);
+
+    //Todo: READ
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> readAllItems() {
+        return itemRepository.readAll();
+    }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> readPopularItems() {
+        return itemRepository.readPopularItems();
+    }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> readNewItems() {
+        return itemRepository.readLastedItems();
+    }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public Item readItemBySeq(int seq) {
+        return itemRepository.readBySeq(seq);
+    }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<Item> readItemsBySameAuthor(UserAcessForm userAcessForm) {
+        if (userAcessForm.getIsArtist() == 1) {
+            return itemRepository.readItemsBySameArtist(userAcessForm.getArtist().getArtistSeq());
+        } else {
+            return itemRepository.readItemsBySameMember(userAcessForm.getMember().getMemberSeq());
+        }
+
     }
 
+
+    //Todo: UPDATE
+    @Transactional
+    public Item updateItem(int itemSeq, Item updatedItem) {
+        return itemRepository.readAndUpdateItem(itemSeq, updatedItem);
+    }
+
+
+    //Todo: DELETE
     @Transactional
     public void deleteItem(int itemSeq) {
         itemRepository.deleteById(itemSeq);
     }
-
-    public List<Item> getPopularItems() {
-        return itemRepository.findPopularItems();
-    }
-
-    public List<Item> getNewItems() {
-        return itemRepository.findLastedItems();
-    }
-
-    public List<Item> getItemsBySameAuthor(Long authorId) {
-        return itemRepository.getItemsBySameAuthor(authorId);
-    }
-
-    //TODO: Implement this method after resolving artist_seq join
-//    public List<Item> getItemsBySameAuthor(String authorId) {
-//        return itemRepository.findSameAuthorItems(authorId);
-//    }
 }

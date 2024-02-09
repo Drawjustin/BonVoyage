@@ -7,21 +7,17 @@ import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.mysema.commons.lang.Assert.assertThat;
-import static java.util.Optional.empty;
 import static org.assertj.core.api.AssertionsForClassTypes.not;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
@@ -49,8 +45,8 @@ public class ArtistMentionCommentServiceTest {
     @BeforeEach
     public void setup() {
         artistMentionComment = new ArtistMentionComment();
-        Artist artist = artistRepository.findArtistById("123");
-        ArtistMention artistMention = artistMentionRepository.findAll().get(0);
+        Artist artist = artistRepository.readArtistById("123");
+        ArtistMention artistMention = artistMentionRepository.readAll().get(0);
 
         artistMentionComment.setArtistMention(artistMention);
         artistMentionComment.setArtistMentionCommentCreatedDate(LocalDateTime.now());
@@ -61,13 +57,13 @@ public class ArtistMentionCommentServiceTest {
 
 
     @Test
-    public void testFindOne() {
-        assertNotNull(artistMentionCommentService.findOne(artistMentionComment.getArtistMentionCommentSeq()));
+    public void testreadOne() {
+        assertNotNull(artistMentionCommentService.readOne(artistMentionComment.getArtistMentionCommentSeq()));
     }
 
     @Test
     public void testGetAllArtistsMentionComment() {
-        List<ArtistMentionComment> comments = artistMentionCommentService.getAllArtistsMentionComment();
+        List<ArtistMentionComment> comments = artistMentionCommentService.readAllArtistsMentionComment();
         assertTrue(comments.size() > 0);
     }
 
@@ -78,7 +74,7 @@ public class ArtistMentionCommentServiceTest {
         updatedComment.setArtistMentionCommentContent("Updated Comment");
         artistMentionCommentService.updateArtistMentionComment(artistMentionComment.getArtistMentionCommentSeq(), updatedComment);
 
-        ArtistMentionComment comment = artistMentionCommentService.findOne(artistMentionComment.getArtistMentionCommentSeq());
+        ArtistMentionComment comment = artistMentionCommentService.readOne(artistMentionComment.getArtistMentionCommentSeq());
         assertEquals("Updated Comment", comment.getArtistMentionCommentContent());
     }
 }

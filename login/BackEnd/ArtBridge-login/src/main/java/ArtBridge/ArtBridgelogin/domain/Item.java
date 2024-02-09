@@ -1,8 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.SaleLike;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -39,26 +38,39 @@ public class Item {
     @Column(name = "item_created_date", nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime itemCreatedDate;
+    // 다른 필드 및 메서드들...
+    @PrePersist
+    protected void onCreate() {
+        if (itemCreatedDate == null) {
+            itemCreatedDate = LocalDateTime.now();
+        }
+    }
+
+    //    ----------------------------------------------------
 
     // Many-to-One relationship with Artist
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "artist_seq", nullable = false)
     private Artist artist;
 
     // One-to-Many relationship with OrderDetail
     @OneToMany(mappedBy = "item")
+    @JsonManagedReference
     private List<OrderDetail> orderDetails;
 
     // One-to-Many relationship with Wish
     @OneToMany(mappedBy = "item")
+    @JsonManagedReference
     private List<Wish> wishes;
 
     // One-to-Many relationship with Auction
     @OneToMany(mappedBy = "item")
+    @JsonManagedReference
     private List<Auction> auctions;
 
     // One-to-Many relationship with SaleLike
     @OneToMany(mappedBy = "item")
+    @JsonManagedReference
     private List<SaleLike> saleLikes;
 }

@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -29,9 +30,11 @@ public class Review {
     @Column(name = "review_created_date", nullable = false)
     private LocalDateTime reviewCreatedDate;
 
+    //    ----------------------------------------------------
+
     // Many-to-One relationship with Member
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "member_seq")
-    @JsonIgnore
     private Member member;
 }

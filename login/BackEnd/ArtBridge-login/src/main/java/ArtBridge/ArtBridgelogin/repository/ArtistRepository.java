@@ -1,7 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.QArtist;
+import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -11,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -33,14 +33,14 @@ public class ArtistRepository {
         return artist;
     }
 
-    public Artist findArtistById(String artistId) {
+    public Artist readArtistById(String artistId) {
         return queryFactory
                 .selectFrom(qArtist)
                 .where(qArtist.artistId.eq(artistId))
                 .fetchOne();
     }
 
-    public List<Artist> findAll() {
+    public List<Artist> readAll() {
         return queryFactory
                 .selectFrom(qArtist)
                 .fetchAll()
@@ -73,7 +73,7 @@ public class ArtistRepository {
     }
 
 
-    public Artist findByName(String name) {
+    public Artist readByName(String name) {
         return queryFactory
                 .selectFrom(qArtist)
                 .where(qArtist.artistName.eq(name))
