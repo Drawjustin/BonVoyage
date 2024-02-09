@@ -4,13 +4,7 @@ import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
 import ArtBridge.ArtBridgelogin.service.AuctionService;
 import ArtBridge.ArtBridgelogin.service.MeetingService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.openvidu.java.client.ConnectionProperties;
-import io.openvidu.java.client.Connection;
-import io.openvidu.java.client.OpenVidu;
-import io.openvidu.java.client.OpenViduHttpException;
-import io.openvidu.java.client.OpenViduJavaClientException;
-import io.openvidu.java.client.Session;
-import io.openvidu.java.client.SessionProperties;
+import io.openvidu.java.client.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -69,7 +63,7 @@ public class OpenViduController {
     public ResponseEntity<?> createSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
 
-         Map<String, Object> check = new HashMap<>();
+        //  Map<String, Object> check = new HashMap<>();
 //         String customSessionId = (String) params.get("customSessionId");
 //         int auctionSeq = (int) params.get("auctionSeq");
 
@@ -98,20 +92,19 @@ public class OpenViduController {
 
 //             return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
 //         }
+        Map<String, Object> check = new HashMap<>();
         SessionProperties properties = new SessionProperties.Builder().build();
-        Session session = openVidu.createSession(properties);
-     
+        Session session = openvidu.createSession(properties);
         ConnectionProperties connectionProperties = new ConnectionProperties.Builder()
-            .role(OpenViduRole.PUBLISHER)
-            .data("Alice")
-            .build();
+                .role(OpenViduRole.PUBLISHER)
+                .data("Alice")
+                .build();
         Connection connection = session.createConnection(connectionProperties);
         String token = connection.getToken(); // Send this string to the client side
         check.put("msg", "success");
         check.put("sessionId", session.getSessionId());
         check.put("token",token);
         return ResponseEntity.status(HttpStatus.OK).body(check);
-
     }
 
     /**
