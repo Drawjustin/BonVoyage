@@ -49,6 +49,16 @@ public class OpenViduController {
     }
 
     /**
+     */
+    @GetMapping
+    public ResponseEntity<?> printAll() {
+        System.out.println(OPENVIDU_URL);
+        System.out.println(OPENVIDU_SECRET);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    /**
      * @param params The Session properties
      * @return The Session ID
      */
