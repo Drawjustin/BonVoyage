@@ -25,14 +25,14 @@ const CAROUSEL_IMAGES = [
   'https://media.architecturaldigest.com/photos/6080a73d795a7b010f3dd2e0/2:1/w_2700,h_1350,c_limit/GettyImages-1213929929.jpg',
 ]
 
-interface Review {
+interface ReviewProp {
   reviewSeq: number;
   // Add other properties based on your actual data structure
 }
 
 
-export default function Review() {
-  const [reviewsData, setReviewsData] = useState<Review[]>([]); // State to store reviews data
+const Review = () => {
+  const [reviewsData, setReviewsData] = useState<ReviewProp[]>([]); // State to store reviews data
 
   const currentUser = getCurrentUser();
 
@@ -69,3 +69,5 @@ export default function Review() {
     </Container>
   );
 }
+
+export default Review
