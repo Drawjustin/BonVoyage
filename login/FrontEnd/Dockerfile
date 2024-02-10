@@ -18,6 +18,8 @@ COPY default.conf /etc/nginx/conf.d/default.conf
 # 빌드된 소스를 Nginx의 HTML 폴더로 복사합니다
 COPY --from=build /.next /usr/share/nginx/html
 
+FROM node:latest
+
 # Nginx를 시작할 때 포트를 노출합니다
 EXPOSE 3000
 
