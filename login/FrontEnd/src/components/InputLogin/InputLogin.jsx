@@ -27,66 +27,25 @@ const InputLogin = () => {
   };
 
   const handleLogin = async (e) => {
-
+    e.preventDefault();
+    setIsLoading(true);
+    const body = {
+      username:username,
+      password:password,
+      callbackUrl: "/",
+    }
+    // 로그인 처리 로직 추가
     const backendUrl = 'https://i10a207.p.ssafy.io/api'
-  
-    if (isArtist) {
+    console.log(`Logging in as ${isArtist ? 'Artist' : 'User'}`);
 
-      const loginData = {
-        "id": username,
-        "pw": password,
-      };
-
-      axios.post(`${backendUrl}/artists/login`, loginData, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
-        }
-      })
-        .then(response => {
-
-          if (response.data !== '바보 멍텅구리 로그인 실패했잔요') {
-            console.log('로그인 성공 :', response.data);
-            navigate.push('/');
-          }
-          else {
-            console.log('로그인 실패 :', response.data);
-            setShowAlert(true);
-          }
-        })
-        .catch(error => {
-          console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-          // 로그인 실패하면 팝업 표시할 것
-          
-        });
-  } else {
-    const loginData = {
-      "id": username,
-      "pw": password,
-    };
-
-    console.log(loginData);
-
-    axios.post(`${backendUrl}/members/login`, loginData, {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8'
-      }
-    }).then(response => {
-
-      if (response.data !== '바보 멍텅구리 로그인 실패했잔요') {
-        console.log('로그인 성공 :', response.data);
-        navigate.push('/');
-      }
-      else {
-        console.log('로그인 실패 :', response.data);
-        setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.error('로그인 실패(에러)', error.response ? error.response.data : error.message);
-      // 로그인 실패하면 팝업 표시할 것
-      
-    });
-}
+    try {
+      const data = await signIn('credentials', body);
+    } catch (error) {
+      console.log('에러');
+        alert(error);
+    } finally {
+      setIsLoading(false);
+    }
 
   }
 

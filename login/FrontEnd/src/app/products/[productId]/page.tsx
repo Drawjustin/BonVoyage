@@ -3,14 +3,18 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import EmptyState from '@/components/EmptyState/EmptyState';
 import React from 'react'
 import ProductClient from './ProductClient';
+import axios from 'axios';
 
 interface Params {
   productId?: string
 }
 
-const ProductPage = async ({params}: { params: Params}) => {
+const ProductPage = async () => {
   
-  const product = {} // await getProductById(params);
+
+  const backend_url = 'https://i10a207.p.ssafy.io/api';
+
+  const product = await axios.get(`${backend_url}/items`);
   const currentUser = await getCurrentUser();
   
   if(!product) {

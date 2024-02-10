@@ -71,6 +71,7 @@ export const authOptions:NextAuthOptions = {
   session: {
     strategy: 'jwt'
   },
+  secret: process.env.NEXTAUTH_SECRET,
   jwt: {
     secret: process.env.JWT_SECRET,
     maxAge: 30 * 24 * 60 * 60 // 30days
@@ -90,6 +91,9 @@ export const authOptions:NextAuthOptions = {
         }
         return token;
       },
+    async redirect({ url, baseUrl }) {
+        return baseUrl
+    },
     async session({ session, token }) {        
       const artistId = token?.artistId as string;
       const memberId = token?.memberId as string;
