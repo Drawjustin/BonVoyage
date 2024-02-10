@@ -63,9 +63,23 @@ public class ItemService {
     public ItemDto createItemDto(ItemDto itemDto) {
         // 유효성 검사 등 필요한 로직 추가
         // ...
+        //Temporary
+        Artist artist = new Artist();
+        artist.setArtistId("sampleId");
+        artist.setArtistPwd("samplePwd");
+        artist.setArtistName("Sample Artist");
+        artist.setArtistNickname("Sample Nickname");
+        artist.setArtistEmail("sample@example.com");
+        artist.setArtistContact("123-456-7890");
+        artist.setArtistPoint(100L);
+        artist.setArtistHistory("Sample history");
+        artist.setArtistIsdeleted(false);
+        artist.setArtistDeletedDate(null);
+        artist.setArtistCreatedDate(LocalDateTime.now());
 
         Item newItem = convertToEntity(itemDto);
         newItem.setItemCreatedDate(LocalDateTime.now());
+        newItem.setArtist(artist);
         Item createdItem = itemRepository.create(newItem);
         return convertToDto(createdItem);
     }
