@@ -91,6 +91,9 @@ export const authOptions:NextAuthOptions = {
         }
         return token;
       },
+    async redirect({ url, baseUrl }) {
+        return baseUrl
+    },
     async session({ session, token }) {        
       const artistId = token?.artistId as string;
       const memberId = token?.memberId as string;
