@@ -13,6 +13,8 @@ RUN npm install
 # 소스 복사
 COPY ./ ./
 
+ENV NODE_ENV production
+
 # 빌드
 RUN npm run build
 
