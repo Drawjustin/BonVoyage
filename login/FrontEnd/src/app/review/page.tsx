@@ -40,7 +40,7 @@ const Review = () => {
     // Fetch reviews data from the API
     const fetchReviews = async () => {
       try {
-        const response = await axios.get<Review[]>('https://i10a207.p.ssafy.io/api/Review');
+        const response = await axios.get<ReviewProp[]>('https://i10a207.p.ssafy.io/api/Review');
         setReviewsData(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
