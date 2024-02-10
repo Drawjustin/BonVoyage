@@ -65,7 +65,7 @@ export const ButtonContainer = () => {
   let buttonList = [
     {text: '판매', func: () => navigate.push('/ProductListPage')},
     {text: '경매', func: () => navigate.push('/AuctionListPage')},
-    {text: '리뷰', func: () => navigate.push('/Review')},
+    {text: '리뷰', func: () => navigate.push('/ReviewPage')},
     {text: '작가', func: () => navigate.push('/ArtistListPage')},
 ];
 
