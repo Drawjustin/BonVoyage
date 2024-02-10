@@ -2,15 +2,12 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
-import ArtBridge.ArtBridgelogin.controller.form.UserAcessForm;
+import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,19 +20,14 @@ public class ItemService {
 
 
     //Todo: CREATE
-    @Transactional
-    public Item createItem(Item item) {
-        return itemRepository.create(item);
-    }
-
-
-    //Todo: READ
     public List<ItemDto> readAllItems() {
         List<Item> items = itemRepository.readAll();
+        if (items.isEmpty()) {
+            throw new NoDataFoundException("No items found");
+        }
         return convertToDtoList(items);
     }
 
-    // 정렬된 아이템 조회 비즈니스 로직
     public List<ItemDto> readAllItemsSorted(String sort) {
         List<Item> items;
 
@@ -47,7 +39,6 @@ public class ItemService {
             items = itemRepository.readAll();
         }
 
-        // 찾은 아이템이 없을 경우 에러 발생
         if (items.isEmpty()) {
             throw new NoDataFoundException("No items found");
         }
@@ -55,52 +46,48 @@ public class ItemService {
         return convertToDtoList(items);
     }
 
-    // Item을 ItemDto로 변환하는 비즈니스 로직
-    private List<ItemDto> convertToDtoList(List<Item> items) {
-        return items.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+    public ItemDto readItemDtoBySeq(int seq) {
+        Item item = itemRepository.readBySeq(seq);
+        if (item == null) {
+            throw new NoDataFoundException("Item not found with seq: " + seq);
+        }
+        return convertToDto(item);
     }
 
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> readPopularItems() {
-        return itemRepository.readPopularItems();
+    public ItemDto createItemDto(ItemDto itemDto) {
+        // 유효성 검사 등 필요한 로직 추가
+        // ...
+
+        Item newItem = convertToEntity(itemDto);
+        Item createdItem = itemRepository.create(newItem);
+        return convertToDto(createdItem);
     }
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> readNewItems() {
-        return itemRepository.readLastedItems();
-    }
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public Item readItemBySeq(int seq) {
-        return itemRepository.readBySeq(seq);
-    }
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Item> readItemsBySameAuthor(UserAcessForm userAcessForm) {
-        if (userAcessForm.getIsArtist() == 1) {
-            return itemRepository.readItemsBySameArtist(userAcessForm.getArtist().getArtistSeq());
-        } else {
-            return itemRepository.readItemsBySameMember(userAcessForm.getMember().getMemberSeq());
+
+    public ItemDto updateItem(int id, ItemDto updatedItemDto) {
+        // 유효성 검사 등 필요한 로직 추가
+        // ...
+
+        Item existingItem = itemRepository.readBySeq(id);
+        if (existingItem == null) {
+            throw new NoDataFoundException("Item not found with id: " + id);
         }
 
+        // 업데이트 로직 수행
+        // ...
+
+        return convertToDto(existingItem);
     }
 
-    //Todo: UPDATE
+    public void deleteItem(int id) {
+        Item existingItem = itemRepository.readBySeq(id);
+        if (existingItem == null) {
+            throw new NoDataFoundException("Item not found with id: " + id);
+        }
 
-    @Transactional
-    public Item updateItem(int itemSeq, Item updatedItem) {
-        return itemRepository.readAndUpdateItem(itemSeq, updatedItem);
+        itemRepository.deleteById(id);
     }
 
-    //Todo: DELETE
-
-    @Transactional
-    public void deleteItem(int itemSeq) {
-        itemRepository.deleteById(itemSeq);
-    }
-
-
-    //Todo: 함수
-    private ItemDto convertToDto(Item item) {
+    public ItemDto convertToDto(Item item) {
         ItemDto itemDto = new ItemDto();
         itemDto.setItemName(item.getItemName());
         itemDto.setItemWidth(item.getItemWidth());
@@ -109,12 +96,38 @@ public class ItemService {
         itemDto.setItemSellPrice(item.getItemSellPrice());
         itemDto.setItemIsSold(item.isItemIsSold());
 
-        // Artist 정보를 가져와서 설정
+        // Map ArtistDto
         if (item.getArtist() != null) {
             ArtistDto artistDto = new ArtistDto();
             artistDto.setId(item.getArtist().getArtistId());
             itemDto.setArtist(artistDto);
         }
+
         return itemDto;
+    }
+
+    public List<ItemDto> convertToDtoList(List<Item> items) {
+        return items.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public Item convertToEntity(ItemDto itemDto) {
+        Item item = new Item();
+        item.setItemName(itemDto.getItemName());
+        item.setItemWidth(itemDto.getItemWidth());
+        item.setItemHeight(itemDto.getItemHeight());
+        item.setItemLike(itemDto.getItemLike());
+        item.setItemSellPrice(itemDto.getItemSellPrice());
+        item.setItemIsSold(itemDto.isItemIsSold());
+
+        // Map Artist entity
+        if (itemDto.getArtist() != null) {
+            Artist artist = new Artist();
+            artist.setArtistId(itemDto.getArtist().getId());  // Assuming you have setId method in ArtistDto
+            item.setArtist(artist);
+        }
+
+        return item;
     }
 }

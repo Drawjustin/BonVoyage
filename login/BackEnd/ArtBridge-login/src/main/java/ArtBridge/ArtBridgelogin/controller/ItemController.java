@@ -2,18 +2,15 @@ package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.controller.form.UserAcessForm;
-import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.ItemService;
+import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -45,35 +42,63 @@ public class  ItemController {
     }
 
     @GetMapping("/{seq}")
-    public Item readItemBySeq(@PathVariable int seq) {
-        return itemService.readItemBySeq(seq);
+    public ResponseEntity<?> readItemBySeq(@PathVariable int seq) {
+        try {
+            ItemDto itemDto = itemService.readItemDtoBySeq(seq);
+            return ResponseEntity.ok(itemDto);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
     }
 
     @PostMapping("/new")
-    public Item createItem(@RequestBody Item item) {
-
-        System.out.println(item);
-        return itemService.createItem(item);
+    public ResponseEntity<?> createItem(@RequestBody ItemDto itemDto) {
+        try {
+            ItemDto createdItemDto = itemService.createItemDto(itemDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdItemDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
     }
 
     @PutMapping("/{id}")
-    public Item updateItem(@PathVariable int id, @RequestBody Item updatedItem) {
-        return itemService.updateItem(id, updatedItem);
+    public ResponseEntity<?> updateItem(@PathVariable int id, @RequestBody ItemDto updatedItemDto) {
+        try {
+            ItemDto itemDto = itemService.updateItem(id, updatedItemDto);
+            return ResponseEntity.ok(itemDto);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteItem(@PathVariable int id) {
-        itemService.deleteItem(id);
+    public ResponseEntity<?> deleteItem(@PathVariable int id) {
+        try {
+            itemService.deleteItem(id);
+            return ResponseEntity.noContent().build();
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
     }
 
-    //작품 작가가 만든 다른 상품들도 조회한다.
-    //TODO: join 해결 이후 진행 필요
+    // 작품 작가가 만든 다른 상품들도 조회한다.
+    // TODO: join 해결 이후 진행 필요
     @GetMapping("/mypage/{authorId}")
-    public List<Item> readItemsByAuthor(@PathVariable("authorId") UserAcessForm userAcessForm) {
-        return itemService.readItemsBySameAuthor(userAcessForm);
+    public ResponseEntity<?> readItemsByAuthor(@PathVariable("authorId") UserAcessForm userAcessForm) {
+        try {
+            List<ItemDto> itemDtos = itemService.readAllItems();
+            return ResponseEntity.ok(itemDtos);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
     }
-
-
-    //TODO: 정렬하는 방법
 
 }

@@ -7,14 +7,10 @@ import ArtBridge.ArtBridgelogin.domain.QOrderDetail;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class ItemRepository {
@@ -50,6 +46,8 @@ public class ItemRepository {
                 .fetch();
     }
 
+
+
     public List<Item> readAllSortedByName() {
         return queryFactory.selectFrom(qItem)
                 .orderBy(qItem.itemName.asc())
@@ -79,67 +77,37 @@ public class ItemRepository {
                 .execute();
     }
 
-    // 인기 아이템 조회 메서드
-    public List<Item> readPopularItems() {
-        return queryFactory
-                .selectFrom(qItem)
-                .orderBy(qItem.itemLike.desc())
+    public List<Item> readItemsSortedByName() {
+        return queryFactory.selectFrom(qItem)
+                .orderBy(qItem.itemName.asc())
                 .fetch();
     }
 
-    // 최신 아이템 조회 메서드
-    public List<Item> readLastedItems() {
-        return queryFactory
-                .selectFrom(qItem)
-                .orderBy(qItem.itemCreatedDate.desc())
+    public List<Item> readItemsSortedByPrice() {
+        return queryFactory.selectFrom(qItem)
+                .orderBy(qItem.itemSellPrice.asc())
                 .fetch();
     }
 
-    public Item readAndUpdateItem(int itemSeq, Item updatedItem) {
-        return Optional.ofNullable(
-                queryFactory
-                        .selectFrom(QItem.item)
-                        .where(QItem.item.itemSeq.eq(itemSeq))
-                        .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-                        .fetchOne()
-        ).map(existingItem -> {
-            // Update fields directly
-            existingItem.setItemName(updatedItem.getItemName());
-            existingItem.setItemHeight(updatedItem.getItemHeight());
-            existingItem.setItemWidth(updatedItem.getItemWidth());
-            existingItem.setItemIsSold(updatedItem.isItemIsSold());
-            existingItem.setItemSellPrice(updatedItem.getItemSellPrice());
-
-            // No need to create a new item, just return the updated item
-            return existingItem;
-        }).orElseThrow(() -> new IllegalArgumentException("Item with id " + itemSeq + " not found"));
-    }
-
-    // 작가의 아이템 조회 메서드
-    public List<Item> readSameAuthorItems(long artistSeq) {
-        return queryFactory
-                .selectFrom(qItem)
-                .where(qItem.artist.artistSeq.eq(artistSeq))
-                .fetch();
-    }
-
-    // 아이템 비관적 잠금 조회 메서드
-    public Item readByIdWithPessimisticLock(int itemId) {
-        return em.find(Item.class, itemId, LockModeType.PESSIMISTIC_WRITE);
-    }
-
-    public List<Item> readItemsBySameMember(Long authorId) {
-        return queryFactory
-                .selectFrom(QItem.item)
-                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
-                .fetch();
-    }
-
-    public List<Item> readItemsBySameArtist(Long authorId) {
-        return queryFactory
-                .selectFrom(QItem.item)
-                .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
-                .fetch();
+    public List<Item> readItemsByArtistAndSort(Long artistSeq, String sort) {
+        if ("name".equalsIgnoreCase(sort)) {
+            return queryFactory
+                    .selectFrom(qItem)
+                    .where(qItem.artist.artistSeq.eq(artistSeq))
+                    .orderBy(qItem.itemName.asc())
+                    .fetch();
+        } else if ("price".equalsIgnoreCase(sort)) {
+            return queryFactory
+                    .selectFrom(qItem)
+                    .where(qItem.artist.artistSeq.eq(artistSeq))
+                    .orderBy(qItem.itemSellPrice.asc())
+                    .fetch();
+        } else {
+            return queryFactory
+                    .selectFrom(qItem)
+                    .where(qItem.artist.artistSeq.eq(artistSeq))
+                    .fetch();
+        }
     }
 
 }
