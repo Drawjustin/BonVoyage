@@ -1,4 +1,5 @@
 FROM nginx
+RUN apt-get update
 RUN apt-get install npm -y
 
 # 웹서버 설정파일 복사
