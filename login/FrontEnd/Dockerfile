@@ -1,29 +1,22 @@
-# Node.js를 사용하여 소스를 빌드하기 위한 단계
-FROM node:latest as build
+FROM nginx
+RUN apt-get install npm -y
 
-WORKDIR /
+# 웹서버 설정파일 복사
+# 프로젝트 루트 밑에 docker폴더, default.conf 생성
+COPY default.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/share/nginx/html
 
-COPY package*.json ./
+COPY ./package*.json ./
+# 모듈 설치
 RUN npm install
+# 소스 복사
+COPY ./ ./
 
-COPY . .
+# 빌드
 RUN npm run build
 
-# Nginx를 사용하여 빌드된 소스를 호스팅하기 위한 단계
-FROM nginx:latest
-
-# Nginx 설정 파일을 복사합니다
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# 빌드된 소스를 Nginx의 HTML 폴더로 복사합니다
-COPY --from=build .next /usr/share/nginx/html
-
-FROM node:latest
-
-# Nginx를 시작할 때 포트를 노출합니다
+# 3000번 포트로 맞춤
 EXPOSE 3000
 
-# Nginx를 실행합니다
+# 컨테이너 실행시 시작
 CMD [ "npm", "run", "start" ]
-
-
