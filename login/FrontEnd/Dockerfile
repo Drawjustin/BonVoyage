@@ -14,6 +14,7 @@ RUN npm install
 COPY . .
 RUN rm -rf /etc/nginx/conf.d
 # Build the React app
+RUN npm run build
 
 # Use an official Nginx runtime as a base image
 FROM nginx:latest
