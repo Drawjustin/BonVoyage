@@ -1,8 +1,6 @@
 package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
-import ArtBridge.ArtBridgelogin.service.AuctionService;
-import ArtBridge.ArtBridgelogin.service.MeetingService;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.openvidu.java.client.*;
 import jakarta.annotation.PostConstruct;
@@ -17,13 +15,11 @@ import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping(value = "/api/openvidu")
+@RequestMapping(value = "/openvidu")
 @RequiredArgsConstructor
 //@Api("OpenVidu Controller API V1")
 public class OpenViduController {
 
-    private MeetingService meetingService;
-    private AuctionService auctionService;
 //    @Autowired
 //    public OpenViduController(AuctionService auctionService) {
 //        this.auctionService = auctionService;
@@ -134,7 +130,7 @@ public class OpenViduController {
             Connection connection = tarreadSession.createConnection(properties);
 
             try {
-                Meeting meeting = meetingService.readMeetingBySession(tarreadSession.getSessionId());
+//                Meeting meeting = meetingService.readMeetingBySession(tarreadSession.getSessionId());
 //                logger.info("*** readMeeting 호출");
 
 //                meetingService.updateMeeting(meetingDto);
@@ -162,7 +158,7 @@ public class OpenViduController {
 //        logger.info("*** deleteSession - 호출");
 
         try {
-            meetingService.deleteMeetingBySession(sessionId);
+//            meetingService.deleteMeetingBySession(sessionId);
 
 //            check.put("msg", "success");
 
