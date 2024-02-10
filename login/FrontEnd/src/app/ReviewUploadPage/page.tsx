@@ -1,7 +1,7 @@
 'use client'
 // import { useNavigation } from '@lucasmogari/react-pagination';
 import React, { useState } from 'react';
-import styles from './ProductUploadPage.module.scss';
+import styles from './ReviewUploadPage.module.scss';
 import Input from '@/components/Input/Input';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '@/components/Button';

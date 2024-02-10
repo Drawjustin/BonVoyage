@@ -7,4 +7,5 @@ module.exports = withImages({
             'via.placeholder.com'
         ]
     },
+    target: 'server',
 });
