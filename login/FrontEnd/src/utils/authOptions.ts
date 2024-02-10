@@ -1,17 +1,8 @@
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import axios, { AxiosResponse } from "axios";
-
-interface CustomUserType {
-    artistId: string;
-    memberId: string;
-  }
   
-  declare module 'next-auth' {
-    interface Session {
-      user: CustomUserType;
-    }
-  }
+
 export const authOptions:NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -29,7 +20,7 @@ export const authOptions:NextAuthOptions = {
                 id: credentials?.username,
                 pw: credentials?.password
             }
-  
+
             const userResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/artists/login`, artistBody, {
               headers: {
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -55,10 +46,10 @@ export const authOptions:NextAuthOptions = {
                 return null;
               }
 
-              return memberResponse.data;
+              return {id : memberResponse.data};
             }
 
-            return userResponse.data;
+            return {id : userResponse.data};
         
           }
           catch (error) {
@@ -84,21 +75,19 @@ export const authOptions:NextAuthOptions = {
         //console.log(token);
         // console.log('체크', token, user);
         // Use optional chaining to safely access properties
-
-        //console.log( {...token, ...user, artistId, memberId })
-        if (!token.name){
+        //console.log( {...token, ...user, artistId, memberId });
+        if (!token.sub){
           return { ...token, ...user};
         }
         return token;
       },
-    async redirect({ url, baseUrl }) {
-        return baseUrl
-    },
-    async session({ session, token }) {        
-      const artistId = token?.artistId as string;
-      const memberId = token?.memberId as string;
+    async session({ session, token }) { 
     
-      session.user = { artistId, memberId };
+      const artistId = token?.sub as string;
+      const memberId = token?.sub as string;
+    
+      session.user = {...session.user, artistId, memberId };
+
       return session;
     },
   },
