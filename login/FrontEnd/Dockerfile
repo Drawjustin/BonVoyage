@@ -16,7 +16,7 @@ FROM nginx:latest
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 # 빌드된 소스를 Nginx의 HTML 폴더로 복사합니다
-COPY --from=build /.next /usr/share/nginx/html
+COPY --from=build .next /usr/share/nginx/html
 
 FROM node:latest
 
