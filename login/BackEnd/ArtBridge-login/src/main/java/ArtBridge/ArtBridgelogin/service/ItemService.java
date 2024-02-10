@@ -8,6 +8,7 @@ import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +22,7 @@ public class ItemService {
 
 
     //Todo: CREATE
+    @Transactional
     public List<ItemDto> readAllItems() {
         List<Item> items = itemRepository.readAll();
         if (items.isEmpty()) {
@@ -29,6 +31,7 @@ public class ItemService {
         return convertToDtoList(items);
     }
 
+    @Transactional
     public List<ItemDto> readAllItemsSorted(String sort) {
         List<Item> items;
 
@@ -47,6 +50,7 @@ public class ItemService {
         return convertToDtoList(items);
     }
 
+    @Transactional
     public ItemDto readItemDtoBySeq(int seq) {
         Item item = itemRepository.readBySeq(seq);
         if (item == null) {
@@ -55,6 +59,7 @@ public class ItemService {
         return convertToDto(item);
     }
 
+    @Transactional
     public ItemDto createItemDto(ItemDto itemDto) {
         // 유효성 검사 등 필요한 로직 추가
         // ...
@@ -65,6 +70,7 @@ public class ItemService {
         return convertToDto(createdItem);
     }
 
+    @Transactional
     public ItemDto updateItem(int id, ItemDto updatedItemDto) {
         // 유효성 검사 등 필요한 로직 추가
         // ...
@@ -80,6 +86,7 @@ public class ItemService {
         return convertToDto(existingItem);
     }
 
+    @Transactional
     public void deleteItem(int id) {
         Item existingItem = itemRepository.readBySeq(id);
         if (existingItem == null) {
@@ -89,6 +96,7 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
+    @Transactional
     public ItemDto convertToDto(Item item) {
         ItemDto itemDto = new ItemDto();
         itemDto.setItemName(item.getItemName());
@@ -108,12 +116,14 @@ public class ItemService {
         return itemDto;
     }
 
+    @Transactional
     public List<ItemDto> convertToDtoList(List<Item> items) {
         return items.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Item convertToEntity(ItemDto itemDto) {
         Item item = new Item();
         item.setItemName(itemDto.getItemName());
