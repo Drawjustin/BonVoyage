@@ -1,32 +1,27 @@
-FROM nginx:latest
-# 웹서버 설정파일 복사
-# 프로젝트 루트 밑에 docker폴더, default.conf 생성
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Node.js를 사용하여 소스를 빌드하기 위한 단계
+FROM node:latest AS build
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /app
 
-COPY ./package*.json ./
-
-# Install dependencies
+COPY package*.json ./
 RUN npm install
-# 소스 복사
-COPY ./ ./
 
-RUN rm -rf /etc/nginx/conf.d
-
-
-# 빌드
+COPY . .
 RUN npm run build
-# Copy the custom nginx.conf file to the nginx configuration directory
 
+# Nginx를 사용하여 빌드된 소스를 호스팅하기 위한 단계
+FROM nginx:latest
+
+# Nginx 설정 파일을 복사합니다
 COPY default.conf /etc/nginx/conf.d/default.conf
-# Copy the build output from the build environment to the nginx directory
-COPY --from=build /.next /usr/share/nginx/html
 
-# 3000번 포트로 맞춤
-# Expose port 80
+# 빌드된 소스를 Nginx의 HTML 폴더로 복사합니다
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Nginx를 시작할 때 포트를 노출합니다
 EXPOSE 3000
 
-# 컨테이너 실행시 시작
-CMD [ "npm", "run", "start" ]
+# Nginx를 실행합니다
+CMD ["nginx", "-g", "daemon off;"]
+
 
