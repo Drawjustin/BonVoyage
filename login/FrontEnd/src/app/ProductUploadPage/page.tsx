@@ -18,7 +18,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ProductUploadPage = () => {
 
-  const [isArtist, setIsArtist] = useState(false);
+  const [isArtist, setIsArtist] = useState(true);
   const navigate = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const currentUser = getCurrentUser();
