@@ -7,9 +7,8 @@ COPY ./ ./
 RUN npm install 
 RUN npm run build
 
-COPY --from=builder /.next/standalone ./
-COPY --from=builder /.next/static ./.next/static
+ENV NODE_ENV=production
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["npm", "run", "start"]
