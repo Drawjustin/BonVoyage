@@ -1,5 +1,5 @@
 # Node.js를 사용하여 소스를 빌드하기 위한 단계
-FROM node:latest 
+FROM node:latest as build
 
 WORKDIR /
 
@@ -16,7 +16,7 @@ FROM nginx:latest
 COPY default.conf /etc/nginx/conf.d/default.conf
 
 # 빌드된 소스를 Nginx의 HTML 폴더로 복사합니다
-COPY --from /.next /usr/share/nginx/html
+COPY --from=build /.next /usr/share/nginx/html
 
 # Nginx를 시작할 때 포트를 노출합니다
 EXPOSE 3000
