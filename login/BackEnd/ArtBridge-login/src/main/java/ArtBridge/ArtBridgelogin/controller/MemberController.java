@@ -1,8 +1,8 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
 import java.util.*;
 
-import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
+import ArtBridge.ArtBridgelogin.controller.dto.member.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;

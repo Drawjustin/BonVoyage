@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.service.ArtistMentionService;

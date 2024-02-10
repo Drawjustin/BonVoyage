@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
@@ -32,18 +33,20 @@ public class AuctionServiceTest {
 
     @BeforeEach
     public void setup() {
-        Artist artist = new Artist();
-        artist.setArtistName("Test Artist");
-        artist.setArtistId("testArtistId");
-        artist.setArtistPwd("testArtistPwd");
-        artist.setArtistNickname("testNickname");
-        artist.setArtistEmail("testArtistEmail@test.com");
-        artist.setArtistContact("01012345678");
-        artist.setArtistPoint(0L);
-        artist.setArtistHistory("학교졸업");
-        artist.setArtistIsdeleted(false);
-        artist.setArtistCreatedDate(LocalDateTime.now());
-        artist = artistService.createArtist(artist);  // Artist 저장
+        ArtistDto artistDto = new ArtistDto();
+        artistDto.setName("Test Artist");
+        artistDto.setId("testArtistId");
+        artistDto.setPw("testArtistPwd");
+        artistDto.setNickName("testNickname");
+        artistDto.setEmail("testArtistEmail@test.com");
+        artistDto.setContact("01012345678");
+
+        ArtistDto createdArtist = artistService.createArtist(artistDto);
+
+
+
+
+        Artist artist = convertToEntity(createdArtist);  // Artist 저장
 
         Item item = new Item();
         item.setItemName("Test Item");
@@ -93,5 +96,18 @@ public class AuctionServiceTest {
         auctionService.deleteAuction(auction.getAuctionSeq());
         Auction foundAuction = auctionService.readOne(auction.getAuctionSeq());
         assertNull(foundAuction);
+    }
+
+    private Artist convertToEntity(ArtistDto artistDto) {
+        Artist artist = new Artist();
+        artist.setArtistId(artistDto.getId());
+        artist.setArtistName(artistDto.getName());
+        artist.setArtistPwd(artistDto.getPw());
+        artist.setArtistNickname(artistDto.getNickName());
+        artist.setArtistEmail(artistDto.getEmail());
+        artist.setArtistContact(artistDto.getContact());
+        // 다른 필드들도 필요에 따라 추가
+
+        return artist;
     }
 }

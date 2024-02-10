@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Config;
+package ArtBridge.ArtBridgelogin.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
 import ArtBridge.ArtBridgelogin.service.AuctionService;

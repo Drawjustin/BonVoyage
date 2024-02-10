@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Config;
+package ArtBridge.ArtBridgelogin.config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

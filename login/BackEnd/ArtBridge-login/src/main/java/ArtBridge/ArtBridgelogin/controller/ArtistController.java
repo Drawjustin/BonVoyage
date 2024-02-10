@@ -1,10 +1,10 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.Controller.form.ArtistLoginForm;
-import ArtBridge.ArtBridgelogin.Controller.form.MemberLoginForm;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistLoginForm;
+import ArtBridge.ArtBridgelogin.controller.dto.member.MemberLoginForm;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
-import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,14 +25,15 @@ public class ArtistController {
     private MemberLoginForm memberForm;
 
     @GetMapping
-    public ResponseEntity<?> readAllArtists() {
+    public ResponseEntity<List<ArtistDto>> readAllArtists() {
         try {
-            List<Artist> artists = artistService.readAllArtists();
-            return ResponseEntity.ok().body(artists);
+            List<ArtistDto> artistDtos = artistService.readAllArtists();
+            return ResponseEntity.ok().body(artistDtos);
         } catch (NoDataFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No artists found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
     @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody ArtistLoginForm artistLoginForm) {
@@ -49,26 +50,26 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> readArtistById(@PathVariable String id) {
-        Artist artist = artistService.readOne(id);
+    public ResponseEntity<?> readArtistById(@PathVariable String id) {
+        ArtistDto artistDto = artistService.readOne(id);
 
-        if (artist != null) {
+        if (artistDto != null) {
             // 조회 성공 시 200 OK와 함께 메시지 반환
-            return ResponseEntity.ok("Artist found");
+            return ResponseEntity.ok("조회한 Aritst " + artistDto);
         } else {
             // 조회 실패 시 404 Not Found와 함께 메시지 반환
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
 
     @PostMapping("/new")
-    public ResponseEntity<?> createArtist(@RequestBody Artist artist) {
-        Artist createdArtist = artistService.createArtist(artist);
+    public ResponseEntity<?> createArtist(@RequestBody ArtistDto artistDto) {
+        ArtistDto createdArtist = artistService.createArtist(artistDto);
 
         if (createdArtist != null) {
             // 추가 성공 시 200 OK와 함께 생성된 Artist 반환
-            return ResponseEntity.ok(createdArtist);
+            return ResponseEntity.ok("Artist Created" + createdArtist);
         } else {
             // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create artist");
@@ -76,12 +77,12 @@ public class ArtistController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateArtist(@PathVariable String id, @RequestBody Artist updatedArtist) {
-        Artist artist = artistService.updateArtist(id, updatedArtist);
+    public ResponseEntity<?> updateArtist(@PathVariable String id, @RequestBody ArtistDto updatedArtist) {
+        ArtistDto artistDto = artistService.updateArtist(id, updatedArtist);
 
-        if (artist != null) {
+        if (artistDto != null) {
             // 업데이트 성공 시 200 OK와 함께 메시지 반환
-            return ResponseEntity.ok("Artist updated");
+            return ResponseEntity.ok("Artist updated" + artistDto);
         } else {
             // 업데이트 실패 시 404 Not Found와 함께 메시지 반환
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
@@ -90,7 +91,7 @@ public class ArtistController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteArtist(@PathVariable String id) {
+    public ResponseEntity<?> deleteArtist(@PathVariable String id) {
         boolean deleted = artistService.deleteArtist(id);
 
         if (deleted) {

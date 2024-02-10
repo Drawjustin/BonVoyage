@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -38,6 +39,18 @@ public class ArtistRepository {
                 .selectFrom(qArtist)
                 .where(qArtist.artistId.eq(artistId))
                 .fetchOne();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Artist> findById(String artistId) {
+        QArtist qArtist = QArtist.artist;
+
+        Artist artist = queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistId.eq(artistId))
+                .fetchOne();
+
+        return Optional.ofNullable(artist);
     }
 
     public List<Artist> readAll() {

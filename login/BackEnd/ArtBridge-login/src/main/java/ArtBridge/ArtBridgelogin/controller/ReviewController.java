@@ -1,6 +1,6 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.Controller.Dto.ReviewResisterForm;
+import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewResisterForm;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.service.ReviewService;
 import jakarta.persistence.EntityNotFoundException;

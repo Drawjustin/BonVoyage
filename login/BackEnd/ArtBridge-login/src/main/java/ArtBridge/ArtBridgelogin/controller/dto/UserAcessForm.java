@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Controller.form;
+package ArtBridge.ArtBridgelogin.controller.form;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;

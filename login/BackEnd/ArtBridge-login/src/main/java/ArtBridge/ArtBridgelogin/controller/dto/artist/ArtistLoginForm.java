@@ -1,12 +1,11 @@
-package ArtBridge.ArtBridgelogin.Controller.form;
+package ArtBridge.ArtBridgelogin.controller.dto.artist;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
-
 @Data
 @Component
-public class MemberLoginForm {
+public class ArtistLoginForm {
 
     private String id;
     private String pw;

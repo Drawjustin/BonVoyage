@@ -1,4 +1,4 @@
-package ArtBridge.ArtBridgelogin.Controller.Dto;
+package ArtBridge.ArtBridgelogin.controller.dto.review;
 
 import lombok.Data;
 

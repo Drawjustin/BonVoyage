@@ -1,6 +1,6 @@
-package ArtBridge.ArtBridgelogin.Controller;
+package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.Controller.form.UserAcessForm;
+import ArtBridge.ArtBridgelogin.controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
