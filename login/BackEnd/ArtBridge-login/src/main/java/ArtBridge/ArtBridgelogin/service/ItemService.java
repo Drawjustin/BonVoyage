@@ -9,6 +9,7 @@ import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,7 @@ public class ItemService {
         // ...
 
         Item newItem = convertToEntity(itemDto);
+        newItem.setItemCreatedDate(LocalDateTime.now());
         Item createdItem = itemRepository.create(newItem);
         return convertToDto(createdItem);
     }
