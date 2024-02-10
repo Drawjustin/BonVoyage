@@ -10,8 +10,7 @@ import ArtistCard from '@/components/Artists/ArtistCard/ArtistCard';
 const ArtistListPage = async () => {
 
   const currentUser = await getCurrentUser();
-  const Artists = await axios.get('https://i10a207.p.ssafy.io/api/artists');
-  console.log(Artists.data);
+  const Artists = {}; //await axios.get('https://i10a207.p.ssafy.io/api/artists');
 
   return (
     <div style={{ width: '1200px' }}>
@@ -21,7 +20,7 @@ const ArtistListPage = async () => {
       </div>
 
       <div className={styles.grid}>
-              {Artists.data?.map((Artist) =>
+              {Artists?.data?.map((Artist) =>
                   <ArtistCard
                     currentUser={currentUser}
                     key={Artist.itemSeq}
