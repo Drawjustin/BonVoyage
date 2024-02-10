@@ -3,7 +3,6 @@ package ArtBridge.ArtBridgelogin.controller;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberLoginForm;
-import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.service.ArtistService;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,7 @@ public class ArtistController {
 
         if (loginResult) {
             // 로그인 성공
-            return ResponseEntity.ok().body("로그인 성공");
+            return ResponseEntity.ok().body(artistLoginForm.getId());
         } else {
             // 로그인 실패
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");

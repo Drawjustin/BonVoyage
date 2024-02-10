@@ -66,17 +66,17 @@ public class ItemService {
         //Temporary
         Artist artist = new Artist();
         artist.setArtistSeq(1L);
-        artist.setArtistId("sampleId");
-        artist.setArtistPwd("samplePwd");
-        artist.setArtistName("Sample Artist");
-        artist.setArtistNickname("Sample Nickname");
-        artist.setArtistEmail("sample@example.com");
-        artist.setArtistContact("123-456-7890");
-        artist.setArtistPoint(100L);
-        artist.setArtistHistory("Sample history");
-        artist.setArtistIsdeleted(false);
-        artist.setArtistDeletedDate(null);
-        artist.setArtistCreatedDate(LocalDateTime.now());
+//        artist.setArtistId("sampleId");
+//        artist.setArtistPwd("samplePwd");
+//        artist.setArtistName("Sample Artist");
+//        artist.setArtistNickname("Sample Nickname");
+//        artist.setArtistEmail("sample@example.com");
+//        artist.setArtistContact("123-456-7890");
+//        artist.setArtistPoint(100L);
+//        artist.setArtistHistory("Sample history");
+//        artist.setArtistIsdeleted(false);
+//        artist.setArtistDeletedDate(null);
+//        artist.setArtistCreatedDate(LocalDateTime.now());
 
         Item newItem = convertToEntity(itemDto);
         newItem.setItemCreatedDate(LocalDateTime.now());

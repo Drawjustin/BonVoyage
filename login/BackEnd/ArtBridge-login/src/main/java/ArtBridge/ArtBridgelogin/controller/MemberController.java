@@ -48,7 +48,7 @@ public class MemberController {
         boolean loginResult = memberService.login(memberLoginForm.getId(), memberLoginForm.getPw());
 
         if (loginResult) {
-            return ResponseEntity.ok().body("로그인 성공");
+            return ResponseEntity.ok().body(memberLoginForm.getId());
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");
         }
