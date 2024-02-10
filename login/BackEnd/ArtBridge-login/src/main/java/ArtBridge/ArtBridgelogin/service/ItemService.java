@@ -65,6 +65,7 @@ public class ItemService {
         // ...
         //Temporary
         Artist artist = new Artist();
+        artist.setArtistSeq(1L);
         artist.setArtistId("sampleId");
         artist.setArtistPwd("samplePwd");
         artist.setArtistName("Sample Artist");

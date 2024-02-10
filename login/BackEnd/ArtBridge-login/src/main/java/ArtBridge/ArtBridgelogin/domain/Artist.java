@@ -1,13 +1,12 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
 
 @Entity
 @Table(name = "artist")
@@ -77,6 +76,6 @@ public class Artist {
     private List<OrderDetail> orderDetails;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "artist")
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
     private List<Item> items;
 }
