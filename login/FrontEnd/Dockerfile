@@ -7,6 +7,9 @@ COPY ./ ./
 RUN npm install 
 RUN npm run build
 
+COPY ./.next/standalone ./
+COPY ./.next/static ./.next/static
+
 ENV NODE_ENV=production
 
 EXPOSE 3000
