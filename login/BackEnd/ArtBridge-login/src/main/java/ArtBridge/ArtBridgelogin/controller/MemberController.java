@@ -19,10 +19,12 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
-    @GetMapping
     public ResponseEntity<List<MemberDto>> readAllMembers() {
         try {
             List<MemberDto> memberDtos = memberService.readAllMembers();
+            if (memberDtos.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            }
             return ResponseEntity.ok().body(memberDtos);
         } catch (NoDataFoundException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -83,7 +85,5 @@ public class MemberController {
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Member not found with ID: " + id);
         }
-    }ember(@PathVariable Long id) {
-        memberService.deleteMember(id);
     }
 }
