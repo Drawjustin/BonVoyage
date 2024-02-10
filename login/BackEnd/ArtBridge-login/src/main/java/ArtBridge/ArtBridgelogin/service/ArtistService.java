@@ -33,7 +33,6 @@ public class ArtistService {
             if (artistRepository.findById(artistId).isPresent()) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
-
             // ArtistDto를 Entity로 변환
             Artist artist = convertToEntity(artistDto);
 
@@ -101,7 +100,7 @@ public class ArtistService {
             throw new MyDataAccessException("Failed to login", e);
         }
     }
-    
+
 
 
     //TODO: UPDATE
@@ -110,8 +109,6 @@ public class ArtistService {
         try {
             Artist artist = artistRepository.findById(artistId)
                     .orElseThrow(() -> new NoDataFoundException("등록된 작가가 없습니다."));
-
-            // 비즈니스 로직 추가
 
             // 필드 설정
             artist.setArtistName(updatedArtistDto.getName());

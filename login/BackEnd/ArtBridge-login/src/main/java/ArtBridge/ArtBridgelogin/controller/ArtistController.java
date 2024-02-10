@@ -29,8 +29,9 @@ public class ArtistController {
         try {
             List<ArtistDto> artistDtos = artistService.readAllArtists();
             return ResponseEntity.ok().body(artistDtos);
+            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
         } catch (NoDataFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
@@ -57,8 +58,8 @@ public class ArtistController {
             // 조회 성공 시 200 OK와 함께 메시지 반환
             return ResponseEntity.ok("조회한 Aritst " + artistDto);
         } else {
-            // 조회 실패 시 404 Not Found와 함께 메시지 반환
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
@@ -84,8 +85,8 @@ public class ArtistController {
             // 업데이트 성공 시 200 OK와 함께 메시지 반환
             return ResponseEntity.ok("Artist updated" + artistDto);
         } else {
-            // 업데이트 실패 시 404 Not Found와 함께 메시지 반환
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Artist not found with ID: " + id);
         }
     }
 
@@ -98,8 +99,8 @@ public class ArtistController {
             // 삭제 성공 시 200 OK와 함께 메시지 반환
             return ResponseEntity.ok("Artist deleted");
         } else {
-            // 삭제 실패 시 404 Not Found와 함께 메시지 반환
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Artist not found with ID: " + id);
+            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Artist not found with ID: " + id);
         }
     }
 }

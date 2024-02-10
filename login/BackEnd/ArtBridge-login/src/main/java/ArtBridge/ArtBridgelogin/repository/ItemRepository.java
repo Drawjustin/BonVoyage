@@ -50,6 +50,19 @@ public class ItemRepository {
                 .fetch();
     }
 
+    public List<Item> readAllSortedByName() {
+        return queryFactory.selectFrom(qItem)
+                .orderBy(qItem.itemName.asc())
+                .fetch();
+    }
+
+    public List<Item> readAllSortedByPrice() {
+        return queryFactory.selectFrom(qItem)
+                .orderBy(qItem.itemSellPrice.asc())
+                .fetch();
+    }
+
+
     // 아이템 일련번호로 조회 메서드
     public Item readBySeq(int itemSeq) {
         return queryFactory
@@ -121,6 +134,7 @@ public class ItemRepository {
                 .where(QOrderDetail.orderDetail.member.memberSeq.eq(authorId))
                 .fetch();
     }
+
     public List<Item> readItemsBySameArtist(Long authorId) {
         return queryFactory
                 .selectFrom(QItem.item)

@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -32,6 +34,13 @@ public class ArtistRepository {
     public Artist create(Artist artist) {
         em.persist(artist);
         return artist;
+    }
+
+    public List<Artist> readAllArtistsSorted() {
+        return queryFactory
+                .selectFrom(qArtist)
+                .orderBy(qArtist.artistName.asc())
+                .fetch();
     }
 
     public Artist readArtistById(String artistId) {

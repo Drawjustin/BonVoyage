@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.controller;
 
+import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.controller.form.UserAcessForm;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.ItemService;
@@ -8,34 +9,39 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/item")
-public class ItemController {
+public class  ItemController {
 
     @Autowired
     private ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<?> readAllItems(@RequestParam(required = false) String sort) {
-        List<Item> items;
-
-        if (sort == null) {
-            // 전체 아이템 조회 로직
-            items = itemService.readAllItems();
-        } else if (sort.equals("popular")) {
-            // 인기 아이템 조회 로직
-            items = itemService.readPopularItems();
-        } else if (sort.equals("new")) {
-            // 최신 아이템 조회 로직
-            items = itemService.readNewItems();
-        } else {
-            return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<ItemDto>> readAllItems() {
+        try {
+            List<ItemDto> items = itemService.readAllItems();
+            return ResponseEntity.ok(items);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
         }
-
-        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+    @GetMapping("/sorted")
+    public ResponseEntity<?> readAllItemsSorted(@RequestParam(required = false) String sort) {
+        try {
+            List<ItemDto> items = itemService.readAllItemsSorted(sort);
+            return ResponseEntity.ok(items);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
     }
 
     @GetMapping("/{seq}")
@@ -68,5 +74,6 @@ public class ItemController {
     }
 
 
-    //TODO: 작품 좋아요를 추가한다???
+    //TODO: 정렬하는 방법
+
 }
