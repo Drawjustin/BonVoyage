@@ -56,8 +56,7 @@ public class ArtistRepository {
     public List<Artist> readAll() {
         return queryFactory
                 .selectFrom(qArtist)
-                .fetchAll()
-                .stream().toList();
+                .fetch();
     }
     public Artist updateArtist(String artistId, Artist updatedArtist) {
         long updatedCount = queryFactory
