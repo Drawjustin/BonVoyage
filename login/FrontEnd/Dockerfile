@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:18-alpine
 WORKDIR /
 
 # Install dependencies based on the preferred package manager
