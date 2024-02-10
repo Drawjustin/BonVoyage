@@ -7,5 +7,5 @@ module.exports = withImages({
             'via.placeholder.com'
         ]
     },
-    output: 'standalone',
+    target: 'server',
 });
