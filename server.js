@@ -40,6 +40,19 @@ function serverHandler(request, response) {
     config = getValuesFromConfigJson(jsonPath);
     config = getBashParameters(config, BASH_COLORS_HELPER);
 
+
+    var handleUnexpectedError = function(e) {
+        // pushLogs(config, 'Unexpected', e);
+
+        if (!response.finished) {
+            response.writeHead(404, {
+                'Content-Type': 'text/plain'
+            });
+            response.write('404 Not Found: Unexpected error.\n' + e.message + '\n\n' + e.stack);
+            response.end();
+        }
+    };
+
     // HTTP_GET handling code goes below
     try {
         var uri, filename;
@@ -148,33 +161,31 @@ function serverHandler(request, response) {
 
         try {
             if (fs.statSync(filename).isDirectory()) {
-                response.writeHead(404, {
-                    'Content-Type': 'text/html'
-                });
-
-                if (filename.indexOf(resolveURL('/demos/MultiRTC/')) !== -1) {
-                    filename = filename.replace(resolveURL('/demos/MultiRTC/'), '');
-                    filename += resolveURL('/demos/MultiRTC/index.html');
-                } else if (filename.indexOf(resolveURL('/admin/')) !== -1) {
-                    filename = filename.replace(resolveURL('/admin/'), '');
-                    filename += resolveURL('/admin/index.html');
-                } else if (filename.indexOf(resolveURL('/demos/dashboard/')) !== -1) {
-                    filename = filename.replace(resolveURL('/demos/dashboard/'), '');
-                    filename += resolveURL('/demos/dashboard/index.html');
-                } else if (filename.indexOf(resolveURL('/demos/video-conference/')) !== -1) {
-                    filename = filename.replace(resolveURL('/demos/video-conference/'), '');
-                    filename += resolveURL('/demos/video-conference/index.html');
-                } else if (filename.indexOf(resolveURL('/demos')) !== -1) {
-                    filename = filename.replace(resolveURL('/demos/'), '');
-                    filename = filename.replace(resolveURL('/demos'), '');
-                    filename += resolveURL('/demos/index.html');
-                } else {
+                const directoryToFile = {
+                    '/demos/MultiRTC/': '/demos/MultiRTC/index.html',
+                    '/admin/': '/admin/index.html',
+                    '/demos/dashboard/': '/demos/dashboard/index.html',
+                    '/demos/video-conference/': '/demos/video-conference/index.html',
+                    '/demos': '/demos/index.html'
+                };
+        
+                let matched = false;
+                for (let directory in directoryToFile) {
+                    if (filename.indexOf(resolveURL(directory)) !== -1) {
+                        filename = filename.replace(resolveURL(directory), '');
+                        filename += resolveURL(directoryToFile[directory]);
+                        matched = true;
+                        break;
+                    }
+                }
+        
+                if (!matched) {
                     filename += resolveURL(config.homePage);
                 }
             }
         } catch (e) {
-            pushLogs(config, 'statSync.isDirectory', e);
-        }
+            handleUnexpectedError(e, 404);
+        }        
 
         var contentType = 'text/plain';
         if (filename.toLowerCase().indexOf('.html') !== -1) {
@@ -189,32 +200,27 @@ function serverHandler(request, response) {
 
         fs.readFile(filename, 'binary', function(err, file) {
             if (err) {
-                response.writeHead(500, {
-                    'Content-Type': 'text/plain'
-                });
-                response.write('404 Not Found: ' + path.join('/', uri) + '\n');
-                response.end();
+                handleUnexpectedError(err, 500);
                 return;
             }
-
+    
             try {
                 file = file.replace('connection.socketURL = \'/\';', 'connection.socketURL = \'' + config.socketURL + '\';');
-            } catch (e) {}
-
-            response.writeHead(200, {
-                'Content-Type': contentType
-            });
-            response.write(file, 'binary');
-            response.end();
+            } catch (e) {
+                handleUnexpectedError(e, 404);
+                return;
+            }
+    
+            if (!response.finished) {
+                response.writeHead(200, {
+                    'Content-Type': contentType
+                });
+                response.write(file, 'binary');
+                response.end();
+            }
         });
     } catch (e) {
-        pushLogs(config, 'Unexpected', e);
-
-        response.writeHead(404, {
-            'Content-Type': 'text/plain'
-        });
-        response.write('404 Not Found: Unexpected error.\n' + e.message + '\n\n' + e.stack);
-        response.end();
+        handleUnexpectedError(e, 404);
     }
 }
 
