@@ -3,7 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import axios, { AxiosResponse } from "axios";
   
 
-export const authOptions:NextAuthOptions = {
+const authOptions:NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -93,4 +93,6 @@ export const authOptions:NextAuthOptions = {
   },
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+
+export {handler as GET, handler as POST};
