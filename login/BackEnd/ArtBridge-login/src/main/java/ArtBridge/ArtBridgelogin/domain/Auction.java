@@ -1,21 +1,19 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(name = "auction")
 @Data
-public class Auction implements Serializable {
+public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
