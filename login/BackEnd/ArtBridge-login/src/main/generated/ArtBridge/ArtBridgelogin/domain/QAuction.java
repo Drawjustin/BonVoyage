@@ -52,8 +52,6 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final QItem item;
 
-    public final ListPath<ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting, ArtBridge.ArtBridgelogin.domain.OpenVidu.QMeeting> meetings = this.<ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting, ArtBridge.ArtBridgelogin.domain.OpenVidu.QMeeting>createList("meetings", ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting.class, ArtBridge.ArtBridgelogin.domain.OpenVidu.QMeeting.class, PathInits.DIRECT2);
-
     public final ListPath<MemberAuctionBidding, QMemberAuctionBidding> memberAuctionBiddings = this.<MemberAuctionBidding, QMemberAuctionBidding>createList("memberAuctionBiddings", MemberAuctionBidding.class, QMemberAuctionBidding.class, PathInits.DIRECT2);
 
     public final ListPath<OrderDetail, QOrderDetail> orderDetails = this.<OrderDetail, QOrderDetail>createList("orderDetails", OrderDetail.class, QOrderDetail.class, PathInits.DIRECT2);

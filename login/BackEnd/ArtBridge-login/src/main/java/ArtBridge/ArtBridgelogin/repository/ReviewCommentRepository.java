@@ -1,59 +1,101 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.*;
+import ArtBridge.ArtBridgelogin.domain.QReviewComment;
+import ArtBridge.ArtBridgelogin.domain.ReviewComment;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.LockModeType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class ReviewCommentRepository {
 
-
     private final EntityManager em;
-
-    private QReviewComment qReviewComment = QReviewComment.reviewComment;
-
+    private QReviewComment qReviewComment;
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
-    public void init() {queryFactory = new JPAQueryFactory(em);}
-
-    public void createReviewComment(ReviewComment reviewComment) {
-        em.persist(reviewComment);
+    public void init() {
+        this.qReviewComment = QReviewComment.reviewComment;
+        this.queryFactory = new JPAQueryFactory(em);
     }
 
-    public List<ReviewComment> readAll(int seq) {
-        return queryFactory
-                .selectFrom(qReviewComment)
-                .where(QReview.review.reviewSeq.eq(seq))
-                .fetch();
+    public ReviewCommentRepository(EntityManager em) {
+        this.em = em;
     }
 
-    public ReviewComment updateReviewComment(Long seq, ReviewComment updatedReviewComment) {
+    @Transactional
+    public void create(ReviewComment comment) {
+        em.persist(comment);
+    }
 
-        queryFactory
-                .update(qReviewComment)
-                .where(qReviewComment.member.memberSeq.eq(seq))
-                .set(qReviewComment.reviewCommentContent, updatedReviewComment.getReviewCommentContent())
-                .execute();
-
+    @Transactional(readOnly = true)
+    public ReviewComment readById(Long seq) {
         return queryFactory
                 .selectFrom(qReviewComment)
                 .where(qReviewComment.reviewCommentSeq.eq(seq))
                 .fetchOne();
     }
-    public void deleteReviewComment(Long seq) {
-        queryFactory
-                .delete(qReviewComment)
-                .where(qReviewComment.reviewCommentSeq.eq(seq))
-                .execute();
+
+    @Transactional(readOnly = true)
+    public List<ReviewComment> readAllByReviewId(Long reviewId) {
+        return queryFactory
+                .selectFrom(qReviewComment)
+                .where(qReviewComment.review.reviewSeq.eq(Math.toIntExact(reviewId)))
+                .fetch();
     }
 
+    @Transactional(readOnly = true)
+    public List<ReviewComment> readAll() {
+        return queryFactory
+                .selectFrom(qReviewComment)
+                .fetch();
+    }
 
+    @Transactional
+    public ReviewComment update(Long commentSeq, ReviewComment updatedComment) {
+        ReviewComment detachedComment = queryFactory
+                .selectFrom(QReviewComment.reviewComment)
+                .where(QReviewComment.reviewComment.reviewCommentSeq.eq(commentSeq))
+                .fetchOne();
+
+        if (detachedComment == null) {
+            throw new IllegalArgumentException("ReviewComment with id " + commentSeq + " not found");
+        }
+
+        ReviewComment managedComment = queryFactory
+                .selectFrom(QReviewComment.reviewComment)
+                .where(QReviewComment.reviewComment.reviewCommentSeq.eq(commentSeq))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .fetchOne();
+
+        if (managedComment == null) {
+            throw new IllegalArgumentException("ReviewComment with id " + commentSeq + " not found");
+        }
+
+        // Update fields directly
+        managedComment.setReviewCommentContent(updatedComment.getReviewCommentContent());
+
+        return managedComment;
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        ReviewComment comment = queryFactory
+                .selectFrom(qReviewComment)
+                .where(qReviewComment.reviewCommentSeq.eq(id))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .fetchOne();
+
+        if (comment == null) {
+            throw new EntityNotFoundException("ReviewComment with ID " + id + " not found");
+        }
+
+        em.remove(comment);
+    }
 }

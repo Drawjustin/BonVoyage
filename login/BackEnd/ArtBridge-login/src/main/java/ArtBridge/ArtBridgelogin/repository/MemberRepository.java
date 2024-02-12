@@ -39,6 +39,8 @@ public class MemberRepository {
                 .fetch();
     }
 
+
+
     @Transactional(readOnly = true)
     public Optional<Member> findByMemberIdAndMemberPwd(String memberId, String password) {
         Member member = queryFactory

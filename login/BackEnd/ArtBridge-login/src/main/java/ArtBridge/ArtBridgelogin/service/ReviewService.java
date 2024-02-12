@@ -1,11 +1,12 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewResisterForm;
+import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewDto;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.repository.ReviewRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
-import jakarta.persistence.EntityManager;
+import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,80 +14,98 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+
     @Autowired
     private ReviewRepository reviewRepository;
 
-    private EntityManager em;
-
-
-    //Todo: CREATE
-//    @Transactional
-//    public void createReview(Review review) {
-//        // 데이터베이스에 review를 저장하는 로직을 추가합니다.
-//        reviewRepository.createReview(review);
-//    }
-
+    // CREATE
     @Transactional
-    public void createReview(ReviewResisterForm reviewResisterForm) throws DataAccessException {
-        // 리뷰 데이터 유효성 검사를 추가할 수 있습니다.
-
-        // ReviewResisterForm에서 Review 엔티티로 변환
-        Review review = new Review();
-        review.setReviewTitle(reviewResisterForm.getTitle());
-        review.setReviewContent(reviewResisterForm.getContent());
-        review.setReviewCreatedDate(LocalDateTime.now());
-        review.setReviewVisit(0);
-        // 다른 필요한 속성들을 설정합니다.
-
-        // 리뷰를 데이터베이스에 저장
+    public void createReview(ReviewDto reviewDto) {
         try {
+            Review review = convertToEntity(reviewDto);
+            review.setReviewCreatedDate(LocalDateTime.now());
+            review.setReviewVisit(0);
+
             reviewRepository.createReview(review);
         } catch (DataAccessException e) {
-            // 데이터베이스 예외 처리: 원하는 방식으로 예외를 다룹니다.
             throw new MyDataAccessException("수정할 수 없습니다.", e);
         }
     }
 
-
-    //Todo: READ
+    // READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public Review readReviewById(Integer reviewId) {
-
-        // 실제로는 reviewId에 해당하는 리뷰를 데이터베이스에서 조회하는 로직이 들어갑니다.
-        Review review = reviewRepository.readById(reviewId);
-
+    public List<ReviewDto> readAllReviews() {
         try {
-            return reviewRepository.readById(reviewId);
+            List<Review> reviews = reviewRepository.readAll();
 
+            if (reviews.isEmpty()) {
+                return Collections.emptyList();
+            }
+
+            return reviews.stream()
+                    .map(this::convertToDto)
+                    .collect(Collectors.toList());
         } catch (DataAccessException e) {
-            // 데이터베이스 예외 처리: 원하는 방식으로 예외를 다룹니다.
+            throw new MyDataAccessException("Failed to read all reviews", e);
+        }
+    }
+
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public ReviewDto readReviewBySeq(Integer reviewSeq) {
+        try {
+            Review review = reviewRepository.readBySeq(reviewSeq);
+            return convertToDto(review);
+        } catch (DataAccessException e) {
             throw new MyDataAccessException("읽을 수 없습니다.", e);
         }
     }
 
-
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Review> readAllReviews() {
-        return reviewRepository.readAll();
-    }
-
-
-    //Todo: UDATE
+    // UPDATE
     @Transactional
-    public Review updateReview(Integer reviewSeq, Review updatedReview) {
-        return reviewRepository.updateReview(reviewSeq, updatedReview);
+    public ReviewDto updateReview(Integer reviewSeq, ReviewDto updatedReviewDto) {
+        try {
+            Review existingReview = reviewRepository.readBySeq(reviewSeq);
+            if (existingReview == null) {
+                throw new NoDataFoundException("리뷰가 존재하지 않습니다.");
+            }
+
+            BeanUtils.copyProperties(updatedReviewDto, existingReview);
+            // 필요한 경우 다른 필드들도 복사
+
+            reviewRepository.updateReview(reviewSeq, existingReview);
+            return convertToDto(existingReview);
+        } catch (DataAccessException e) {
+            throw new MyDataAccessException("Failed to update review", e);
+        }
     }
 
-
-    //Todo: DELETE
+    // DELETE
     @Transactional
     public void deleteById(Integer id) {
-        reviewRepository.deleteById(id);
+        try {
+            reviewRepository.deleteById(id);
+        } catch (DataAccessException e) {
+            // 데이터베이스 예외가 발생한 경우 처리
+            throw new MyDataAccessException("Failed to delete review with ID: " + id, e);
+        }
     }
 
+    private ReviewDto convertToDto(Review review) {
+        ReviewDto reviewDto = new ReviewDto();
+        BeanUtils.copyProperties(review, reviewDto);
+        return reviewDto;
+    }
+
+    private Review convertToEntity(ReviewDto reviewDto) {
+        Review review = new Review();
+        BeanUtils.copyProperties(reviewDto, review);
+        return review;
+    }
 }

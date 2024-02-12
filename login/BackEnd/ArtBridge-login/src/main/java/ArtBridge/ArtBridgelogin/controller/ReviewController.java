@@ -1,75 +1,85 @@
 package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewResisterForm;
+import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewDto;
 import ArtBridge.ArtBridgelogin.domain.Review;
+import ArtBridge.ArtBridgelogin.service.ReviewCommentService;
 import ArtBridge.ArtBridgelogin.service.ReviewService;
-import jakarta.persistence.EntityNotFoundException;
+import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/Review")
+@RequestMapping("/api/review")
 public class ReviewController {
-    // 리뷰 조회 API
+
     @Autowired
     private ReviewService reviewService;
-    @GetMapping("/{reviewId}")
-    public Review readReview(@PathVariable Integer reviewId) {
-
-
-        return reviewService.readReviewById(reviewId);
-    }
+    // 리뷰 목록 조회
     @GetMapping
-    public ResponseEntity<?> readAllReviews(@RequestParam(required = false) String sort) {
-        List<Review> reviews;
-
-        if (sort == null) {
-            // 전체 아이템 조회 로직
-            reviews = reviewService.readAllReviews();
-        } else if (sort.equals("popular")) {
-            // 인기 아이템 조회 로직
-            reviews = reviewService.readAllReviews();
-        } else if (sort.equals("new")) {
-            // 최신 아이템 조회 로직
-            reviews = reviewService.readAllReviews();
-        } else {
-            return new ResponseEntity<>("sort값이 잘못 들어왔습니다.", HttpStatus.BAD_REQUEST);
-        }
-        
-        return new ResponseEntity<>(reviews, HttpStatus.OK);
-    }
-    // 리뷰 등록 API
-//    @PostMapping
-//    public ResponseEntity<Void> createReview(@RequestBody Review review) {
-//        // 실제로는 전달받은 review를 데이터베이스에 저장하는 로직이 들어갑니다.
-//        reviewService.createReview(review);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-
-    @PostMapping("/createReview")
-    public ResponseEntity<?> createReview(@RequestBody ReviewResisterForm reviewResisterForm) {
+    public ResponseEntity<List<ReviewDto>> readAllReviews() {
         try {
-            reviewService.createReview(reviewResisterForm);
-            return ResponseEntity.ok().body("Success message");
+            List<ReviewDto> reviews = reviewService.readAllReviews();
+            return ResponseEntity.ok(reviews);
         } catch (Exception e) {
-            // 실패할 경우 예외 메시지와 500 Internal Server Error 반환
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
         }
     }
 
+    // 특정 리뷰 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<?> readReviewById(@PathVariable int id) {
+        try {
+            ReviewDto reviewDto = reviewService.readReviewBySeq(id);
+            return ResponseEntity.ok(reviewDto);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
+    }
+
+
+    // 새로운 리뷰 생성
+    @PostMapping("/new")
+    public ResponseEntity<?> createReview(@RequestBody ReviewDto reviewDto) {
+        try {
+            reviewService.createReview(reviewDto);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
+    }
+
+    // 리뷰 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateReview(@PathVariable int id, @RequestBody ReviewDto updatedReview) {
+        try {
+            ReviewDto reviewDto = reviewService.updateReview(id, updatedReview);
+            return ResponseEntity.ok(reviewDto);
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
+        }
+    }
+
+    // 리뷰 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteReview(@PathVariable int id) {
         try {
             reviewService.deleteById(id);
             return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (NoDataFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
         }
     }
-
 }

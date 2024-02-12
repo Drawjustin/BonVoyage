@@ -1,7 +1,6 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
-import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -77,8 +76,5 @@ public class Auction {
     @OneToMany(mappedBy = "auction")
     private List<AuctionPointDetail> auctionPointDetails;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "auction")
-    private List<Meeting> meetings;
 }
 

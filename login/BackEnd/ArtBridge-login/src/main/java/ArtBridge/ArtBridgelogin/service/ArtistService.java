@@ -11,7 +11,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,8 +22,7 @@ public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
 
-
-    //TODO: CRETE
+    // CREATE
     @Transactional
     public ArtistDto createArtist(ArtistDto artistDto) {
         try {
@@ -44,8 +42,7 @@ public class ArtistService {
         }
     }
 
-
-    //TODO: READ
+    // READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<ArtistDto> readAllArtists() {
         try {
@@ -63,14 +60,6 @@ public class ArtistService {
         }
     }
 
-    private List<ArtistDto> convertToDtoList(List<Artist> artists) {
-        // Artist 리스트를 ArtistDto 리스트로 변환하는 로직
-        // 각각의 Artist를 위에서 정의한 convertToDto 메서드를 활용하여 변환
-        return artists.stream()
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
-    }
-
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public ArtistDto readOne(String id) {
         Artist artist = artistRepository.readArtistById(id);
@@ -82,9 +71,8 @@ public class ArtistService {
         return convertToDto(artist);
     }
 
-
     @Transactional
-    public boolean login(@RequestParam("id") String userId, @RequestParam("pw") String password) {
+    public boolean login(String userId, String password) {
         try {
             // 로그인 처리 로직
             Artist foundArtist = artistRepository.readArtistById(userId);
@@ -101,9 +89,7 @@ public class ArtistService {
         }
     }
 
-
-
-    //TODO: UPDATE
+    // UPDATE
     @Transactional
     public ArtistDto updateArtist(String artistId, ArtistDto updatedArtistDto) {
         try {
@@ -129,8 +115,7 @@ public class ArtistService {
         }
     }
 
-
-    //TODO: DELETE
+    // DELETE
     @Transactional
     public boolean deleteArtist(String id) {
         try {
@@ -148,8 +133,7 @@ public class ArtistService {
         }
     }
 
-
-    //TODO: Function
+    // Function
     private Artist convertToEntity(ArtistDto artistDto) {
         Artist artist = new Artist();
         artist.setArtistId(artistDto.getId());
@@ -170,7 +154,16 @@ public class ArtistService {
         artistDto.setNickName(artist.getArtistNickname());
         artistDto.setEmail(artist.getArtistEmail());
         artistDto.setContact(artist.getArtistContact());
+        // 다른 필드들도 필요에 따라 추가
 
         return artistDto;
+    }
+
+    private List<ArtistDto> convertToDtoList(List<Artist> artists) {
+        // Artist 리스트를 ArtistDto 리스트로 변환하는 로직
+        // 각각의 Artist를 위에서 정의한 convertToDto 메서드를 활용하여 변환
+        return artists.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 }

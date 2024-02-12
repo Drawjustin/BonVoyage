@@ -28,12 +28,12 @@ public class AuctionPointDetail{
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "member_Reference")
+    @JsonBackReference
     @JoinColumn(name = "member_seq")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference(value = "auction_Reference")
+    @JsonBackReference
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 

@@ -33,7 +33,7 @@ public class ReviewRepository {
         em.persist(review);
     }
 
-    public Review readById(Integer seq) {
+    public Review readBySeq(Integer seq) {
         return queryFactory
                 .selectFrom(qReview)
                 .where(qReview.reviewSeq.eq(seq))

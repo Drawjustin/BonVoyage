@@ -60,6 +60,17 @@ public class MemberService {
             throw new MyDataAccessException("Failed to read all members", e);
         }
     }
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public MemberDto findMemberById(String memberId) {
+        try {
+            Member member = memberRepository.findByMemberId(memberId)
+                    .orElseThrow(() -> new NoDataFoundException("Member not found with ID: " + memberId));
+
+            return convertToDto(member);
+        } catch (DataAccessException e) {
+            throw new MyDataAccessException("Failed to find member by ID", e);
+        }
+    }
 
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public MemberDto readOne(String memberId) {
