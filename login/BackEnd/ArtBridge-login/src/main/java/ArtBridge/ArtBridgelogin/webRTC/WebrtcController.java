@@ -4,10 +4,7 @@ import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
-import ArtBridge.ArtBridgelogin.domain.Member;
-import ArtBridge.ArtBridgelogin.domain.MemberAuctionBidding;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,6 +57,7 @@ public class WebrtcController {
     }
 
     // 경매 정보 조회
+<<<<<<< HEAD
     @GetMapping("/{seq}/windate")
     public ResponseEntity<?> updateAuctionDetails(@PathVariable("seq") Integer seq) {
         try{
@@ -76,5 +74,18 @@ public class WebrtcController {
 
 
 
+=======
+//    @PutMapping("/{seq}/winner")
+//    public ResponseEntity<?> updateAuctionDetails(@PathVariable("seq") Integer seq, @RequestBody AuctionPointDetail bidRequest) {
+//        try{
+//            return webrtcService.updateAuctionDetails(seq,bidRequest);
+//
+//        }
+//        catch (Exception e){
+//            return ResponseEntity.ok("read AuctionDetails error");
+//        }
+//
+//    }
+>>>>>>> a1e172f1635e08154339f50868515d94ec85465d
 
 }

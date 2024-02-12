@@ -1,17 +1,15 @@
 package ArtBridge.ArtBridgelogin.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "order_detail")
 @Data
-public class OrderDetail implements Serializable {
+public class OrderDetail{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

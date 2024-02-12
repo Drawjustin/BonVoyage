@@ -46,8 +46,6 @@ public class ItemRepository {
                 .fetch();
     }
 
-
-
     public List<Item> readAllSortedByName() {
         return queryFactory.selectFrom(qItem)
                 .orderBy(qItem.itemName.asc())
@@ -109,5 +107,4 @@ public class ItemRepository {
                     .fetch();
         }
     }
-
 }
