@@ -9,6 +9,7 @@ import AuthSession from './AuthSession';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/authOptions';
 import Navbar from '@/components/Navbar/Navbar';
+import Footer from '@/components/footer/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,6 +40,7 @@ export default async function RootLayout({children})
                   </PlayProvider>
                 </AuthSession>
             </main>
+            <Footer />
           </body>
 
       
