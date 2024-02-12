@@ -31,7 +31,7 @@ interface ReviewProp {
 }
 
 
-const Review = () => {
+const ReviewPage = () => {
   const [reviewsData, setReviewsData] = useState<ReviewProp[]>([]); // State to store reviews data
 
   const currentUser = getCurrentUser();
@@ -70,4 +70,4 @@ const Review = () => {
   );
 }
 
-export default Review
+export default ReviewPage

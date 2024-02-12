@@ -8,9 +8,9 @@ export async function middleware(req:NextRequest) {
     const LoggedOn = session?.artistId ? session?.artistId : session?.memberId;
     const pathname = req.nextUrl.pathname;
 
-    if (pathname.startsWith('/MyPage') && !LoggedOn) {
-        return NextResponse.redirect(new URL("/LoginPage", req.url));
-    }
+    // if (pathname.startsWith('/MyPage') && !LoggedOn) {
+    //     return NextResponse.redirect(new URL("/LoginPage", req.url));
+    // }
 
     // if ((pathname.startsWith('/AuctionUploadPage') ||
     //     pathname.startsWith('/ProductUploadPage') ||
