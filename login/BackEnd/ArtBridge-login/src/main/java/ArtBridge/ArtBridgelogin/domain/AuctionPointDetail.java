@@ -30,12 +30,12 @@ public class AuctionPointDetail implements Serializable {
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "member_Reference")
     @JoinColumn(name = "member_seq")
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference(value = "auction_Reference")
     @JoinColumn(name = "auction_seq")
     private Auction auction;
 

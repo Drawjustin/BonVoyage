@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -40,12 +41,27 @@ public class AuctionRepository {
         return em.find(Auction.class, seq);
     }
 
+    public Item readItemByAuctionSeq(int seq){
+        return queryFactory.selectFrom(QItem.item)
+                .join(QAuction.auction)
+                .on(QAuction.auction.item.itemSeq.eq(QItem.item.itemSeq))
+                .where(QAuction.auction.auctionSeq.eq(seq))
+                .fetchOne();
+    }
+
     public List<Auction> readAll() {
         return queryFactory
                 .selectFrom(qAuction)
                 .fetch();
     }
+    public Artist readArtistByItemSeq(int itemseq) {
+        return queryFactory.select(QArtist.artist)
+                .from(QItem.item)
+                .join(QItem.item.artist, QArtist.artist)
+                .where(QItem.item.itemSeq.eq(itemseq))
+                .fetchOne();
 
+    }
     public Auction updateAuction(int seq, Auction updatedAuction) {
         // Pessimistic write lock 설정
         Optional<Auction> auctionOptional = Optional.ofNullable(
@@ -109,4 +125,7 @@ public class AuctionRepository {
                 .setLockMode(LockModeType.PESSIMISTIC_WRITE)
                 .execute();
     }
+
+
+
 }

@@ -50,7 +50,7 @@ public class Item {
 
     // Many-to-One relationship with Artist
     @ManyToOne
-    @JsonBackReference
+    @JsonBackReference(value = "item_artist_Reference")
     @JoinColumn(name = "artist_seq", nullable = false)
     private Artist artist;
 
