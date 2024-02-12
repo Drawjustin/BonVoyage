@@ -9,7 +9,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Container = styled('nav')({
   
-  width: '30vw',
+  width: '12vw',
   display: 'flex',
   background: 'transparent',
   justifyContent: 'space-between',
@@ -62,12 +62,7 @@ export const ButtonContainer = () => {
 
   User = session?.user.artistId ? session?.user.artistId : session?.user.memberId;
 
-  let buttonList = [
-    {text: '판매', func: () => navigate.push('/ProductListPage')},
-    {text: '경매', func: () => navigate.push('/AuctionListPage')},
-    {text: '리뷰', func: () => navigate.push('/Review')},
-    {text: '작가', func: () => navigate.push('/ArtistListPage')},
-];
+  let buttonList = [];
 
 
   if (!User) {

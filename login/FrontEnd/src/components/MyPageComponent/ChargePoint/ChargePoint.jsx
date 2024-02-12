@@ -11,9 +11,10 @@ const ChargePoint = () => {
     const [remainingPoints, setRemainingPoints] = useState(0);
     const [chargedPoints, setChargedPoints] = useState(0);
 
-    const handleInputChange = (evnet) => {
+    const handleInputChange = (event) => {
         const value = event.target.value;
         setInputValue(value);
+        updateChargedPoints(value);
     };
 
     const updateChargedPoints = (value) => {
@@ -22,28 +23,49 @@ const ChargePoint = () => {
         setChargedPoints(roundedPoints);
     };
 
-    const handleChargePoints = async () => {
-        const enteredPoints = parseInt(inputValue, 10) || 0;
 
-        // 서버에 결제 요청 보내기
+    // 카카오 서버의 엔드포인트 URL
+    const Kakaourl = 'https://kapi.kakao.com/v1/payment/ready'; // 실제 A서버의 엔드포인트 URL을 넣어주세요
+
+    // 우리 서버의 엔드포인트 URL
+    const Backendurl = 'https://i10a207.p.ssafy.io/api/'; // 실제 B서버의 엔드포인트 URL을 넣어주세요
+
+    const handleKakaoPay = async () => {
+        // 카카오페이 결제 요청
         try {
-            const response = await axios.post('http://localhost:3001/charge/kakao', {
-              amount: enteredPoints,  // 결제할 금액 정보 등 필요한 정보 전달
-              // 다른 결제 정보들도 필요한 경우 추가
-            });
+            const response = await axios.post(
+                `${Backendurl}/`,
+                {
+                    cid: "TC0ONETIME", // 테스트용 가맹점 코드, 실제 운영에서는 발급받은 코드 사용
+                    partner_order_id: "partner_order_id", // 가맹점 주문번호
+                    partner_user_id: "partner_user_id", // 가맹점 회원 id
+                    item_name: "별이 빛나는 밤", // 상품명
+                    quantity: 1, // 수량
+                    total_amount: 10000, // 결제 금액
+                    tax_free_amount: 0, // 비과세 금액
+                    approval_url: "https://i10a207.p.ssafy.io/api/charge/success", // 결제 성공 시 리다이렉트 URL
+                    cancel_url: "https://i10a207.p.ssafy.io/api/charge/cancel", // 결제 취소 시 리다이렉트 URL
+                    fail_url: "https://i10a207.p.ssafy.io/api/charge/fail", // 결제 실패 시 리다이렉트 URL
+                },
+                {
+                    headers: {
+                        Authorization: "a3002d14622e3f0380776d5aed15a26d"
+                    },
+                }
+            );
 
-            // 서버 응답으로 받은 카카오페이 결제 창 URL로 이동
+            // 서버 응답으로 받은 카카오페이 결제 창으로 이동
             window.location.href = response.data.next_redirect_pc_url;
-        } catch (error) {
-            console.error('카카오페이 결제 요청 실패:', error);
-        }
+            } catch (error) {
+                console.error("카카오페이 결제 요청 실패: ", error);
+            }
+        };
     }
-
     const handleNaverPayClick = async () => {
         // 네이버페이 간편 결제로 이동하는 코드 작성
         try {
             // 네이버페이 간편 결제에 필요한 정보를 서버에 전달
-            const response = await axios.post('http://localhost:3001/charge/naver', {
+            const response = await axios.post('https://i10a207.p.ssafy.io/api/charge/naver', {
               amount: chargedPoints,  // 네이버페이에 전달할 결제 금액
               // 다른 결제 정보들도 필요한 경우 추가
             });
@@ -96,7 +118,7 @@ const ChargePoint = () => {
                         <div>  
                             <div className={styles.pay_align}>
                                 <div className={styles.nav_button}>
-                                    <img className={styles.pay} src={kakao} alt="카카오"  onClick={handleChargePoints} />
+                                    <img className={styles.pay} src={kakao} alt="카카오"  onClick={handleKakaoPay} />
                                 </div>
                                 <div className={styles.nav_button}>
                                     <img className={styles.pay} src={naver} alt="네이버" onClick={handleNaverPayClick}/>
@@ -120,6 +142,5 @@ const ChargePoint = () => {
          
         
     );
-};
 
 export default ChargePoint
