@@ -57,7 +57,6 @@ public class WebrtcController {
     }
 
     // 경매 정보 조회
-<<<<<<< HEAD
     @GetMapping("/{seq}/windate")
     public ResponseEntity<?> updateAuctionDetails(@PathVariable("seq") Integer seq) {
         try{
@@ -74,7 +73,6 @@ public class WebrtcController {
 
 
 
-=======
 //    @PutMapping("/{seq}/winner")
 //    public ResponseEntity<?> updateAuctionDetails(@PathVariable("seq") Integer seq, @RequestBody AuctionPointDetail bidRequest) {
 //        try{
@@ -86,6 +84,5 @@ public class WebrtcController {
 //        }
 //
 //    }
->>>>>>> a1e172f1635e08154339f50868515d94ec85465d
 
 }

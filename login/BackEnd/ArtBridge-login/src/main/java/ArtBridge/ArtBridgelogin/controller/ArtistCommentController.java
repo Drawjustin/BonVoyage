@@ -1,9 +1,11 @@
 package ArtBridge.ArtBridgelogin.controller;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.service.ArtistMentionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,32 +16,55 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArtistCommentController {
 
-
-    @Autowired
     private final ArtistMentionService artistMentionService;
 
     @GetMapping
-    public List<ArtistMention> readAllMArtistMention() {
-        return artistMentionService.readAllArtistsMention();
+    public ResponseEntity<List<ArtistMentionDto>> readAllArtistMention() {
+        try {
+            List<ArtistMentionDto> artistMentions = artistMentionService.readAllArtistsMention();
+            return ResponseEntity.ok(artistMentions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @GetMapping("/{id}")
-    public ArtistMention readArtistMentionById(@PathVariable Long id) {
-        return artistMentionService.readOne(id);
+    public ResponseEntity<ArtistMentionDto> readArtistMentionById(@PathVariable Long id) {
+        try {
+            ArtistMentionDto artistMention = artistMentionService.readOne(id);
+            return ResponseEntity.ok(artistMention);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PostMapping("/new")
-    public ArtistMention createArtistMention(@RequestBody ArtistMention artistMention) {
-        return artistMentionService.createArtistMention(artistMention);
+    public ResponseEntity<ArtistMentionDto> createArtistMention(@RequestBody ArtistMentionDto artistMentionDto) {
+        try {
+            ArtistMentionDto createdArtistMention = artistMentionService.createArtistMention(artistMentionDto);
+            return ResponseEntity.ok(createdArtistMention);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ArtistMention updateArtistMention(@PathVariable Long id, @RequestBody ArtistMention updatedArtistMention) {
-        return artistMentionService.updateArtistMention(id, updatedArtistMention);
+    public ResponseEntity<ArtistMentionDto> updateArtistMention(@PathVariable Long id, @RequestBody ArtistMentionDto updatedArtistMentionDto) {
+        try {
+            ArtistMentionDto artistMention = artistMentionService.updateArtistMention(id, updatedArtistMentionDto);
+            return ResponseEntity.ok(artistMention);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtistMention(@PathVariable Long id) {
-        artistMentionService.deleteArtistMention(id);
+    public ResponseEntity<Void> deleteArtistMention(@PathVariable Long id) {
+        try {
+            artistMentionService.deleteArtistMention(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

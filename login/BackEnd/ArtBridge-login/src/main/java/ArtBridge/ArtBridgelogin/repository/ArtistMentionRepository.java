@@ -1,23 +1,22 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.*;
+import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.LockModeType;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class ArtistMentionRepository {
 
+    @PersistenceContext
     private final EntityManager em;
 
-    private QArtistMention qArtistMention = QArtistMention.artistMention;
+    private final ArtBridge.ArtBridgelogin.domain.QArtistMention qArtistMention = ArtBridge.ArtBridgelogin.domain.QArtistMention.artistMention;
+
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -25,49 +24,41 @@ public class ArtistMentionRepository {
         queryFactory = new JPAQueryFactory(em);
     }
 
+    public ArtistMentionRepository(EntityManager em) {
+        this.em = em;
+    }
+
+    // 아티스트 멘션 생성 메서드
     public ArtistMention create(ArtistMention artistMention) {
         em.persist(artistMention);
         return artistMention;
     }
 
-    public ArtistMention readOne(Long artistMentionSeq) {
-        ArtistMention artistMention = queryFactory
-                .selectFrom(qArtistMention)
-                .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
-                .fetchOne();
-
-        if (artistMention == null) {
-            throw new IllegalStateException("Cannot read ArtistMention with id: " + artistMentionSeq);
-        }
-
-        return artistMention;
-    }
-
+    // 모든 아티스트 멘션 조회 메서드
     public List<ArtistMention> readAll() {
         return queryFactory
                 .selectFrom(qArtistMention)
-                .stream().toList();
+                .fetch();
     }
 
-    public void deleteBySeq(Long seq) {
+    // 아티스트 멘션 일련번호로 조회 메서드
+    public ArtistMention readOne(Long artistMentionSeq) {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
+                .fetchOne();
+    }
+
+    // 아티스트 멘션 업데이트 메서드
+    public void updateArtistMention(Long artistMentionSeq, ArtistMention updatedArtistMention) {
+        em.merge(updatedArtistMention);
+    }
+
+    // 아티스트 멘션 삭제 메서드
+    public void deleteArtistMention(Long artistMentionSeq) {
         queryFactory
                 .delete(qArtistMention)
-                .where(qArtistMention.artistMentionSeq.eq(seq))
+                .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
                 .execute();
-    }
-    public ArtistMention artistMention(Long artistMentionSeq, ArtistMention updatedArtistMention) {
-
-        ArtistMention managedArtistMention = queryFactory
-                .selectFrom(QArtistMention.artistMention)
-                .where(QArtistMention.artistMention.artistMentionSeq.eq(artistMentionSeq))
-                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-                .fetchOne();
-
-
-        // Update fields directly
-        managedArtistMention.setArtistMentionContent(updatedArtistMention.getArtistMentionContent());
-        managedArtistMention.setArtistMentionSubject(updatedArtistMention.getArtistMentionSubject());
-
-        return managedArtistMention;
     }
 }

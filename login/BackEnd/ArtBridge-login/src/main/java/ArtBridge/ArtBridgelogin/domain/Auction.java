@@ -12,11 +12,7 @@ import java.util.List;
 @Entity
 @Table(name = "auction")
 @Data
-<<<<<<< HEAD
-public class Auction  {
-=======
 public class Auction {
->>>>>>> a1e172f1635e08154339f50868515d94ec85465d
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +54,6 @@ public class Auction {
 
     //    ----------------------------------------------------
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
     @JoinColumn(name = "item_seq")
@@ -81,4 +76,3 @@ public class Auction {
     private List<AuctionPointDetail> auctionPointDetails;
 
 }
-
