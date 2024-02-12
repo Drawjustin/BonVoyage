@@ -4,10 +4,11 @@ import { SessionProvider } from "next-auth/react";
 
 type Props = ({
   children: React.ReactNode;
+  session: any
   });
 
-export default function AuthSession({ children }: Props) {
-  return <SessionProvider>
+export default function AuthSession({ children, session }: Props) {
+  return <SessionProvider session={session}>
                     {children}
         </SessionProvider>;
 }

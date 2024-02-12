@@ -6,6 +6,8 @@ import ToastProvider from '@/components/ToastProvider';
 import { PlayProvider } from '@/components/Threejs/contexts/PlayProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import AuthSession from './AuthSession';
+import { getServerSession } from 'next-auth';
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,6 +19,8 @@ export const metadata = {
 export default async function RootLayout({children}:Readonly<{children: React.ReactNode;}>)
 {
 
+  const session = getServerSession(authOptions);
+
   return (
     <html>
 
@@ -26,7 +30,7 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
           </Head>
           <body>
             <main>
-                <AuthSession>
+                <AuthSession session={session}>
                   <PlayProvider>
                     <ToastProvider />
                         {children}
