@@ -58,6 +58,8 @@ export const ButtonContainer = () => {
 
   const {data:session} = useSession();
 
+
+
   let User;
 
   User = session?.user.artistId ? session?.user.artistId : session?.user.memberId;
@@ -86,7 +88,7 @@ export const ButtonContainer = () => {
   const [selected, setSelected] = useState('');
   const navigate = useRouter();
 
-  const buttonHandler = (item:any) => {
+  const buttonHandler = (item) => {
     setSelected(item.text);
     item.func();
   };

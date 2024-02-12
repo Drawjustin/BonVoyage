@@ -1,11 +1,12 @@
-import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import axios, { AxiosResponse } from "axios";
+import { NextAuthOptions } from "next-auth";
   
 
-export const authOptions:NextAuthOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
+      id:'SignIn',
       name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
@@ -21,7 +22,7 @@ export const authOptions:NextAuthOptions = {
                 pw: credentials?.password
             }
 
-            const userResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/artists/login`, artistBody, {
+            const userResponse = await axios.post(`${backendUrl}/artists/login`, artistBody, {
               headers: {
                 'Content-Type': 'application/json;charset=UTF-8'
               }
@@ -35,7 +36,7 @@ export const authOptions:NextAuthOptions = {
                 pw: credentials?.password
             }
 
-              const memberResponse: AxiosResponse<any> = await axios.post(`${backendUrl}/members/login`, memberBody, {
+              const memberResponse = await axios.post(`${backendUrl}/members/login`, memberBody, {
                 headers: {
                   'Content-Type': 'application/json;charset=UTF-8'
                 }
@@ -82,8 +83,8 @@ export const authOptions:NextAuthOptions = {
       },
     async session({ session, token }) { 
     
-      const artistId = token?.sub as string;
-      const memberId = token?.sub as string;
+      const artistId = token?.sub;
+      const memberId = token?.sub;
     
       session.user = {...session.user, artistId, memberId };
 

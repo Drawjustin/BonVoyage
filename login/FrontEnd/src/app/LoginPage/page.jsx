@@ -1,12 +1,14 @@
+'use server'
 import React from 'react'
 import Navbar from '@/components/Navbar/Navbar';
 import InputLogin from '@/components/InputLogin/InputLogin';
-import getCurrentUser from '@/app/actions/getCurrentUser';
+import { getProviders } from 'next-auth/react';
 
-const LoginPage = () => {
+async function LoginPage() {
 
-  const currentUser = getCurrentUser();
-
+    const provider = await getProviders();
+    console.log(provider);
+  
     return (
       
         

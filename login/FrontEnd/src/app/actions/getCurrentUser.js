@@ -2,16 +2,16 @@ import axios from 'axios';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/authOptions';
 
-interface CustomUserType {
-    artistId: string;
-    memberId: string;
-  }
+// interface CustomUserType {
+//     artistId: string;
+//     memberId: string;
+//   }
   
-  declare module 'next-auth' {
-    interface Session {
-      user: CustomUserType;
-    }
-  }
+//   declare module 'next-auth' {
+//     interface Session {
+//       user: CustomUserType;
+//     }
+//   }
 
 export async function getSession() {
     return await getServerSession(authOptions);
