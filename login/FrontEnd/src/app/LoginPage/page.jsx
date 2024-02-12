@@ -5,9 +5,6 @@ import InputLogin from '@/components/InputLogin/InputLogin';
 import { getProviders } from 'next-auth/react';
 
 async function LoginPage() {
-
-    const provider = await getProviders();
-    console.log(provider);
   
     return (
       
