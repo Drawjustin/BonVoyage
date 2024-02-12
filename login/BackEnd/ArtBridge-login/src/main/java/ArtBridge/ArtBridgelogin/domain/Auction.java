@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "auction")
 @Data
-public class Auction implements Serializable {
+public class Auction  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

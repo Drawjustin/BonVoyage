@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "auction_point_detail")
-public class AuctionPointDetail implements Serializable {
+public class AuctionPointDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

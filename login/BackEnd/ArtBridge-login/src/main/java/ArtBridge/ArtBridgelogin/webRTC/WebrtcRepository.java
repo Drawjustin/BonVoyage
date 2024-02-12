@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.webRTC;
 
+import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
 import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.domain.QAuctionPointDetail;
@@ -9,6 +10,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +32,7 @@ public class WebrtcRepository {
     public WebrtcRepository(EntityManager em) {
         this.em = em;
     }
+
     public void createBid(Long seq, AuctionPointDetail bidRequest) {
         // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
         em.persist(bidRequest);
@@ -37,10 +40,13 @@ public class WebrtcRepository {
 
     public Member readWinner(Integer seq) {
         // 경매에서 낙찰자를 조회하는 로직을 여기에 추가
-        return queryFactory.selectFrom(qMember) // 멤버 엔티티 선택
+        return queryFactory.select(qMember)
+                .from(qAuctionPointDetail)
+                .innerJoin(qAuctionPointDetail.member, qMember)
                 .where(qAuctionPointDetail.auction.auctionSeq.eq(seq)
                         .and(qAuctionPointDetail.auctionPointDetailIsWin.eq(true)))
-                .fetchOne(); // 첫 번째 결과 반환
+                .fetchOne();
+
     }
 
     public AuctionPointDetail readCurrentPrice(Integer seq) {
@@ -49,19 +55,21 @@ public class WebrtcRepository {
         return queryFactory.selectFrom(qAuctionPointDetail)
                 .where(qAuctionPointDetail.auction.auctionSeq.eq(seq))
                 .orderBy(qAuctionPointDetail.auctionPointDetailPoint.desc())
-                .fetchFirst(); // 결과를 하나만 가져오기
+                .fetchOne(); // 결과를 하나만 가져오기
     }
 
-    public Member readAuctionDetails(Integer seq) {
-        // 경매의 상세 정보를 조회하는 로직을 여기에 추가
-        return queryFactory.selectFrom(qMember) // 멤버 엔티티 선택
-                .where(qAuctionPointDetail.auction.auctionSeq.eq(seq)
-                        .and(qAuctionPointDetail.auctionPointDetailIsWin.eq(true)))
-                .fetchOne(); // 첫 번째 결과 반환
-    }
-
-    public void updateAuctionDetails(AuctionPointDetail bidRequest) {
+    public void updateAuctionDetails(Integer seq) {
         //업데이트
+        AuctionPointDetail highestBid = queryFactory.selectFrom(qAuctionPointDetail)
+                .where(qAuctionPointDetail.auction.auctionSeq.eq(seq))
+                .orderBy(qAuctionPointDetail.auctionPointDetailPoint.desc())
+                .fetchFirst();
+
+        // 조회된 입찰이 존재하고 있다면 해당 입찰의 isWin을 true로 업데이트
+        if (highestBid != null) {
+            highestBid.setAuctionPointDetailIsWin(true);
+            em.merge(highestBid);
+        }
 
 
     }
