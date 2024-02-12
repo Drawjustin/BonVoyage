@@ -30,6 +30,10 @@
 <div style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
     <div>
         <p id="auctionDetailText" style="margin-top: 10%">옥션 정보를 보여줄겁니다</p>
+        <p id="itemDetailText" style="margin-top: 10%" >여기는 아이템 정보를 보여줄겁니다.</p>
+    </div>
+    <div>
+        <p>여기는 3분 시계를 띄워볼까합니다.</p>
     </div>
     <div style="position: relative; width: 100%; height: 150px;">
         <button id="sessionCloseBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
@@ -64,7 +68,7 @@
 <!-- 경매 입찰 시 뜨는 팝업 -->
 <div id="popup" style="display: none; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; text-align: center; padding-top: 20%;">
     <div style="background: white; display: inline-block; padding: 20px;">
-        입력을 잠시 멈춰주세요.
+        <p id="popupText">입력 중지</p>
     </div>
 </div>
 
@@ -214,22 +218,23 @@ connection.onmessage = function(event) {
 //URL 통신
 //TODO: 아래 예시에서 API 및 데이터 변경
 function updateBidButton() {
+    console.log(bidPrice);
     document.getElementById('bidBtn').innerHTML = bidPrice + '원';
 }
 
-// 서버로부터 경매 정보를 받아와 전역 변수에 저장
-var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
-function fetchBidPrice() {
-    return fetch(getBidPriceUrl)
-    .then(response => response.json())
-    .then(data => {
-        bidPrice = data['auctionStartPoint'];
-        // 버튼 업데이트
-        updateBidButton();
-    });
-}
+// // 서버로부터 경매 정보를 받아와 전역 변수에 저장
+// var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
+// function fetchBidPrice() {
+//     return fetch(getBidPriceUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//         bidPrice = data['auctionStartPoint'];
+//         // 버튼 업데이트
+//         updateBidButton();
+//     });
+// }
 
-// // 최신 호가 가져오기 => 얘 API 통신되는지 확인 필
+// // 최신 호가 가져오기 => 통신;... 왜 있냐면 최신호가와 html 상의 호가가 일치하는지 보려고?
 // var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
 // fetch(getBidPriceUrl)
 //     .then(response => response.json())
@@ -241,7 +246,7 @@ function fetchBidPrice() {
 //     })
 //     .catch(error => console.error('Error:', error));
 
-// 호가 입찰 (동시성 어떻게 하지?) => 얘 API 통신되는지 확인 필
+// // 호가 입찰 (동시성 어떻게 하지?) => 얘 API 통신되는지 확인 필
 // var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
 
 // var data = {
@@ -260,7 +265,7 @@ function fetchBidPrice() {
 //     .then(data => {
 //         console.log('Success:', data); 
 
-//         bidPrice += bidPrice * auctionAskPoint;
+//         bidPrice += bidPrice * (auctionAskPoint / 100);
 
 //         //버튼 업데이트
 //         updateBidButton();
@@ -271,25 +276,52 @@ function fetchBidPrice() {
 //     // alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
 // });
 
-// 입찰 버튼 누를 때마다 팝업 띄우기
 var socket = io();
+var auctionEnded = false;
+var timeoutId;
+
+// 팝업 띄우는 함수
+function showPopup(message, timeout) {
+    var popup = document.getElementById('popup');
+    var popupText = document.getElementById('popupText');
+
+    // 팝업에 메시지를 표시
+    popupText.textContent = message;
+    popup.style.display = 'block';
+
+    // timeout이 지정되어 있을 경우에만 setTimeout을 호출
+    if (timeout !== Infinity) {
+        setTimeout(() => {
+            popup.style.display = 'none';
+        }, timeout);
+    }
+}
 
 document.getElementById('bidBtn').addEventListener('click', function() {
-// bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked'와 타겟을 'all'로 전송
-socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all' });
+    // bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked', 타겟을 'all'로, 그리고 호가 정보를 전송
+    socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all', price: bidPrice });
+
+    // 동시에 자신에게도 팝업 띄우기
+    showPopup("현재 호가: " + bidPrice, 3000);
+
+    // 기존의 timeout을 제거하고 새 timeout 설정
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+        auctionEnded = true;
+        socket.emit('custom-message', { message: '경매가 종료되었습니다.', target: 'all' });
+        showPopup("경매가 종료되었습니다.", Infinity);
+    }, 180000); // 3분 후에 실행
 });
 
 // 서버로부터 'custom-message' 이벤트를 받으면
 socket.on('custom-message', function(data) {
-if (data.message === 'bidBtn clicked') {
-// 팝업을 띄우고, 3초 후에 팝업을 닫음
-var popup = document.getElementById('popup');
-popup.style.display = 'block';
-
-  setTimeout(() => {
-    popup.style.display = 'none';
-  }, 3000);
-}
+    if (data.message === 'bidBtn clicked') {
+        // 팝업을 띄우기
+        showPopup("현재 호가: " + data.price, 3000);
+    } else {
+        // 경매 종료 메시지를 받으면 팝업 띄우기 =>
+        showPopup(data.message, Infinity);
+    }
 });
 
 // 경매 정보 가져오기
@@ -301,6 +333,9 @@ function fetchAuctionInfo() {
     .then(response => response.json())
     .then(data => {
         auctionInfo = data;
+        //일단 경매 정보를 가져오며 바로 bidPrice(현재 호가)를 갱신하고 버튼도 갱신함.
+        bidPrice = data['auctionStartPoint'];
+        updateBidButton();
     });
 }
 
