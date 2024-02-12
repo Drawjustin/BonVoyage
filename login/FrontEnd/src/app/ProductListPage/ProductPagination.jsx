@@ -8,6 +8,10 @@ import ProductCard from '@/components/products/ProductCard/ProductCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
+import './m1.jpg';
+import './m2.jpg';
+import './m3.jpg';
+import './m4.jpg';
 
 
 const ProductPagination = ({PageLink}) => {
@@ -19,6 +23,35 @@ const ProductPagination = ({PageLink}) => {
   const [products, setProducts] = useState([]);
   const searchParams = useSearchParams();
   const [page, setProductId] = useState('');
+
+
+  const dummyData = [
+    {
+      id: 1,
+      title: "별이 빛나는 밤",
+      image: "./m1.jpg",
+      price: 19000,
+    },
+    {
+      id: 2,
+      title: "배",
+      image: "./m2.jpg",
+      price: 240000,
+    },
+    {
+      id: 3,
+      title: "해바라기",
+      image: "./m3.jpg",
+      price: 650000,
+    },
+    {
+      id: 4,
+      title: "숲",
+      image: "./m4.jpg",
+      price: 14000,
+    },
+  ];
+
 
   useEffect(() => {
     const id = searchParams.get("page");
@@ -34,10 +67,14 @@ const ProductPagination = ({PageLink}) => {
     
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
+        // const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
 
-        setProducts(response.data);
-        setTotalItems(response.data.length);
+        // setProducts(response.data);
+        // setTotalItems(response.data.length);
+
+        setProducts(dummyData);
+        setTotalItems(dummyData.length);
+
       } catch (error) {
         console.error('Error fetching products:', error);
         throw error; // Rethrow the error to be handled elsewhere

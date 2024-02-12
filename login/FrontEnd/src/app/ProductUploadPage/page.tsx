@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 import { formatTime } from '@/helpers/dayjs';
 import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
-import getCurrentUser from '@/app/actions/getCurrentUser';
+import getCurrentUser from '../actions/getCurrentUser';
 // import './ProductUploadPage.sass';
 
 const ProductUploadPage = () => {
@@ -159,7 +159,6 @@ const ProductUploadPage = () => {
     
     return (
       <Container>
-      <Navbar/>
       <div className={styles.productUploadContainer}>
         {/* <form>
               <h1>일반 판매 작품 등록</h1>

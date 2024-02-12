@@ -10,7 +10,6 @@ import ImageUpload from '@/components/ImageUpload/ImageUpload';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import dayjs from 'dayjs';
-import Navbar from '@/components/Navbar/Navbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const AuctionUploadPage = () => {
@@ -91,7 +90,6 @@ const AuctionUploadPage = () => {
 
   return (
     <Container>
-      <Navbar />
       <div className={styles.productUploadContainer}>
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.heading}>

@@ -19,9 +19,10 @@ const HomePage = () => {
     const { play, end } = usePlay();
     const currentUser = getCurrentUser();
 
+    
+
     return (
         <div className={styles.container}>
-        <Navbar />
         <Canvas>
             <color attach="background" args={["#ececec"]} />
             <ScrollControls 

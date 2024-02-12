@@ -152,7 +152,6 @@ const ReviewUploadPage = () => {
     
     return (
       <Container>
-      <Navbar/>
       <div className={styles.productUploadContainer}>
         
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>

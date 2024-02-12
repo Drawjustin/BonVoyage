@@ -11,7 +11,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <PlayProvider>
     <Provider store={store}>
         <App />
-        {/* <Navbar /> */}
     </Provider>
   </PlayProvider>
   ,

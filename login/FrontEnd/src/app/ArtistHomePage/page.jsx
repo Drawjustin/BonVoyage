@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import styles from './ArtistHomePage.module.scss'
 import dynamic from 'next/dynamic';
-import Navbar from "@/components/Navbar/Navbar";
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ArtistPortfolio = dynamic(() => import('../../components/ArtistHomepage/ArtistPortfolio/ArtistPortfolio'), {ssr:false});
@@ -42,9 +41,7 @@ const ArtistHomePage = () => {
   };
 
   return (
-    <div>
-        <Navbar />
-      <div style={{ marginTop: '5vh' }} className={styles.container}>
+      <div style={{ marginTop: '3vh' }} className={styles.container}>
         <div className={styles.contents}>
           <div className={styles.profile}>
               <ArtistProfile />
@@ -70,7 +67,6 @@ const ArtistHomePage = () => {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 

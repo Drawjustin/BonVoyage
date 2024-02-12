@@ -37,7 +37,7 @@ const Navbar: React.FC = () => {
   // };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between'}}>
+    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div className='navbar'>
           <div className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
@@ -62,27 +62,6 @@ const Navbar: React.FC = () => {
             ))}
           </ul>
         </nav>
-
-
-
-
-
-
-    {/* <nav className={styles.navbar} style={{ marginBottom: '10px', display: 'flex', alignItems: 'center' }}> */}
-    
-        
-        
-        
-        {/* <Sidebar />
-        <div style={{ flex: '1', display: 'flex'}}>
-        <Link href='/'>
-        <div className={`${styles.logo} ${styles.center}`} />
-        </Link>
-        </div>
-      <ButtonContainer /> */}
-    
-     {/* </nav> */}
-
 
     <div style={{ right: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}><ButtonContainer /></div>
     

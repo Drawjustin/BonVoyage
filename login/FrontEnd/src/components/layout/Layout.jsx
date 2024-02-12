@@ -3,10 +3,12 @@ import React from 'react'
 // import Footer from '../footer/Footer'
 import styles from './Layout.module.scss'
 import { Outlet } from 'react-router-dom'
+import Navbar from '@/components/Navbar/Navbar';
 
 const Layout = () => {
     return (
         <div className={styles.layout}>
+            <Navbar />
             {/* <Header /> */}
             <Outlet />
             {/* <Footer /> */}

@@ -30,8 +30,8 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
             <title>{metadata.title}</title>
             <meta name="description" content={metadata.description} />
           </Head>
-          <body>
-            <main>
+          <body style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+            <main  style={{ flex: 1 }}>
                 <AuthSession>
                   <PlayProvider>
                     <ToastProvider />
@@ -39,10 +39,10 @@ export default async function RootLayout({children}:Readonly<{children: React.Re
                       <div style={containerStyle}>
                         {children}
                       </div>
-                      <Footer />
                   </PlayProvider>
                 </AuthSession>
             </main>
+              <Footer />
           </body>
     </html>
   );

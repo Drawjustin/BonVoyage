@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import KakaoLoginButton from './KakaoLoginButton';
 import GoogleLoginButton from './GoogleLoginButton';
+import SocialKakao from './SocialKakao';
 
 const InputLogin = () => {
   
@@ -124,7 +125,7 @@ const InputLogin = () => {
       </div>
       
       <div style={{ marginTop: '10px' }}>
-        <KakaoLoginButton />
+        <SocialKakao />
         <GoogleLoginButton />
       </div>
 

@@ -21,7 +21,6 @@ const ThreejsMainPage = () => {
 
     return (
         <div className={styles.container}>
-        <Navbar />
         <Canvas>
             <color attach="background" args={["#ececec"]} />
             <ScrollControls 

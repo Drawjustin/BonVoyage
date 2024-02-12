@@ -1,9 +1,9 @@
 import './App.css'
 import React from 'react';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
-import navbar from './components/Navbar/navbar';
-import Footer from './components/Footer/Footer';
 import HomePage from './pages/HomePage';
 
 import LoginPage from './pages/LoginPage';
@@ -27,8 +27,7 @@ const ThreejsMainPage = dynamic(() => import("../pages/ThreejsMainPage"), { ssr:
 const App = () => {
 
   return (
-  <div>
-    <navbar />
+  <>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}/>
@@ -44,8 +43,7 @@ const App = () => {
         <Route path='/threejs' element={<ThreejsMainPage />} />
       </Routes>
     </BrowserRouter>
-    <Footer />
-  </div>
+  </>
 
   )
 }

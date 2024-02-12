@@ -21,6 +21,8 @@
     @media (min-width: 1024px) {
       grid-template-columns: repeat(3, 1fr); // 5 columns for screens wider than 1024px
     }
+    
+    grid-gap: 20px;
   }
   
     .toggle_container {
