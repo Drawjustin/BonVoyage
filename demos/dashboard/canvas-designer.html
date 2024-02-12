@@ -29,10 +29,12 @@
 <div id="widget-container" style="position: fixed;bottom: 0;right: 80%;left: 0;height: 100%;border: 1px solid black; border-top:0; border-bottom: 0; display: none;"></div>
 <div style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
     <div>
-        <button id="bidBtn" class="btn btn-primary" style="width: 100%; height: 150px;">입찰 100,000 현재 최고 호가를 버튼에 띄워줄 예정</button>
         <p id="auctionDetailText" style="margin-top: 10%">옥션 정보를 보여줄겁니다</p>
     </div>
-    <button id="sessionCloseBtn" class="btn btn-primary" style="width: 100%; height: 150px;">세션 종료</button>
+    <div style="position: relative; width: 100%; height: 150px;">
+        <button id="sessionCloseBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
+        <button id="bidBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">입찰 100,000 현재 최고 호가를 버튼에 띄워줄 예정</button>
+    </div>
 </div>
 
 <video id="screen-viewer" controls playsinline autoplay></video>
@@ -58,6 +60,13 @@
     <img id="btn-share-screen" src="https://www.webrtc-experiment.com/images/share-screen.png" title="Share Your Screen">
 </div>
 </article>
+
+<!-- 경매 입찰 시 뜨는 팝업 -->
+<div id="popup" style="display: none; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; text-align: center; padding-top: 20%;">
+    <div style="background: white; display: inline-block; padding: 20px;">
+        입력을 잠시 멈춰주세요.
+    </div>
+</div>
 
 <script>
 (function() {
@@ -86,12 +95,25 @@ connection.publicRoomIdentifier = params.publicRoomIdentifier;
 connection.socketMessageEvent = 'canvas-dashboard-demo';
 
 // keep room opened even if owner leaves
-connection.autoCloseEntireSession = false;
+connection.autoCloseEntireSession = true;
 
 // https://www.rtcmulticonnection.org/docs/maxParticipantsAllowed/
 connection.maxParticipantsAllowed = 1000;
 // set value 2 for one-to-one connection
 // connection.maxParticipantsAllowed = 2;
+
+// 경매 정보 저장하는 전역 변수
+let auctionInfo = {};
+
+// 경매 seq (어디서든 끌고 오기)
+let aucSeq = 7;
+
+//현재 유저와 경매 작가 조회
+let sessionArtist = 'startUser'; // 경매 참여한 artist(세션 시작) 이거.. artist를 가져와야 하는데..? -> API 요청함
+let currentUser = connection.extra.userFullName; // 현재 로그인한 사용자의 이름..입장 시 입력하는 이름 가져옴 입장 이름을 무조건 세션 값으로 넣어주면 되겠다
+
+// 현재 최고 호가 전역변수
+let bidPrice = 0;
 
 // here goes canvas designer
 var designer = new CanvasDesigner();
@@ -105,7 +127,6 @@ designer.addSyncListener(function(data) {
 });
 
 // here goes RTCMultiConnection
-
 connection.chunkSize = 16000;
 connection.enableFileSharing = true;
 
@@ -191,56 +212,154 @@ connection.onmessage = function(event) {
 };
 
 //URL 통신
-//TODO: aucSeq 뭐 인자.. 아니면 url로 받거나 쨋든 전달받을것
-var aucSeq = 7; //일단 임의로 집어넣음
-
-// 경매 정보 가져오기
-// 아 이거 생각해보니까 아이템도 띄워야 하네..?
-var getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
-fetch(getAucDetailUrl)
-    .then(response => response.json())
-    .then(data => {
-        let keysToShow = ["auctionSeq", "auctionScheduledTime", "auctionStatus", "auctionStartPoint", "auctionAskPoint"];
-        let keyToKorean = {
-            "auctionSeq": "경매 번호",
-            "auctionScheduledTime": "경매 예정 시간",
-            "auctionStatus": "경매 상태",
-            "auctionStartPoint": "경매 시작가",
-            "auctionAskPoint": "경매 호가",
-        };
-        let text = '';
-        for (let key of keysToShow) {
-            if (data.hasOwnProperty(key)) {
-                let koreanKey = keyToKorean.hasOwnProperty(key) ? keyToKorean[key] : key;
-                text += koreanKey + ': ' + data[key] + '<br>';
-            }
-        }
-        document.getElementById('auctionDetailText').innerHTML = text;
-    })
-    .catch(error => console.error('Error:', error)); // 에러 처리
-
-
 //TODO: 아래 예시에서 API 및 데이터 변경
-// 현재 최신 호가인 전역변수
-let bidPrice = 0;
-
 function updateBidButton() {
     document.getElementById('bidBtn').innerHTML = bidPrice + '원';
 }
 
-// 최신 호가 가져오기
+// 서버로부터 경매 정보를 받아와 전역 변수에 저장
 var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
-fetch(getBidPriceUrl)
+function fetchBidPrice() {
+    return fetch(getBidPriceUrl)
     .then(response => response.json())
     .then(data => {
-        // 전역 변수 값 변경
-        bidPrice = data['auctionBidPrice'];
+        bidPrice = data['auctionStartPoint'];
         // 버튼 업데이트
         updateBidButton();
-    })
-    .catch(error => console.error('Error:', error)); // 에러 처리
+    });
+}
 
-    
+// // 최신 호가 가져오기 => 얘 API 통신되는지 확인 필
+// var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
+// fetch(getBidPriceUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//         // 전역 변수 값 변경
+//         bidPrice = data['auctionStartPoint'];
+//         // 버튼 업데이트
+//         updateBidButton();
+//     })
+//     .catch(error => console.error('Error:', error));
+
+// 호가 입찰 (동시성 어떻게 하지?) => 얘 API 통신되는지 확인 필
+// var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
+
+// var data = {
+//     memberName: connection.extra.userFullName, // 현재 유저 이름
+//     bidPrice: bidPrice // 최고 호가
+// };
+
+// fetch(postBidPriceUrl, {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify(data),
+// })
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('Success:', data); 
+
+//         bidPrice += bidPrice * auctionAskPoint;
+
+//         //버튼 업데이트
+//         updateBidButton();
+//     })
+//     .catch(error => {
+//     console.error('Error:', error);
+//     // 사용자에게 새로고침하라는 알림창 표시 **근데 지금 API 없어서 무조건 오류뜸 그니까 API 오면 주석 풀기**
+//     // alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+// });
+
+// 입찰 버튼 누를 때마다 팝업 띄우기
+var socket = io();
+
+document.getElementById('bidBtn').addEventListener('click', function() {
+// bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked'와 타겟을 'all'로 전송
+socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all' });
+});
+
+// 서버로부터 'custom-message' 이벤트를 받으면
+socket.on('custom-message', function(data) {
+if (data.message === 'bidBtn clicked') {
+// 팝업을 띄우고, 3초 후에 팝업을 닫음
+var popup = document.getElementById('popup');
+popup.style.display = 'block';
+
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 3000);
+}
+});
+
+// 경매 정보 가져오기
+let getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
+
+// 서버로부터 경매 정보를 받아와 전역 변수에 저장
+function fetchAuctionInfo() {
+    return fetch(getAucDetailUrl)
+    .then(response => response.json())
+    .then(data => {
+        auctionInfo = data;
+    });
+}
+
+// 경매 정보 한국어 변환을 위해 필요한 정보
+let keysToShow = ["auctionSeq", "auctionScheduledTime", "auctionStatus", "auctionStartPoint", "auctionAskPoint"];
+let keyToKorean = {
+    "auctionSeq": "경매 번호",
+    "auctionScheduledTime": "경매 예정 시간",
+    "auctionStatus": "경매 상태",
+    "auctionStartPoint": "경매 시작가",
+    "auctionAskPoint": "경매 호가 퍼센트",
+};
+
+// 경매 정보를 한국어로 변환하여 표시
+function displayAuctionInfo() {
+    let text = '';
+    for (let key of keysToShow) {
+        if (auctionInfo.hasOwnProperty(key)) {
+            let koreanKey = keyToKorean.hasOwnProperty(key) ? keyToKorean[key] : key;
+            text += koreanKey + ': ' + auctionInfo[key] + '<br>';
+        }
+    }
+    document.getElementById('auctionDetailText').innerHTML = text;
+}
+
+// 유저가 누구인지에 따라 버튼 바꾸기
+function updateButtonStatus() {
+    let sessionCloseBtn = document.getElementById('sessionCloseBtn');
+    var bidBtn = document.getElementById('bidBtn');
+
+    if (sessionArtist === currentUser) { // 작가인 경우
+        sessionCloseBtn.style.display = 'block';
+        bidBtn.style.display = "none";
+    } else { // 일반 회원인 경우
+        sessionCloseBtn.style.display = 'none';
+        bidBtn.style.display = "block";
+    }
+}
+
+// 페이지가 로드되면 서버로부터 경매 정보를 받아옴
+window.onload = function() {
+    fetchAuctionInfo()
+    .then(() => {
+        // 경매 정보를 표시
+        displayAuctionInfo();
+        bidPrice = auctionInfo.auctionStartPoint;
+    })
+    .catch(error => {
+        console.error('Error:', error); // 에러 처리
+        // 사용자에게 새로고침하라는 알림창 표시
+        alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+    })
+    .finally(() => {
+        // 유저가 누구인지에 따라 버튼 바꾸기
+        updateButtonStatus();
+    });
+};
+
+
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
 // 스트리밍 코드
