@@ -8,6 +8,7 @@ import getCurrentUser from './actions/getCurrentUser';
 import AuthSession from './AuthSession';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/utils/authOptions';
+import Navbar from '@/components/Navbar/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -33,7 +34,7 @@ export default async function RootLayout({children})
                 <AuthSession session={session}>
                   <PlayProvider>
                     <ToastProvider />
-
+                        <Navbar/>
                         {children}
                   </PlayProvider>
                 </AuthSession>

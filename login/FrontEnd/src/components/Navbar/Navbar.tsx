@@ -10,7 +10,6 @@ import './newnavbar.css';
 import { IconContext } from 'react-icons';
 // import Link from 'next/link';
 // import styles from './Navbar.module.scss';
-import {ButtonContainer} from './ButtonContainer';
 // import Sidebar from './Sidebar';
 
 interface SidebarItem {
@@ -63,7 +62,7 @@ const Navbar: React.FC = () => {
           </ul>
         </nav>
 
-    <div style={{ right: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}><ButtonContainer /></div>
+    <div style={{ right: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}></div>
     
 
     </div>

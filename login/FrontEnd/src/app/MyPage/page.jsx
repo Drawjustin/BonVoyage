@@ -16,7 +16,7 @@ import dynamic from 'next/dynamic';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 const AccountInfo = dynamic(() => import('../../components/MyPageComponent/AccountInfo/AccountInfo'), {ssr:false});
 const PurchaseInfo = dynamic(() => import('../../components/MyPageComponent/PurchaseInfo/PurchaseInfo'), {ssr:false});
-const Faq = dynamic(() => import('../../components/MyPageComponent/Faq/Accordion'), {ssr:false});
+const Faq = dynamic(() => import('../../components/MyPageComponent/Faq/Faq'), {ssr:false});
 const MyAuctionCal = dynamic(() => import('../../components/MyPageComponent/MyAuctionCal/MyAuctionCal'), {ssr:false});
 
 // import React from 'react';

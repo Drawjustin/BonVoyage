@@ -60,7 +60,7 @@ const ChargePoint = () => {
                 console.error("카카오페이 결제 요청 실패: ", error);
             }
         };
-    }
+    
     const handleNaverPayClick = async () => {
         // 네이버페이 간편 결제로 이동하는 코드 작성
         try {
@@ -143,4 +143,5 @@ const ChargePoint = () => {
         
     );
 
+}
 export default ChargePoint
