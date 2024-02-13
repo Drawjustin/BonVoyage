@@ -7,55 +7,54 @@ import axios from 'axios'
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import AuctionCard from '@/components/Auctions/AuctionCard/AuctionCard'
 import EmptyState from "@/components/EmptyState/EmptyState";
+import m1 from './m1.jpg'
+import m2 from './m2.jpg'
 
 const AuctionListPage = async () => {
 
-  const currentUser = getCurrentUser();
-  const [auctions, setAuctions] = useState([]);
+  const currentUser = '현재유저';
 
+  const auctions = [{
+    auctionSeq:1,
+      imageSrc: m1,
+      title: '별 헤는 밤',
+  },
+  {
+    auctionSeq:2,
+      imageSrc: m2,
+      title: '샤라랄랄라랄라',
+  }]
 
-  const dummyData = [
+  async function handleFunc (seq, user) {
+
+    const Id = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
+    const ClickedId = user.artistId ? user.artistId : user.memberId
+    const WhetherArtist = user.artistId ? true : false
+
+    const send = {id:Id.data, userId:ClickedId, IsArtist:WhetherArtist};
+
+    const data = await axios.post('https://i10a207.p.ssafy.io/api/auction', send, { headers: 
     {
-      id: 1,
-      title: "별이 빛나는 밤",
-      image: "./m1.jpg",
-      price: 19000,
-    },
-    {
-      id: 2,
-      title: "배",
-      image: "./m2.jpg",
-      price: 240000,
-    },
-    {
-      id: 3,
-      title: "해바라기",
-      image: "./m3.jpg",
-      price: 650000,
-    },
-    {
-      id: 4,
-      title: "숲",
-      image: "./m4.jpg",
-      price: 14000,
-    },
-  ];
+      'Content-Type': 'application/json;charset=UTF-8',
+    }})
+  }
 
+  // const [auctions, setAuctions] = useState([]);
 
-  useEffect(() => {    
-    const fetchData = async () => {
-      try {
-        const response = axios.get('https://i10a207.p.ssafy.io/api/auction');
+  // useEffect(() => {    
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get('https://i10a207.p.ssafy.io/api/auction');
 
-        setAuctions(response.data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-        throw error; // Rethrow the error to be handled elsewhere
-      }
-    };
+  //       setAuctions(response.data);
+  //     } catch (error) {
+  //       console.error('Error fetching products:', error);
+  //       throw error; // Rethrow the error to be handled elsewhere
+  //     }
+  //   };
   
-    fetchData();
-  }, [])
+  //   fetchData();
+  // }, [])
 
     return (
       <>
@@ -64,18 +63,22 @@ const AuctionListPage = async () => {
             </div>
 
             {
-              (auctions.data?.length === 0 || !auctions.data)
+              (auctions.length === 0 || !auctions)
               ?
               <EmptyState showReset />
               :
               <>
               <div className={styles.grid}>
-              {auctions?.data?.map((auction) =>
+              {auctions.map((auction) =>
+              <div onClick={() => handleFunc(auction.auctionSeq, currentUser)}>
                   <AuctionCard
                     currentUser={currentUser}
                     key={auction.auctionSeq}
                     data={auction}
-                  />)}
+                  />
+                  </div>
+                  )}
+                  
               </div>
               </>
             }

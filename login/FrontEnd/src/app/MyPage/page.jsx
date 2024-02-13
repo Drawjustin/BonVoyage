@@ -97,7 +97,7 @@ const MyPage = () => {
 
     return (
         
-        <div>
+        <div className={styles.container}>
 
         <div className={styles.my_page}>
         <h2 style={{textAlign: 'left', color: '#f1efee' }}>마이 페이지</h2>

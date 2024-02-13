@@ -2,12 +2,11 @@
 // AccountInfo.module.scss
 
 .title {
-    font-size: calc(1.3rem + 0.6vw);
-    display: flex;
     font-size: 24px;
-    padding-left: 20px;
-    text-align: left;
-    margin-bottom: 20px;
+    
+    margin-right: 60%;
+    color: #f1efee;
+    font-size: calc(1.3rem + .6vw);
 }
 .account_info {
     width: 600px;
@@ -18,6 +17,7 @@
     padding: 20px;
     margin: 20px;
     max-width: 600px;
+    color:#292929;
     
 
     .info_item {
@@ -39,12 +39,13 @@
         height: 30px;
         border-radius: 5px;
         flex: 1;
-        max-width: 120px;
+        margin-left: 30%;
+        max-width: 250px;
       }
   
       button {
         margin-left: 10px;
-        max-width: 80px;
+        max-width: 90px;
       }
     }
   

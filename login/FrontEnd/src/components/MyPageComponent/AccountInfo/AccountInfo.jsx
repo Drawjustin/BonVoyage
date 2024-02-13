@@ -93,11 +93,14 @@ const AccountInfo = () => {
     
     
     return (
-        <div style={{ width: '600px', alignItems: 'center' }}>
-        <div style={{ display: 'flex', justifyContent:'space-between'}}>
-        <h3 className={styles.title} style={{ color: '#f1efee', fontSize: 'calc(1.3rem + .6vw)' }}>계정 정보</h3>
-        <button onClick={handleSave}>전체 저장</button>
-        </div>
+        <div style={{alignItems: 'center'}}>
+        <div style={{ width: '600px', alignItems: 'center', display:'flex', flexDirection:'column' }}>
+
+            <div style={{display: 'flex', alignItems:'center', flexDirection:'row', width:'90%', height:'30%'}}>
+                <h3 className={styles.title} >계정 정보</h3>
+                <button onClick={handleSave} style={{height:'30px'}}>전체 저장</button>
+            </div>
+        <div>
         <div  className={styles.account_info}>
             <div>
             <div className={styles.info_item}>
@@ -116,7 +119,7 @@ const AccountInfo = () => {
                 <p>비밀번호</p>
                 {editableFields.password ? (
                     <div>
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             <input
                             type="password"
                             placeholder="기존 비밀번호 입력"
@@ -126,7 +129,7 @@ const AccountInfo = () => {
                             <button onClick={handlePasswordConfirm}>확인</button>
                         </div>
 
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             {passwordMatchError && <span style={{ color: 'red', fontFamily: 'Gowun Dodum' }}>{passwordMatchError}</span>}
                             <input
                             type="password"
@@ -135,7 +138,7 @@ const AccountInfo = () => {
                             onChange={handleNewPasswordChange}
                             />
                         </div>
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             <input
                             type="password"
                             placeholder="새로운 비밀번호 확인"
@@ -178,7 +181,11 @@ const AccountInfo = () => {
             </div>
             </div>
         </div>
+        </div>
+        
     </div>
+        </div>
+        
     )
 } 
 
