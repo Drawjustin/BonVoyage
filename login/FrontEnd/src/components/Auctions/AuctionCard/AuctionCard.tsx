@@ -4,13 +4,9 @@ import Image from 'next/image';
 import styles from './AuctionCard.module.scss';
 
 const AuctionCard = ({ data, currentUser }:any) => {
-  const handleCardClick = () => {
-    // Add logic for handling card click
-  };
 
   return (
     <div
-      onClick={handleCardClick}
       className={styles['auction-card']}
     >
       <div className={styles['image-container']}>

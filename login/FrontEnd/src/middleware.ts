@@ -1,11 +1,9 @@
-import { getToken } from 'next-auth/jwt';
 import { NextRequest, NextResponse } from 'next/server';
+import getCurrentUser from './app/actions/getCurrentUser';
 
-export {default} from 'next-auth/middleware';
-
-export async function middleware(req:NextRequest) {
-    const session = await getToken({ req, secret: process.env.JWT_SECRET});
-    const LoggedOn = session?.artistId ? session?.artistId : session?.memberId;
+export const middleware = (req:NextRequest) => {
+    const session = getCurrentUser();
+    const LoggedOn = session?.id ? true : false;
     const pathname = req.nextUrl.pathname;
 
     // if (pathname.startsWith('/MyPage') && !LoggedOn) {
@@ -23,5 +21,5 @@ export async function middleware(req:NextRequest) {
     //     return NextResponse.redirect(new URL("/", req.url));
     // }
 
-    return NextResponse.next();
+    // return NextResponse.next();
 }
