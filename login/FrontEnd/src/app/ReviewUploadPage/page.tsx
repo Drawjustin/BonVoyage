@@ -15,6 +15,7 @@ import dayjs from 'dayjs';
 import Navbar from '@/components/Navbar/Navbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import { useSession } from 'next-auth/react';
+import { display } from '@mui/system';
 
 const ReviewUploadPage = () => {
 
@@ -152,9 +153,8 @@ const ReviewUploadPage = () => {
     
     return (
       <Container>
-      <div className={styles.productUploadContainer}>
-        
-        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.productUploadContainer} style={{ display: 'flex', justifyContent: 'space-between', marginTop: '5vh' }}>
+        <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)} style={{ marginTop: '2vh' }}>
           <div className={styles.heading}>
             <h1 style={{ color: '#f1efee' }}>리뷰 작성</h1>
             <div style={{ color: '#f1efee' }}>구매한 작품의 리뷰를 작성해주세요!</div>
@@ -164,26 +164,29 @@ const ReviewUploadPage = () => {
             <ImageUpload onChange={(value) => setCustomValue('imageSrc', value)} value={imageSrc} />
           </div>
 
-          <div>
-            <div style={{ marginBottom: '10px' }}>작품명</div>
-            <div style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5', backgroundColor: 'lightgray' }}></div>
-          </div>
-
-          <div>
-            <div style={{ marginBottom: '10px' }}>후기</div>
-            <textarea
-              id="description" 
-              placeholder="작품 구매 후기를 적어주세요."
-              disabled={isLoading || Object.keys(errors).length > 0}
-              {...register('description', { required: true })}
-              style={{ width: '100%', minHeight: '100px', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }} />
-          </div>
-          <div>
-            <button className={styles.btn}>리뷰 등록</button>
-          </div>
         </form>
 
-</div>
+
+        <div style={{ width: '500px', marginTop: '12vh', marginLeft: '10vh' }}>
+          <div style={{ alignContent: 'center'}}>
+              <div style={{ marginBottom: '10px' }}>작품명</div>
+              <div style={{ width: '30%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5', backgroundColor: 'lightgray' }}></div>
+            </div>
+
+            <div>
+              <div style={{ marginBottom: '10px' }}>후기</div>
+              <textarea
+                id="description" 
+                placeholder="작품 구매 후기를 적어주세요."
+                disabled={isLoading || Object.keys(errors).length > 0}
+                {...register('description', { required: true })}
+                style={{ width: '80%', minHeight: '100px', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }} />
+            </div>
+            <div>
+              <button className={styles.btn}>리뷰 등록</button>
+            </div>
+        </div>
+      </div>
 
     </Container>
   );

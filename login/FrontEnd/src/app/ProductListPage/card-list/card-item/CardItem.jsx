@@ -20,35 +20,14 @@ const CardItem = ({ item }) => {
     dispatch(addToCart(item));
   }
 
-  const dummyData = [
-    {
-      id: 1,
-      title: "별이 빛나는 밤",
-      image: m1,
-      price: 19000,
-    },
-    {
-      id: 2,
-      title: "배",
-      image: m2,
-      price: 240000,
-    },
-    {
-      id: 3,
-      title: "해바라기",
-      image: m3,
-      price: 650000,
-    },
-    {
-      id: 4,
-      title: "숲",
-      image: m4,
-      price: 14000,
-    },
-  ];
+  // 이게 원래 코드
+  // const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
+
+  // setProducts(response.data);
+  // setTotalItems(response.data.length);
 
 
-  const selectedDummyData = dummyData.find((dummyItem) => dummyItem.id === item.id);
+  const selectedFetchedData = fetchedData.find((fetchedItem) => fetchedItem.id === item.id);
   
 
   return (
@@ -56,7 +35,7 @@ const CardItem = ({ item }) => {
       <Link href={`/product/${item.id}`}>
         <a>
         <img
-          src={selectedDummyData.image}
+          src={selectedFetchedData.image}
           width={"80%"}
           height={"200px"}
           alt="product card"
@@ -74,7 +53,7 @@ const CardItem = ({ item }) => {
         >
           {productMatching ? "장바구니에 담긴 제품" : "장바구니에 담기"}
         </button>
-        <p>{selectedDummyData.price} 원</p>
+        <p>{selectedFetchedData.price} 원</p>
       </div>
 
     </li>

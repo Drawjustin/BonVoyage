@@ -20,39 +20,57 @@ const ProductPagination = ({PageLink}) => {
   const [totalItems, setTotalItems] = useState(0);
   const [Sort, setSortBy] = useState('Like');
   const [currentPage, setCurrentPage] = useState(1);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const searchParams = useSearchParams();
   const [page, setProductId] = useState('');
+  const [fetchedData, setFetchedData] = useState([]);
 
+  // 여기에 DB에서 데이터
 
-  const dummyData = [
-    {
-      id: 1,
-      title: "별이 빛나는 밤",
-      image: m1,
-      price: 19000,
-    },
-    {
-      id: 2,
-      title: "배",
-      image: m2,
-      price: 240000,
-    },
-    {
-      id: 3,
-      title: "해바라기",
-      image: m3,
-      price: 650000,
-    },
-    {
-      id: 4,
-      title: "숲",
-      image: m4,
-      price: 14000,
-    },
-  ];
+  // const dummyData = [
+  //   {
+  //     id: 1,
+  //     title: "별이 빛나는 밤",
+  //     image: m1,
+  //     price: 19000,
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "배",
+  //     image: m2,
+  //     price: 240000,
+  //   },
+  //   {
+    //     id: 3,
+    //     title: "해바라기",
+    //     image: m3,
+    //     price: 650000,
+    //   },
+    //   {
+  //     id: 4,
+  //     title: "숲",
+  //     image: m4,
+  //     price: 14000,
+  //   },
+  // ];
+  
+  // 서버에서 데이터를 가져오는 함수
+  const fetchDataFromBackend = async (sortBy, page) => {
+    try {
+      const response = await axios.get('https://i10a207.p.ssafy.io/api/item', {
+        params: {
+          sort: sortBy,
+          page: page,
+        },
+      });
 
-
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching products from backend:', error);
+      throw error;
+    }
+  };
+  
   useEffect(() => {
     const id = searchParams.get("page");
     if (id) {
@@ -64,18 +82,23 @@ const ProductPagination = ({PageLink}) => {
     if (typeof window !== 'undefined'){
         window.scrollTo(0, 0);
     }
+
     
     const fetchData = async () => {
       try {
         // 이게 원래 코드
         // const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
+        const fetchedData = await fetchDataFromBackend(Sort, currentPage);
+        
 
+        setFetchedData(fetchedData);
+        setTotalItems(fetchedData.length);
         // setProducts(response.data);
         // setTotalItems(response.data.length);
 
-        // 가데이터 임시방편 출력
-        setProducts(dummyData);
-        setTotalItems(dummyData.length);
+        // 가데이터 임시방편 출력c
+        // setProducts(dummyData);
+        // setTotalItems(dummyData.length);
 
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -94,8 +117,8 @@ const ProductPagination = ({PageLink}) => {
 
     return (
         <>
-          <div className={styles.toggle_container} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '24vh' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>판매 작품</h1>
+          <div className={styles.toggle_container} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '24vh', width: '90%' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px', }}>판매 작품</h1>
           
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
@@ -123,13 +146,13 @@ const ProductPagination = ({PageLink}) => {
       </div>
 
 
-        <div className="container" style={{ marginTop: '10px', marginLeft: '24vh' , width: '85%', alignItems: 'center' }}>
+        <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
           
 
-          {Array.isArray(dummyData) && dummyData.length > 0 ? (
+          {Array.isArray(fetchedData) && fetchedData.length > 0 ? (
             Sort === 'New' ? (
             <div className={styles.grid}>
-            {dummyData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
+            {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
                     <ProductCard
                     currentUser={currentUser}
                     key={product.itemSeq}
@@ -144,7 +167,7 @@ const ProductPagination = ({PageLink}) => {
             (
             <div className={styles.grid}>
 
-               {dummyData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
+               {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
                 <ProductCard
                   currentUser={currentUser}
                   key={product.itemSeq}
@@ -158,7 +181,7 @@ const ProductPagination = ({PageLink}) => {
             <EmptyState showReset />
           )}
         </div>
-        <div style={{ marginTop: '5vh', textAlign: 'center', marginLeft: '24vh' }}>
+        <div style={{ marginTop: '5vh', textAlign: 'center', marginLeft: '30vh' }}>
         
           <Pagination 
             currentPage={parseInt(page) > 0 ? parseInt(page) : currentPage} 
