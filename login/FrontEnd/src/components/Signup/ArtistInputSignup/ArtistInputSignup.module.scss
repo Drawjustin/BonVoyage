@@ -1,16 +1,20 @@
 .form {
-    margin-top:  10vh;
+    margin-top: 10vh;
+    // margin-left: 37%;
+    max-width: 320px;
     border-radius: 10px;
     padding: 20px 40px;
     background-color: #f1efee;
     box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.1);
+    color: black;
+    margin: 0 auto;
 }
 
 .form_title {
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    padding: 20px;
+    padding: 10px;
 }
 
 .form_element {
@@ -29,7 +33,6 @@
 .input_btn {
     font-family: 'Gowun Dodum', sans-serif;
     border: #171de5 1px solid;
-    margin-right: 15px;
     padding: 4px;
     border-radius: 8px;
     font-size: 10px;
@@ -50,11 +53,13 @@
     background-color: #171de5;
     color: #f1efee;
     margin-bottom: 3px;
-    padding: 0.7em 1.2em;
+    padding: 0.5em 0.2em;
     border-radius: 8px;
     border: 1px solid transparent;
     cursor: pointer;
     transition: none;
+    display:flex;
+    align-items: center;
 }
 
 .input_btn2:hover {
@@ -87,7 +92,7 @@
 }
 
 .form_input_3 {
-    width: 225px;
+    width: 240px;
     height: 20px;
     border: none;
     padding: 5px 8px;
@@ -102,9 +107,10 @@
     border: 1px solid #171de5;
     text-align: center;
     border-radius: 8px;
-    margin-top: 10px;
-    padding: 5px;
-    font-size: 10px;
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    font-size: 13px;
     font-weight: bold;
     background-color: #171de5;
     color: #f1efee;
