@@ -33,7 +33,7 @@ public class AuctionController {
     }
 
     @GetMapping("/{seq}")
-    public ResponseEntity<AuctionDto> readAuctionById(@PathVariable int seq) {
+    public ResponseEntity<AuctionDto> readAuctionById(@PathVariable(value="seq") int seq) {
         try {
             AuctionDto auctionDto = auctionService.readOne(seq);
             return ResponseEntity.ok(auctionDto);
@@ -57,11 +57,10 @@ public class AuctionController {
 //    }
 
     @GetMapping("/item/{seq}")
-    public Item readItemByAuctionSeq(@PathVariable int seq) {
+    public Item readItemByAuctionSeq(@PathVariable(value="seq") int seq) {
         return auctionService.readItemByAuctionSeq(seq);
     }
 
-//    @GetMapping("/{Seq}")
 //    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
 //        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
 //
@@ -75,7 +74,7 @@ public class AuctionController {
 //    }
 
     @PutMapping("/{seq}")
-    public ResponseEntity<AuctionDto> updateAuction(@PathVariable int seq, @RequestBody AuctionDto updatedAuctionDto) {
+    public ResponseEntity<AuctionDto> updateAuction(@PathVariable(value="seq") int seq, @RequestBody AuctionDto updatedAuctionDto) {
         try {
             AuctionDto auctionDto = auctionService.updateAuction(seq, updatedAuctionDto);
             return ResponseEntity.ok(auctionDto);
@@ -85,12 +84,12 @@ public class AuctionController {
     }
 
     @DeleteMapping("/{seq}")
-    public void deleteAuction(@PathVariable int seq) {
+    public void deleteAuction(@PathVariable(value="seq") int seq) {
         auctionService.deleteAuction(seq);
     }
 
     @GetMapping("/mypage/{authorId}")
-    public List<Auction> readAuctionsByAuthor(@PathVariable Long authorId) {
+    public List<Auction> readAuctionsByAuthor(@PathVariable(value="authorId") Long authorId) {
         return auctionService.readAuctionsBySameAuthor(authorId);
     }
 
