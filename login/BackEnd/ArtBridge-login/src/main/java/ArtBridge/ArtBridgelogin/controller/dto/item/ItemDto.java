@@ -5,6 +5,7 @@ import lombok.Data;
 
 @Data
 public class ItemDto {
+    private int itemSeq;
     private String itemName;
     private String explain;
     private int itemWidth;

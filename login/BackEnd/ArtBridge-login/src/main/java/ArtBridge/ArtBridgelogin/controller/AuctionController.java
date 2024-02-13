@@ -42,6 +42,19 @@ public class AuctionController {
         }
     }
 
+
+//    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
+//        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
+//
+//        if (artistDto != null) {
+//            // 조회 성공 시 200 OK와 함께 메시지 반환
+//            return ResponseEntity.ok("조회한 Aritst " + artistDto);
+//        } else {
+//            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+
     @PostMapping("/new")
     public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto) {
         try {
@@ -60,18 +73,6 @@ public class AuctionController {
     public Item readItemByAuctionSeq(@PathVariable(value="seq") int seq) {
         return auctionService.readItemByAuctionSeq(seq);
     }
-
-//    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
-//        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
-//
-//        if (artistDto != null) {
-//            // 조회 성공 시 200 OK와 함께 메시지 반환
-//            return ResponseEntity.ok("조회한 Aritst " + artistDto);
-//        } else {
-//            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
 
     @PutMapping("/{seq}")
     public ResponseEntity<AuctionDto> updateAuction(@PathVariable(value="seq") int seq, @RequestBody AuctionDto updatedAuctionDto) {

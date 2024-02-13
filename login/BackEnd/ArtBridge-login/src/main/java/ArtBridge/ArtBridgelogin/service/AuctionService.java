@@ -3,6 +3,7 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
+import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.Auction;
@@ -56,7 +57,7 @@ public class AuctionService {
 
             return convertToDtoList(auctions);
         } catch (DataAccessException e) {
-            throw new MyDataAccessException("Failed to read all artist mentions", e);
+            throw new MyDataAccessException("Failed to read all auctions", e);
         }
     }
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
@@ -64,7 +65,7 @@ public class AuctionService {
         Auction auction = auctionRepository.readOne(seq);
 
         if (auction == null) {
-            throw new NoDataFoundException("Seq가 " + seq + "인 아티스트 멘션을 찾을 수 없습니다.");
+            throw new NoDataFoundException("Seq가 " + seq + "인 경매를 찾을 수 없습니다.");
         }
 
         return convertToDto(auction);
@@ -134,6 +135,16 @@ public class AuctionService {
         auctionDto.setAuctionStartPoint(auction.getAuctionStartPoint());
         auctionDto.setAuctionAskPoint(auction.getAuctionAskPoint());
         auctionDto.setAuctionCreatedDate(auction.getAuctionCreatedDate());
+        if (auction.getItem() != null) {
+            ItemDto itemDto = new ItemDto();
+            itemDto.setItemSeq(auction.getItem().getItemSeq());
+            itemDto.setItemName(auction.getItem().getItemName());
+            itemDto.setExplain(auction.getItem().getExplain());
+            itemDto.setItemWidth(auction.getItem().getItemWidth());
+            itemDto.setItemHeight(auction.getItem().getItemHeight());
+            itemDto.setArtistId(auction.getItem().getArtist().getArtistId());
+            auctionDto.setItem(itemDto);
+        }
         return auctionDto;
     }
 

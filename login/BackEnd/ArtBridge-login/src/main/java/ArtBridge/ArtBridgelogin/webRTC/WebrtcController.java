@@ -5,8 +5,12 @@ import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.Map;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -16,13 +20,12 @@ public class WebrtcController {
     WebrtcService webrtcService;
 
     @PostMapping("/{seq}/price")
-    public ResponseEntity<String> createBid(@PathVariable("seq") Long seq, @RequestBody AuctionPointDetailDto bidRequest) {
+    public ResponseEntity<?> createBid(@PathVariable("seq") Long seq, @RequestBody AuctionPointDetailDto bidRequest) {
         try {
             webrtcService.createBid(seq, bidRequest);
-            return ResponseEntity.ok("Create Bid successfully.");
-
+            return ResponseEntity.ok(Collections.singletonMap("message", "Create Bid successfully."));
         }catch (Exception e){
-            return ResponseEntity.ok("Create Bid Error");
+            return new ResponseEntity<>("Create Bid Error", HttpStatus.BAD_REQUEST);
         }
     }
 
