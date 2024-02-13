@@ -228,7 +228,7 @@ function updateListOfRooms(rooms) {
           html += '<td>' + (idx + 1) + ' <img src="https://www.webrtc-experiment.com/images/password-protected.png" style="height: 15px; vertical-align: middle;" title="Password Protected Room"></td>';
         }
 
-        html += '<td><span class="max-width" title="' + room.sessionid + '">' + room.sessionid + '</span></td>';
+        html += '<td><span class="max-width" title="' + room.sessionId + '">' + room.sessionId + '</span></td>';
         html += '<td><span class="max-width" title="' + room.owner + '">' + room.owner + '</span></td>';
 
         html += '<td>';
@@ -251,7 +251,7 @@ function updateListOfRooms(rooms) {
           html += '<td><span style="border-bottom: 1px dotted red; color: red;">Room is full</span></td>';
         }
         else {
-          html += '<td><button class="btn join-room" data-roomid="' + room.sessionid + '" data-password-protected="' + (room.isPasswordProtected === true ? 'true' : 'false') +'">Join</button></td>';
+          html += '<td><button class="btn join-room" data-roomid="' + room.sessionId + '" data-password-protected="' + (room.isPasswordProtected === true ? 'true' : 'false') +'">Join</button></td>';
         }
         
         $(tr).html(html);
@@ -332,7 +332,7 @@ function joinAHiddenRoom(roomid) {
             return;
         }
 
-        connection.sessionid = roomid;
+        connection.sessionId = roomid;
         connection.isInitiator = false;
         $('#joinRoomModel').modal('hide');
         openCanvasDesigner();
@@ -343,7 +343,7 @@ function joinAHiddenRoom(roomid) {
 
 function openCanvasDesigner() {
     $('#startRoomModel').modal('hide');
-    var href = location.href + 'demos/dashboard/canvas-designer.html?open=' + connection.isInitiator + '&sessionid=' + connection.sessionid + '&publicRoomIdentifier=' + connection.publicRoomIdentifier + '&userFullName=' + connection.extra.userFullName;
+    var href = location.href + 'demos/dashboard/canvas-designer.html?open=' + connection.isInitiator + '&sessionId=' + connection.sessionId + '&publicRoomIdentifier=' + connection.publicRoomIdentifier + '&userFullName=' + connection.extra.userFullName;
     
     if(!!connection.password) {
       href += '&password=' + connection.password;
@@ -457,7 +457,7 @@ $('#btn-create-room').click(function() {
             connection.publicRoomIdentifier = '';
         }
 
-        connection.sessionid = roomid;
+        connection.sessionId = roomid;
         connection.isInitiator = true;
         openCanvasDesigner();
         $('#btn-create-room').html(initialHTML).prop('disabled', false);

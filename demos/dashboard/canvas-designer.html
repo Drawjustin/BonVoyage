@@ -69,6 +69,8 @@
 <div id="popup" style="display: none; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; text-align: center; padding-top: 20%;">
     <div style="background: white; display: inline-block; padding: 20px;">
         <p id="popupText">입력 중지</p>
+        <button id="returnHomeBtn" style="background-color: lightskyblue;">퇴장하기</button>
+        <button id="nextSessionBtn" style="background-color: greenyellow;">다음 세션으로</button>
     </div>
 </div>
 
@@ -118,6 +120,11 @@ let currentUser = connection.extra.userFullName; // 현재 로그인한 사용�
 
 // 현재 최고 호가 전역변수
 let bidPrice = 0;
+
+// 시간 관련
+let bidPriceTime = 3000;
+let aucEndTime = Infinity;
+let aucSessionTime = 10; //원래 180임
 
 // here goes canvas designer
 var designer = new CanvasDesigner();
@@ -222,18 +229,6 @@ function updateBidButton() {
     document.getElementById('bidBtn').innerHTML = bidPrice + '원';
 }
 
-// // 서버로부터 경매 정보를 받아와 전역 변수에 저장
-// var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
-// function fetchBidPrice() {
-//     return fetch(getBidPriceUrl)
-//     .then(response => response.json())
-//     .then(data => {
-//         bidPrice = data['auctionStartPoint'];
-//         // 버튼 업데이트
-//         updateBidButton();
-//     });
-// }
-
 // // 최신 호가 가져오기 => 통신;... 왜 있냐면 최신호가와 html 상의 호가가 일치하는지 보려고?
 // var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
 // fetch(getBidPriceUrl)
@@ -280,19 +275,35 @@ var socket = io();
 var auctionEnded = false;
 var intervalId;
 var tickReceived = false; // 'tick' 메시지를 받았는지 확인하는 불리언 변수
-var timeLeft = 180;
+var timeLeft = aucSessionTime;
 
 // 팝업 띄우는 함수
-function showPopup(message, timeout) {
+function showPopup(message, timeout, isEnd) {
     var popup = document.getElementById('popup');
     var popupText = document.getElementById('popupText');
+    var returnHomeBtn = document.getElementById('returnHomeBtn');
+    var nextSessionBtn = document.getElementById('nextSessionBtn');
 
     // 팝업에 메시지를 표시
     popupText.textContent = message;
     popup.style.display = 'block';
 
+    if(isEnd) {
+        if (sessionArtist === currentUser) { // 작가 혹은 낙찰자인 경우
+            nextSessionBtn.style.display = 'block';
+            returnHomeBtn.style.display = "none";
+        } else { // 일반 회원인 경우
+            nextSessionBtn.style.display = 'none';
+            returnHomeBtn.style.display = "block";
+        }
+    }
+    else {
+        nextSessionBtn.style.display = 'none';
+        returnHomeBtn.style.display = "none";
+    }
+
     // timeout이 지정되어 있을 경우에만 setTimeout을 호출
-    if (timeout !== Infinity) {
+    if (timeout !== aucEndTime) {
         setTimeout(() => {
             popup.style.display = 'none';
         }, timeout);
@@ -300,15 +311,15 @@ function showPopup(message, timeout) {
 }
 
 var timer = document.getElementById('timer');
-timer.textContent = '180';
-var timeLeft = 180;
+timer.textContent = aucSessionTime.toString();
+var timeLeft = aucSessionTime;
 
 document.getElementById('bidBtn').addEventListener('click', function() {
     // bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked', 타겟을 'all'로, 그리고 호가 정보를 전송
     socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all', price: bidPrice });
 
     // 동시에 자신에게도 팝업 띄우기
-    showPopup("현재 호가: " + bidPrice, 3000);
+    showPopup("현재 호가: " + bidPrice, bidPriceTime, false);
     resetTimer();
 });
 
@@ -319,10 +330,10 @@ socket.on('custom-message', function(data) {
         timer.textContent = data.timeLeft.toString(); // 서버로부터 받은 남은 시간을 화면에 표시
     } else if (data.message === 'auction ended') {
         // 경매 종료 메시지를 받으면 팝업 띄우기
-        showPopup("경매가 종료되었습니다.", Infinity);
+        showPopup("경매가 종료되었습니다.", aucEndTime, true);
     } else if (data.message === 'bidBtn clicked') {
         // 팝업을 띄우기
-        showPopup("현재 호가: " + data.price, 3000);
+        showPopup("현재 호가: " + data.price, bidPriceTime, false);
     } else if (data.message === 'session end') {
         console.log("세션을 종료합니다.");
         connection.close();
@@ -332,14 +343,14 @@ socket.on('custom-message', function(data) {
 
 
 function resetTimer() {
-    timeLeft = 180;
+    timeLeft = aucSessionTime;
     clearInterval(intervalId);
     intervalId = setInterval(() => {
             timeLeft--;
             timer.textContent = timeLeft.toString();
             if (timeLeft <= 0) {
                 clearInterval(intervalId);
-                showPopup("경매가 종료되었습니다.", Infinity);
+                showPopup("경매가 종료되었습니다.", aucEndTime, true);
             }
     }, 1000);
 }
@@ -410,6 +421,20 @@ window.onload = function() {
     });
 };
 
+// 리다이렉트
+var returnHomeBtn = document.getElementById('returnHomeBtn');
+var nextSessionBtn = document.getElementById('nextSessionBtn');
+
+returnHomeBtn.addEventListener('click', function() {
+    //경매 리스트 페이지로
+    window.location.href = 'https://i10a207.p.ssafy.io/api/AuctionListPage';
+});
+
+nextSessionBtn.addEventListener('click', function() {
+    //다음 세션으로
+    //일단 다음 세션 어떻게 만들지 고민중이라 url 이렇게 둠
+    window.location.href = 'https://i10a207.p.ssafy.io/';
+});
 
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
@@ -679,7 +704,7 @@ designer.appendTo(document.getElementById('widget-container'), function() {
             window.tempStream = tempStream;
 
             connection.extra.roomOwner = true;
-            connection.open(params.sessionid, function(isRoomOpened, roomid, error) {
+            connection.open(params.sessionId, function(isRoomOpened, roomid, error) {
                 if (error) {
                     if (error === connection.errors.ROOM_NOT_AVAILABLE) {
                         alert('Someone already created this room. Please either join or create a separate room.');
@@ -693,7 +718,7 @@ designer.appendTo(document.getElementById('widget-container'), function() {
                 });
             });
     } else {
-        connection.join(params.sessionid, function(isRoomJoined, roomid, error) {
+        connection.join(params.sessionId, function(isRoomJoined, roomid, error) {
             if (error) {
                 if (error === connection.errors.ROOM_NOT_AVAILABLE) {
                     alert('This room does not exist. Please either create it or wait for moderator to enter in the room.');
@@ -709,7 +734,7 @@ designer.appendTo(document.getElementById('widget-container'), function() {
                         alert('Invalid password.');
                         return;
                     }
-                    connection.join(params.sessionid, function(isRoomJoined, roomid, error) {
+                    connection.join(params.sessionId, function(isRoomJoined, roomid, error) {
                         if(error) {
                             alert(error);
                         }

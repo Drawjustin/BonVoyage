@@ -288,8 +288,10 @@ function endSession(sessionId) {
 
 // --------------------------
 // socket.io codes goes below
+let bidPriceTime = 3000;
+let aucSessionTime = 10; //원래 180임
 let intervalId;
-let timeLeft = 180;
+let timeLeft = aucSessionTime;
 ioServer(httpApp).on('connection', function(socket) {
     RTCMultiConnectionServer.addSocket(socket, config);
 
@@ -306,7 +308,7 @@ ioServer(httpApp).on('connection', function(socket) {
         if (message.message === 'bidBtn clicked') {
             // 기존의 interval을 제거하고 새 interval 설정
             clearInterval(intervalId);
-            timeLeft = 180;
+            timeLeft = aucSessionTime;
             intervalId = setInterval(() => {
                 timeLeft--;
                 // 모든 클라이언트에게 남은 시간을 보냄
@@ -318,7 +320,7 @@ ioServer(httpApp).on('connection', function(socket) {
                     setTimeout(() => {
                         socket.broadcast.emit(params.socketCustomEvent, { message: 'session end'});
                         socket.disconnect();
-                    }, 3000);
+                    }, bidPriceTime);
                 }
             }, 1000);
         }
