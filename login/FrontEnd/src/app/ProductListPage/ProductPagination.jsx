@@ -24,35 +24,6 @@ const ProductPagination = ({PageLink}) => {
   const searchParams = useSearchParams();
   const [page, setProductId] = useState('');
   const [fetchedData, setFetchedData] = useState([]);
-
-  // 여기에 DB에서 데이터
-
-  // const dummyData = [
-  //   {
-  //     id: 1,
-  //     title: "별이 빛나는 밤",
-  //     image: m1,
-  //     price: 19000,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "배",
-  //     image: m2,
-  //     price: 240000,
-  //   },
-  //   {
-    //     id: 3,
-    //     title: "해바라기",
-    //     image: m3,
-    //     price: 650000,
-    //   },
-    //   {
-  //     id: 4,
-  //     title: "숲",
-  //     image: m4,
-  //     price: 14000,
-  //   },
-  // ];
   
   // 서버에서 데이터를 가져오는 함수
   const fetchDataFromBackend = async (page) => {

@@ -15,11 +15,11 @@ async function ProductListPage() {
   
   const backend_url = 'https://i10a207.p.ssafy.io/api/item';
   const product = {} // await axios.get(`${backend_url}/items`);
-  const currentUser = await getCurrentUser();
+  const currentUser = getCurrentUser();
   // const { currentUser, product } = useContext(ProductContext);
 
     return (
-    // <ProductContext.Provider value={{ product, currentUser: currentUser || defaultValue }}>
+    <ProductContext.Provider value={{ product, currentUser }}>
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className={styles.container} style={{ marginTop: '3vh' }}>
 
