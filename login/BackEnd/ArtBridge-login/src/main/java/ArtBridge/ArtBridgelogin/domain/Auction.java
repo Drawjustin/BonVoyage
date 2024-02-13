@@ -52,6 +52,9 @@ public class Auction {
     @Column(name = "auction_win_date")
     private LocalDateTime auctionWinDate;
 
+    @Column(name = "auction_session_id")
+    private String auctionSessionId;
+
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)

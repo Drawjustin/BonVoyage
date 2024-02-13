@@ -1,18 +1,25 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
+import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
+import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,35 +27,61 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
 
-    //Todo: CREATE
     @Transactional
-    public Auction createAuction(Auction auction) {
-        return auctionRepository.create(auction);
+    public AuctionDto createAuction(AuctionDto auctionDto) {
+        try {
+            Auction auction = new Auction();
+
+            auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
+            auction.setAuctionScheduledTime(auctionDto.getAuctionScheduledTime());
+            auction.setAuctionStatus(auctionDto.getAuctionStatus());
+            auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
+            auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
+            auction.setAuctionCreatedDate(auctionDto.getAuctionCreatedDate());
+            return convertToDto(auctionRepository.create(auction));
+        } catch (DataAccessException e) {
+            throw new MyDataAccessException("Failed to create auction", e);
+        }
     }
 
 
-    //Todo: READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<Auction> readAllAuction(){
-        return auctionRepository.readAll();
+    public List<AuctionDto> readAllAuction(){
+        try {
+            List<Auction> auctions = auctionRepository.readAll();
+
+            if (auctions.isEmpty()) {
+                throw new NoDataFoundException("No artist mentions found");
+            }
+
+            return convertToDtoList(auctions);
+        } catch (DataAccessException e) {
+            throw new MyDataAccessException("Failed to read all artist mentions", e);
+        }
     }
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public Auction readOne(int seq) {
-        return auctionRepository.readOne(seq);
-    }
+    public AuctionDto readOne(int seq) {
+        Auction auction = auctionRepository.readOne(seq);
 
-
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public ArtistDto readAuctionByArtistSeq(int seq) {
-        Item item =  auctionRepository.readItemByAuctionSeq(seq);
-        Artist artist = auctionRepository.readArtistByItemSeq(item.getItemSeq());
-
-        if (artist == null) {
-            throw new NoDataFoundException("Artist not found with ID: " + item.getItemSeq());
+        if (auction == null) {
+            throw new NoDataFoundException("Seq가 " + seq + "인 아티스트 멘션을 찾을 수 없습니다.");
         }
 
-        return convertToDto(artist);
+        return convertToDto(auction);
     }
+
+
+//    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+//    public ArtistDto readAuctionByArtistSeq(int seq) {
+//        Item item =  auctionRepository.readItemByAuctionSeq(seq);
+//        Artist artist = auctionRepository.readArtistByItemSeq(item.getItemSeq());
+//
+//        if (artist == null) {
+//            throw new NoDataFoundException("Artist not found with ID: " + item.getItemSeq());
+//        }
+//
+//        return convertToDto(artist);
+//    }
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public Item readItemByAuctionSeq(int seq) {
         return auctionRepository.readItemByAuctionSeq(seq);
@@ -61,9 +94,16 @@ public class AuctionService {
 
     //Todo: UPDATE
     @Transactional
-    public Auction updateAuction(int seq, Auction updatedAuction) {
-        auctionRepository.updateAuction(seq, updatedAuction);
-        return auctionRepository.readOne(seq);
+    public AuctionDto updateAuction(int seq, AuctionDto updatedAuctionDto) {
+        Auction auction = auctionRepository.readOne(seq);
+
+        if(auction == null) {
+            throw new NoDataFoundException("auction을 찾을 수 없습니다.");
+        }
+        BeanUtils.copyProperties(updatedAuctionDto, auction, "auctionSeq");
+
+        auctionRepository.updateAuction(seq, auction);
+        return convertToDto(auctionRepository.readOne(seq));
     }
 
 
@@ -73,28 +113,33 @@ public class AuctionService {
         auctionRepository.deleteById(seq);
     }
 
-    private Artist convertToEntity(ArtistDto artistDto) {
-        Artist artist = new Artist();
-        artist.setArtistId(artistDto.getId());
-        artist.setArtistName(artistDto.getName());
-        artist.setArtistPwd(artistDto.getPw());
-        artist.setArtistNickname(artistDto.getNickName());
-        artist.setArtistEmail(artistDto.getEmail());
-        artist.setArtistContact(artistDto.getContact());
-        // 다른 필드들도 필요에 따라 추가
+    private Auction convertToEntity(AuctionDto auctionDto) {
+        Auction auction = new Auction();
+        auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
+        auction.setAuctionScheduledTime(auctionDto.getAuctionScheduledTime());
+        auction.setAuctionStatus(auctionDto.getAuctionStatus());
+        auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
+        auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
+        auction.setAuctionCreatedDate(auctionDto.getAuctionCreatedDate());
 
-        return artist;
+        return auction;
     }
 
-    private ArtistDto convertToDto(Artist artist) {
-        ArtistDto artistDto = new ArtistDto();
-        artistDto.setId(artist.getArtistId());
-        artistDto.setName(artist.getArtistName());
-        artistDto.setNickName(artist.getArtistNickname());
-        artistDto.setEmail(artist.getArtistEmail());
-        artistDto.setContact(artist.getArtistContact());
+    private AuctionDto convertToDto(Auction auction) {
+        AuctionDto auctionDto = new AuctionDto();
+        auctionDto.setAuctionSessionId(auction.getAuctionSessionId());
+        auctionDto.setAuctionScheduledTime(auction.getAuctionScheduledTime());
+        auctionDto.setAuctionStatus(auction.getAuctionStatus());
+        auctionDto.setAuctionStartPoint(auction.getAuctionStartPoint());
+        auctionDto.setAuctionAskPoint(auction.getAuctionAskPoint());
+        auctionDto.setAuctionCreatedDate(auction.getAuctionCreatedDate());
+        return auctionDto;
+    }
 
-        return artistDto;
+    private List<AuctionDto> convertToDtoList(List<Auction> auctions) {
+        return auctions.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
 }

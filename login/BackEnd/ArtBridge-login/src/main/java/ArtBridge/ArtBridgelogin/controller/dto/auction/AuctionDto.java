@@ -23,6 +23,7 @@ public class AuctionDto {
     private Boolean auctionIsMiscarried;
     private LocalDateTime auctionMiscarriedDate;
     private LocalDateTime auctionWinDate;
+    private String auctionSessionId;
 
     public void setItem(ItemDto item) {
         this.item = item;

@@ -19,6 +19,7 @@ public class MemberController {
     @Autowired
     private MemberService memberService;
 
+    @GetMapping
     public ResponseEntity<List<MemberDto>> readAllMembers() {
         try {
             List<MemberDto> memberDtos = memberService.readAllMembers();
@@ -43,7 +44,6 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    @ResponseBody
     public ResponseEntity<?> login(@RequestBody MemberLoginForm memberLoginForm) {
         boolean loginResult = memberService.login(memberLoginForm.getId(), memberLoginForm.getPw());
 

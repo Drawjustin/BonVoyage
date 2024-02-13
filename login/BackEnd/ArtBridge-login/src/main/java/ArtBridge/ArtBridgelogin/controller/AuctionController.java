@@ -1,6 +1,8 @@
 package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
+import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
@@ -21,35 +23,65 @@ public class AuctionController {
     private AuctionService auctionService;
 
     @GetMapping
-    public List<Auction> readAlLAuction() {return auctionService.readAllAuction();}
-
-    @GetMapping("/{seq}")
-    public Auction readAuctionById(@PathVariable int seq) {return auctionService.readOne(seq);}
-
-    @PostMapping("/new")
-    public Auction createAuction(@RequestBody Auction Auction) {
-        return auctionService.createAuction(Auction);
-    }
-    @GetMapping("/artist/{seq}")
-    public ArtistDto readAuctionByArtistSeq(@PathVariable int seq) {return auctionService.readAuctionByArtistSeq(seq);}
-
-    @GetMapping("/item/{seq}")
-    public Item readItemByAuctionSeq(@PathVariable int seq) {return auctionService.readItemByAuctionSeq(seq);}
-    @GetMapping("/{Seq}")
-    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
-        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
-
-        if (artistDto != null) {
-            // 조회 성공 시 200 OK와 함께 메시지 반환
-            return ResponseEntity.ok("조회한 Aritst " + artistDto);
-        } else {
-            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+    public ResponseEntity<List<AuctionDto>> readAlLAuction() {
+        try {
+            List<AuctionDto> auctionDtos = auctionService.readAllAuction();
+            return ResponseEntity.ok(auctionDtos);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @GetMapping("/{seq}")
+    public ResponseEntity<AuctionDto> readAuctionById(@PathVariable int seq) {
+        try {
+            AuctionDto auctionDto = auctionService.readOne(seq);
+            return ResponseEntity.ok(auctionDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto) {
+        try {
+            AuctionDto createdAuction = auctionService.createAuction(auctionDto);
+            return ResponseEntity.ok(createdAuction);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+//    @GetMapping("/artist/{seq}")
+//    public ArtistDto readAuctionByArtistSeq(@PathVariable int seq) {
+//        return auctionService.readAuctionByArtistSeq(seq);
+//    }
+
+    @GetMapping("/item/{seq}")
+    public Item readItemByAuctionSeq(@PathVariable int seq) {
+        return auctionService.readItemByAuctionSeq(seq);
+    }
+
+//    @GetMapping("/{Seq}")
+//    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
+//        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
+//
+//        if (artistDto != null) {
+//            // 조회 성공 시 200 OK와 함께 메시지 반환
+//            return ResponseEntity.ok("조회한 Aritst " + artistDto);
+//        } else {
+//            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//    }
+
     @PutMapping("/{seq}")
-    public Auction updateAuction(@PathVariable int seq, @RequestBody Auction updatedAuction) {
-        return auctionService.updateAuction(seq, updatedAuction);
+    public ResponseEntity<AuctionDto> updateAuction(@PathVariable int seq, @RequestBody AuctionDto updatedAuctionDto) {
+        try {
+            AuctionDto auctionDto = auctionService.updateAuction(seq, updatedAuctionDto);
+            return ResponseEntity.ok(auctionDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @DeleteMapping("/{seq}")
