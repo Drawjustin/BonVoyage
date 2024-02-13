@@ -65,6 +65,7 @@ public class ArtistController {
 
     @PostMapping("/new")
     public ResponseEntity<?> createArtist(@RequestBody ArtistDto artistDto) {
+        System.out.println(artistDto);
         ArtistDto createdArtist = artistService.createArtist(artistDto);
 
         if (createdArtist != null) {

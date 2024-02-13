@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class ArtistDto {
 
+    private Long seq;
     private String name;
     private String id;
     private String pw;

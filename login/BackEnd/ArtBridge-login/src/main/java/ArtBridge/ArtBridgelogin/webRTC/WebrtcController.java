@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/auction")
+@RequestMapping("/api/bid")
 public class WebrtcController {
     @Autowired
     WebrtcService webrtcService;
 
-    @PostMapping("/{seq}/bid")
+    @PostMapping("/{seq}/price")
     public ResponseEntity<String> createBid(@PathVariable("seq") Long seq, @RequestBody AuctionPointDetailDto bidRequest) {
         try {
-            System.out.println("1231231231");
             webrtcService.createBid(seq, bidRequest);
             return ResponseEntity.ok("Create Bid successfully.");
 
