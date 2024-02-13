@@ -9,7 +9,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Container = styled('nav')({
   
-  width: '30vw',
+  width: '18vw',
   display: 'flex',
   background: 'transparent',
   justifyContent: 'space-between',

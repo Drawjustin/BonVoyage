@@ -17,7 +17,7 @@ const ProductCard = ({ data, currentUser }:any) => {
     >
       <div className={styles['image-container']}>
         <Image
-          src={data.imageSrc}
+          src={data.image}
           fill
           sizes='auto'
           className={styles['product-image']}

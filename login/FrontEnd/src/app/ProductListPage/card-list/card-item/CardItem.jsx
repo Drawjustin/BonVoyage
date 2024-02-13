@@ -1,13 +1,13 @@
 'use client'
-import React from 'react'
-import { Link } from 'react-router-dom';
+import React from 'react';
+import Link from 'next/link';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { addToCart } from '../../../../store/cart/cart.slice';
 import styles from './CardItem.module.scss';
-import '../../m1.jpg';
-import '../../m2.jpg';
-import '../../m3.jpg';
-import '../../m4.jpg';
+import m1 from '../../m1.jpg';
+import m2 from '../../m2.jpg';
+import m3 from '../../m3.jpg';
+import m4 from '../../m4.jpg';
 
 
 const CardItem = ({ item }) => {
@@ -24,25 +24,25 @@ const CardItem = ({ item }) => {
     {
       id: 1,
       title: "별이 빛나는 밤",
-      image: "./m1.jpg",
+      image: m1,
       price: 19000,
     },
     {
       id: 2,
       title: "배",
-      image: "./m2.jpg",
+      image: m2,
       price: 240000,
     },
     {
       id: 3,
       title: "해바라기",
-      image: "./m3.jpg",
+      image: m3,
       price: 650000,
     },
     {
       id: 4,
       title: "숲",
-      image: "./m4.jpg",
+      image: m4,
       price: 14000,
     },
   ];
@@ -53,16 +53,19 @@ const CardItem = ({ item }) => {
 
   return (
     <li className={styles.card_item}>
-      <Link to={`/product/${item.id}`}>
+      <Link href={`/product/${item.id}`}>
+        <a>
         <img
-          src={require(`${selectedDummyData.image}`).default}
+          src={selectedDummyData.image}
           width={"80%"}
           height={"200px"}
           alt="product card"
         />
+        
+        <h5>{item.title.substring(0, 15)}...</h5>
+        </a>
       </Link>
 
-      <h5>{item.title.substring(0, 15)}...</h5>
 
       <div>
         <button
