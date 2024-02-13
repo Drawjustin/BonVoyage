@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 // import getCurrentUser from '@/app/actions/getCurrentUser';
 import { signIn, signOut, useSession } from 'next-auth/react';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 // import Link from 'next/link';
 
 
@@ -55,25 +56,21 @@ const Underline = styled('ul')({
 
 export const ButtonContainer = () => {
 
-  const {data:session} = useSession();
-
-  let User;
+  const session = getCurrentUser();
 
   const buttonList = [];
 
-  User = session?.user.artistId ? session?.user.artistId : session?.user.memberId;
 
-
-  if (!User) {
+  if (!session.id) {
     buttonList.push(
-      { text: '로그인', func: () => signIn() },
+      { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
     );
   } else {
     buttonList.push(
       { text: '장바구니', func: () => navigate.push('/CartPage') },
       { text: '마이페이지', func: () => navigate.push('/MyPage') },
-      { text: '로그아웃', func: () => {signOut(); navigate.push('/')} },
+      { text: '로그아웃', func: () => {sessionStorage.setItem('session', null); alert('로그아웃 완료'); navigate.push('/')} },
     );
   }
   
