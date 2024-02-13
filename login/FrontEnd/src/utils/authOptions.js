@@ -67,9 +67,6 @@ export const authOptions = {
   jwt: {
     maxAge: 30 * 24 * 60 * 60, // 30days
   },
-  pages: {
-    signIn: '/LoginPage',
-  },
   callbacks: {
     async jwt({ token, user }) {
         //console.log(token);

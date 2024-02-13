@@ -8,7 +8,7 @@ import ArtistCard from '@/components/Artists/ArtistCard/ArtistCard';
 
 const ArtistListPage = async () => {
 
-  const currentUser = await getCurrentUser();
+  const currentUser = getCurrentUser();
   const Artists = {}; //await axios.get('https://i10a207.p.ssafy.io/api/artists');
 
   return (

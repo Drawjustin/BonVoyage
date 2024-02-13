@@ -2,7 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import styles from "./IslandHtmlOverlay.module.scss";
 import { Link } from "react-router-dom";
 import { useRouter } from 'next/navigation';
-import ReviewImg from "./review.png"
+import Img1 from "./img/review.png"
+import Img4 from "./img/artist.png"
 
 const IslandHtmlOverlay = ({ selectedIsland } ) => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -15,21 +16,24 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
 
   const navigate = useRouter();
 
-  // 리뷰
+  // 작품 리뷰
   const handleIslandClick1 = () => {
-    navigate.push('/review')
+    navigate.push('/ReviewPage')
   };
 
+  // 판매 작품
   const handleIslandClick2 = () => {
-    navigate.push('/review')
+    navigate.push('/ProductListPage')
   };
 
+  // 경매 작품
   const handleIslandClick3 = () => {
-    navigate.push('/review')
+    navigate.push('/AuctionListPage')
   };
 
+  // 작가 목록
   const handleIslandClick4 = () => {
-    navigate.push('/review')
+    navigate.push('/ArtistListPage')
   };
 
   const renderContent = () => {
@@ -39,7 +43,7 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
           <div className={styles.card}>
             <div className={styles.icon_container}>
               <div className={styles.icon}>
-                <img src={ReviewImg} alt="Review" />
+                <img src={Img1} alt="Review" />
               </div>
             </div>
           <div className={styles.title}>작품 리뷰</div>
@@ -52,6 +56,11 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
       case 2:
         return (
           <div className={styles.card}>
+            <div className={styles.icon_container}>
+              <div className={styles.icon}>
+                <img src={Img1} alt="Review" />
+              </div>
+            </div>
           <div className={styles.title}>판매 작품</div>
           <div className={styles.content}>
             <div>판매 작품을 둘러보고 작품을 구매해보세요!</div>
@@ -62,9 +71,14 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
       case 3:
         return (
           <div className={styles.card}>
+            <div className={styles.icon_container}>
+              <div className={styles.icon}>
+                <img src={Img1} alt="Review" />
+              </div>
+            </div>
           <div className={styles.title}>경매 작품</div>
           <div className={styles.content}>
-            <div>경매 작품을 둘러보고 작품 경매에 참여해보세요!</div>
+            <div>경매 작품을 둘러보고<br></br>작품 경매에 참여해보세요!</div>
           </div>
           <button onClick={handleIslandClick3} className={styles.btn}>바로 가기</button>
           </div>
@@ -72,9 +86,14 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
       case 4:
         return (
           <div className={styles.card}>
+            <div className={styles.icon_container}>
+              <div className={styles.icon}>
+                <img src={Img4} alt="Review" />
+              </div>
+            </div>
           <div className={styles.title}>작가 목록</div>
           <div className={styles.content}>
-            <div>작가들을 둘러보고 소통의 기회를 가져보세요!</div>
+            <div>작가들을 둘러보고<br></br>소통의 기회를 가져보세요!</div>
           </div>
           <button onClick={handleIslandClick4} className={styles.btn}>바로 가기</button>
           </div>

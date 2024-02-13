@@ -27,11 +27,11 @@ const AuctionListPage = async () => {
 
   async function handleFunc (seq, user) {
 
-    const Id = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
+    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
     const ClickedId = user.artistId ? user.artistId : user.memberId
     const WhetherArtist = user.artistId ? true : false
 
-    const send = {id:Id.data, userId:ClickedId, IsArtist:WhetherArtist};
+    const send = {id:Auction.data, userId:ClickedId, IsArtist:WhetherArtist};
 
     const data = await axios.post('https://i10a207.p.ssafy.io/api/auction', send, { headers: 
     {

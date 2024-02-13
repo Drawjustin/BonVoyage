@@ -16,8 +16,8 @@ const Ocean = () => {
 
 export default Ocean
 
-// import React, {useMemo}from 'react';
-// import { PlaneGeometry, MeshBasicMaterial, Mesh, ShaderMaterial } from 'three';
+// import React, { useMemo } from 'react';
+// import { PlaneGeometry, MeshBasicMaterial, Mesh, ShaderMaterial, Vector3  } from 'three';
 
 // const Ocean = () => {
 //     const planeGeometry = new PlaneGeometry(1000, 300, 1, 1);
@@ -27,8 +27,8 @@ export default Ocean
 //     const shaderMaterial = useMemo(() => {
 //       const shader = {
 //         uniforms: {
-//             colorTop: { value: new Vector3(84, 160, 227) },
-//             colorBottom: { value: new Vector3(255, 255, 255) }
+//             colorTop: { value: new Vector3(255, 255, 255) },
+//             colorBottom: { value: new Vector3(84, 160, 227)  }
 //         },
 //         vertexShader: `
 //             varying vec2 vUv;
