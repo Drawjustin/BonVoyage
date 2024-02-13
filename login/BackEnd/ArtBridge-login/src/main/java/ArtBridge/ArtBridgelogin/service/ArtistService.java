@@ -148,6 +148,7 @@ public class ArtistService {
     // Function
     private Artist convertToEntity(ArtistDto artistDto) {
         Artist artist = new Artist();
+        artist.setArtistSeq(artistDto.getSeq());
         artist.setArtistId(artistDto.getId());
         artist.setArtistName(artistDto.getName());
         artist.setArtistPwd(artistDto.getPw());
@@ -161,6 +162,7 @@ public class ArtistService {
 
     private ArtistDto convertToDto(Artist artist) {
         ArtistDto artistDto = new ArtistDto();
+        artistDto.setSeq(artist.getArtistSeq());
         artistDto.setId(artist.getArtistId());
         artistDto.setName(artist.getArtistName());
         artistDto.setNickName(artist.getArtistNickname());
