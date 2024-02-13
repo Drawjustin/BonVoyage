@@ -38,7 +38,6 @@ public class ArtistMentionService {
     public ArtistMentionDto createArtistMention(ArtistMentionDto artistMentionDto) {
         try {
             ArtistMention artistMention = new ArtistMention();
-
             artistMention.setArtist(artistRepository.readArtistById(artistMentionDto.getArtistId()));
             artistMention.setArtistMentionSubject(artistMentionDto.getSubject());
             artistMention.setArtistMentionContent(artistMentionDto.getContent());
