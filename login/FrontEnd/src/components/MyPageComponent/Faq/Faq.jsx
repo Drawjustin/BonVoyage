@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import styles from './Faq.module.scss';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import Accordion from 'react-bootstrap/Accordion';
 
 const Faq = () => {
