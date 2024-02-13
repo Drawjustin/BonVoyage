@@ -46,17 +46,15 @@ public class ArtistRepository {
                 .fetchOne();
     }
 
-    @Transactional(readOnly = true)
-    public Optional<Artist> findById(String artistId) {
-        QArtist qArtist = QArtist.artist;
-
-        Artist artist = queryFactory
-                .selectFrom(qArtist)
-                .where(qArtist.artistId.eq(artistId))
-                .fetchOne();
-
-        return Optional.ofNullable(artist);
-    }
+//    @Transactional(readOnly = true)
+//    public Optional<Artist> findById(String artistId) {
+//        Artist artist = queryFactory
+//                .selectFrom(qArtist)
+//                .where(qArtist.artistId.eq(artistId))
+//                .fetchOne();
+//
+//        return Optional.ofNullable(artist);
+//    }
 
     public List<Artist> readAll() {
         return queryFactory

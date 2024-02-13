@@ -77,4 +77,8 @@ public class Item implements Serializable {
     @OneToMany(mappedBy = "item")
     @JsonManagedReference
     private List<SaleLike> saleLikes;
+
+//    @OneToOne(mappedBy = "item")
+//    @JsonManagedReference
+//    private Review review;
 }

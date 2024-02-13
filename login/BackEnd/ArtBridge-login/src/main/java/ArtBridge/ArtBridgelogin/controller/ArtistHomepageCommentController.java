@@ -21,8 +21,8 @@ public class ArtistHomepageCommentController {
         return artistHomepageCommentService.readAllArtistsHomepageComment();
     }
 
-    @GetMapping("/{id}")
-    public ArtistHomepageComment readArtistMentionById(@PathVariable Long seq) {
+    @GetMapping("/{seq}")
+    public ArtistHomepageComment readArtistMentionById(@PathVariable(value = "seq") Long seq) {
         return artistHomepageCommentService.readOne(seq);
     }
 
@@ -31,13 +31,13 @@ public class ArtistHomepageCommentController {
         return artistHomepageCommentService.createArtistHomepageComment(artistHomepageComment);
     }
 
-    @PutMapping("/{id}")
-    public ArtistHomepageComment updateArtistHomepageComment(@PathVariable Long seq, @RequestBody ArtistHomepageComment updatedArtistHomepageComment) {
+    @PutMapping("/{seq}")
+    public ArtistHomepageComment updateArtistHomepageComment(@PathVariable(value = "seq") Long seq, @RequestBody ArtistHomepageComment updatedArtistHomepageComment) {
         return artistHomepageCommentService.updateArtistHomepageComment(seq, updatedArtistHomepageComment);
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteArtistHomepageComment(@PathVariable Long seq) {
+    @DeleteMapping("/{seq}")
+    public void deleteArtistHomepageComment(@PathVariable(value = "seq") Long seq) {
         artistHomepageCommentService.deleteArtistHomepageComment(seq);
     }
 }

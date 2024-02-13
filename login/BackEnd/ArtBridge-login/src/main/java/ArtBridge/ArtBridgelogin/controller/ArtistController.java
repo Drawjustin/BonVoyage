@@ -50,7 +50,7 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> readArtistById(@PathVariable String id) {
+    public ResponseEntity<?> readArtistById(@PathVariable(value = "id") String id) {
         ArtistDto artistDto = artistService.readOne(id);
 
         if (artistDto != null) {
@@ -78,7 +78,7 @@ public class ArtistController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateArtist(@PathVariable String id, @RequestBody ArtistDto updatedArtist) {
+    public ResponseEntity<?> updateArtist(@PathVariable(value = "id") String id, @RequestBody ArtistDto updatedArtist) {
         ArtistDto artistDto = artistService.updateArtist(id, updatedArtist);
 
         if (artistDto != null) {
@@ -92,7 +92,7 @@ public class ArtistController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteArtist(@PathVariable String id) {
+    public ResponseEntity<?> deleteArtist(@PathVariable(value = "id") String id) {
         boolean deleted = artistService.deleteArtist(id);
 
         if (deleted) {

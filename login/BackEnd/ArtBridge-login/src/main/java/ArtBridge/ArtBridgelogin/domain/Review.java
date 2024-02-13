@@ -36,4 +36,14 @@ public class Review {
     @JsonBackReference
     @JoinColumn(name = "member_seq")
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JsonBackReference
+//    @JoinColumn(name = "item_seq")
+//    private Item item;
 }

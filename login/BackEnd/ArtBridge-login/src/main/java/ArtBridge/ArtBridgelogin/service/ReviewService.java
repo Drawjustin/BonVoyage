@@ -32,6 +32,7 @@ public class ReviewService {
             Review review = convertToEntity(reviewDto);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewVisit(0);
+            System.out.println(review.getReviewTitle());
 
             reviewRepository.createReview(review);
         } catch (DataAccessException e) {
@@ -99,7 +100,9 @@ public class ReviewService {
 
     private ReviewDto convertToDto(Review review) {
         ReviewDto reviewDto = new ReviewDto();
-        BeanUtils.copyProperties(review, reviewDto);
+        reviewDto.setSeq(review.getReviewSeq());
+        reviewDto.setContent(review.getReviewContent());
+        reviewDto.setTitle(reviewDto.getTitle());
         return reviewDto;
     }
 

@@ -66,7 +66,7 @@ public class Member {
 
     // One-to-Many relationship with ArtistHomepageComment
     @OneToMany(mappedBy = "member")
-    @JsonManagedReference
+    @JsonManagedReference("artist")
     private List<ArtistHomepageComment> artistHomepageComments;
 
     // One-to-Many relationship with ArtistMentionComment

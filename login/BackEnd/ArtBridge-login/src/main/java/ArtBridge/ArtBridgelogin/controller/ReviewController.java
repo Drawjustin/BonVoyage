@@ -34,7 +34,7 @@ public class ReviewController {
 
     // 특정 리뷰 조회
     @GetMapping("/{id}")
-    public ResponseEntity<?> readReviewById(@PathVariable int id) {
+    public ResponseEntity<?> readReviewById(@PathVariable(value = "id") int id) {
         try {
             ReviewDto reviewDto = reviewService.readReviewBySeq(id);
             return ResponseEntity.ok(reviewDto);
@@ -59,7 +59,7 @@ public class ReviewController {
 
     // 리뷰 수정
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateReview(@PathVariable int id, @RequestBody ReviewDto updatedReview) {
+    public ResponseEntity<?> updateReview(@PathVariable(value = "id") int id, @RequestBody ReviewDto updatedReview) {
         try {
             ReviewDto reviewDto = reviewService.updateReview(id, updatedReview);
             return ResponseEntity.ok(reviewDto);
@@ -72,7 +72,7 @@ public class ReviewController {
 
     // 리뷰 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteReview(@PathVariable int id) {
+    public ResponseEntity<?> deleteReview(@PathVariable(value = "id") int id) {
         try {
             reviewService.deleteById(id);
             return ResponseEntity.noContent().build();

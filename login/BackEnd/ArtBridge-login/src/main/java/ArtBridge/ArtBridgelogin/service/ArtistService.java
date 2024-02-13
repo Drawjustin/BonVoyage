@@ -28,7 +28,7 @@ public class ArtistService {
         try {
             // 아티스트 ID를 통해 이미 존재하는 아티스트인지 확인
             String artistId = artistDto.getId();
-            if (artistRepository.findById(artistId).isPresent()) {
+            if (artistRepository.readArtistById(artistId) != null) {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
             // ArtistDto를 Entity로 변환
@@ -105,8 +105,8 @@ public class ArtistService {
     @Transactional
     public ArtistDto updateArtist(String artistId, ArtistDto updatedArtistDto) {
         try {
-            Artist artist = artistRepository.findById(artistId)
-                    .orElseThrow(() -> new NoDataFoundException("등록된 작가가 없습니다."));
+            Artist artist = artistRepository.readArtistById(artistId);
+//                    .orElseThrow(() -> new NoDataFoundException("등록된 작가가 없습니다."));
 
             // 필드 설정
             artist.setArtistName(updatedArtistDto.getName());
@@ -155,7 +155,6 @@ public class ArtistService {
         artist.setArtistNickname(artistDto.getNickName());
         artist.setArtistEmail(artistDto.getEmail());
         artist.setArtistContact(artistDto.getContact());
-        // 다른 필드들도 필요에 따라 추가
 
         return artist;
     }
