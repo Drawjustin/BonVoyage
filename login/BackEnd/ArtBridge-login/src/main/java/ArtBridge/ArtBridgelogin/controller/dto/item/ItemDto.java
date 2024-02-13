@@ -11,9 +11,6 @@ public class ItemDto {
     private int itemLike;
     private Long itemSellPrice;
     private boolean itemIsSold;
-    private ArtistDto artist;
+    private String artistId;
 
-    public void setArtist(ArtistDto artist) {
-        this.artist = artist;
-    }
 }

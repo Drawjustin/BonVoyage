@@ -89,6 +89,18 @@ public class ArtistService {
         }
     }
 
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public Artist readArtistById(String artistId) {
+        Artist findArtist = artistRepository.readArtistById(artistId);
+
+        if (findArtist == null) {
+            throw new NoDataFoundException("ArtistSeq not found for artist with ID: " + artistId);
+        }
+
+        return findArtist;
+    }
+
+
     // UPDATE
     @Transactional
     public ArtistDto updateArtist(String artistId, ArtistDto updatedArtistDto) {

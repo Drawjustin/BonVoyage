@@ -7,6 +7,7 @@ import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ import java.util.stream.Collectors;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+
+    @Autowired
+    private ArtistService artistService;
 
 
     //Todo: CREATE
@@ -61,27 +65,23 @@ public class ItemService {
 
     @Transactional
     public ItemDto createItemDto(ItemDto itemDto) {
-        // 유효성 검사 등 필요한 로직 추가
-        // ...
-        //Temporary
-        Artist artist = new Artist();
-        artist.setArtistSeq(1L);
-//        artist.setArtistId("sampleId");
-//        artist.setArtistPwd("samplePwd");
-//        artist.setArtistName("Sample Artist");
-//        artist.setArtistNickname("Sample Nickname");
-//        artist.setArtistEmail("sample@example.com");
-//        artist.setArtistContact("123-456-7890");
-//        artist.setArtistPoint(100L);
-//        artist.setArtistHistory("Sample history");
-//        artist.setArtistIsdeleted(false);
-//        artist.setArtistDeletedDate(null);
-//        artist.setArtistCreatedDate(LocalDateTime.now());
 
         Item newItem = convertToEntity(itemDto);
+
+
+
+        newItem.setArtist(artistService.readArtistById(itemDto.getArtistId()));
+
+        newItem.setItemName(itemDto.getItemName());
+        newItem.setItemWidth(itemDto.getItemWidth());
+        newItem.setItemHeight(itemDto.getItemHeight());
+        newItem.setItemLike(itemDto.getItemLike());
+        newItem.setItemSellPrice(itemDto.getItemSellPrice());
         newItem.setItemCreatedDate(LocalDateTime.now());
-        newItem.setArtist(artist);
+
         Item createdItem = itemRepository.create(newItem);
+
+
         return convertToDto(createdItem);
     }
 
@@ -125,7 +125,7 @@ public class ItemService {
         if (item.getArtist() != null) {
             ArtistDto artistDto = new ArtistDto();
             artistDto.setId(item.getArtist().getArtistId());
-            itemDto.setArtist(artistDto);
+            itemDto.setArtistId(artistDto.getId());
         }
 
         return itemDto;
@@ -149,12 +149,13 @@ public class ItemService {
         item.setItemIsSold(itemDto.isItemIsSold());
 
         // Map Artist entity
-        if (itemDto.getArtist() != null) {
+        if (itemDto.getArtistId() != null) {
             Artist artist = new Artist();
-            artist.setArtistId(itemDto.getArtist().getId());  // Assuming you have setId method in ArtistDto
+            artist.setArtistId(itemDto.getArtistId());  // Assuming you have setId method in ArtistDto
             item.setArtist(artist);
         }
 
         return item;
     }
+
 }

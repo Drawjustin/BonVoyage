@@ -41,10 +41,10 @@ public class ArtistMentionCommentController {
         }
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
-        try {
+    @PostMapping("/new")public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
+                try {
             ArtistMentionCommentDto createdArtistMentionComment = artistMentionCommentService.createArtistMentionComment(artistMentionCommentDto);
+//            System.out.println(createdArtistMentionComment.toString());
             return ResponseEntity.ok(createdArtistMentionComment);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

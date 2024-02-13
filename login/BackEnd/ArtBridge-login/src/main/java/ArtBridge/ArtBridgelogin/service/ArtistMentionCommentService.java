@@ -3,9 +3,13 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
+import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
+import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +19,12 @@ import java.util.stream.Collectors;
 public class ArtistMentionCommentService {
 
     private final ArtistMentionCommentRepository artistMentionCommentRepository;
+
+    @Autowired
+    private ArtistMentionRepository artistMentionRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
 
     public List<ArtistMentionCommentDto> readAllArtistMentionComments() {
         try {
@@ -38,7 +48,14 @@ public class ArtistMentionCommentService {
 
     public ArtistMentionCommentDto createArtistMentionComment(ArtistMentionCommentDto commentDto) {
         try {
-            ArtistMentionComment artistMentionComment = convertDtoToEntity(commentDto);
+
+            System.out.println("check");
+            ArtistMentionComment artistMentionComment = new ArtistMentionComment();
+
+            artistMentionComment.setArtistMention(artistMentionRepository.readOne(commentDto.getArtistMentionSeq()));
+            artistMentionComment.setMember(memberRepository.readMemberById(commentDto.getMemberId()));
+            artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
+            artistMentionComment.setArtistMentionCommentCreatedDate(LocalDateTime.now());
             ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.save(artistMentionComment);
             return convertEntityToDto(createdArtistMentionComment);
         } catch (Exception e) {
@@ -89,7 +106,8 @@ public class ArtistMentionCommentService {
 
     private ArtistMentionComment convertDtoToEntity(ArtistMentionCommentDto commentDto) {
         ArtistMentionComment artistMentionComment = new ArtistMentionComment();
-        artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
+
+
         // 나머지 필드도 복사해야 함
         return artistMentionComment;
     }

@@ -7,6 +7,7 @@ import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -52,7 +53,6 @@ public class  ItemController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
         }
     }
-
     @PostMapping("/new")
     public ResponseEntity<?> createItem(@RequestBody ItemDto itemDto) {
         try {

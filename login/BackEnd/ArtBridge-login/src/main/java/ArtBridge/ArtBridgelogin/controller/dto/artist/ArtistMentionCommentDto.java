@@ -10,6 +10,9 @@ import java.util.stream.Collectors;
 public class ArtistMentionCommentDto {
     private String content;
 
+    private Long artistMentionSeq;
+
+    private String memberId;
 
 
 }
