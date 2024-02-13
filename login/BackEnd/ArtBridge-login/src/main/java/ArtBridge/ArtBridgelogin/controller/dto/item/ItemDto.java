@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class ItemDto {
     private String itemName;
+    private String explain;
     private int itemWidth;
     private int itemHeight;
     private int itemLike;

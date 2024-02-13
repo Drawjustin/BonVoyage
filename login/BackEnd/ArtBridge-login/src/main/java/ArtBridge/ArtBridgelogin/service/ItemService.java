@@ -68,11 +68,10 @@ public class ItemService {
 
         Item newItem = convertToEntity(itemDto);
 
-
-
         newItem.setArtist(artistService.readArtistById(itemDto.getArtistId()));
 
         newItem.setItemName(itemDto.getItemName());
+        newItem.setExplain(itemDto.getExplain());
         newItem.setItemWidth(itemDto.getItemWidth());
         newItem.setItemHeight(itemDto.getItemHeight());
         newItem.setItemLike(itemDto.getItemLike());
@@ -120,6 +119,7 @@ public class ItemService {
         itemDto.setItemLike(item.getItemLike());
         itemDto.setItemSellPrice(item.getItemSellPrice());
         itemDto.setItemIsSold(item.isItemIsSold());
+        itemDto.setExplain(item.getExplain());
 
         // Map ArtistDto
         if (item.getArtist() != null) {

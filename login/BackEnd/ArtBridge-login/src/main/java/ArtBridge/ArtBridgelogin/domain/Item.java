@@ -20,6 +20,9 @@ public class Item {
     @Column(name = "item_name", nullable = false, length = 100)
     private String itemName;
 
+    @Column(name = "item_explain")
+    private String explain;
+
     @Column(name = "item_width", nullable = false)
     private int itemWidth;
 
