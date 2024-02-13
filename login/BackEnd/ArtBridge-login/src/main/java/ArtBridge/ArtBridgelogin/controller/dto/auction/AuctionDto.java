@@ -1,15 +1,7 @@
 package ArtBridge.ArtBridgelogin.controller.dto.auction;
 
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
-import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
-import ArtBridge.ArtBridgelogin.domain.Connection.AuctionLike;
-import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.domain.MemberAuctionBidding;
-import ArtBridge.ArtBridgelogin.domain.OpenVidu.Meeting;
-import ArtBridge.ArtBridgelogin.domain.OrderDetail;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
+
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +29,5 @@ public class AuctionDto {
     }
 
     private ItemDto item;
-
-
 
 }

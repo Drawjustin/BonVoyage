@@ -1,40 +1,81 @@
 package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.service.ArtistMentionCommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/api/artistMentionComment")
 @RequiredArgsConstructor
 public class ArtistMentionCommentController {
 
-    @Autowired
-    private ArtistMentionCommentService artistMentionCommentService;
+    private final ArtistMentionCommentService artistMentionCommentService;
 
     @GetMapping
-    public List<ArtistMentionComment> readAlLArtistMentionComment() {return artistMentionCommentService.readAllArtistsMentionComment();}
+    public ResponseEntity<List<ArtistMentionCommentDto>> readAllArtistMentionComments() {
+        try {
+            List<ArtistMentionCommentDto> artistMentionComments = artistMentionCommentService.readAllArtistMentionComments();
+            return ResponseEntity.ok(artistMentionComments);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     @GetMapping("/{id}")
-    public ArtistMentionComment readArtistMentionById(@PathVariable Long id) {return artistMentionCommentService.readOne(id);}
+    public ResponseEntity<ArtistMentionCommentDto> readArtistMentionCommentById(@PathVariable Long id) {
+        try {
+            ArtistMentionCommentDto artistMentionComment = artistMentionCommentService.readArtistMentionCommentById(id);
+            if (artistMentionComment != null) {
+                return ResponseEntity.ok(artistMentionComment);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     @PostMapping("/new")
-    public ArtistMentionComment createArtistMentionComment(@RequestBody ArtistMentionComment artistMentionComment) {
-        return artistMentionCommentService.createArtisMentioneComment(artistMentionComment);
+    public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
+        try {
+            ArtistMentionCommentDto createdArtistMentionComment = artistMentionCommentService.createArtistMentionComment(artistMentionCommentDto);
+            return ResponseEntity.ok(createdArtistMentionComment);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @PutMapping("/{id}")
-    public ArtistMentionComment updateArtistMentionComment(@PathVariable Long id, @RequestBody ArtistMentionComment updatedArtistMentionComment) {
-        return artistMentionCommentService.updateArtistMentionComment(id, updatedArtistMentionComment);
+    public ResponseEntity<ArtistMentionCommentDto> updateArtistMentionComment(@PathVariable Long id, @RequestBody ArtistMentionCommentDto updatedArtistMentionCommentDto) {
+        try {
+            ArtistMentionCommentDto artistMentionComment = artistMentionCommentService.updateArtistMentionComment(id, updatedArtistMentionCommentDto);
+            if (artistMentionComment != null) {
+                return ResponseEntity.ok(artistMentionComment);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArtistMentionComment(@PathVariable Long id) {
-        artistMentionCommentService.deleteArtistMentionComment(id);
+    public ResponseEntity<Void> deleteArtistMentionComment(@PathVariable Long id) {
+        try {
+            boolean deleted = artistMentionCommentService.deleteArtistMentionComment(id);
+            if (deleted) {
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

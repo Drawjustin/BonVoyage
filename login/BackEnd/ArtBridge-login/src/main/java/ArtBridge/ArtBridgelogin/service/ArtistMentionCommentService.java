@@ -1,59 +1,96 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ArtistMentionCommentService {
 
-
     private final ArtistMentionCommentRepository artistMentionCommentRepository;
 
-    //TODO: CRETE
-    @Transactional
-    public ArtistMentionComment createArtisMentioneComment(ArtistMentionComment artistMentionComment) {
-        return artistMentionCommentRepository.create(artistMentionComment);
-    }
-
-
-    //TODO: READ
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public List<ArtistMentionComment> readAllArtistsMentionComment() {
-        return artistMentionCommentRepository.readAll();
-    }
-
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public ArtistMentionComment readOne(Long id) {
-        return artistMentionCommentRepository.readOne(id);
-    }
-
-
-    //TODO: UPDATE
-    @Transactional
-    public ArtistMentionComment updateArtistMentionComment(Long seq, ArtistMentionComment updatedArtistMentionComment) {
-        ArtistMentionComment existingArtistMentionComment = artistMentionCommentRepository.readOne(seq);
-
-        if (existingArtistMentionComment != null) {
-            // 업데이트할 정보를 새로운 정보로 설정
-            existingArtistMentionComment.setArtistMentionCommentContent(updatedArtistMentionComment.getArtistMentionCommentContent());
-            artistMentionCommentRepository.updateArtistMentionComment(seq, existingArtistMentionComment);
-            return existingArtistMentionComment;
-        } else {
-            return null;
+    public List<ArtistMentionCommentDto> readAllArtistMentionComments() {
+        try {
+            List<ArtistMentionComment> artistMentionComments = artistMentionCommentRepository.findAll();
+            return convertEntityListToDtoList(artistMentionComments);
+        } catch (Exception e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("Failed to retrieve artist mention comments.", e);
         }
     }
 
+    public ArtistMentionCommentDto readArtistMentionCommentById(Long id) {
+        try {
+            Optional<ArtistMentionComment> artistMentionCommentOptional = artistMentionCommentRepository.findById(id);
+            return artistMentionCommentOptional.map(this::convertEntityToDto).orElse(null);
+        } catch (Exception e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("Failed to retrieve artist mention comment by ID: " + id, e);
+        }
+    }
 
-    //TODO: DELETE
-    @Transactional
-    public void deleteArtistMentionComment(Long id) {
-        artistMentionCommentRepository.deleteById(id);
+    public ArtistMentionCommentDto createArtistMentionComment(ArtistMentionCommentDto commentDto) {
+        try {
+            ArtistMentionComment artistMentionComment = convertDtoToEntity(commentDto);
+            ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.save(artistMentionComment);
+            return convertEntityToDto(createdArtistMentionComment);
+        } catch (Exception e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("Failed to create artist mention comment.", e);
+        }
+    }
+
+    public ArtistMentionCommentDto updateArtistMentionComment(Long id, ArtistMentionCommentDto updatedCommentDto) {
+        try {
+            Optional<ArtistMentionComment> existingArtistMentionCommentOptional = artistMentionCommentRepository.findById(id);
+            return existingArtistMentionCommentOptional.map(existingArtistMentionComment -> {
+                existingArtistMentionComment.setArtistMentionCommentContent(updatedCommentDto.getContent());
+                artistMentionCommentRepository.save(existingArtistMentionComment); // 이 부분이 수정되었습니다.
+                return convertEntityToDto(existingArtistMentionComment);
+            }).orElse(null);
+        } catch (Exception e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("Failed to update artist mention comment by ID: " + id, e);
+        }
+    }
+
+    public boolean deleteArtistMentionComment(Long id) {
+        try {
+            Optional<ArtistMentionComment> artistMentionCommentOptional = artistMentionCommentRepository.findById(id);
+            return artistMentionCommentOptional.map(existingArtistMentionComment -> {
+                artistMentionCommentRepository.deleteById(id);
+                return true;
+            }).orElse(false);
+        } catch (Exception e) {
+            // Log the exception or handle it as needed
+            throw new RuntimeException("Failed to delete artist mention comment by ID: " + id, e);
+        }
+    }
+
+    private ArtistMentionCommentDto convertEntityToDto(ArtistMentionComment artistMentionComment) {
+        ArtistMentionCommentDto commentDto = new ArtistMentionCommentDto();
+        commentDto.setContent(artistMentionComment.getArtistMentionCommentContent());
+        // 나머지 필드도 복사해야 함
+        return commentDto;
+    }
+
+    private List<ArtistMentionCommentDto> convertEntityListToDtoList(List<ArtistMentionComment> artistMentionComments) {
+        return artistMentionComments.stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    private ArtistMentionComment convertDtoToEntity(ArtistMentionCommentDto commentDto) {
+        ArtistMentionComment artistMentionComment = new ArtistMentionComment();
+        artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
+        // 나머지 필드도 복사해야 함
+        return artistMentionComment;
     }
 }

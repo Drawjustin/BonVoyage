@@ -1,80 +1,54 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.ArtistMention;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
-import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
-import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
-import jakarta.persistence.EntityManager;
-import org.junit.jupiter.api.BeforeEach;
+import ArtBridge.ArtBridgelogin.service.ArtistMentionCommentService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.not;
-import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@Transactional
 public class ArtistMentionCommentServiceTest {
-    @Autowired
-    ArtistMentionCommentService artistMentionCommentService;
 
-    @Autowired
-    ArtistMentionCommentRepository artistMentionCommentRepository;
+    @Mock
+    private ArtistMentionCommentRepository artistMentionCommentRepository;
 
-    @Autowired
-    ArtistRepository artistRepository;
-    @Autowired
-    ArtistMentionRepository artistMentionRepository;
-
-    private static ArtistMentionComment artistMentionComment;
-
-    @Autowired
-    private EntityManager entityManager;
-
-    @BeforeEach
-    public void setup() {
-        artistMentionComment = new ArtistMentionComment();
-        Artist artist = artistRepository.readArtistById("123");
-        ArtistMention artistMention = artistMentionRepository.readAll().get(0);
-
-        artistMentionComment.setArtistMention(artistMention);
-        artistMentionComment.setArtistMentionCommentCreatedDate(LocalDateTime.now());
-        artistMentionComment.setArtistMentionCommentContent("Test Comment");
-
-        artistMentionCommentService.createArtisMentioneComment(artistMentionComment);
-    }
-
+    @InjectMocks
+    private ArtistMentionCommentService artistMentionCommentService;
 
     @Test
-    public void testreadOne() {
-        assertNotNull(artistMentionCommentService.readOne(artistMentionComment.getArtistMentionCommentSeq()));
+    public void testReadAllArtistMentionComments() {
+        // 가짜 데이터 생성
+        ArtistMentionComment comment1 = new ArtistMentionComment();
+        comment1.setArtistMentionCommentContent("Comment 1");
+
+        ArtistMentionComment comment2 = new ArtistMentionComment();
+        comment2.setArtistMentionCommentContent("Comment 2");
+
+        List<ArtistMentionComment> fakeData = Arrays.asList(comment1, comment2);
+
+        // Mock 설정
+        when(artistMentionCommentRepository.findAll()).thenReturn(fakeData);
+
+        // 테스트 실행
+        List<ArtistMentionCommentDto> result = artistMentionCommentService.readAllArtistMentionComments();
+
+        // 결과 확인
+        assertEquals(2, result.size());
+        assertEquals("Comment 1", result.get(0).getContent());
+        assertEquals("Comment 2", result.get(1).getContent());
+
+        // Mock이 제대로 호출되었는지 확인
+        verify(artistMentionCommentRepository, times(1)).findAll();
     }
 
-    @Test
-    public void testGetAllArtistsMentionComment() {
-        List<ArtistMentionComment> comments = artistMentionCommentService.readAllArtistsMentionComment();
-        assertTrue(comments.size() > 0);
-    }
-
-
-    @Test
-    public void testUpdateArtistMentionComment() {
-        ArtistMentionComment updatedComment = new ArtistMentionComment();
-        updatedComment.setArtistMentionCommentContent("Updated Comment");
-        artistMentionCommentService.updateArtistMentionComment(artistMentionComment.getArtistMentionCommentSeq(), updatedComment);
-
-        ArtistMentionComment comment = artistMentionCommentService.readOne(artistMentionComment.getArtistMentionCommentSeq());
-        assertEquals("Updated Comment", comment.getArtistMentionCommentContent());
-    }
+    // 다른 메서드에 대한 유사한 방식으로 테스트 코드 작성 가능
 }

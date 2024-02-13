@@ -17,7 +17,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055">
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from review;]]></console>
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[alter table artist_mention_comment drop column artist_homepage_comment_content;
+
+select * from artist_mention_comment;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -40,6 +42,9 @@
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
+  </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -269,7 +274,6 @@
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
