@@ -7,5 +7,6 @@ public class ArtistMentionDto {
 
     private String subject;
     private String content;
+    private String artistId;
 
 }

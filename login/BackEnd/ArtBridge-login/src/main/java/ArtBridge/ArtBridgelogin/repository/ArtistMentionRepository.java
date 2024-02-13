@@ -30,6 +30,7 @@ public class ArtistMentionRepository {
 
     // 아티스트 멘션 생성 메서드
     public ArtistMention create(ArtistMention artistMention) {
+
         em.persist(artistMention);
         return artistMention;
     }

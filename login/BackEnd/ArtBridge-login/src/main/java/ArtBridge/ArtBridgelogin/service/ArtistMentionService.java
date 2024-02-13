@@ -2,7 +2,10 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
+import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
+import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
+import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +27,23 @@ public class ArtistMentionService {
     @Autowired
     private ArtistMentionRepository artistMentionRepository;
 
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    @Autowired
+    private ArtistMentionCommentRepository artistMentionCommentRepository;
+
     // CREATE
     @Transactional
     public ArtistMentionDto createArtistMention(ArtistMentionDto artistMentionDto) {
         try {
-            ArtistMention artistMention = convertToEntity(artistMentionDto);
+            ArtistMention artistMention = new ArtistMention();
 
+            artistMention.setArtist(artistRepository.readArtistById(artistMentionDto.getArtistId()));
+            artistMention.setArtistMentionSubject(artistMentionDto.getSubject());
+            artistMention.setArtistMentionContent(artistMentionDto.getContent());
+            artistMention.setArtistMentionCreatedDate(LocalDateTime.now());
+            artistMention.setArtistMentionComments(artistMentionCommentRepository.findAll());
             return convertToDto(artistMentionRepository.create(artistMention));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create artist mention", e);
@@ -97,7 +112,10 @@ public class ArtistMentionService {
 
     private ArtistMentionDto convertToDto(ArtistMention artistMention) {
         ArtistMentionDto artistMentionDto = new ArtistMentionDto();
-        BeanUtils.copyProperties(artistMention, artistMentionDto);
+        artistMentionDto.setArtistId(artistMention.getArtist().getArtistId());
+        artistMentionDto.setContent(artistMention.getArtistMentionContent());
+        artistMentionDto.setSubject(artistMention.getArtistMentionSubject());
+        System.out.println(artistMentionDto.getContent());
         return artistMentionDto;
     }
 

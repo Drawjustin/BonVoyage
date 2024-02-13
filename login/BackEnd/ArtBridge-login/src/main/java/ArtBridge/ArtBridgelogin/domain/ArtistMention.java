@@ -34,6 +34,9 @@ public class ArtistMention implements Serializable {
     @Column(name = "artist_mention_deleted_date")
     private LocalDateTime artistMentionDeletedDate;
 
+    @Column(name = "artist_mention_isremoved")
+    private boolean artistIsRemoved;
+
     //    ----------------------------------------------------
 
     @JsonManagedReference
