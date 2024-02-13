@@ -106,7 +106,7 @@
   
   /* HANDLE */
   ::-webkit-scrollbar-thumb {
-    background: white;
+    background: transparent;
     height: 10%;
     border-radius: 20px;
   }

@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import EmptyState from '@/components/EmptyState/EmptyState';
 import styles from './ProductListPage.module.scss'
@@ -8,10 +8,10 @@ import ProductCard from '@/components/products/ProductCard/ProductCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
-import './m1.jpg';
-import './m2.jpg';
-import './m3.jpg';
-import './m4.jpg';
+import m1 from './m1.jpg';
+import m2 from './m2.jpg';
+import m3 from './m3.jpg';
+import m4 from './m4.jpg';
 
 
 const ProductPagination = ({PageLink}) => {
@@ -29,25 +29,25 @@ const ProductPagination = ({PageLink}) => {
     {
       id: 1,
       title: "별이 빛나는 밤",
-      image: "./m1.jpg",
+      image: m1,
       price: 19000,
     },
     {
       id: 2,
       title: "배",
-      image: "./m2.jpg",
+      image: m2,
       price: 240000,
     },
     {
       id: 3,
       title: "해바라기",
-      image: "./m3.jpg",
+      image: m3,
       price: 650000,
     },
     {
       id: 4,
       title: "숲",
-      image: "./m4.jpg",
+      image: m4,
       price: 14000,
     },
   ];
@@ -67,11 +67,13 @@ const ProductPagination = ({PageLink}) => {
     
     const fetchData = async () => {
       try {
+        // 이게 원래 코드
         // const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
 
         // setProducts(response.data);
         // setTotalItems(response.data.length);
 
+        // 가데이터 임시방편 출력
         setProducts(dummyData);
         setTotalItems(dummyData.length);
 
@@ -88,43 +90,51 @@ const ProductPagination = ({PageLink}) => {
     setCurrentPage(newPage);
   };
 
+  
+
     return (
         <>
-            <div className={styles.toggle_container}>
-        <label>
-          <button type='button'
-            onClick={() => {setSortBy('Like')}}
-            style={{ backgroundColor: Sort === 'Like' ? '#171de5' : '#f1efee',
-            color: Sort==='Like' ? '#f1efee' : '#171de5' }}
-            >
-            인기순</button>
-        </label>
+          <div className={styles.toggle_container} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '24vh' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>판매 작품</h1>
+          
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <label>
+              <button type='button'
+                onClick={() => {setSortBy('Like')}}
+                style={{ backgroundColor: Sort === 'Like' ? '#171de5' : '#f1efee',
+                color: Sort==='Like' ? '#f1efee' : '#171de5' }}
+                >
+                인기순</button>
+            </label>
+            <br />
+
+            <label>
+              <button type='button'
+                onClick={() => {setSortBy('New')}}
+                style={{ backgroundColor: Sort === 'New' ? '#171de5' : '#f1efee',
+                color: Sort==='New' ? '#f1efee' : '#171de5' }}
+              >
+              최신순
+              </button>
+            </label>
+          
         <br />
-
-        <label>
-          <button type='button'
-            onClick={() => {setSortBy('New')}}
-            style={{ backgroundColor: Sort === 'New' ? '#171de5' : '#f1efee',
-            color: Sort==='New' ? '#f1efee' : '#171de5' }}
-          >
-          최신순
-          </button>
-        </label>
-
-        <br />
-
       </div>
-        <div className="container" style={{ marginTop: '10px' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left' }}>Products</h1>
+      </div>
 
-          {Array.isArray(products) && products.length > 0 ? (
+
+        <div className="container" style={{ marginTop: '10px', marginLeft: '24vh' , width: '85%', alignItems: 'center' }}>
+          
+
+          {Array.isArray(dummyData) && dummyData.length > 0 ? (
             Sort === 'New' ? (
             <div className={styles.grid}>
-            {products.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
+            {dummyData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
                     <ProductCard
                     currentUser={currentUser}
                     key={product.itemSeq}
                     data={product}
+                    image={product.image}
                     />
                     ))}
               
@@ -134,11 +144,12 @@ const ProductPagination = ({PageLink}) => {
             (
             <div className={styles.grid}>
 
-               {products.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
+               {dummyData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
                 <ProductCard
                   currentUser={currentUser}
                   key={product.itemSeq}
                   data={product}
+                  image={product.image}
                 />
               ))}
             </div>
@@ -147,10 +158,14 @@ const ProductPagination = ({PageLink}) => {
             <EmptyState showReset />
           )}
         </div>
-        <div>
+        <div style={{ marginTop: '5vh', textAlign: 'center', marginLeft: '24vh' }}>
         
-          <Pagination  currentPage={parseInt(page) > 0 ? parseInt(page) : currentPage} totalItems={totalItems} itemCountPerPage={PRODUCTS_PER_PAGE} pageCount={4}
-          onPageChange={handlePageChange}/>
+          <Pagination 
+            currentPage={parseInt(page) > 0 ? parseInt(page) : currentPage} 
+            totalItems={totalItems} 
+            itemCountPerPage={PRODUCTS_PER_PAGE} 
+            pageCount={Math.ceil(totalItems / PRODUCTS_PER_PAGE)}
+            onPageChange={handlePageChange}/>
 
         </div>
         </>

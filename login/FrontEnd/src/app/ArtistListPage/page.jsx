@@ -1,7 +1,6 @@
 import React from 'react';
 import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
-import Navbar from '../../components/Navbar/Navbar';
 import axios from 'axios';
 import styles from './ArtistListPage.module.scss'
 import getCurrentUser from '@/app/actions/getCurrentUser';
@@ -13,11 +12,10 @@ const ArtistListPage = async () => {
   const Artists = {}; //await axios.get('https://i10a207.p.ssafy.io/api/artists');
 
   return (
-    <div style={{ width: '1200px' }}>
-      <Navbar />
-      <div style={{ marginTop: '10vh' }}>
-        <h1 style={{ color: '#f1efee'}}>작가 목록</h1>
-      </div>
+    <div className="container" style={{ marginTop: '10px', marginLeft: '24vh' , width: '85%', alignItems: 'center' }}>
+
+      <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>작가 목록</h1>
+
 
       <div className={styles.grid}>
               {Artists?.data?.map((Artist) =>
