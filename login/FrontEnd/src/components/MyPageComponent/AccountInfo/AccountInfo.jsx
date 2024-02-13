@@ -119,7 +119,7 @@ const AccountInfo = () => {
                 <p>비밀번호</p>
                 {editableFields.password ? (
                     <div>
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             <input
                             type="password"
                             placeholder="기존 비밀번호 입력"
@@ -129,7 +129,7 @@ const AccountInfo = () => {
                             <button onClick={handlePasswordConfirm}>확인</button>
                         </div>
 
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             {passwordMatchError && <span style={{ color: 'red', fontFamily: 'Gowun Dodum' }}>{passwordMatchError}</span>}
                             <input
                             type="password"
@@ -138,7 +138,7 @@ const AccountInfo = () => {
                             onChange={handleNewPasswordChange}
                             />
                         </div>
-                        <div style={{ marginLeft: '405px', width: '150px'}}>
+                        <div style={{ marginLeft: '30%', width: '60%'}}>
                             <input
                             type="password"
                             placeholder="새로운 비밀번호 확인"

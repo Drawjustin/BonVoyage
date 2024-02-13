@@ -50,12 +50,25 @@ const AuctionUploadPage = () => {
     }
   });
 
+  const generateRandomString = () => {
+    let characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+    let result = '';
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        if (i < 2) {
+            result += '-';
+        }
+    }
+    return result;
+}
   const imageSrc = watch('imageSrc');
   const category = watch('category');
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-
+    const ID = generateRandomString();
     data = {
         itemSeq:12,
         itemName:data.title,
@@ -64,7 +77,8 @@ const AuctionUploadPage = () => {
         itemLike:0,
         itemSe1lPrice:data.price,
         itemIsSold:false,
-        itemCreatedDate: dayjs()
+        itemCreatedDate: dayjs(),
+        auctionId:ID,
     }
     
     try {
@@ -75,8 +89,10 @@ const AuctionUploadPage = () => {
       });
 
       console.log('성공', response.data);
+      
+
        // 경매 목록 페이지로 이동
-       router.push('/auctionList'); // 경매 목록 페이지의 경로에 맞게 변경
+       router.push('/AuctionListPage'); // 경매 목록 페이지의 경로에 맞게 변경
       } catch (error) {
         console.error(error);
       } finally {

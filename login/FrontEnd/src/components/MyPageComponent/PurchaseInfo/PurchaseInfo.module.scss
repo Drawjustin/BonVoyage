@@ -1,7 +1,7 @@
 .title {
     font-size: calc(1.3rem + 0.6vw);
     font-size: 24px;
-    padding-left: 20px;
+    margin-right: 75%;
     text-align: left;
     margin-bottom: 20px;
 }
@@ -14,6 +14,8 @@
 }
 .frame {
   align-items: center;
+  display: flex;
+  flex-direction: column;
   width: 600px;
   padding: 10px;
 }
