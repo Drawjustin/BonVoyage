@@ -5,10 +5,8 @@ import styles from './Footer.module.scss'
 
 const Footer = () => {
   return (
-    <footer>
-      <div className={styles.container}>
+    <footer className={styles.container}>
         <p style={{ color: '#f1efee'}}>&copy; 2024 Bon Voyage. All rights reserved.</p>
-      </div>
     </footer>
   );
 };

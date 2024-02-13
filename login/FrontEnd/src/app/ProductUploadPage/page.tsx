@@ -24,6 +24,17 @@ const ProductUploadPage = () => {
   const currentUser = getCurrentUser();
   const [showAlert, setShowAlert] = useState(false);
 
+  const [width, setWidth] = useState('');
+  const [height, setHeight] = useState('');
+
+  const handleInputChange = (event: any, setValueFuction: any) => {
+    setValueFuction(event.target.value);
+  };
+
+  const handleHeightChange = (event: any) => {
+    setHeight(event.target.value);
+  };
+
   const {
     register,
     handleSubmit,
@@ -37,10 +48,11 @@ const ProductUploadPage = () => {
     defaultValues: {
       title: '',
       description: '',
-      category: 'auction',
+      width: '',
+      height: '',
+      price: '',
+      category: 'item',
       imageSrc: '',
-      size: '',
-      price: ''
     }
   });
 
@@ -57,15 +69,14 @@ const ProductUploadPage = () => {
     try {
       if (isArtist) {
         const ProductUploadData = {
-          "itemName": "hjhjhj",
-          "itemWidth": 0,
-          "itemHeight": 0,
-          "itemLike": 0,
-          "itemSellPrice": 0,
-          "itemIsSold": false,
-          "artist": {
-            "artistSeq": 1
-          }
+          "itemName": data.title,
+          "explain" : data.description,
+          "itemWidth": data.width,
+          "itemHeight": data.height,
+          // "itemLike": 0,
+          "itemSellPrice": data.price,
+          // "itemIsSold": false,
+          "artistId": "dfdff0"
         }
   
         const response = await axios.post(`${backendUrl}/new`, ProductUploadData, {
@@ -99,15 +110,14 @@ const ProductUploadPage = () => {
       } 
       else {
         const ProductUploadData = {
-          "itemName": "hjhjhj",
-          "itemWidth": 0,
-          "itemHeight": 0,
-          "itemLike": 0,
-          "itemSellPrice": 0,
-          "itemIsSold": false,
-          "artist": {
-            "artistSeq": 1
-          }
+          "itemName": data.title,
+          "explain" : data.description,
+          "itemWidth": data.width,
+          "itemHeight": data.height,
+          // "itemLike": 0,
+          "itemSellPrice": data.price,
+          // "itemIsSold": false,
+          "artistId": "dfdff0"
         }
         
         const response = await axios.post(`${backendUrl}/new`, ProductUploadData, {
@@ -148,11 +158,6 @@ const ProductUploadPage = () => {
     }
   };
 
-  
-    
-    
-    
-    
     const setCustomValue = (id: string, value: any) => {
       setValue(id, value);
     };
@@ -160,31 +165,10 @@ const ProductUploadPage = () => {
     return (
       <Container>
       <div className={styles.productUploadContainer}>
-        {/* <form>
-              <h1>일반 판매 작품 등록</h1>
-              <div className="question">
-                <input type="text" required />
-                <label>작품명</label>
-              </div>
-              <div className="question">
-                <input type="text" required />
-                <label>상세 설명</label>
-              </div>
-              <div className="question">
-                <input type="text" required />
-                <label>규격</label>
-              </div>
-              <div className="question">
-                <input type="text" required />
-                <label>가격</label>
-              </div>
-              <button>등록하기</button>
-        </form> */}
-        
         <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.heading}>
             <h1 style={{ color: '#f1efee' }}>일반 판매 작품 등록</h1>
-            <div style={{ color: '#f1efee' }}>일반 판매할 작품의 정보를 등록해주세요!</div>
+            <div style={{ color: '#f1efee',  }}>일반 판매할 작품의 정보를 등록해주세요!</div>
           </div>
 
           <div className={styles.imageUploadContainer}>
@@ -212,10 +196,18 @@ const ProductUploadPage = () => {
           </div>
 
           <div>
-            <div>규격</div>
+            <div>가로</div>
             <input 
-              id="size" 
-              placeholder="예) 가로 * 세로 53.0 * 40.9 cm"
+              id="widthInput" 
+              placeholder="cm 기준의 규격을 입력해주세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('size', { required: true })} 
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>
+         
+            <div>세로</div>
+            <input 
+              id="heightInput" 
+              placeholder="cm 기준의 규격을 입력해주세요."
               disabled={isLoading || Object.keys(errors).length > 0}
               {...register('size', { required: true })} 
               style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>

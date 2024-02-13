@@ -1,55 +1,57 @@
 'use client'
-import React from 'react';
-import styles from './ThreejsMainPage.module.scss';
 import { Canvas } from "@react-three/fiber";
-// import Experience from "../../components/Threejs/Experience";
-import { ScrollControls, Html } from '@react-three/drei';
-import { EffectComposer, Noise } from '@react-three/postprocessing';
-// import Overlay from "../../components/Threejs/Overlay";
-import { usePlay } from "../../components/Threejs/contexts/PlayProvider";
-import Navbar from "../../components/Navbar/Navbar"
-import dynamic from 'next/dynamic';
-import getCurrentUser from '@/app/actions/getCurrentUser';
+import React, { Suspense, useMemo, useState, useEffect } from "react";
+import Experience from "../../components/ThreejsTest/Experience";
+import styles from "./MainPage.module.scss"
+import Ocean from "../../components/ThreejsTest/Ocean"
+import IslandHtmlOverlay from "../../components/ThreejsTest/IslandHtmlOverlay";
+import * as THREE from 'three';
+import Cloud from "../../components/ThreejsTest/Cloud"
 
-const Experience = dynamic(() => import("../../components/Threejs/Experience"), { ssr: false });
-const Overlay = dynamic(() => import("../../components/Threejs/Overlay"), { ssr: false });
-const Ocean = dynamic(() => import("../../components/Threejs/Ocean"), { ssr: false });
+const ThreejsTestPage = () => {
+  const [selectedIsland, setSelectedIsland] = useState(null);
+  const [showOverlay, setShowOverlay] = useState(false);
+  // const [start, setStart] = useState(true);
 
-const HomePage = () => {
-    const { play, end } = usePlay();
-    const currentUser = getCurrentUser();
+  const handleIslandSelect = (island: any) => {
+    setSelectedIsland(island);
+    setShowOverlay(true);
+  };
 
-    
+  const handleClearSelection = () => {
+    setSelectedIsland(null);
+    setShowOverlay(false);
+  };
 
-    return (
-        <div className={styles.container}>
-        <Canvas>
-            <color attach="background" args={["#ececec"]} />
-            <ScrollControls 
-                pages={play && !end ? 20:0} 
-                damping={0.2}
-                style={{
-                    top: "10px",
-                    left: "0px",
-                    bottom: "10px",
-                    right: "10px",
-                    width: "auto",
-                    height: "auto",
-                    animation: "fadeIn 2.4s ease-in-out 1.2s forwards",
-                    opacity: 0,
-                }}
-            >
-                <Experience />
-            </ScrollControls>
+  return (
+    <div className={styles.container}>
+      {/* {start ? (
+        <StartPage onStartButtonClick={handleStartButtonClick} />
+      ) : (
+        <> */}
+        <div className={styles.logo_title}>Bon Voyage</div>
+        {/* <div className="canvas-background" style={{ zIndex: -1 }} /> */}
+        <Canvas 
+          shadows 
+          camera={{ position: [0, 1, 14], fov: 45 }}
+          style={{
+            background: "linear-gradient(to bottom, #dbecfb -8%, #ffffff)"
+          }}
+        >
+            <Experience onIslandSelect={handleIslandSelect} selectedIsland={selectedIsland}/>
             <Ocean />
-            <EffectComposer>
-                <Noise opacity={0.1} />
-            </EffectComposer>
+            <Cloud position={[40, 25, -120]} speed={2} amplitude={0.8}/>
         </Canvas>
-        <Overlay />
-        </div>
-        
-    );
-};
+        {showOverlay && (
+          <div className={styles.clearSelection} onClick={handleClearSelection}>
+            x
+          </div>
+        )}
+        {showOverlay && <IslandHtmlOverlay selectedIsland={selectedIsland} />}
+        {/* </>
+        )} */}
+      </div>
+  );
+}
 
-export default HomePage
+export default ThreejsTestPage;

@@ -9,7 +9,8 @@ import styles from './ReviewCard.module.scss'
 
 const ReviewCard = ({ data, currentUser }: any) => {
 
-    const router = useRouter();
+  const router = useRouter();
+
   return (
     <div
     onClick={() => router.push(`/review/${data.id}`)}

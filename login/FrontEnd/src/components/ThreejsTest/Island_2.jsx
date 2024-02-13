@@ -6,9 +6,21 @@ Command: npx gltfjsx@6.2.16 public/models/island/island2.glb
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-const Island_2 = (props) => {
+const Island_2 = ({ scale, position, onClick, props }) => {
   const { nodes, materials } = useGLTF('./models/island/island_2.glb')
+  const meshRef = useRef();
+  
+  const handleOnClick = () => {
+    onClick(); // 부모 컴포넌트로 클릭 이벤트 전달
+  };
+
   return (
+    <mesh
+      ref={meshRef}
+      scale={scale}
+      position={position}
+      onClick={handleOnClick}
+    >
     <group {...props} dispose={null}>
       <group position={[1.397, 50.417, -38.659]} rotation={[-Math.PI / 2, 0, -0.96]} scale={[0.157, 0.157, 2.074]}>
         <mesh geometry={nodes['Tree2_02_-_Default_0'].geometry} material={materials['02_-_Default']} />
@@ -36,6 +48,7 @@ const Island_2 = (props) => {
       <mesh geometry={nodes['CoCoNut002_05_-_Default_0'].geometry} material={materials['05_-_Default']} position={[8.213, 53.326, -38.515]} rotation={[-Math.PI / 2, 0, 0]} scale={0.383} />
       <mesh geometry={nodes['CoCoNut003_05_-_Default_0'].geometry} material={materials['05_-_Default']} position={[37.157, 50.676, -0.465]} rotation={[-Math.PI / 2, 0, 0]} scale={0.383} />
     </group>
+    </mesh>
   )
 }
 

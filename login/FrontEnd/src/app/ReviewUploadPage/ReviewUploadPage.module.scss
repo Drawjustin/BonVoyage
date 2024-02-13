@@ -1,19 +1,21 @@
 .productUploadContainer {
   position: relative;
-    
-    margin: 0 auto;
-    color: #f1efee;
-  }
+  margin: 0 auto;
+  color: #f1efee;
+  width: 70%;
+}
   
   .formContainer {
     background-color: transparent;
     display: flex;
     flex-direction: column;
+    margin-left: 24vh;
   }
   
   .imageUploadContainer {
-    max-width: 50vh;
-    margin: 0 auto;
+    
+    max-width: 36vh;
+
   }
   
   .input_ {
