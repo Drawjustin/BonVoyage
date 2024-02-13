@@ -124,10 +124,10 @@ const InputLogin = () => {
         <Link href='/ResetPw'>비밀번호 찾기</Link>
       </div>
       
-      <div style={{ marginTop: '10px' }}>
+      {/* <div style={{ marginTop: '10px' }}>
         <SocialKakao />
         <GoogleLoginButton />
-      </div>
+      </div> */}
 
     </div>
   );

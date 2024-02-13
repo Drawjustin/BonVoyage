@@ -54,9 +54,9 @@ const AuctionListPage = async () => {
   // }, [])
 
     return (
-        <div style={{ width: '1200px' }}>
-            <div style={{ marginTop: '10vh' }}>
-            <h1 style={{ color: '#f1efee'}}>경매 목록</h1>
+      <>
+        <div className="container" style={{ marginTop: '10px', marginLeft: '23vh' , width: '85%', alignItems: 'center' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
             </div>
 
             {
@@ -79,14 +79,9 @@ const AuctionListPage = async () => {
               </div>
               </>
             }
-        
-            <FloatingButton
-      href="/AuctionUploadPage">
-        +
-      </FloatingButton>
-
-        </div>
-    )
+ 
+    </>
+  )
 }
 
 export default AuctionListPage

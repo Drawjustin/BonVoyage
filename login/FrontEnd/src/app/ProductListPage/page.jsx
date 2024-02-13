@@ -1,13 +1,14 @@
 'use client'
-import React from 'react';
+import React, { useContext } from 'react';
 import { IconContext } from 'react-icons';
 import ProductPagination from './ProductPagination';
 import { useRouter } from 'next/navigation';
-import Navbar from '@/components/Navbar/Navbar';
 import styles from './ProductListPage.module.scss'
 import FloatingButton from '@/components/FloatingButton/FloatingButton'
 import axios from 'axios';
 import getCurrentUser from '../actions/getCurrentUser';
+
+const ProductContext = React.createContext();
 
 async function ProductListPage() {
   const router = useRouter();

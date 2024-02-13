@@ -17,7 +17,6 @@ const MAIN_DATA = [
   { id: 4, name: 'review', text: '리뷰' },
 ];
 
-
 const ArtistHomePage = () => {
   // 카테고리
   const currentUser = getCurrentUser();

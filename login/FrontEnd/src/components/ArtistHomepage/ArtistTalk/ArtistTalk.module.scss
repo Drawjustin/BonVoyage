@@ -3,6 +3,7 @@
     margin: 0 auto;
     display: flex;
     flex-direction: column;
+    color: black;
 }
 
 // 작가의 말
@@ -123,6 +124,29 @@
     }
 }
 
+.user_talk_input {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+
+    input {
+        width: 84%;
+        border: 1px solid #d1d1d1;
+        border-radius: 10px;
+    }
+
+    button {
+        background-color: #171de5;
+        border-radius: 8px;
+        border: #171de5;
+        color: #f1efee;
+        height: 30px;
+        font-size: 12px;
+        text-align: center;
+        padding: 0 15px;
+    }
+}
+
 .user_talk_list {
     width: 89%;
     background-color: #f9f9f9;
@@ -133,12 +157,15 @@
     margin-top: 10px;
     // box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
     text-align: left;
+    display: flex;
+    flex-direction: column;
 }
 
 .talk_list {
     overflow: auto;
     width: 100%;
-    height: 160px;
+    height: 130px;
+    // height: 160px;
 }
 
 .talk_list::-webkit-scrollbar {
@@ -218,6 +245,11 @@
     margin-bottom: 10px;
     outline: none;
     text-align: left;
+
+    input {
+        height: 90%;
+        width: 90%;
+    }
 }
 
 .add_content_inner {

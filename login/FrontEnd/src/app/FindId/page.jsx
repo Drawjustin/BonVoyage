@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react';
 import styles from './FindId.module.scss';
-import Navbar from '@/components/Navbar/Navbar';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const FindId = () => {
@@ -20,7 +19,6 @@ const FindId = () => {
 
   return(
     <div className={styles.id_finder_container} style={{ marginTop: '25vh' }}>
-      <Navbar />
       <h2>아이디 찾기</h2>
     
 

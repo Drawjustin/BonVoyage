@@ -4,6 +4,7 @@ import Image from 'next/image';
 import HeartButton from '../../HeartButton/HeartButton';
 import { fromNow } from '@/helpers/dayjs';
 import styles from './ProductCard.module.scss';
+import Link from 'next/link';
 
 const ProductCard = ({ data, currentUser }:any) => {
   const handleCardClick = () => {
@@ -17,7 +18,7 @@ const ProductCard = ({ data, currentUser }:any) => {
     >
       <div className={styles['image-container']}>
         <Image
-          src={data.imageSrc}
+          src={data.image}
           fill
           sizes='auto'
           className={styles['product-image']}

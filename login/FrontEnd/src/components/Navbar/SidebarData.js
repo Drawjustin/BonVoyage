@@ -30,7 +30,7 @@ export const SidebarData = [
     },
     {
         title: '리뷰',
-        path: '/ReviewListPage',
+        path: '/ReviewPage',
         icon: <FaIcons.FaEnvelopeOpenText />,
         cName: 'nav-text'
     },

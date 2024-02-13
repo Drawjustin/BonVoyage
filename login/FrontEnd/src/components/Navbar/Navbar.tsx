@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
             <FaIcons.FaBars onClick={showSidebar} />
           </div>
         </div>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'} style={{ zIndex: 1000 }}>
           <ul className='nav-menu-items' onClick={showSidebar} style={{ display: 'flex', flexDirection: 'column'}}>
             <li className='navbar-toggle'>
               <Link href='#' className='menu-bars'>
