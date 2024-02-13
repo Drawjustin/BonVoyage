@@ -108,15 +108,19 @@ connection.maxParticipantsAllowed = 1000;
 // set value 2 for one-to-one connection
 // connection.maxParticipantsAllowed = 2;
 
-// 경매 정보 저장하는 전역 변수
+// 경매, 작품, 낙찰자 정보
 let auctionInfo = {};
+let itemInfo = {};
+let winnerInfo = {};
 
-// 경매 seq (어디서든 끌고 오기)
+// TODO: 경매 seq (어디서든 끌고 오기)
 let aucSeq = 7;
 
 //현재 유저와 경매 작가 조회
-let sessionArtist = 'startUser'; // 경매 참여한 artist(세션 시작) 이거.. artist를 가져와야 하는데..? -> API 요청함
-let currentUser = connection.extra.userFullName; // 현재 로그인한 사용자의 이름..입장 시 입력하는 이름 가져옴 입장 이름을 무조건 세션 값으로 넣어주면 되겠다
+let sessionArtist; // TODO: 경매 참여한 artist(세션 시작) 이거.. artist를 가져와야 하는데..? -> API 요청함
+const currentUserName = connection.extra.userFullName; // 입장 시 입력하는 이름 가져옴
+//pinia가 어떻게 되는지 물어봐야겠음.. memberSeq가 필요함
+//const currentUserSeq = connectin.extra.seq;
 
 // 현재 최고 호가 전역변수
 let bidPrice = 0;
@@ -125,6 +129,10 @@ let bidPrice = 0;
 let bidPriceTime = 3000;
 let aucEndTime = Infinity;
 let aucSessionTime = 10; //원래 180임
+
+//URL
+var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+var getBidWinnerUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/winner";
 
 // here goes canvas designer
 var designer = new CanvasDesigner();
@@ -241,36 +249,6 @@ function updateBidButton() {
 //     })
 //     .catch(error => console.error('Error:', error));
 
-// // 호가 입찰 (동시성 어떻게 하지?) => 얘 API 통신되는지 확인 필
-// var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
-
-// var data = {
-//     memberName: connection.extra.userFullName, // 현재 유저 이름
-//     bidPrice: bidPrice // 최고 호가
-// };
-
-// fetch(postBidPriceUrl, {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(data),
-// })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log('Success:', data); 
-
-//         bidPrice += bidPrice * (auctionAskPoint / 100);
-
-//         //버튼 업데이트
-//         updateBidButton();
-//     })
-//     .catch(error => {
-//     console.error('Error:', error);
-//     // 사용자에게 새로고침하라는 알림창 표시 **근데 지금 API 없어서 무조건 오류뜸 그니까 API 오면 주석 풀기**
-//     // alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
-// });
-
 var socket = io();
 var auctionEnded = false;
 var intervalId;
@@ -289,7 +267,7 @@ function showPopup(message, timeout, isEnd) {
     popup.style.display = 'block';
 
     if(isEnd) {
-        if (sessionArtist === currentUser) { // 작가 혹은 낙찰자인 경우
+        if (sessionArtist === currentUserName) { // 작가 혹은 낙찰자인 경우
             nextSessionBtn.style.display = 'block';
             returnHomeBtn.style.display = "none";
         } else { // 일반 회원인 경우
@@ -315,6 +293,37 @@ timer.textContent = aucSessionTime.toString();
 var timeLeft = aucSessionTime;
 
 document.getElementById('bidBtn').addEventListener('click', function() {
+    var data = {
+        auctionPointDetailPoint: bidPrice,
+        auctionPointDetailIsWin: false,
+        auctionPointDate: new Date().toISOString(),
+        member: {
+            seq: 1 // TODO: pinia 확인 이후 작성하기
+        },
+        auction: {
+            seq: auctionInfo.aucSeq
+        }
+    };
+
+    fetch(postBidPriceUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data); 
+
+            bidPrice += bidPrice * (auctionAskPoint / 100);
+
+            updateBidButton();
+        })
+        .catch(error => {
+        console.error('Error:', error);
+        alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+    });
     // bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked', 타겟을 'all'로, 그리고 호가 정보를 전송
     socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all', price: bidPrice });
 
@@ -329,7 +338,9 @@ socket.on('custom-message', function(data) {
         timeLeft = data.timeLeft;
         timer.textContent = data.timeLeft.toString(); // 서버로부터 받은 남은 시간을 화면에 표시
     } else if (data.message === 'auction ended') {
-        // 경매 종료 메시지를 받으면 팝업 띄우기
+        //낙찰자 찾기
+        getBidWinnerName();
+        console.log(winnerInfo.memberName);
         showPopup("경매가 종료되었습니다.", aucEndTime, true);
     } else if (data.message === 'bidBtn clicked') {
         // 팝업을 띄우기
@@ -339,8 +350,6 @@ socket.on('custom-message', function(data) {
         connection.close();
     }
 });
-
-
 
 function resetTimer() {
     timeLeft = aucSessionTime;
@@ -354,16 +363,17 @@ function resetTimer() {
             }
     }, 1000);
 }
+
 // 경매 정보 가져오기
 let getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
-
 // 서버로부터 경매 정보를 받아와 전역 변수에 저장
 function fetchAuctionInfo() {
     return fetch(getAucDetailUrl)
     .then(response => response.json())
     .then(data => {
         auctionInfo = data;
-        //일단 경매 정보를 가져오며 바로 bidPrice(현재 호가)를 갱신하고 버튼도 갱신함.
+        itemInfo = data.item; 
+        sessionArtist = data.item.artistId;
         bidPrice = data['auctionStartPoint'];
         updateBidButton();
     });
@@ -391,12 +401,44 @@ function displayAuctionInfo() {
     document.getElementById('auctionDetailText').innerHTML = text;
 }
 
+// 아이템 정보 한국어 변환을 위해 필요한 정보
+let itemKeysToShow = ["itemName", "explain", "itemWidth", "itemHeight"];
+let itemKeyToKorean = {
+    "itemName": "아이템 이름",
+    "explain": "설명",
+    "itemWidth": "아이템 넓이",
+    "itemHeight": "아이템 높이",
+};
+
+// 아이템 정보를 한국어로 변환하여 표시
+function displayItemInfo() {
+    let text = '';
+    for (let key of itemKeysToShow) {
+        if (itemInfo.hasOwnProperty(key) && itemInfo[key] !== null) {
+            let koreanKey = itemKeyToKorean.hasOwnProperty(key) ? itemKeyToKorean[key] : key;
+            text += koreanKey + ': ' + itemInfo[key] + '<br>';
+        }
+    }
+    document.getElementById('itemDetailText').innerHTML = text;
+}
+
+function getBidWinnerName() {
+    var getBidWinnerUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/winner";
+
+    fetch(getBidWinnerUrl)
+        .then(response => response.json())
+        .then(data => {
+            winnerInfo = data;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
 // 유저가 누구인지에 따라 버튼 바꾸기
 function updateButtonStatus() {
     let sessionCloseBtn = document.getElementById('sessionCloseBtn');
     var bidBtn = document.getElementById('bidBtn');
 
-    if (sessionArtist === currentUser) { // 작가인 경우
+    if (sessionArtist === currentUserName) { // 작가인 경우
         sessionCloseBtn.style.display = 'block';
         bidBtn.style.display = "none";
     } else { // 일반 회원인 경우
@@ -410,6 +452,7 @@ window.onload = function() {
     fetchAuctionInfo()
     .then(() => {
         displayAuctionInfo();
+        displayItemInfo();
     })
     .catch(error => {
         console.error('Error:', error); // 에러 처리
@@ -426,15 +469,30 @@ var returnHomeBtn = document.getElementById('returnHomeBtn');
 var nextSessionBtn = document.getElementById('nextSessionBtn');
 
 returnHomeBtn.addEventListener('click', function() {
-    //경매 리스트 페이지로
-    window.location.href = 'https://i10a207.p.ssafy.io/api/AuctionListPage';
+    window.location.href = 'https://i10a207.p.ssafy.io/AuctionListPage';
 });
 
 nextSessionBtn.addEventListener('click', function() {
-    //다음 세션으로
-    //일단 다음 세션 어떻게 만들지 고민중이라 url 이렇게 둠
-    window.location.href = 'https://i10a207.p.ssafy.io/';
+    // 다음 세션으로 
+    // TODO : open은 냅둘까? 
+    var sessionId = generateRandomString();
+    window.location.href = 'https://i10a207.p.ssafy.io:9001//demos/dashboard/canvas-designer.html?open=false&sessionId=' + sessionId + '&userFullName=' + currentUserName;
 });
+
+// sessionId 생성하는 랜덤 함수
+function generateRandomString() {
+    var characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+    var result = '';
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        if (i < 2) {
+            result += '-';
+        }
+    }
+    return result;
+}
 
 //-------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------
