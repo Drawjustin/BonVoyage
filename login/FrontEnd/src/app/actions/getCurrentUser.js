@@ -18,7 +18,7 @@
 
 const getCurrentUser = () => {
     try {
-        const session = sessionStorage.getItem('session');
+        const session = JSON.parse(sessionStorage.getItem('session'));
         if (!session) {
             return null;
         }

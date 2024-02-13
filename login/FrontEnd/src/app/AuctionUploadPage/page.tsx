@@ -70,12 +70,11 @@ const AuctionUploadPage = () => {
     setIsLoading(true);
     const ID = generateRandomString();
     data = {
-        auctionSeq:12,
         auctionName:data.title,
         auctionWidth:230,
         auctionHeight:460,
         auctionLike:0,
-        auctionSe1lPrice:data.price,
+        auctionSellPrice:data.price,
         auctionIsSold:false,
         auctionCreatedDate: dayjs(),
         auctionSessionId:ID,

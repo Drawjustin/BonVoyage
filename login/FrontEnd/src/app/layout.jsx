@@ -4,9 +4,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
 import getCurrentUser from './actions/getCurrentUser';
-import AuthSession from './AuthSession';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/utils/authOptions';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/footer/Footer';
 
@@ -20,8 +17,6 @@ export const metadata = {
 export default async function RootLayout({children})
 {
 
-  const session = await getServerSession(authOptions);
-
   return (
     <html>
 
@@ -31,11 +26,9 @@ export default async function RootLayout({children})
           </Head>
           <body>
             <main>
-                <AuthSession session={session}>
                     <ToastProvider />
                         <Navbar/>
                         {children}
-                </AuthSession>
             </main>
             <Footer />
           </body>
