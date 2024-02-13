@@ -111,6 +111,7 @@ public class ArtistMentionService {
 
     private ArtistMentionDto convertToDto(ArtistMention artistMention) {
         ArtistMentionDto artistMentionDto = new ArtistMentionDto();
+        artistMentionDto.setArtistMentionSeq(artistMention.getArtistMentionSeq());
         artistMentionDto.setArtistId(artistMention.getArtist().getArtistId());
         artistMentionDto.setContent(artistMention.getArtistMentionContent());
         artistMentionDto.setSubject(artistMention.getArtistMentionSubject());

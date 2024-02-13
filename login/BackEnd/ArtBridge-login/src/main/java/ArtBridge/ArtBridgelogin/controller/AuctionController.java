@@ -33,7 +33,7 @@ public class AuctionController {
     }
 
     @GetMapping("/{seq}")
-    public ResponseEntity<AuctionDto> readAuctionById(@PathVariable int seq) {
+    public ResponseEntity<AuctionDto> readAuctionById(@PathVariable(value = "seq") int seq) {
         try {
             AuctionDto auctionDto = auctionService.readOne(seq);
             return ResponseEntity.ok(auctionDto);
