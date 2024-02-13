@@ -36,7 +36,7 @@ const ReviewUploadPage = () => {
     reset
   } = useForm<FieldValues>({
     defaultValues: {
-      title: '',
+      itemSeq: '',
       description: '',
       imageSrc: '',
     }
@@ -50,21 +50,16 @@ const ReviewUploadPage = () => {
 
     const now = dayjs();
 
-    const backendUrl = 'https://i10a207.p.ssafy.io/api/Review'
+    const backendUrl = 'https://i10a207.p.ssafy.io/api/review'
 
     try {
       if (isArtist) {
-        const ReviewUploadData = {
-          "itemName": "우주먼지",
-          "reviewContent": '',
-          "reviewVisit": 0,
-          "reviewCreatedDate": dayjs().format('YY-MM-DD'),
-          "member": {
-            "memberSeq": 1
-          }
+        const  ReviewUploadData = {
+          "itemName": data.itemSeq,
+          "reviewContent" : data.description,
         }
-        
-        const response = await axios.post(`${backendUrl}`, ReviewUploadData, {
+  
+        const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
           },
@@ -72,51 +67,21 @@ const ReviewUploadPage = () => {
 
           if (response.data !== 'fail') {
             console.log('success :', response.data);
-            navigate.push('/');
+            navigate.push('/ReviewPage');
           }
           else {
             console.log('fail :', response.data);
             setShowAlert(true);
           }
-        })
-        .catch(error => {
-          console.error('error', error.response ? error.response.data : error.message);
-          // 로그인 실패하면 팝업 표시할 것
-          
         });
-
       } 
       else {
         const ReviewUploadData = {
-            "itemName": "우주먼지",
-            "reviewContent": '',
-            "reviewVisit": 0,
-            "reviewCreatedDate": dayjs().format('YY-MM-DD'),
-            "member": {
-              "memberSeq": 1
+          "itemName": data.itemSeq,
+          "reviewContent" : data.description,
         }
-    }
         
-        //const session = useSession();
-
-        //console.log(session);
-        // 작품명을 DB로부터 받는 것
-
-        // const respond = axios.get(`${backendUrl}/api/members/ggg`).then(respond => {
-
-        //     const subject = respond.data.orderDetail.item.itemName;
-        //     console.log(subject)
-
-        // });
-
-            
-
-
-
-
-
-
-        const response = await axios.post(`${backendUrl}/`, ReviewUploadData, {
+        const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
           },
@@ -124,7 +89,7 @@ const ReviewUploadPage = () => {
 
           if (response.data !== '실패') {
             console.log('성공 :', response.data);
-            navigate.push('/ProductListPage');
+            navigate.push('/ReviewPage');
           }
           else {
             console.log('실패 :', response.data);
@@ -138,15 +103,22 @@ const ReviewUploadPage = () => {
           
         });
   
+        // if (response.data !== '바보 실패했잔요') {
+        //   console.log(' 성공 :', response.data);
+        //   navigate.push('/ProductListPage');
+        // } else {
+        //   console.log('실패 :', response.data);
+        //   setShowAlert(true);
+        // }
       }
-    } catch (error:any) {
-      console.error('에러 발생:', error.response ? error.response.data : error.message);
-      // 에러 처리 로직 추가
+    // } catch (error:any) {
+    //   console.error('에러 발생:', error.response ? error.response.data : error.message);
+    //   // 에러 처리 로직 추가
     } finally {
       setIsLoading(false);
     }
   };
-    
+
     const setCustomValue = (id: string, value: any) => {
       setValue(id, value);
     };
@@ -160,14 +132,14 @@ const ReviewUploadPage = () => {
             <div style={{ color: '#f1efee' }}>구매한 작품의 리뷰를 작성해주세요!</div>
           </div>
 
-          <div className={styles.imageUploadContainer}>
+          <div className={styles.imageUploadContainer} style={{ marginTop: '3vh' }}>
             <ImageUpload onChange={(value) => setCustomValue('imageSrc', value)} value={imageSrc} />
           </div>
 
-        </form>
+        
 
 
-        <div style={{ width: '500px', marginTop: '12vh', marginLeft: '10vh' }}>
+        <div style={{ width: '500px', marginTop: '12vh', marginLeft: '1vh' }}>
           <div style={{ alignContent: 'center'}}>
               <div style={{ marginBottom: '10px' }}>작품명</div>
               <div style={{ width: '30%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5', backgroundColor: 'lightgray' }}></div>
@@ -186,8 +158,8 @@ const ReviewUploadPage = () => {
               <button className={styles.btn}>리뷰 등록</button>
             </div>
         </div>
+        </form>
       </div>
-
     </Container>
   );
 };

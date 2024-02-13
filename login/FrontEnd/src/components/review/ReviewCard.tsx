@@ -13,7 +13,7 @@ const ReviewCard = ({ data, currentUser }: any) => {
 
   return (
     <div
-    onClick={() => router.push(`/review/${data.id}`)}
+    onClick={() => router.push(`/review/${data.itemSeq}`)}
     className={styles.Card}>
         <div className={styles.card2}>
             <div className={styles.template}>

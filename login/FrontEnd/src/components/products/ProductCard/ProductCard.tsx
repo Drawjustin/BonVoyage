@@ -28,7 +28,7 @@ const ProductCard = ({ data, currentUser }:any) => {
     };
 
     fetchProductDetail();
-  }, [data.id]);
+  }, [data.itemSeq]);
 
   const handleCardClick = () => {
     // Add logic for handling card click
