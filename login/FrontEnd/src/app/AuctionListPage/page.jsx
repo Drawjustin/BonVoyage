@@ -31,9 +31,13 @@ const AuctionListPage = async () => {
 
     console.log(seq, user);
 
-    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
+    
+
+    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/{${seq}}`)
     const ClickedId = user.id;
     const WhetherArtist = user.role === 'artist' ? true : false;
+
+    console.log(ClickedId, WhetherArtist);
 
     navigate.push(`/demos/dashboard/canvas-designer.html?open=${WhetherArtist}&sessionid=${Auction.auctionId}&userFullName=${ClickedId}`)
     
