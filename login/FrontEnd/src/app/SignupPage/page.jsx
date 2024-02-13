@@ -8,14 +8,14 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 const SignupPage = async () => {
     const currentUser = await getCurrentUser();
     return (
-        <div>
+        <div className={styles.container}>
             <div className={styles.title} style={{ color: '#f1efee' }}>회원가입</div>
             <div className={styles.cards}>
                 <div className={styles.card}>
-                    <Link href="/SignupPage/SignupArtistPage"><ArtistCard /></Link>
+                    <Link href="/SignupPage/SignupArtistPage" className={styles.linkstyle}><ArtistCard /></Link>
                 </div>
                 <div className={styles.card}>
-                    <Link href="/SignupPage/SignupMemberPage"><GuestCard /></Link>
+                    <Link href="/SignupPage/SignupMemberPage" className={styles.linkstyle}><GuestCard /></Link>
                 </div>
             </div>
         </div>

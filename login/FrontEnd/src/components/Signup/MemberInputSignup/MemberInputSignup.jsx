@@ -192,7 +192,7 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input style={{ width: '200px' }} type="text" className={styles.form_input} placeholder='연락처'
+                    <input type="text" className={styles.form_input_3} placeholder='연락처'
                     value={phonenum} onChange={(e) => {
                         setPhoneNumber(e.target.value);
                     }}/>

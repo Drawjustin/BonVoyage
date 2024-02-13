@@ -46,7 +46,6 @@ const ResetPw = () => {
 
     return (
         <div className={styles.password_reset_container}>
-      <Navbar/>
             <h2>비밀번호 재설정</h2>
             {showResetForm ? (
             <>
@@ -56,7 +55,7 @@ const ResetPw = () => {
                 )}
                 {/* 비밃번호 재설정 폼 추가 */}
                 <div className={styles.input_container}>
-                    <label htmlFor="newPassword">새 비밀번호</label>
+                    <label htmlFor="newPassword" className={styles.newPassword}>새 비밀번호</label>
                     <input 
                         type="password" 
                         id='newPassword' 
@@ -85,7 +84,7 @@ const ResetPw = () => {
                 <div className={styles.input_container}>
                     <label htmlFor="userId">ID</label>
                     <input
-                        type="text" 
+                        type="text"
                         id='userId' 
                         name='userId' 
                         placeholder='아이디를 입력하세요.'
