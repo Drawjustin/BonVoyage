@@ -2,8 +2,6 @@
 import { styled } from '@mui/system';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import getCurrentUser from '@/app/actions/getCurrentUser';
-import { signIn, signOut, useSession } from 'next-auth/react';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 // import Link from 'next/link';
 
@@ -60,8 +58,7 @@ export const ButtonContainer = () => {
 
   const buttonList = [];
 
-
-  if (!session.id) {
+  if (!session) {
     buttonList.push(
       { text: '로그인', func: () => navigate.push('/LoginPage') },
       { text: '회원가입', func: () => navigate.push('/SignupPage') },
@@ -70,7 +67,7 @@ export const ButtonContainer = () => {
     buttonList.push(
       { text: '장바구니', func: () => navigate.push('/CartPage') },
       { text: '마이페이지', func: () => navigate.push('/MyPage') },
-      { text: '로그아웃', func: () => {sessionStorage.setItem('session', null); alert('로그아웃 완료'); navigate.push('/')} },
+      { text: '로그아웃', func: () => {sessionStorage.clear(); alert('로그아웃 완료'); navigate.push('/')} },
     );
   }
   

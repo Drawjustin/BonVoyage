@@ -56,7 +56,7 @@ const InputLogin = () => {
           return;
         } else {
           alert('로그인 성공')
-          sessionStorage.setItem('session', {id : userResponse.data, role: 'artist'});
+          sessionStorage.setItem('session', JSON.stringify({id : userResponse.data, role: 'artist'}));
           navigate.push('/');
         }
         
@@ -80,7 +80,7 @@ const InputLogin = () => {
         }
 
         alert('로그인 성공')
-        sessionStorage.setItem('session', {id : memberResponse.data, role: 'member'});
+        sessionStorage.setItem('session', JSON.stringify({id : memberResponse.data, role: 'member'}));
         navigate.push('/');
       }
       
