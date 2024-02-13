@@ -12,7 +12,6 @@ const CartPage = () => {
 
   return (
         <div className='page'>
-      <Navbar />
           <Provider store={store}>
             <CartDetail/>
           </Provider>

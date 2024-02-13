@@ -1,6 +1,6 @@
-import axios from 'axios';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/utils/authOptions';
+// import axios from 'axios';
+// import { getServerSession } from 'next-auth';
+// import { authOptions } from '@/utils/authOptions';
 
 // interface CustomUserType {
 //     artistId: string;
@@ -13,11 +13,10 @@ import { authOptions } from '@/utils/authOptions';
 //     }
 //   }
 
-export async function getSession() {
-    return await getServerSession(authOptions);
-}
 
-export default async function getCurrentUser() {
+
+
+const getCurrentUser = () => {
     try {
         const session = sessionStorage.getItem('session');
         if (!session) {
@@ -54,3 +53,5 @@ export default async function getCurrentUser() {
         return null;
     }
 }
+
+export default getCurrentUser
