@@ -93,11 +93,14 @@ const AccountInfo = () => {
     
     
     return (
-        <div style={{ width: '600px', alignItems: 'center' }}>
-        <div style={{ display: 'flex', justifyContent:'space-between'}}>
-        <h3 className={styles.title} style={{ color: '#f1efee', fontSize: 'calc(1.3rem + .6vw)' }}>계정 정보</h3>
-        <button onClick={handleSave}>전체 저장</button>
-        </div>
+        <div style={{alignItems: 'center'}}>
+        <div style={{ width: '600px', alignItems: 'center', display:'flex', flexDirection:'column' }}>
+
+            <div style={{display: 'flex', alignItems:'center', flexDirection:'row', width:'90%', height:'30%'}}>
+                <h3 className={styles.title} >계정 정보</h3>
+                <button onClick={handleSave} style={{height:'30px'}}>전체 저장</button>
+            </div>
+        <div>
         <div  className={styles.account_info}>
             <div>
             <div className={styles.info_item}>
@@ -178,7 +181,11 @@ const AccountInfo = () => {
             </div>
             </div>
         </div>
+        </div>
+        
     </div>
+        </div>
+        
     )
 } 
 
