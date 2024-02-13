@@ -45,7 +45,7 @@ const AuctionListPage = async () => {
   useEffect(() => {    
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://i10a207.p.ssafy.io/api/auction');
+        const response = axios.get('https://i10a207.p.ssafy.io/api/auction');
 
         setAuctions(response.data);
       } catch (error) {

@@ -10,8 +10,7 @@ import EmptyState from "@/components/EmptyState/EmptyState";
 import ReviewCard from "@/components/review/ReviewCard";
 // import Pagination from "@/components/Pagination";
 import Carousel from '@/components/carousel/Carousel';
-import styles from './review.module.scss'
-import Navbar from "@/components/Navbar/Navbar";
+import styles from './review.module.scss';
 import PurchaseInfo from "@/components/MyPageComponent/PurchaseInfo/PurchaseInfo";
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
@@ -52,7 +51,6 @@ const ReviewPage = () => {
 
   return (
     <Container>
-      <Navbar/>
       <div>
       <h2 style={{ marginTop: '10px', color: '#f1efee'}}>리뷰</h2>
       <Carousel carouselList={CAROUSEL_IMAGES}/>
