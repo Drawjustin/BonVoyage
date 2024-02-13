@@ -127,6 +127,7 @@ public class AuctionService {
 
     private AuctionDto convertToDto(Auction auction) {
         AuctionDto auctionDto = new AuctionDto();
+        auctionDto.setAuctionSeq(auction.getAuctionSeq());
         auctionDto.setAuctionSessionId(auction.getAuctionSessionId());
         auctionDto.setAuctionScheduledTime(auction.getAuctionScheduledTime());
         auctionDto.setAuctionStatus(auction.getAuctionStatus());
