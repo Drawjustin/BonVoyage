@@ -5,10 +5,14 @@ import HeartButton from '../../HeartButton/HeartButton';
 import { fromNow } from '@/helpers/dayjs';
 import styles from './ProductCard.module.scss';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const ProductCard = ({ data, currentUser }:any) => {
   const handleCardClick = () => {
     // Add logic for handling card click
+    const router = useRouter()
+
+    router.push('/{id}/ProductDetailPage')
   };
 
   return (

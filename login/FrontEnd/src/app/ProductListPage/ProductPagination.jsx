@@ -55,16 +55,12 @@ const ProductPagination = ({PageLink}) => {
   // ];
   
   // 서버에서 데이터를 가져오는 함수
-  const fetchDataFromBackend = async (sortBy, page) => {
+  const fetchDataFromBackend = async (page) => {
     try {
-      const response = await axios.get('https://i10a207.p.ssafy.io/api/item', {
-        params: {
-          sort: sortBy,
-          page: page,
-        },
-      });
+      const response = axios.get('https://i10a207.p.ssafy.io/api/item', {
 
-      return response.data;
+      });
+      return (await response).data;
     } catch (error) {
       console.error('Error fetching products from backend:', error);
       throw error;
@@ -79,35 +75,29 @@ const ProductPagination = ({PageLink}) => {
   }, [searchParams])
 
   useEffect(() => {
-    if (typeof window !== 'undefined'){
-        window.scrollTo(0, 0);
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
     }
-
-    
+  
     const fetchData = async () => {
       try {
-        // 이게 원래 코드
-        // const response = await axios.get('https://i10a207.p.ssafy.io/api/item', Sort);
-        const fetchedData = await fetchDataFromBackend(Sort, currentPage);
+        const fetchedData = await fetchDataFromBackend(currentPage);
         
-
-        setFetchedData(fetchedData);
-        setTotalItems(fetchedData.length);
-        // setProducts(response.data);
-        // setTotalItems(response.data.length);
-
-        // 가데이터 임시방편 출력c
-        // setProducts(dummyData);
-        // setTotalItems(dummyData.length);
-
+        if (Array.isArray(fetchedData)) {
+          setFetchedData(fetchedData);
+          console.log(fetchedData);
+          setTotalItems(fetchedData.length);
+        } else {
+          console.error('Error: fetchedData is not an array');
+        }
       } catch (error) {
         console.error('Error fetching products:', error);
-        throw error; // Rethrow the error to be handled elsewhere
+        // 에러 핸들링을 추가하거나 필요에 따라 예외 처리를 진행하세요.
       }
     };
   
     fetchData();
-  }, [Sort, currentPage])
+  }, [currentPage]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
