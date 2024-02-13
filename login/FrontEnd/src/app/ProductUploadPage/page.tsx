@@ -93,12 +93,12 @@ const ProductUploadPage = () => {
             console.log('fail :', response.data);
             setShowAlert(true);
           }
-        })
-        .catch(error => {
-          console.error('error', error.response ? error.response.data : error.message);
-          // 로그인 실패하면 팝업 표시할 것
-          
         });
+        // .catch(error => {
+        //   console.error('error', error.response ? error.response.data : error.message);
+        //   // 로그인 실패하면 팝업 표시할 것
+          
+        // });
   
         // if (response.data !== '바보 멍텅구리 실패했잔요') {
         //   console.log('성공 :', response.data);
@@ -150,9 +150,9 @@ const ProductUploadPage = () => {
         //   setShowAlert(true);
         // }
       }
-    } catch (error:any) {
-      console.error('에러 발생:', error.response ? error.response.data : error.message);
-      // 에러 처리 로직 추가
+    // } catch (error:any) {
+    //   console.error('에러 발생:', error.response ? error.response.data : error.message);
+    //   // 에러 처리 로직 추가
     } finally {
       setIsLoading(false);
     }
