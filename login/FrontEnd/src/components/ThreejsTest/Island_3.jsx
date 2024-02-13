@@ -6,9 +6,21 @@ Command: npx gltfjsx@6.2.16 public/models/island/island_3.glb
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
-const Island_3 = (props) => {
+const Island_3 = ({ scale, position, onClick, props }) => {
   const { nodes, materials } = useGLTF('./models/island/island_3.glb')
+  const meshRef = useRef();
+  
+  const handleOnClick = () => {
+    onClick(); // 부모 컴포넌트로 클릭 이벤트 전달
+  };
+  
   return (
+    <mesh
+      ref={meshRef}
+      scale={scale}
+      position={position}
+      onClick={handleOnClick}
+    >
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.008}>
         <group rotation={[Math.PI / 2, 0, 0]}>
@@ -54,6 +66,7 @@ const Island_3 = (props) => {
         </group>
       </group>
     </group>
+    </mesh>
   )
 }
 

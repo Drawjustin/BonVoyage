@@ -5,17 +5,32 @@ Command: npx gltfjsx@6.2.16 public/models/island/island_b.glb
 
 import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useThree } from '@react-three/fiber';
+import gsap from 'gsap';
+import * as THREE from "three"
 
-const Island_b = (props) => {
+const Island_b = ({ scale, position, onClick, props }) => {
   const { nodes, materials } = useGLTF('./models/island/island_b.glb')
+  const meshRef = useRef();
+  
+  const handleOnClick = () => {
+    onClick(); // 부모 컴포넌트로 클릭 이벤트 전달
+  };
+  
   return (
+    <mesh
+      ref={meshRef}
+      scale={scale}
+      position={position}
+      onClick={handleOnClick}
+    >
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]} scale={0.1} position-y={-1} rotation-z={-3}>
         <group rotation={[Math.PI / 2, 0, 0]}>
           <mesh geometry={nodes.Cloner_3_rock1_0.geometry} material={materials['rock.1']} position={[-107.941, 871.584, 101.213]} rotation={[0.279, -0.823, 0.306]} />
           {/* <mesh geometry={nodes.Cube_9_rock1_0.geometry} material={materials['rock.1']} position={[22.035, -98.714, -495.031]} scale={-1} /> */}
           {/* <mesh geometry={nodes.Cylinder_rock1_0.geometry} material={materials['rock.1']} position={[-767.859, -88.909, 112.563]} rotation={[-0.227, 0.029, 0.02]} /> */}
-          {/* <mesh geometry={nodes.Cylinder_2_rock1_0.geometry} material={materials['rock.1']} position={[12.318, 766.794, 129.293]} rotation={[0.12, -0.315, 0.217]} /> */}
+          <mesh geometry={nodes.Cylinder_2_rock1_0.geometry} material={materials['rock.1']} position={[12.318, 766.794, 129.293]} rotation={[0.12, -0.315, 0.217]} />
           {/* <mesh geometry={nodes.Cylinder_3_rock1_0.geometry} material={materials['rock.1']} position={[228.334, -91.587, -339.672]} rotation={[Math.PI, -0.575, -2.833]} /> */}
           <mesh geometry={nodes.GRASS_rock1_0.geometry} material={materials['rock.1']} position={[469.595, 129.375, -21.313]} rotation={[0, 0.108, 0]} />
           <mesh geometry={nodes.GRASS_2_rock1_0.geometry} material={materials['rock.1']} position={[-257.097, 494.035, 109.124]} rotation={[-Math.PI, 0, -Math.PI]} />
@@ -29,6 +44,7 @@ const Island_b = (props) => {
         </group>
       </group>
     </group>
+    </mesh>
   )
 }
 

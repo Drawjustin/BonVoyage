@@ -3,7 +3,6 @@ import Head from 'next/head';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import ToastProvider from '@/components/ToastProvider';
-import { PlayProvider } from '@/components/Threejs/contexts/PlayProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import AuthSession from './AuthSession';
 import { getServerSession } from 'next-auth';
@@ -33,11 +32,9 @@ export default async function RootLayout({children})
           <body>
             <main>
                 <AuthSession session={session}>
-                  <PlayProvider>
                     <ToastProvider />
                         <Navbar/>
                         {children}
-                  </PlayProvider>
                 </AuthSession>
             </main>
             <Footer />
