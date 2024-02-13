@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "*")
@@ -19,6 +20,7 @@ public class WebrtcController {
     @Autowired
     WebrtcService webrtcService;
 
+    // 입찰
     @PostMapping("/{seq}/price")
     public ResponseEntity<?> createBid(@PathVariable("seq") Long seq, @RequestBody AuctionPointDetailDto bidRequest) {
         try {
@@ -29,13 +31,23 @@ public class WebrtcController {
         }
     }
 
+    @GetMapping("/{seq}")
+    public ResponseEntity<?> readBidListByAuctionSeq(@PathVariable("seq") Integer seq) {
+        try {
+            List<AuctionPointDetailDto> bids = webrtcService.readBidListByAuctionSeq(seq);
+            return ResponseEntity.ok(bids);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("Read Bid List Error", HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // 경매 낙찰자 찾기
     @GetMapping("/{seq}/winner")
     public ResponseEntity<?> readWinnerBySeq(@PathVariable("seq") Integer seq) {
         try {
             MemberDto winner = webrtcService.readWinner(seq);
             return ResponseEntity.ok(winner);
-
         }
         catch (Exception e){
             return ResponseEntity.ok("read Winner error");

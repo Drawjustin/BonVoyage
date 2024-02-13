@@ -23,7 +23,6 @@ public class AuctionPointDetailService {
         return auctionPointDetailRepository.create(auctionPointDetail);
     }
 
-
     //TODO: READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<AuctionPointDetail> readAllAuctionPointDetail() {
@@ -33,7 +32,6 @@ public class AuctionPointDetailService {
     public AuctionPointDetail readOne(int seq) {
         return auctionPointDetailRepository.readOne(seq);
     }
-
 
     //TODO: UPDATE
     @Transactional

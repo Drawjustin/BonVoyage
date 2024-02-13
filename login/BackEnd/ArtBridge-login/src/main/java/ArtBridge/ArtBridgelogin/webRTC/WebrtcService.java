@@ -1,15 +1,18 @@
 package ArtBridge.ArtBridgelogin.webRTC;
 
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
+import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
+import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-import ArtBridge.ArtBridgelogin.domain.Auction;
-import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
-import ArtBridge.ArtBridgelogin.domain.Member;
-import ArtBridge.ArtBridgelogin.domain.MemberAuctionBidding;
+import ArtBridge.ArtBridgelogin.domain.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -42,6 +45,12 @@ public class WebrtcService {
             return "error";
         }
     }
+
+    @Transactional
+    public List<AuctionPointDetailDto> readBidListByAuctionSeq(int seq) {
+        return convertToDtoList(webrtcRepository.readBidListByAuctionSeq(seq));
+    }
+
     @Transactional
     public MemberDto readWinner(Integer seq) {
         Member member = webrtcRepository.readWinner(seq);
@@ -88,6 +97,37 @@ public class WebrtcService {
         return memberDto;
     }
 
+    private AuctionPointDetailDto convertToDto(AuctionPointDetail auctionPointDetail) {
+        AuctionPointDetailDto auctionPointDetailDto = new AuctionPointDetailDto();
+        auctionPointDetailDto.setAuctionPointDetailSeq(auctionPointDetail.getAuctionPointDetailSeq());
+        auctionPointDetailDto.setAuctionPointDetailPoint(auctionPointDetail.getAuctionPointDetailPoint());
+        auctionPointDetailDto.setAuctionPointDetailIsWin(auctionPointDetail.getAuctionPointDetailIsWin());
+        auctionPointDetailDto.setAuctionPointDate(auctionPointDetail.getAuctionPointDate());
 
+        // Map MemberDto
+        if (auctionPointDetail.getMember() != null) {
+            MemberDto memberDto = new MemberDto();
+            memberDto.setMemberId(auctionPointDetail.getMember().getMemberId());
+            // 이후 필요한 필드들도 여기서 설정해주세요.
+            auctionPointDetailDto.setMember(memberDto);
+        }
+
+        // Map AuctionDto
+        if (auctionPointDetail.getAuction() != null) {
+            AuctionDto auctionDto = new AuctionDto();
+            auctionDto.setAuctionSeq(auctionPointDetail.getAuction().getAuctionSeq());
+            // 이후 필요한 필드들도 여기서 설정해주세요.
+            auctionPointDetailDto.setAuction(auctionDto);
+        }
+
+        return auctionPointDetailDto;
+    }
+
+
+    private List<AuctionPointDetailDto> convertToDtoList(List<AuctionPointDetail> details) {
+        return details.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
 
 }

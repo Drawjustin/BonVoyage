@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public class WebrtcRepository {
@@ -72,5 +74,12 @@ public class WebrtcRepository {
         }
 
 
+    }
+
+    public List<AuctionPointDetail> readBidListByAuctionSeq(int seq) {
+        return queryFactory.selectFrom(qAuctionPointDetail)
+                .where(qAuctionPointDetail.auction.auctionSeq.eq(seq))
+                .orderBy(qAuctionPointDetail.auctionPointDate.desc())
+                .fetch();
     }
 }
