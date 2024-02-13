@@ -276,9 +276,20 @@ httpApp = httpApp.listen(process.env.PORT || PORT, process.env.IP || "0.0.0.0", 
     RTCMultiConnectionServer.afterHttpListen(httpApp, config);
 });
 
+// 세션을 종료하고 사용자를 내보내는 함수
+function endSession(sessionId) {
+    var socket = io.sockets.connected[sessionId];
+    if (socket) {
+        // 'session end' 이벤트를 클라이언트에게 전송
+        socket.broadcast.emit(params.socketCustomEvent, { message: 'session end'});
+        socket.disconnect();
+    }
+}
+
 // --------------------------
 // socket.io codes goes below
-
+let intervalId;
+let timeLeft = 180;
 ioServer(httpApp).on('connection', function(socket) {
     RTCMultiConnectionServer.addSocket(socket, config);
 
@@ -292,6 +303,25 @@ ioServer(httpApp).on('connection', function(socket) {
     }
 
     socket.on(params.socketCustomEvent, function(message) {
+        if (message.message === 'bidBtn clicked') {
+            // 기존의 interval을 제거하고 새 interval 설정
+            clearInterval(intervalId);
+            timeLeft = 180;
+            intervalId = setInterval(() => {
+                timeLeft--;
+                // 모든 클라이언트에게 남은 시간을 보냄
+                socket.broadcast.emit(params.socketCustomEvent, { message: 'tick', timeLeft: timeLeft });
+                if (timeLeft <= 0) {
+                    clearInterval(intervalId);
+                    // 모든 클라이언트에게 경매 종료 메시지를 보냄
+                    socket.broadcast.emit(params.socketCustomEvent, { message: 'auction ended' });
+                    setTimeout(() => {
+                        socket.broadcast.emit(params.socketCustomEvent, { message: 'session end'});
+                        socket.disconnect();
+                    }, 3000);
+                }
+            }, 1000);
+        }
         socket.broadcast.emit(params.socketCustomEvent, message);
     });
 });

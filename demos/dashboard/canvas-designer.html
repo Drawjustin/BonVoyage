@@ -33,7 +33,7 @@
         <p id="itemDetailText" style="margin-top: 10%" >여기는 아이템 정보를 보여줄겁니다.</p>
     </div>
     <div>
-        <p>여기는 3분 시계를 띄워볼까합니다.</p>
+        <p id="timer">180</p>
     </div>
     <div style="position: relative; width: 100%; height: 150px;">
         <button id="sessionCloseBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
@@ -278,7 +278,9 @@ function updateBidButton() {
 
 var socket = io();
 var auctionEnded = false;
-var timeoutId;
+var intervalId;
+var tickReceived = false; // 'tick' 메시지를 받았는지 확인하는 불리언 변수
+var timeLeft = 180;
 
 // 팝업 띄우는 함수
 function showPopup(message, timeout) {
@@ -297,33 +299,50 @@ function showPopup(message, timeout) {
     }
 }
 
+var timer = document.getElementById('timer');
+timer.textContent = '180';
+var timeLeft = 180;
+
 document.getElementById('bidBtn').addEventListener('click', function() {
     // bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked', 타겟을 'all'로, 그리고 호가 정보를 전송
     socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all', price: bidPrice });
 
     // 동시에 자신에게도 팝업 띄우기
     showPopup("현재 호가: " + bidPrice, 3000);
-
-    // 기존의 timeout을 제거하고 새 timeout 설정
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => {
-        auctionEnded = true;
-        socket.emit('custom-message', { message: '경매가 종료되었습니다.', target: 'all' });
-        showPopup("경매가 종료되었습니다.", Infinity);
-    }, 180000); // 3분 후에 실행
+    resetTimer();
 });
 
 // 서버로부터 'custom-message' 이벤트를 받으면
 socket.on('custom-message', function(data) {
-    if (data.message === 'bidBtn clicked') {
+    if (data.message === 'tick') {
+        timeLeft = data.timeLeft;
+        timer.textContent = data.timeLeft.toString(); // 서버로부터 받은 남은 시간을 화면에 표시
+    } else if (data.message === 'auction ended') {
+        // 경매 종료 메시지를 받으면 팝업 띄우기
+        showPopup("경매가 종료되었습니다.", Infinity);
+    } else if (data.message === 'bidBtn clicked') {
         // 팝업을 띄우기
         showPopup("현재 호가: " + data.price, 3000);
-    } else {
-        // 경매 종료 메시지를 받으면 팝업 띄우기 =>
-        showPopup(data.message, Infinity);
+    } else if (data.message === 'session end') {
+        console.log("세션을 종료합니다.");
+        connection.close();
     }
 });
 
+
+
+function resetTimer() {
+    timeLeft = 180;
+    clearInterval(intervalId);
+    intervalId = setInterval(() => {
+            timeLeft--;
+            timer.textContent = timeLeft.toString();
+            if (timeLeft <= 0) {
+                clearInterval(intervalId);
+                showPopup("경매가 종료되었습니다.", Infinity);
+            }
+    }, 1000);
+}
 // 경매 정보 가져오기
 let getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
 
@@ -379,13 +398,10 @@ function updateButtonStatus() {
 window.onload = function() {
     fetchAuctionInfo()
     .then(() => {
-        // 경매 정보를 표시
         displayAuctionInfo();
-        bidPrice = auctionInfo.auctionStartPoint;
     })
     .catch(error => {
         console.error('Error:', error); // 에러 처리
-        // 사용자에게 새로고침하라는 알림창 표시
         alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
     })
     .finally(() => {
