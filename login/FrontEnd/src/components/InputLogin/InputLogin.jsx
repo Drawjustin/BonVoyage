@@ -39,19 +39,28 @@ const InputLogin = () => {
     try {
       const backendUrl = "https://i10a207.p.ssafy.io/api";
       // Artist
-      const artistBody = {
-          id: body.username,
-          pw: body.password
-      }
-
-      const userResponse = await axios.post(`${backendUrl}/artists/login`, artistBody, {
-        headers: {
-          'Content-Type': 'application/json;charset=UTF-8'
+      if(isArtist) {
+        const artistBody = {
+            id: body.username,
+            pw: body.password
         }
-      });
 
-      if (userResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
-        // Member
+        const userResponse = await axios.post(`${backendUrl}/artists/login`, artistBody, {
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
+        });
+
+        if (userResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
+          alert('로그인 실패');
+          return;
+        } else {
+          alert('로그인 성공')
+          sessionStorage.setItem('session', {id : userResponse.data, role: 'artist'});
+        }
+        
+      } else {
+          // Member
 
         const memberBody = {
           id: body.username,
@@ -65,21 +74,20 @@ const InputLogin = () => {
         });
 
         if (memberResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
-          console.log('error');
-          return null;
+          alert('로그인 실패');
+          return;
         }
 
         alert('로그인 성공')
         sessionStorage.setItem('session', {id : memberResponse.data, role: 'member'});
       }
-
-      alert('로그인 성공')
-      sessionStorage.setItem('session', {id : userResponse.data, role: 'artist'});
-  
-    }
-    catch (error) {
+      
+        
+      } catch (error) {
       console.log('에러에러', error);
       return null;
+    } finally {
+      setIsLoading(false);
     }
 
   }
