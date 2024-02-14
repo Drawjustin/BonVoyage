@@ -82,7 +82,7 @@ public class WebrtcService {
         auctionPointDetail.setAuctionPointDetailSeq(auctionPointDetailDto.getAuctionPointDetailSeq());
         auctionPointDetail.setAuctionPointDetailPoint(auctionPointDetailDto.getAuctionPointDetailPoint());
         auctionPointDetail.setAuctionPointDetailIsWin(auctionPointDetailDto.getAuctionPointDetailIsWin());
-
+        return auctionPointDetail;
     }
     private MemberDto convertToDto(Member member) {
         MemberDto memberDto = new MemberDto();
