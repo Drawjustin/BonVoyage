@@ -25,7 +25,13 @@ async function ProductListPage() {
 
           <ProductPagination PageLink={router}/>
               
-          <FloatingButton href="/ProductUploadPage">+</FloatingButton>
+          {
+          currentUser !== null ?
+          <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
+          :
+          <></>
+        }
+
         </div>
       </IconContext.Provider>
     </ProductContext.Provider>

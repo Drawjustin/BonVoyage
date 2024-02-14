@@ -9,9 +9,11 @@ import AuctionCard from '@/components/Auctions/AuctionCard/AuctionCard'
 import EmptyState from "@/components/EmptyState/EmptyState";
 import m1 from './m1.jpg'
 import m2 from './m2.jpg'
+import { useRouter } from "next/navigation";
 
 const AuctionListPage = async () => {
 
+  const navigate = useRouter();
   const currentUser = '현재유저';
   let auctions = [];
   await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {auctions = response.data})
@@ -31,15 +33,15 @@ const AuctionListPage = async () => {
   async function handleFunc (seq, user) {
 
     const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
-    const ClickedId = user.artistId ? user.artistId : user.memberId
-    const WhetherArtist = user.artistId ? true : false
 
-    const send = {id:Auction.data, userId:ClickedId, IsArtist:WhetherArtist};
+    const isArtist = user.role === 'artist' ? true : false;
 
-    const data = await axios.post('https://i10a207.p.ssafy.io/api/auction', send, { headers: 
-    {
-      'Content-Type': 'application/json;charset=UTF-8',
-    }})
+
+    if (!user){
+      navigate.push('/LoginPage');
+    } else {
+    navigate.push(`/demos/dashboard/canvas-designer.html?open=${isArtist}&sessionid=${Auction.data.auctionSessionId}&userFullName=${user.id}`)
+    }
   }
 
   // const [auctions, setAuctions] = useState([]);
@@ -61,12 +63,12 @@ const AuctionListPage = async () => {
 
     return (
       <>
-        <div className="container" style={{ marginTop: '10px', marginLeft: '23vh' , width: '85%', alignItems: 'center' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
-            </div>
-
+      <div className={styles.container}>
+      
+        <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
+        <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10vh' }}>경매 작품</h1>
             {
-              (auctions?.data?.length === 0 || !auctions?.data)
+              (auctions?.length === 0)
               ?
               <EmptyState showReset />
               :
@@ -85,7 +87,8 @@ const AuctionListPage = async () => {
               </div>
               </>
             }
- 
+            </div>
+        </div>
     </>
   )
 }
