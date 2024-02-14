@@ -9,6 +9,7 @@ import ArtBridge.ArtBridgelogin.domain.QMember;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,15 +38,27 @@ public class WebrtcRepository {
 
     public void createBid(Long seq, AuctionPointDetail bidRequest) {
         // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
+
+        // 데이터베이스에 락을 걸어 다른 트랜잭션이 해당 레코드에 접근하지 못하도록 함
+        em.lock(bidRequest, LockModeType.PESSIMISTIC_WRITE);
+
         try {
-            // 3초 동안 락을 유지
+            // 3초 동안 대기
             Thread.sleep(3000);
+
+            // 경매에 대한 입찰을 데이터베이스에 등록
+            em.persist(bidRequest);
+
+            // 트랜잭션 커밋 시 락을 해제
+            em.flush();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        } finally {
+            // 락을 해제
+            em.clear();
         }
-
-        em.persist(bidRequest);
     }
+
 
     public Member readWinner(Integer seq) {
         // 경매에서 낙찰자를 조회하는 로직을 여기에 추가
