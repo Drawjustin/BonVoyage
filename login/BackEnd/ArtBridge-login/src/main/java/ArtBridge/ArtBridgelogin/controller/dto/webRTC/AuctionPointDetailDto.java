@@ -20,17 +20,8 @@ public class AuctionPointDetailDto {
 
     private LocalDateTime auctionPointDate;
 
+    private Long memberSeq;
 
-    public void setMember(MemberDto member) {
-        this.member = member;
-    }
-
-    private MemberDto member;
-
-    public void setAuction(AuctionDto auction) {
-        this.auction = auction;
-    }
-
-    private AuctionDto auction;
+    private int auctionSeq;
 
 }
