@@ -7,7 +7,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import ProductCard from '@/components/products/ProductCard/ProductCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import m1 from './m1.jpg';
 import m2 from './m2.jpg';
 import m3 from './m3.jpg';
@@ -24,7 +24,6 @@ const ProductPagination = ({PageLink}) => {
   const searchParams = useSearchParams();
   const [page, setProductId] = useState('');
   const [fetchedData, setFetchedData] = useState([]);
-  const navigation = useRouter();
   
   // 서버에서 데이터를 가져오는 함수
   const fetchDataFromBackend = async (page) => {
@@ -82,6 +81,8 @@ const ProductPagination = ({PageLink}) => {
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+
+  
 
     return (
         <>
@@ -156,7 +157,7 @@ const ProductPagination = ({PageLink}) => {
             totalItems={totalItems} 
             itemCountPerPage={PRODUCTS_PER_PAGE} 
             pageCount={Math.ceil(totalItems / PRODUCTS_PER_PAGE)}
-            onchange={handlePageChange}/>
+            onPageChange={handlePageChange}/>
 
         </div>
         </>

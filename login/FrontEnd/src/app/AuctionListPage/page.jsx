@@ -9,12 +9,10 @@ import AuctionCard from '@/components/Auctions/AuctionCard/AuctionCard'
 import EmptyState from "@/components/EmptyState/EmptyState";
 import m1 from './m1.jpg'
 import m2 from './m2.jpg'
-import { useRouter } from "next/navigation";
 
 const AuctionListPage = async () => {
 
-  const currentUser = getCurrentUser();
-  const navigate = useRouter();
+  const currentUser = '현재유저';
 
   const auctions = await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {return response})
   .catch((error) => {console.log(error); return [];})
@@ -33,16 +31,15 @@ const AuctionListPage = async () => {
   async function handleFunc (seq, user) {
 
     const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
-    const ClickedId = user.id;
-    const WhetherArtist = user.role === 'artist' ? true : false;
+    const ClickedId = user.artistId ? user.artistId : user.memberId
+    const WhetherArtist = user.artistId ? true : false
 
-    console.log(Auction.data, ClickedId, WhetherArtist);
+    const send = {id:Auction.data, userId:ClickedId, IsArtist:WhetherArtist};
 
-    if (user === null) {
-      navigate.push('/LoginPage');
-    } else {
-      navigate.push(`/demos/dashboard/canvas-designer.html?open=${WhetherArtist}&sessionid=${Auction.data.auctionSessionId}&userFullName=${ClickedId}`)
-    }
+    const data = await axios.post('https://i10a207.p.ssafy.io/api/auction', send, { headers: 
+    {
+      'Content-Type': 'application/json;charset=UTF-8',
+    }})
   }
 
   // const [auctions, setAuctions] = useState([]);
@@ -64,42 +61,31 @@ const AuctionListPage = async () => {
 
     return (
       <>
-      <div className={styles.container}>
-      <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
-        <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
-          
-            
+        <div className="container" style={{ marginTop: '10px', marginLeft: '23vh' , width: '85%', alignItems: 'center' }}>
+          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
+            </div>
 
             {
               (auctions?.data.length === 0 || !auctions?.data)
               ?
               <EmptyState showReset />
               :
-              (
               <>
               <div className={styles.grid}>
-              {auctions.data.map((auction) =>(
+              {auctions.map((auction) =>
               <div onClick={() => handleFunc(auction.auctionSeq, currentUser)}>
                   <AuctionCard
                     currentUser={currentUser}
                     key={auction.auctionSeq}
                     data={auction}
                   />
-                  </div>)
-              )}
+                  </div>
+                  )}
                   
               </div>
-              </>)
+              </>
             }
-        </div>
-        {
-          currentUser !== null ?
-          <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
-          :
-          <></>
-        }
-        
-        </div>
+ 
     </>
   )
 }
