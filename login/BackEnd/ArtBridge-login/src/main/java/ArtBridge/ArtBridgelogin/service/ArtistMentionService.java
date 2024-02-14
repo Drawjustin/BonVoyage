@@ -79,7 +79,8 @@ public class ArtistMentionService {
     // UPDATE
     @Transactional
     public ArtistMentionDto updateArtistMention(Long id, ArtistMentionDto updatedArtistMentionDto) {
-        ArtistMention artistMention = artistMentionRepository.readOne(id);
+
+        ArtistMention artistMention = artistMentionRepository.readOne(String.valueOf(id));
 
         if (artistMention == null) {
             throw new NoDataFoundException("ID가 " + id + "인 아티스트 멘션을 찾을 수 없습니다.");
