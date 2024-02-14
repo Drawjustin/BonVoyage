@@ -20,7 +20,7 @@ const AuctionCard = ({ data, currentUser }:any) => {
       </div>
 
       <div className={styles['artist-details']}>
-        {data.item.itemName}
+        {data.title}
       </div>
 
     </div>
