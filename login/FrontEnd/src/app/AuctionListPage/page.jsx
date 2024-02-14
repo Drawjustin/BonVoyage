@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 const AuctionListPage = async () => {
 
   const navigate = useRouter();
-  const currentUser = '현재유저';
+  const currentUser = getCurrentUser();
   let auctions = [];
   await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {auctions = response.data})
   .catch((error) => {console.log(error); auctions = []})
@@ -37,7 +37,7 @@ const AuctionListPage = async () => {
     const isArtist = user.role === 'artist' ? true : false;
 
 
-    if (!user){
+    if (!user.id){
       navigate.push('/LoginPage');
     } else {
     navigate.push(`/demos/dashboard/canvas-designer.html?open=${isArtist}&sessionid=${Auction.data.auctionSessionId}&userFullName=${user.id}`)
@@ -88,6 +88,13 @@ const AuctionListPage = async () => {
               </>
             }
             </div>
+          
+            {
+          (currentUser !== null && currentUser.role === 'artist') ?
+          <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
+          :
+          <></>
+        }
         </div>
     </>
   )
