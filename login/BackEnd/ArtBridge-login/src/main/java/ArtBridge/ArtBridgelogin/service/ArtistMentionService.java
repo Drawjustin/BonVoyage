@@ -85,8 +85,9 @@ public class ArtistMentionService {
             throw new NoDataFoundException("ID가 " + id + "인 아티스트 멘션을 찾을 수 없습니다.");
         }
 
-        BeanUtils.copyProperties(updatedArtistMentionDto, artistMention, "artistMentionSeq");
-
+//        BeanUtils.copyProperties(updatedArtistMentionDto, artistMention, "artistMentionSeq");
+        artistMention.setArtistMentionContent(updatedArtistMentionDto.getContent());
+        artistMention.setArtistMentionSubject(updatedArtistMentionDto.getSubject());
         artistMentionRepository.updateArtistMention(id, artistMention);
 
         return convertToDto(artistMention);

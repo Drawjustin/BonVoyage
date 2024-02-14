@@ -40,7 +40,7 @@ public class Auction {
     @Column(name = "auction_canceled_date")
     private LocalDateTime auctionCanceledDate;
 
-    @Column(name = "auction_ismiscarried", columnDefinition = "DEFAULT false")
+    @Column(name = "auction_ismiscarried", columnDefinition = "DEFAULT false" , nullable = false)
     private Boolean auctionIsMiscarried;
 
     @Column(name = "auction_miscarried_date")

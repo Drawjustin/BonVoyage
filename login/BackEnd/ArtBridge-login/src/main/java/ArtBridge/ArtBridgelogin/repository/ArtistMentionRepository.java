@@ -52,7 +52,8 @@ public class ArtistMentionRepository {
 
     // 아티스트 멘션 업데이트 메서드
     public void updateArtistMention(Long artistMentionSeq, ArtistMention updatedArtistMention) {
-        em.merge(updatedArtistMention);
+        em.merge(updatedArtistMention)
+        ;
     }
 
     // 아티스트 멘션 삭제 메서드

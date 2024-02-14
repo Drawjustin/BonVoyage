@@ -45,7 +45,12 @@ public class ArtistRepository {
                 .where(qArtist.artistId.eq(artistId))
                 .fetchOne();
     }
-
+    public Artist readArtistBySeq(Long artistSeq) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistSeq.eq(artistSeq))
+                .fetchOne();
+    }
 //    @Transactional(readOnly = true)
 //    public Optional<Artist> findById(String artistId) {
 //        Artist artist = queryFactory

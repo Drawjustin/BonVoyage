@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.controller;
 
+import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistLoginForm;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberLoginForm;
@@ -38,11 +39,11 @@ public class ArtistController {
     @ResponseBody
     public ResponseEntity<?> login(@RequestBody ArtistLoginForm artistLoginForm) {
 
-        boolean loginResult = artistService.login(artistLoginForm.getId(), artistLoginForm.getPw());
+        LoginReturnForm loginResult = artistService.login(artistLoginForm.getId(), artistLoginForm.getPw());
 
-        if (loginResult) {
+        if (loginResult.getSeq() != null) {
             // 로그인 성공
-            return ResponseEntity.ok().body(artistLoginForm.getId());
+            return ResponseEntity.ok().body(loginResult);
         } else {
             // 로그인 실패
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.");

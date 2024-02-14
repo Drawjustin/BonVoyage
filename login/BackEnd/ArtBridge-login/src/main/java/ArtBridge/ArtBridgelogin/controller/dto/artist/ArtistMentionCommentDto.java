@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class ArtistMentionCommentDto {
+public class    ArtistMentionCommentDto {
     private String content;
 
     private Long artistMentionSeq;

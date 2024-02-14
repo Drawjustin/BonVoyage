@@ -153,6 +153,7 @@ public class AuctionService {
         auctionDto.setAuctionStartPoint(auction.getAuctionStartPoint());
         auctionDto.setAuctionAskPoint(auction.getAuctionAskPoint());
         auctionDto.setAuctionCreatedDate(auction.getAuctionCreatedDate());
+        auctionDto.setAuctionIsMiscarried(auction.getAuctionIsMiscarried());
         if (auction.getItem() != null) {
             ItemDto itemDto = new ItemDto();
             itemDto.setItemSeq(auction.getItem().getItemSeq());

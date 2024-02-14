@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
@@ -81,13 +82,17 @@ public class MemberService {
     }
 
     @Transactional
-    public boolean login(String memberId, String password) {
+    public LoginReturnForm login(String memberId, String password) {
         try {
             // 로그인 처리 로직
             Member foundMember = memberRepository.findByMemberIdAndMemberPwd(memberId, password)
                     .orElse(null);
 
-            return foundMember != null;
+            LoginReturnForm loginReturnForm = new LoginReturnForm();
+            loginReturnForm.setSeq(foundMember.getMemberSeq());
+            loginReturnForm.setId(foundMember.getMemberId());
+
+            return loginReturnForm;
         } catch (DataAccessException e) {
             // 데이터베이스 예외가 발생한 경우 처리
             throw new MyDataAccessException("Failed to login", e);

@@ -105,7 +105,7 @@ public class AuctionRepository {
     public List<Auction> readAuctionsBySameAuthor(Long authorId) {
         return queryFactory
                 .selectFrom(qAuction)
-                .where(qMemberAuctionBidding.member.memberSeq.eq(authorId))
+                .where(qAuction.item.artist.artistSeq.eq(authorId))
                 .fetch();
     }
 
