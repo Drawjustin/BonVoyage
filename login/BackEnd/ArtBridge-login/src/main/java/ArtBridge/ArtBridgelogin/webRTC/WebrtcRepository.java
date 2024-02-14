@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 
 @Repository
@@ -36,26 +38,23 @@ public class WebrtcRepository {
         this.em = em;
     }
 
+    private final Semaphore semaphore = new Semaphore(1);
+
     public void createBid(Long seq, AuctionPointDetail bidRequest) {
-        // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
-
-        // 데이터베이스에 락을 걸어 다른 트랜잭션이 해당 레코드에 접근하지 못하도록 함
-        em.lock(bidRequest, LockModeType.PESSIMISTIC_WRITE);
-
         try {
-            // 3초 동안 대기
-            Thread.sleep(3000);
-
-            // 경매에 대한 입찰을 데이터베이스에 등록
-            em.persist(bidRequest);
-
-            // 트랜잭션 커밋 시 락을 해제
-            em.flush();
+            // 3초 동안에만 허용되도록 시도
+            if (semaphore.tryAcquire(3, TimeUnit.SECONDS)) {
+                // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
+                em.persist(bidRequest);
+            } else {
+                // 3초 안에 입력을 받지 않았을 경우 처리
+                // 예: 로그 기록 또는 에러 처리
+            }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
-            // 락을 해제
-            em.clear();
+            // semaphore.release() 메소드를 호출하여 락 해제
+            semaphore.release();
         }
     }
 
