@@ -37,6 +37,9 @@ const ReviewUploadPage = () => {
   } = useForm<FieldValues>({
     defaultValues: {
       itemSeq: '',
+      artist: '',
+      member: '',
+      title: '',
       description: '',
       imageSrc: '',
     }
@@ -55,8 +58,10 @@ const ReviewUploadPage = () => {
     try {
       if (isArtist) {
         const  ReviewUploadData = {
-          "itemName": data.itemSeq,
-          "reviewContent" : data.description,
+          "memberId": data.member,
+          "reviewTitle": data.title,
+          "reviewContent": data.description,
+          "artistId": data.artist,
         }
   
         const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
@@ -77,8 +82,10 @@ const ReviewUploadPage = () => {
       } 
       else {
         const ReviewUploadData = {
-          "itemName": data.itemSeq,
-          "reviewContent" : data.description,
+          "memberId": data.member,
+          "reviewTitle": data.title,
+          "reviewContent": data.description,
+          "artistId": data.artist,
         }
         
         const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
@@ -141,12 +148,23 @@ const ReviewUploadPage = () => {
 
         <div style={{ width: '500px', marginTop: '12vh', marginLeft: '1vh' }}>
           <div style={{ alignContent: 'center'}}>
-              <div style={{ marginBottom: '10px' }}>작품명</div>
-              <div style={{ width: '30%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5', backgroundColor: 'lightgray' }}></div>
-            </div>
+            <div style={{ marginBottom: '10px' }}>작품명</div>
+            <div style={{ width: '30%', padding: '10px', color: 'black', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5', backgroundColor: 'lightgray' }}>{watch('itemSeq')}</div>
+          </div>
+
+
+          <div>
+            <div style={{ marginBottom: '10px' }}>제목</div>
+            <input
+              id="title" 
+              placeholder="제목을 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('title', { required: true })} 
+              style={{ width: '80%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}/>          
+          </div>
 
             <div>
-              <div style={{ marginBottom: '10px' }}>후기</div>
+              <div style={{ marginBottom: '10px' }}>내용</div>
               <textarea
                 id="description" 
                 placeholder="작품 구매 후기를 적어주세요."

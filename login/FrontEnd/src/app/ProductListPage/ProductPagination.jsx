@@ -8,10 +8,10 @@ import ProductCard from '@/components/products/ProductCard/ProductCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
-import m1 from './m1.jpg';
-import m2 from './m2.jpg';
-import m3 from './m3.jpg';
-import m4 from './m4.jpg';
+// import m1 from './m1.jpg';
+// import m2 from './m2.jpg';
+// import m3 from './m3.jpg';
+// import m4 from './m4.jpg';
 
 
 const ProductPagination = ({PageLink}) => {

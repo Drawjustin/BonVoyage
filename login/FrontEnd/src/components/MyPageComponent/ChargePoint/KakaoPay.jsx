@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const KAKAO_API_KEY = 'YOUR_KAKAO_API_KEY';
+const KAKAO_API_KEY = '41B27CD1E0CE97520743';
 
 const Kakaopay = () => {
   const [itemName, setItemName] = useState('');
@@ -12,7 +12,7 @@ const Kakaopay = () => {
   const handlePayment = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/payment', // 백엔드 서버 주소
+        'https://i10a207.p.ssafy.io/payment', // 백엔드 서버 주소
         { itemName, amount },
         {
           headers: {
@@ -30,7 +30,7 @@ const Kakaopay = () => {
 
   return (
     <div>
-      <h1>KakaoPay Payment</h1>
+      <h1>카카오페이 결제</h1>
       <div>
         <label>Item Name:</label>
         <input
