@@ -1,9 +1,7 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistHomepageCommentDto;
-import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistHomepageComment;
-import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.ArtistHomepageCommentRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
@@ -13,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,10 +26,26 @@ public class ArtistHomepageCommentService {
     private MemberRepository memberRepository;
     //TODO: CRETE
     @Transactional
-    public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageComment) {
-        artistHomepageCommentRepository.create(convertToEntity(artistHomepageComment));
-        System.out.println(artistHomepageComment);
-        return artistHomepageComment;
+    public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageCommentDto) {
+
+        ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
+
+        artistHomepageComment.setArtist(artistRepository.readArtistById(artistHomepageCommentDto.getArtistId()));
+        artistHomepageComment.setMember(memberRepository.readMemberById(artistHomepageCommentDto.getMemberId()));
+
+        artistHomepageComment.setArtistHompageCommentContentCreatedDate(LocalDateTime.now());
+        //artist_homepage_comment_isdeleted
+        //artist_homepage_comment_deleted_date
+
+        artistHomepageComment.setArtistHompageCommentContent(artistHomepageCommentDto.getArtistHompageCommentContent());
+
+        ArtistHomepageComment newArtistHomepageComment = artistHomepageCommentRepository.create(artistHomepageComment);
+
+        artistHomepageCommentDto.setArtistHomepageCommentSeq(newArtistHomepageComment.getArtistHomepageCommentSeq());
+
+        System.out.println(artistHomepageCommentDto.toString());
+
+        return artistHomepageCommentDto;
     }
 
 
@@ -71,26 +86,12 @@ public class ArtistHomepageCommentService {
 
     public ArtistHomepageCommentDto convertToDto(ArtistHomepageComment artistHomepageComment){
         ArtistHomepageCommentDto artistHomepageCommentDto = new ArtistHomepageCommentDto();
-        artistHomepageCommentDto.setArtist(artistHomepageComment.getArtist().getArtistSeq());
         artistHomepageCommentDto.setArtistHompageCommentContent(artistHomepageComment.getArtistHompageCommentContent());
-        artistHomepageCommentDto.setArtistHompageCommentContentDeletedDate(artistHomepageComment.getArtistHompageCommentContentDeletedDate());
-        artistHomepageCommentDto.setMember(artistHomepageComment.getMember().getMemberSeq());
-        artistHomepageCommentDto.setArtistHompageCommentContentCreatedDate(artistHomepageComment.getArtistHompageCommentContentCreatedDate());
         artistHomepageCommentDto.setArtistHomepageCommentSeq(artistHomepageComment.getArtistHomepageCommentSeq());
 
         return artistHomepageCommentDto;
     }
-    public ArtistHomepageComment convertToEntity(ArtistHomepageCommentDto artistHomepageCommentDto){
-        ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
-        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtist()));
-        artistHomepageComment.setArtistHompageCommentContent(artistHomepageCommentDto.getArtistHompageCommentContent());
-        artistHomepageComment.setArtistHompageCommentContentDeletedDate(artistHomepageCommentDto.getArtistHompageCommentContentDeletedDate());
-        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMember()));
-        artistHomepageComment.setArtistHompageCommentContentCreatedDate(artistHomepageCommentDto.getArtistHompageCommentContentCreatedDate());
-        artistHomepageComment.setArtistHomepageCommentSeq(artistHomepageCommentDto.getArtistHomepageCommentSeq());
 
-        return artistHomepageComment;
-    }
     public List<ArtistHomepageCommentDto> convertToDtoList(List<ArtistHomepageComment>  artistHomepageCommentList) {
         return artistHomepageCommentList.stream()
                 .map(this::convertToDto)
