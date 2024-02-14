@@ -13,9 +13,9 @@ import m2 from './m2.jpg'
 const AuctionListPage = async () => {
 
   const currentUser = '현재유저';
-
-  const auctions = await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {return response})
-  .catch((error) => {console.log(error); return [];})
+  let auctions = [];
+  await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {auctions = response.data})
+  .catch((error) => {console.log(error); auctions = []})
 
   // const auctions = [{
   //   auctionSeq:1,
@@ -66,7 +66,7 @@ const AuctionListPage = async () => {
             </div>
 
             {
-              (auctions?.data.length === 0 || !auctions?.data)
+              (auctions?.data?.length === 0 || !auctions?.data)
               ?
               <EmptyState showReset />
               :
