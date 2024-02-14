@@ -29,7 +29,7 @@ public class ArtistMentionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArtistMentionDto> readArtistMention(@PathVariable(value = "id") String id) {
+    public ResponseEntity<ArtistMentionDto> readArtistMention(@PathVariable(value = "id") Long id) {
         try {
             ArtistMentionDto artistMention = artistMentionService.readOne(id);
             return ResponseEntity.ok(artistMention);

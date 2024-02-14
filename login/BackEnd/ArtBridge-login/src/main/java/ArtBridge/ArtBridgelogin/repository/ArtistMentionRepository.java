@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
+import ArtBridge.ArtBridgelogin.domain.QArtist;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -43,10 +44,10 @@ public class ArtistMentionRepository {
     }
 
     // 아티스트 멘션 일련번호로 조회 메서드
-    public ArtistMention readOne(String artistMentionId) {
+    public ArtistMention readOne(Long artistMentionId) {
         return queryFactory
                 .selectFrom(qArtistMention)
-                .where(qArtistMention.artist.artistId.eq(artistMentionId))
+                .where(qArtistMention.artist.artistSeq.eq(artistMentionId))
                 .fetchOne();
     }
 
