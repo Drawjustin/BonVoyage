@@ -60,19 +60,19 @@ public class Auction {
     private Item item;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "auction", orphanRemoval = true)
     private List<OrderDetail> orderDetails;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "auction",orphanRemoval = true)
     private List<AuctionLike> auctionLikes;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "auction", orphanRemoval = true)
     private List<MemberAuctionBidding> memberAuctionBiddings;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "auction",orphanRemoval = true)
     private List<AuctionPointDetail> auctionPointDetails;
 
 }

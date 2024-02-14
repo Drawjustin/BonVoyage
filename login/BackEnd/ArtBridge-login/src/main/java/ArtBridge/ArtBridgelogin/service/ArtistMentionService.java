@@ -2,7 +2,6 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
-import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
