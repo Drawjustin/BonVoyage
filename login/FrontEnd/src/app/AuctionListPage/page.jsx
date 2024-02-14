@@ -10,6 +10,7 @@ import EmptyState from "@/components/EmptyState/EmptyState";
 import m1 from './m1.jpg'
 import m2 from './m2.jpg'
 import { useRouter } from "next/navigation";
+import AuctionPagination from './AuctionPagination'
 
 const AuctionListPage = async () => {
 
@@ -19,7 +20,7 @@ const AuctionListPage = async () => {
   await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {auctions = response.data})
   .catch((error) => {console.log(error); auctions = []})
 
-  // const auctions = [{
+  // auctions = [{
   //   auctionSeq:1,
   //     imageSrc: m1,
   //     title: '별 헤는 밤',
@@ -29,20 +30,6 @@ const AuctionListPage = async () => {
   //     imageSrc: m2,
   //     title: '샤라랄랄라랄라',
   // }]
-
-  async function handleFunc (seq, user) {
-
-    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
-
-    const isArtist = user.role === 'artist' ? true : false;
-
-
-    if (!user.id){
-      navigate.push('/LoginPage');
-    } else {
-    navigate.push(`/demos/dashboard/canvas-designer.html?open=${isArtist}&sessionid=${Auction.data.auctionSessionId}&userFullName=${user.id}`)
-    }
-  }
 
   // const [auctions, setAuctions] = useState([]);
 
@@ -67,28 +54,8 @@ const AuctionListPage = async () => {
       
         <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
         <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10vh' }}>경매 작품</h1>
-            {
-              (auctions?.length === 0)
-              ?
-              <EmptyState showReset />
-              :
-              <>
-              <div className={styles.grid}>
-              {auctions.map((auction) =>
-              <div onClick={() => handleFunc(auction.auctionSeq, currentUser)}>
-                  <AuctionCard
-                    currentUser={currentUser}
-                    key={auction.auctionSeq}
-                    data={auction}
-                  />
-                  </div>
-                  )}
-                  
-              </div>
-              </>
-            }
+            <AuctionPagination/>
             </div>
-          
             {
           (currentUser !== null && currentUser.role === 'artist') ?
           <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
