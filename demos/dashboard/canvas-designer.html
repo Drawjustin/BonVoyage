@@ -120,14 +120,14 @@
         // set value 2 for one-to-one connection
         // connection.maxParticipantsAllowed = 2;
 
+        // URL
+        let homeUrl = new URL(window.location.href);
+        let urlParams = new URLSearchParams(homeUrl.search);
+
         // 경매, 작품, 낙찰자 정보
         let auctionInfo = {};
         let itemInfo = {};
         let winnerInfo = {};
-
-        // TODO: 경매 seq (어디서든 끌고 오기)
-        let homeUrl = new URL(window.location.href);
-        let urlParams = new URLSearchParams(homeUrl.search);
         let aucSeq = urlParams.get('aucSeq');
 
         //현재 유저와 경매 작가 조회
@@ -471,6 +471,7 @@
 
         // 페이지가 로드되면 서버로부터 경매 정보를 받아옴
         window.onload = function () {
+            console.log("params.sessionId : " + params.sessionId);
             fetchAuctionInfo()
                 .then(itemSeq => {
                     displayAuctionInfo();
@@ -672,32 +673,32 @@
             });
         };
 
-        //채팅에 파일 업로드
-        var recentFile;
-        document.getElementById('btn-attach-file').onclick = function () {
-            var file = new FileSelector();
-            file.selectSingleFile(function (file) {
-                recentFile = file;
+        // //채팅에 파일 업로드
+        // var recentFile;
+        // document.getElementById('btn-attach-file').onclick = function () {
+        //     var file = new FileSelector();
+        //     file.selectSingleFile(function (file) {
+        //         recentFile = file;
 
-                if (connection.getAllParticipants().length >= 1) {
-                    recentFile.userIndex = 0;
-                    connection.send(file, connection.getAllParticipants()[recentFile.userIndex]);
-                }
-            });
-        };
+        //         if (connection.getAllParticipants().length >= 1) {
+        //             recentFile.userIndex = 0;
+        //             connection.send(file, connection.getAllParticipants()[recentFile.userIndex]);
+        //         }
+        //     });
+        // };
 
-        function getFileHTML(file) {
-            var url = file.url || URL.createObjectURL(file);
-            var attachment = '<a href="' + url + '" target="_blank" download="' + file.name + '">Download: <b>' + file.name + '</b></a>';
-            if (file.name.match(/\.jpg|\.png|\.jpeg|\.gif/gi)) {
-                attachment += '<br><img crossOrigin="anonymous" src="' + url + '">';
-            } else if (file.name.match(/\.wav|\.mp3/gi)) {
-                attachment += '<br><audio src="' + url + '" controls></audio>';
-            } else if (file.name.match(/\.pdf|\.js|\.txt|\.sh/gi)) {
-                attachment += '<iframe class="inline-iframe" src="' + url + '"></iframe></a>';
-            }
-            return attachment;
-        }
+        // function getFileHTML(file) {
+        //     var url = file.url || URL.createObjectURL(file);
+        //     var attachment = '<a href="' + url + '" target="_blank" download="' + file.name + '">Download: <b>' + file.name + '</b></a>';
+        //     if (file.name.match(/\.jpg|\.png|\.jpeg|\.gif/gi)) {
+        //         attachment += '<br><img crossOrigin="anonymous" src="' + url + '">';
+        //     } else if (file.name.match(/\.wav|\.mp3/gi)) {
+        //         attachment += '<br><audio src="' + url + '" controls></audio>';
+        //     } else if (file.name.match(/\.pdf|\.js|\.txt|\.sh/gi)) {
+        //         attachment += '<iframe class="inline-iframe" src="' + url + '"></iframe></a>';
+        //     }
+        //     return attachment;
+        // }
 
         function getFullName(userid) {
             var _userFullName = userid;
@@ -707,77 +708,77 @@
             return _userFullName;
         }
 
-        connection.onFileEnd = function (file) {
-            var html = getFileHTML(file);
-            var div = progressHelper[file.uuid].div;
+        // connection.onFileEnd = function (file) {
+        //     var html = getFileHTML(file);
+        //     var div = progressHelper[file.uuid].div;
 
-            if (file.userid === connection.userid) {
-                div.innerHTML = '<b>You:</b><br>' + html;
-                div.style.background = '#cbffcb';
+        //     if (file.userid === connection.userid) {
+        //         div.innerHTML = '<b>You:</b><br>' + html;
+        //         div.style.background = '#cbffcb';
 
-                if (recentFile) {
-                    recentFile.userIndex++;
-                    var nextUserId = connection.getAllParticipants()[recentFile.userIndex];
-                    if (nextUserId) {
-                        connection.send(recentFile, nextUserId);
-                    }
-                    else {
-                        recentFile = null;
-                    }
-                }
-                else {
-                    recentFile = null;
-                }
-            } else {
-                div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br>' + html;
-            }
-        };
+        //         if (recentFile) {
+        //             recentFile.userIndex++;
+        //             var nextUserId = connection.getAllParticipants()[recentFile.userIndex];
+        //             if (nextUserId) {
+        //                 connection.send(recentFile, nextUserId);
+        //             }
+        //             else {
+        //                 recentFile = null;
+        //             }
+        //         }
+        //         else {
+        //             recentFile = null;
+        //         }
+        //     } else {
+        //         div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br>' + html;
+        //     }
+        // };
 
-        // to make sure file-saver dialog is not invoked.
-        connection.autoSaveToDisk = false;
+        // // to make sure file-saver dialog is not invoked.
+        // connection.autoSaveToDisk = false;
 
-        var progressHelper = {};
+        // var progressHelper = {};
 
-        connection.onFileProgress = function (chunk, uuid) {
-            var helper = progressHelper[chunk.uuid];
-            helper.progress.value = chunk.currentPosition || chunk.maxChunks || helper.progress.max;
-            updateLabel(helper.progress, helper.label);
-        };
+        // connection.onFileProgress = function (chunk, uuid) {
+        //     var helper = progressHelper[chunk.uuid];
+        //     helper.progress.value = chunk.currentPosition || chunk.maxChunks || helper.progress.max;
+        //     updateLabel(helper.progress, helper.label);
+        // };
 
-        connection.onFileStart = function (file) {
-            var div = document.createElement('div');
-            div.className = 'message';
+        // connection.onFileStart = function (file) {
+        //     var div = document.createElement('div');
+        //     div.className = 'message';
 
-            if (file.userid === connection.userid) {
-                var userFullName = file.remoteUserId;
-                if (connection.peersBackup[file.remoteUserId]) {
-                    userFullName = connection.peersBackup[file.remoteUserId].extra.userFullName;
-                }
+        //     if (file.userid === connection.userid) {
+        //         var userFullName = file.remoteUserId;
+        //         if (connection.peersBackup[file.remoteUserId]) {
+        //             userFullName = connection.peersBackup[file.remoteUserId].extra.userFullName;
+        //         }
 
-                div.innerHTML = '<b>You (to: ' + userFullName + '):</b><br><label>0%</label> <progress></progress>';
-                div.style.background = '#cbffcb';
-            } else {
-                div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br><label>0%</label> <progress></progress>';
-            }
+        //         div.innerHTML = '<b>You (to: ' + userFullName + '):</b><br><label>0%</label> <progress></progress>';
+        //         div.style.background = '#cbffcb';
+        //     } else {
+        //         div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br><label>0%</label> <progress></progress>';
+        //     }
 
-            div.title = file.name;
-            conversationPanel.appendChild(div);
-            progressHelper[file.uuid] = {
-                div: div,
-                progress: div.querySelector('progress'),
-                label: div.querySelector('label')
-            };
-            progressHelper[file.uuid].progress.max = file.maxChunks;
+        //     div.title = file.name;
+        //     conversationPanel.appendChild(div);
+        //     progressHelper[file.uuid] = {
+        //         div: div,
+        //         progress: div.querySelector('progress'),
+        //         label: div.querySelector('label')
+        //     };
+        //     progressHelper[file.uuid].progress.max = file.maxChunks;
 
-            conversationPanel.scrollTop = conversationPanel.clientHeight;
-            conversationPanel.scrollTop = conversationPanel.scrollHeight - conversationPanel.scrollTop;
-        };
+        //     conversationPanel.scrollTop = conversationPanel.clientHeight;
+        //     conversationPanel.scrollTop = conversationPanel.scrollHeight - conversationPanel.scrollTop;
+        // };
 
-        function updateLabel(progress, label) {
-            if (progress.position == -1) return;
-            var position = +progress.position.toFixed(2).split('.')[1] || 100;
-            label.innerHTML = position + '%';
-        }
+        // function updateLabel(progress, label) {
+        //     if (progress.position == -1) return;
+        //     var position = +progress.position.toFixed(2).split('.')[1] || 100;
+        //     label.innerHTML = position + '%';
+        // }
 
         if (!!params.password) {
             connection.password = params.password;
@@ -808,38 +809,74 @@
                     });
                 });
             } else {
-                connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
-                    if (error) {
-                        if (error === connection.errors.ROOM_NOT_AVAILABLE) {
-                            alert('This room does not exist. Please either create it or wait for moderator to enter in the room.');
-                            return;
-                        }
-                        if (error === connection.errors.ROOM_FULL) {
-                            alert('Room is full.');
-                            return;
-                        }
-                        if (error === connection.errors.INVALID_PASSWORD) {
-                            connection.password = prompt('Please enter room password.') || '';
-                            if (!connection.password.length) {
-                                alert('Invalid password.');
-                                return;
-                            }
-                            connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
-                                if (error) {
-                                    alert(error);
-                                }
-                            });
-                            return;
-                        }
-                        alert(error);
-                    }
+                joinSession();
+                // connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                //     if (error) {
+                //         if (error === connection.errors.ROOM_NOT_AVAILABLE) {
+                //             alert('This room does not exist. Please either create it or wait for moderator to enter in the room.');
+                //             return;
+                //         }
+                //         if (error === connection.errors.ROOM_FULL) {
+                //             alert('Room is full.');
+                //             return;
+                //         }
+                //         if (error === connection.errors.INVALID_PASSWORD) {
+                //             connection.password = prompt('Please enter room password.') || '';
+                //             if (!connection.password.length) {
+                //                 alert('Invalid password.');
+                //                 return;
+                //             }
+                //             connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                //                 if (error) {
+                //                     alert(error);
+                //                 }
+                //             });
+                //             return;
+                //         }
+                //         alert(error);
+                //     }
 
-                    connection.socket.on('disconnect', function () {
-                        location.reload();
-                    });
-                });
+                //     connection.socket.on('disconnect', function () {
+                //         location.reload();
+                //     });
+                // });
             }
         });
+
+        function joinSession() {
+    connection.checkPresence(params.sessionId, function(isRoomExist, roomid) {
+        if (isRoomExist) {
+            connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                if (error) {
+                    if (error === connection.errors.ROOM_FULL) {
+                        alert('Room is full.');
+                        return;
+                    }
+                    if (error === connection.errors.INVALID_PASSWORD) {
+                        connection.password = prompt('Please enter room password.') || '';
+                        if (!connection.password.length) {
+                            alert('Invalid password.');
+                            return;
+                        }
+                        connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                            if (error) {
+                                alert(error);
+                            }
+                        });
+                        return;
+                    }
+                    alert(error);
+                }
+        
+                connection.socket.on('disconnect', function () {
+                    location.reload();
+                });
+            });
+        } else {
+            setTimeout(joinSession, 5000); // Try again after 5 seconds
+        }
+    });
+}
 
         function addStreamStopListener(stream, callback) {
             stream.addEventListener('ended', function () {
