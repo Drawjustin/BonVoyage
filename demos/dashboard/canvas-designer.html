@@ -38,7 +38,7 @@
                 <p id="itemDetailText" style="margin-top: 10%">여기는 아이템 정보를 보여줄겁니다.</p>
             </div>
             <div>
-                <p id="timer">180</p>
+                <p id="timer">10</p>
             </div>
             <div style="position: relative; width: 100%; height: 150px;">
                 <button id="sessionCloseBtn" class="btn btn-primary"
@@ -126,14 +126,16 @@
         let winnerInfo = {};
 
         // TODO: 경매 seq (어디서든 끌고 오기)
-        let aucSeq = 100;
+        let homeUrl = new URL(window.location.href);
+        let urlParams = new URLSearchParams(homeUrl.search);
+        let aucSeq = urlParams.get('aucSeq');
 
         //현재 유저와 경매 작가 조회
         let sessionArtist; // TODO: 경매 참여한 artistID (세션 시작) 이거.. artist를 가져와야 하는데..? -> API 요청함
         const currentUserName = connection.extra.userFullName; // 사용자 ID
         //const currentUserSeq = connectin.extra.seq;
 
-        // 현재 최고 호가 전역변수
+        // 현재 최고 호가
         let bidPrice = 0;
 
         // 시간 관련
@@ -247,17 +249,17 @@
             document.getElementById('bidBtn').innerHTML = bidPrice + '원';
         }
 
-        // // 최신 호가 가져오기 => 통신;... 왜 있냐면 최신호가와 html 상의 호가가 일치하는지 보려고?
-        // var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq + "/price";
-        // fetch(getBidPriceUrl)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // 전역 변수 값 변경
-        //         bidPrice = data['auctionStartPoint'];
-        //         // 버튼 업데이트
-        //         updateBidButton();
-        //     })
-        //     .catch(error => console.error('Error:', error));
+        // 최신 호가 가져오기
+        var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+        fetch(getBidPriceUrl)
+            .then(response => response.json())
+            .then(data => {
+                // 전역 변수 값 변경
+                bidPrice = data['auctionStartPoint'];
+                // 버튼 업데이트
+                updateBidButton();
+            })
+            .catch(error => console.error('Error:', error));
 
         var socket = io();
         var auctionEnded = false;
@@ -506,7 +508,7 @@
             } else { // 일반 회원인 경우
                 open = false;
             }
-            window.location.href = 'https://i10a207.p.ssafy.io:9001/demos/dashboard/canvas-designer.html?open=' + open +'&sessionId=' + sessionId + '&userFullName=' + currentUserName;
+            window.location.href = 'https://i10a207.p.ssafy.io:9001/demos/dashboard/canvas-designer.html?open=' + open + '&sessionId=' + sessionId + '&userFullName=' + currentUserName;
         });
 
         // sessionId 생성하는 랜덤 함수
