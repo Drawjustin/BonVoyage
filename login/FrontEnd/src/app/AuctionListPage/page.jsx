@@ -16,7 +16,8 @@ const AuctionListPage = async () => {
   const currentUser = getCurrentUser();
   const navigate = useRouter();
 
-  const auctions = await axios.get(`https://i10a207.p.ssafy.io/api/auction`);
+  const auctions = await axios.get(`https://i10a207.p.ssafy.io/api/auction`).then((response) => {return response})
+  .catch((error) => {console.log(error); return [];})
 
   // const auctions = [{
   //   auctionSeq:1,
@@ -70,7 +71,7 @@ const AuctionListPage = async () => {
             
 
             {
-              (auctions.data.length === 0 || !auctions.data)
+              (auctions?.data.length === 0 || !auctions?.data)
               ?
               <EmptyState showReset />
               :

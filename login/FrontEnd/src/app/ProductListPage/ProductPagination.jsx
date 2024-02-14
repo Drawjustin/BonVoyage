@@ -38,14 +38,6 @@ const ProductPagination = ({PageLink}) => {
       throw error;
     }
   };
-  
-  useEffect(() => {
-    const id = searchParams.get("page");
-    if (id) {
-      setProductId(id);
-    }
-    setCurrentPage(id);
-  }, [searchParams])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -71,6 +63,21 @@ const ProductPagination = ({PageLink}) => {
   
     fetchData();
   }, [currentPage]);
+
+  useEffect(() => {
+    const id = searchParams.get("page");
+    if (id) {
+      setProductId(id);
+    }
+
+    if (!id) {
+      setCurrentPage(1);
+    }
+    else {
+      setCurrentPage(id);
+    }
+    
+  }, [searchParams])
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
