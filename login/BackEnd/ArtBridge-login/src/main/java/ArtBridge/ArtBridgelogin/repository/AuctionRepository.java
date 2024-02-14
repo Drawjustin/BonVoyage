@@ -1,15 +1,12 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.*;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -94,13 +91,19 @@ public class AuctionRepository {
     }
 
 
-    public void deleteById(int seq) {
-        queryFactory
-                .delete(qAuction)
-                .where(qAuction.auctionSeq.eq(seq))
-                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-                .execute();
+//    public void deleteById(int seq) {
+//        queryFactory
+//                .delete(qAuction)
+//                .where(qAuction.auctionSeq.eq(seq))
+//                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+//                .execute();
+//    }
+
+    public void deleteById(int auctionSeq) {
+        Auction auction = em.find(Auction.class, auctionSeq);
+        em.remove(auction);
     }
+
 
     public List<Auction> readAuctionsBySameAuthor(Long authorId) {
         return queryFactory

@@ -1,11 +1,7 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
-import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
@@ -13,6 +9,7 @@ import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,9 @@ import java.util.stream.Collectors;
 public class AuctionService {
 
     private final AuctionRepository auctionRepository;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -132,6 +132,7 @@ public class AuctionService {
     public void deleteAuction(int seq) {
         auctionRepository.deleteById(seq);
     }
+
 
     private Auction convertToEntity(AuctionDto auctionDto) {
         Auction auction = new Auction();
