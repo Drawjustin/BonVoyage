@@ -44,17 +44,9 @@ public class ReviewService {
     @Transactional
     public ReviewDto createReview(ReviewDto reviewDto) {
         try {
-<<<<<<< HEAD
-=======
-            System.out.println(reviewDto.getTitle());
             Review review = convertToEntity(reviewDto);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewVisit(0);
-            System.out.println(review.getReviewTitle());
->>>>>>> 730b8f739624f8ec1ad748eb322371c1d4e8c9fa
-
-            Review review = new Review();
-
             review.setReviewContent(reviewDto.getContent());
             review.setReviewVisit(0);
             review.setReviewCreatedDate(LocalDateTime.now());
