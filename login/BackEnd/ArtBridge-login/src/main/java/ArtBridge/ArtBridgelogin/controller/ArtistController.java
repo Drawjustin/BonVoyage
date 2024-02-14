@@ -56,7 +56,7 @@ public class ArtistController {
 
         if (artistDto != null) {
             // 조회 성공 시 200 OK와 함께 메시지 반환
-            return ResponseEntity.ok("조회한 Aritst " + artistDto);
+            return ResponseEntity.ok(artistDto);
         } else {
             // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

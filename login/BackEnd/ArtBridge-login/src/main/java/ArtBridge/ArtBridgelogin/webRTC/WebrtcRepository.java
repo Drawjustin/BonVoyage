@@ -37,6 +37,13 @@ public class WebrtcRepository {
 
     public void createBid(Long seq, AuctionPointDetail bidRequest) {
         // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
+        try {
+            // 3초 동안 락을 유지
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
         em.persist(bidRequest);
     }
 
