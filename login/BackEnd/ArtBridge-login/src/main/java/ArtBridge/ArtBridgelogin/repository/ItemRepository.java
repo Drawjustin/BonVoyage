@@ -1,9 +1,6 @@
 package ArtBridge.ArtBridgelogin.repository;
 
-import ArtBridge.ArtBridgelogin.domain.Item;
-import ArtBridge.ArtBridgelogin.domain.QItem;
-import ArtBridge.ArtBridgelogin.domain.QMember;
-import ArtBridge.ArtBridgelogin.domain.QOrderDetail;
+import ArtBridge.ArtBridgelogin.domain.*;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -19,8 +16,9 @@ public class ItemRepository {
     private final EntityManager em;
 
     private final QItem qItem = QItem.item;
-
+    private final QArtist qArtist = QArtist.artist;
     private final QMember qMember = QMember.member;
+    private final QWish qWish = QWish.wish;
     private final QOrderDetail qOrderDetail = QOrderDetail.orderDetail;
     private JPAQueryFactory queryFactory;
 
@@ -57,8 +55,11 @@ public class ItemRepository {
                 .orderBy(qItem.itemSellPrice.asc())
                 .fetch();
     }
-
-
+    public Wish readByMemberSeq(int itemSeq,Long memberSeq){
+        return queryFactory.selectFrom(qWish)
+                .where(qWish.item.itemSeq.eq(itemSeq).and(qWish.member.memberSeq.eq(memberSeq)))
+                .fetchOne();
+    }
     // 아이템 일련번호로 조회 메서드
     public Item readBySeq(int itemSeq) {
         return queryFactory

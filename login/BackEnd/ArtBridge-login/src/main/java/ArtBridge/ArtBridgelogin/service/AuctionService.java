@@ -41,23 +41,7 @@ public class AuctionService {
     public AuctionDto createAuction(AuctionDto auctionDto) {
         try {
 
-            Auction auction = new Auction();
-
-            auction.setItem(itemRepository.readBySeq(auctionDto.getItemSeq()));
-            auction.setAuctionScheduledTime(auctionDto.getAuctionScheduledTime());
-            auction.setAuctionStatus(1);
-            auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
-            auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
-
-            //auction_winner
-            //auction_canceled_date
-            //auction_ismiscarried
-            //auction_miscarried_dateD
-            //auction_win_date
-            auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
-            auction.setAuctionCreatedDate(LocalDateTime.now());
-            auction.setAuctionIsMiscarried(true);
-            System.out.println(convertToDto(auction).toString());
+            Auction auction = convertToEntity(auctionDto);
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create auction", e);
