@@ -2,19 +2,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import EmptyState from '@/components/EmptyState/EmptyState';
-import styles from './ProductListPage.module.scss'
+import styles from './AuctionListPage.module.scss'
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import ProductCard from '@/components/products/ProductCard/ProductCard'
+import AuctionCard from '@/components/Auctions/AuctionCard/AuctionCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
-import m1 from './m1.jpg';
-import m2 from './m2.jpg';
-import m3 from './m3.jpg';
-import m4 from './m4.jpg';
 
 
-const ProductPagination = ({PageLink}) => {
+const AuctionPagination = ({PageLink}) => {
   
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);
@@ -28,7 +24,7 @@ const ProductPagination = ({PageLink}) => {
   // 서버에서 데이터를 가져오는 함수
   const fetchDataFromBackend = async (page) => {
     try {
-      const response = axios.get('https://i10a207.p.ssafy.io/api/item', {
+      const response = axios.get('https://i10a207.p.ssafy.io/api/auction', {
 
       });
       return (await response).data;
@@ -87,70 +83,31 @@ const ProductPagination = ({PageLink}) => {
     return (
         <>
           <div className={styles.toggle_container} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '24vh', width: '90%' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px', }}>판매 작품</h1>
-          
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <label>
-              <button type='button'
-                onClick={() => {setSortBy('Like')}}
-                style={{ backgroundColor: Sort === 'Like' ? '#171de5' : '#f1efee',
-                color: Sort==='Like' ? '#f1efee' : '#171de5' }}
-                >
-                인기순</button>
-            </label>
-            <br />
-
-            <label>
-              <button type='button'
-                onClick={() => {setSortBy('New')}}
-                style={{ backgroundColor: Sort === 'New' ? '#171de5' : '#f1efee',
-                color: Sort==='New' ? '#f1efee' : '#171de5' }}
-              >
-              최신순
-              </button>
-            </label>
-          
-        <br />
-      </div>
       </div>
 
 
-        <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
+        <div className="container" style={{ marginTop: '10px', marginLeft: '13vh' , width: '85%', alignItems: 'center' }}>
           
 
           {Array.isArray(fetchedData) && fetchedData.length > 0 ? (
-            Sort === 'New' ? (
-            <div className={styles.grid}>
-            {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
-                    <ProductCard
-                    currentUser={currentUser}
-                    key={product.itemSeq}
-                    data={product}
-                    image={product.image}
-                    />
-                    ))}
-              
-            </div>
-            )
-            :
-            (
+            
             <div className={styles.grid}>
 
-               {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
-                <ProductCard
+               {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((auction) => (
+                <AuctionCard
                   currentUser={currentUser}
-                  key={product.itemSeq}
-                  data={product}
-                  image={product.image}
+                  key={auction.itemSeq}
+                  data={auction}
+                  image={auction.image}
                 />
               ))}
             </div>
-            )
+            
           ) : (
             <EmptyState showReset />
           )}
         </div>
-        <div style={{ marginTop: '5vh', textAlign: 'center', marginLeft: '30vh' }}>
+        <div style={{ marginTop: '5vh', textAlign: 'center', marginLeft: '10vh' }}>
         
           <Pagination 
             currentPage={parseInt(page) > 0 ? parseInt(page) : currentPage} 
@@ -165,4 +122,4 @@ const ProductPagination = ({PageLink}) => {
     );
 };
 
-export default ProductPagination;
+export default AuctionPagination;

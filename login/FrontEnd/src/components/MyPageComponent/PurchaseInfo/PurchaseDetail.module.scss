@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo:wght@700&display=swap');
 
 .title {
+  color: black;
   display: flex;
   padding-left: 20px;
   text-align: left;
@@ -9,6 +10,7 @@
 
 .purchase_details_container {
   border-radius: 8px;
+  color: black;
   padding: 15px;
   background-color: #ececec;
   width: 100%;

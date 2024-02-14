@@ -2,19 +2,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import EmptyState from '@/components/EmptyState/EmptyState';
-import styles from './ProductListPage.module.scss'
+import styles from './ArtistListPage.module.scss'
 import getCurrentUser from '@/app/actions/getCurrentUser';
-import ProductCard from '@/components/products/ProductCard/ProductCard'
+import ArtistCard from '@/components/Artists/ArtistCard/ArtistCard'
 import Pagination from '@/components/Pagination/Pagination';
 import {PRODUCTS_PER_PAGE} from '../../constants';
 import { useSearchParams } from 'next/navigation';
-import m1 from './m1.jpg';
-import m2 from './m2.jpg';
-import m3 from './m3.jpg';
-import m4 from './m4.jpg';
 
 
-const ProductPagination = ({PageLink}) => {
+const ArtistPagination = ({PageLink}) => {
   
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);
@@ -28,7 +24,7 @@ const ProductPagination = ({PageLink}) => {
   // 서버에서 데이터를 가져오는 함수
   const fetchDataFromBackend = async (page) => {
     try {
-      const response = axios.get('https://i10a207.p.ssafy.io/api/item', {
+      const response = axios.get('https://i10a207.p.ssafy.io/api/artists', {
 
       });
       return (await response).data;
@@ -87,7 +83,7 @@ const ProductPagination = ({PageLink}) => {
     return (
         <>
           <div className={styles.toggle_container} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginLeft: '24vh', width: '90%' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px', }}>판매 작품</h1>
+          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px', }}>작가 목록</h1>
           
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <label>
@@ -106,7 +102,7 @@ const ProductPagination = ({PageLink}) => {
                 style={{ backgroundColor: Sort === 'New' ? '#171de5' : '#f1efee',
                 color: Sort==='New' ? '#f1efee' : '#171de5' }}
               >
-              최신순
+              신인순
               </button>
             </label>
           
@@ -121,12 +117,12 @@ const ProductPagination = ({PageLink}) => {
           {Array.isArray(fetchedData) && fetchedData.length > 0 ? (
             Sort === 'New' ? (
             <div className={styles.grid}>
-            {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
-                    <ProductCard
+            {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((artist) => (
+                    <ArtistCard
                     currentUser={currentUser}
-                    key={product.itemSeq}
-                    data={product}
-                    image={product.image}
+                    key={artist.itemSeq}
+                    data={artist}
+                    image={artist.image}
                     />
                     ))}
               
@@ -136,12 +132,12 @@ const ProductPagination = ({PageLink}) => {
             (
             <div className={styles.grid}>
 
-               {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((product) => (
-                <ProductCard
+               {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((artist) => (
+                <ArtistCard
                   currentUser={currentUser}
-                  key={product.itemSeq}
-                  data={product}
-                  image={product.image}
+                  key={artist.itemSeq}
+                  data={artist}
+                  image={artist.image}
                 />
               ))}
             </div>
@@ -165,4 +161,4 @@ const ProductPagination = ({PageLink}) => {
     );
 };
 
-export default ProductPagination;
+export default ArtistPagination;

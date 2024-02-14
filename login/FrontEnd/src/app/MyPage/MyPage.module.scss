@@ -63,17 +63,21 @@
   }
   
   .membership_info {
+    color: rgba(12, 18, 26, 0.867);
     font-family: 'Gowun Dodum', sans-serif;
     display: flex;
     align-items: center;
   }
   
   .membership_grade {
+    font-weight: bold;
     font-family: 'Gowun Dodum', sans-serif;
     margin-left: 10px;
   }
   
   .points_info {
+    font-weight: bold;
+    color: rgba(12, 18, 26, 0.867);
     font-family: 'Gowun Dodum', sans-serif;
     margin-top: 10px;
   }

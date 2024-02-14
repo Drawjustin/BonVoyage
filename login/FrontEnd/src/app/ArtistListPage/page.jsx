@@ -1,32 +1,31 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import { Provider } from 'react-redux';
-import axios from 'axios';
+'use client'
+import React, { useContext } from 'react';
+import { IconContext } from 'react-icons';
+import ArtistPagination from './ArtistPagination';
+import { useRouter } from 'next/navigation';
 import styles from './ArtistListPage.module.scss'
-import getCurrentUser from '@/app/actions/getCurrentUser';
-import ArtistCard from '@/components/Artists/ArtistCard/ArtistCard';
+import getCurrentUser from '../actions/getCurrentUser';
 
-const ArtistListPage = async () => {
+const ProductContext = React.createContext();
 
+async function ArtistListPage() {
+  const router = useRouter();
+  
+  const artist = {} // await axios.get(`${backend_url}/items`);
   const currentUser = getCurrentUser();
-  const Artists = {}; //await axios.get('https://i10a207.p.ssafy.io/api/artists');
+  // const { currentUser, product } = useContext(ProductContext);
 
-  return (
-    <div className="container" style={{ marginTop: '10px', marginLeft: '24vh' , width: '85%', alignItems: 'center' }}>
+    return (
+    <ProductContext.Provider value={{ artist, currentUser }}>
+      <IconContext.Provider value={{ color: '#fff' }}>
+        <div className={styles.container} style={{ marginTop: '3vh' }}>
 
-      <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>작가 목록</h1>
+          <ArtistPagination PageLink={router}/>
 
-
-      <div className={styles.grid}>
-              {Artists?.data?.map((Artist) =>
-                  <ArtistCard
-                    currentUser={currentUser}
-                    key={Artist.itemSeq}
-                    data={Artist}
-                  />)}
-              </div>
-    </div>
-  );
+        </div>
+      </IconContext.Provider>
+    </ProductContext.Provider>
+    );
 };
 
 export default ArtistListPage;
