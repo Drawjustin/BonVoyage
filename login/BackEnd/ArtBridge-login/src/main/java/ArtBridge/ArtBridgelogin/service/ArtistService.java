@@ -1,5 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
+import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
@@ -72,17 +73,21 @@ public class ArtistService {
     }
 
     @Transactional
-    public boolean login(String userId, String password) {
+    public LoginReturnForm login(String userId, String password) {
         try {
             // 로그인 처리 로직
             Artist foundArtist = artistRepository.readArtistById(userId);
 
             if (foundArtist != null && foundArtist.getArtistPwd().equals(password)) {
                 // 로그인 성공 시 true 반환
-                return true;
+                LoginReturnForm loginReturnForm = new LoginReturnForm();
+                loginReturnForm.setId(foundArtist.getArtistId());
+                loginReturnForm.setSeq(foundArtist.getArtistSeq());
+
+                return loginReturnForm;
             }
             // 로그인 실패 시 false 반환
-            return false;
+            return null;
         } catch (DataAccessException e) {
             // 데이터베이스 예외가 발생한 경우 처리
             throw new MyDataAccessException("Failed to login", e);
