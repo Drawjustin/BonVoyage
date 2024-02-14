@@ -42,13 +42,31 @@ public class WebrtcRepository {
 
     public void createBid(Long seq, AuctionPointDetail bidRequest) {
         try {
-            // 3초 동안에만 허용되도록 시도
+            // semaphore.tryAcquire() 메소드로 3초 동안에만 허용되도록 시도
             if (semaphore.tryAcquire(3, TimeUnit.SECONDS)) {
-                // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
-                em.persist(bidRequest);
+                // 3초 동안 대기
+                Thread.sleep(3000);
+
+                // 입력을 무시하도록 처리
+                System.out.println("입력을 무시합니다.");
+
             } else {
                 // 3초 안에 입력을 받지 않았을 경우 처리
-                // 예: 로그 기록 또는 에러 처리
+                // 여기에 실제 입력 처리 로직을 추가하면 됩니다.
+
+                // 경매에 대한 입찰을 생성하는 로직을 여기에 추가
+                em.lock(bidRequest, LockModeType.PESSIMISTIC_WRITE);
+
+                try {
+                    // 경매에 대한 입찰을 데이터베이스에 등록
+                    em.persist(bidRequest);
+
+                    // 트랜잭션 내용을 즉시 데이터베이스에 전송 (버퍼에 저장하지 않음)
+                    em.flush();
+                } finally {
+                    // 락을 해제
+                    em.clear();
+                }
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
