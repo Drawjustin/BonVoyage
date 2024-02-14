@@ -1,14 +1,51 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './AuctionCard.module.scss';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 const AuctionCard = ({ data, currentUser }:any) => {
 
+    const navigate = useRouter();
     const isArtist = currentUser?.role === 'artist' ? true : false;
     const sessionId = data.auctionSessionId;
     const id = currentUser?.id.id;
     const aucseq = data.auctionSeq;
+    const itemSeq = data.itemSeq;
+    const [noticedItem, setNoticedItem] = useState<any>('');
+
+    
+
+    // console.log(data);
+
+    const deleteAuction = async () => {
+      try {
+        await axios.delete(`https://i10a207.p.ssafy.io/api/auction/${data.auctionSeq}`);
+      alert('삭제 성공');
+      location.reload();
+    } catch (error) {
+          console.log(error);
+          alert('삭제 실패');
+        }
+    }
+  
+
+    useEffect(() => {
+
+      const noticeItem = async () => {
+        try {
+          const response = await axios.get(`https://i10a207.p.ssafy.io/api/item/${itemSeq}`);
+          setNoticedItem(response.data);
+      } catch (error) {
+            console.log(error);
+          }
+      }
+
+      noticeItem();
+    })
+
+    
 
   return (
     <div
@@ -28,7 +65,8 @@ const AuctionCard = ({ data, currentUser }:any) => {
         {data.title}
       </div>
 
-      <div>
+      <div className={styles.buttonContainer}>
+        
           {
             currentUser?.id
             ?
@@ -36,6 +74,28 @@ const AuctionCard = ({ data, currentUser }:any) => {
             :
             <></>
           }
+        
+
+          {
+            id === noticedItem?.artistId
+            ?
+            <button onClick={() => {navigate.push(`/AuctionModifyPage/${data.auctionSeq}`)}}>수정</button>
+            :
+            <></>
+          }
+        
+
+        
+
+          {
+            id === noticedItem?.artistId
+            ?
+            <button onClick={deleteAuction}>삭제</button>
+            :
+            <></>
+          }
+        
+          
           
       </div>
 
