@@ -43,10 +43,10 @@ public class ArtistMentionRepository {
     }
 
     // 아티스트 멘션 일련번호로 조회 메서드
-    public ArtistMention readOne(Long artistMentionSeq) {
+    public ArtistMention readOne(String artistMentionId) {
         return queryFactory
                 .selectFrom(qArtistMention)
-                .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
+                .where(qArtistMention.artist.artistId.eq(artistMentionId))
                 .fetchOne();
     }
 

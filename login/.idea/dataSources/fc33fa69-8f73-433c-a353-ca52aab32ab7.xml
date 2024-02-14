@@ -1134,7 +1134,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Charset>utf8mb4</Charset>
     </collation>
     <schema id="288" parent="1" name="artbridge">
-      <LastIntrospectionLocalTimestamp>2024-02-14.02:19:32</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-02-14.06:57:58</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="289" parent="1" name="information_schema">
@@ -1596,763 +1596,762 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <NotNull>1</NotNull>
       <Position>11</Position>
     </column>
-    <column id="385" parent="303" name="auction_miscarried_dateD">
-      <Comment>경매가 유찰되었을 경우의 종료 시간</Comment>
+    <column id="385" parent="303" name="auction_win_date">
       <DasType>datetime|0s</DasType>
       <Position>12</Position>
     </column>
-    <column id="386" parent="303" name="auction_win_date">
-      <DasType>datetime|0s</DasType>
+    <column id="386" parent="303" name="auction_session_address">
+      <DasType>varchar(255)|0s</DasType>
       <Position>13</Position>
     </column>
-    <column id="387" parent="303" name="auction_session_address">
-      <DasType>varchar(255)|0s</DasType>
+    <column id="387" parent="303" name="auction_session_id">
+      <DasType>varchar(12)|0s</DasType>
       <Position>14</Position>
     </column>
     <column id="388" parent="303" name="auction_miscarried_date">
       <DasType>datetime(6)|0s</DasType>
       <Position>15</Position>
     </column>
-    <column id="389" parent="303" name="auction_session_id">
-      <DasType>varchar(12)|0s</DasType>
-      <Position>16</Position>
-    </column>
-    <foreign-key id="390" parent="303" name="FKsgfl8fk06dglk7hxxf8t6pi89">
+    <foreign-key id="389" parent="303" name="FKsgfl8fk06dglk7hxxf8t6pi89">
       <ColNames>item_seq</ColNames>
       <RefColNames>item_seq</RefColNames>
       <RefTableName>item</RefTableName>
     </foreign-key>
-    <index id="391" parent="303" name="PRIMARY">
+    <index id="390" parent="303" name="PRIMARY">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="392" parent="303" name="FKsgfl8fk06dglk7hxxf8t6pi89">
+    <index id="391" parent="303" name="FKsgfl8fk06dglk7hxxf8t6pi89">
       <ColNames>item_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="393" parent="303" name="PRIMARY">
+    <key id="392" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="394" parent="304" name="member_seq">
+    <column id="393" parent="304" name="member_seq">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="395" parent="304" name="auction_seq">
+    <column id="394" parent="304" name="auction_seq">
       <Comment>경매 개시될 경우 자동 부여되는 ID</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <foreign-key id="396" parent="304" name="FKh8jx75g9ja84ukl5e6bvmdw24">
+    <foreign-key id="395" parent="304" name="FKh8jx75g9ja84ukl5e6bvmdw24">
       <ColNames>member_seq</ColNames>
       <RefColNames>member_seq</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="397" parent="304" name="FKaolpvwo3so2bouwgf30fgp919">
+    <foreign-key id="396" parent="304" name="FKaolpvwo3so2bouwgf30fgp919">
       <ColNames>auction_seq</ColNames>
       <RefColNames>auction_seq</RefColNames>
       <RefTableName>auction</RefTableName>
     </foreign-key>
-    <index id="398" parent="304" name="FKh8jx75g9ja84ukl5e6bvmdw24">
+    <index id="397" parent="304" name="FKh8jx75g9ja84ukl5e6bvmdw24">
       <ColNames>member_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="399" parent="304" name="FKaolpvwo3so2bouwgf30fgp919">
+    <index id="398" parent="304" name="FKaolpvwo3so2bouwgf30fgp919">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <column id="400" parent="305" name="auction_point_detail_seq">
+    <column id="399" parent="305" name="auction_point_detail_seq">
       <AutoIncrement>79</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="401" parent="305" name="auction_seq">
+    <column id="400" parent="305" name="auction_seq">
       <Comment>경매 개시될 경우 자동 부여되는 ID</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="402" parent="305" name="member_seq">
+    <column id="401" parent="305" name="member_seq">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="403" parent="305" name="auction_point_detail_point">
+    <column id="402" parent="305" name="auction_point_detail_point">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="404" parent="305" name="auction_point_detail_iswin">
+    <column id="403" parent="305" name="auction_point_detail_iswin">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="405" parent="305" name="auction_point_date">
+    <column id="404" parent="305" name="auction_point_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <foreign-key id="406" parent="305" name="FKndsosvjed3v96y3y308ya21ka">
+    <foreign-key id="405" parent="305" name="FKndsosvjed3v96y3y308ya21ka">
       <ColNames>auction_seq</ColNames>
       <RefColNames>auction_seq</RefColNames>
       <RefTableName>auction</RefTableName>
     </foreign-key>
-    <foreign-key id="407" parent="305" name="FKmhviasjxaycueaux04itlrtqd">
+    <foreign-key id="406" parent="305" name="FKmhviasjxaycueaux04itlrtqd">
       <ColNames>member_seq</ColNames>
       <RefColNames>member_seq</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <index id="408" parent="305" name="PRIMARY">
+    <index id="407" parent="305" name="PRIMARY">
       <ColNames>auction_point_detail_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="409" parent="305" name="FKndsosvjed3v96y3y308ya21ka">
+    <index id="408" parent="305" name="FKndsosvjed3v96y3y308ya21ka">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="410" parent="305" name="FKmhviasjxaycueaux04itlrtqd">
+    <index id="409" parent="305" name="FKmhviasjxaycueaux04itlrtqd">
       <ColNames>member_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="411" parent="305" name="PRIMARY">
+    <key id="410" parent="305" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="412" parent="306" name="commission_detail_seq">
+    <column id="411" parent="306" name="commission_detail_seq">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="413" parent="306" name="artist_seq">
+    <column id="412" parent="306" name="artist_seq">
       <Comment>회원가입 시 자동 부여되는 seq</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="414" parent="306" name="commission_detail_date">
+    <column id="413" parent="306" name="commission_detail_date">
       <Comment>수수료 이력이 발생한 시간</Comment>
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="415" parent="306" name="commission_detail_point">
+    <column id="414" parent="306" name="commission_detail_point">
       <Comment>차감된 수수료 포인트</Comment>
       <DasType>bigint|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="416" parent="306" name="commission_detail_category">
+    <column id="415" parent="306" name="commission_detail_category">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="417" parent="306" name="commission_detail_table_seq">
+    <column id="416" parent="306" name="commission_detail_table_seq">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <index id="418" parent="306" name="PRIMARY">
+    <index id="417" parent="306" name="PRIMARY">
       <ColNames>commission_detail_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="419" parent="306" name="PRIMARY">
+    <key id="418" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="420" parent="307" name="item_seq">
+    <column id="419" parent="307" name="item_seq">
       <AutoIncrement>227</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="421" parent="307" name="artist_seq">
+    <column id="420" parent="307" name="artist_seq">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="422" parent="307" name="item_name">
+    <column id="421" parent="307" name="item_name">
       <Comment>작품 명</Comment>
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="423" parent="307" name="item_width">
+    <column id="422" parent="307" name="item_width">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="424" parent="307" name="item_height">
+    <column id="423" parent="307" name="item_height">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="425" parent="307" name="item_like">
+    <column id="424" parent="307" name="item_like">
       <Comment>좋아요 개수</Comment>
       <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="426" parent="307" name="item_sell_price">
+    <column id="425" parent="307" name="item_sell_price">
       <Comment>판매상품일 경우의 판매가</Comment>
       <DasType>bigint|0s</DasType>
       <Position>7</Position>
     </column>
-    <column id="427" parent="307" name="item_is_sold">
+    <column id="426" parent="307" name="item_is_sold">
       <Comment>판매 여부</Comment>
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="428" parent="307" name="item_created_date">
+    <column id="427" parent="307" name="item_created_date">
       <Comment>작품이 동록된 시간</Comment>
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <column id="429" parent="307" name="item_explain">
+    <column id="428" parent="307" name="item_explain">
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
     </column>
-    <foreign-key id="430" parent="307" name="FKk9we93yneqa7fxftx0ut53fj8">
+    <foreign-key id="429" parent="307" name="FKk9we93yneqa7fxftx0ut53fj8">
       <ColNames>artist_seq</ColNames>
       <RefColNames>artist_seq</RefColNames>
       <RefTableName>artist</RefTableName>
     </foreign-key>
-    <index id="431" parent="307" name="PRIMARY">
+    <index id="430" parent="307" name="PRIMARY">
       <ColNames>item_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="432" parent="307" name="FKk9we93yneqa7fxftx0ut53fj8">
+    <index id="431" parent="307" name="FKk9we93yneqa7fxftx0ut53fj8">
       <ColNames>artist_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="433" parent="307" name="PRIMARY">
+    <key id="432" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="434" parent="308" name="tid">
+    <column id="433" parent="308" name="tid">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="435" parent="308" name="next_redirect_app_url">
+    <column id="434" parent="308" name="next_redirect_app_url">
       <DasType>int|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="436" parent="308" name="next_redirect_mobile_url">
+    <column id="435" parent="308" name="next_redirect_mobile_url">
       <Comment>카카오톡 모바일 웹 결제 페이지</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="437" parent="308" name="next_redirect_pc_url">
+    <column id="436" parent="308" name="next_redirect_pc_url">
       <Comment>카카오톡 PC 웹 결제 페이지</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
     </column>
-    <column id="438" parent="308" name="android_app_scheme">
+    <column id="437" parent="308" name="android_app_scheme">
       <Comment>카카오페이 결제 화면으로 이동하는 Android 앱 스킴</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="439" parent="308" name="ios_app_scheme">
+    <column id="438" parent="308" name="ios_app_scheme">
       <Comment>카카오페이 결제 화면으로 이동하는 iOS 앱 스킴</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="440" parent="308" name="created_at">
+    <column id="439" parent="308" name="created_at">
       <Comment>결제 준비 요청 시간</Comment>
       <DasType>datetime|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <index id="441" parent="308" name="PRIMARY">
+    <index id="440" parent="308" name="PRIMARY">
       <ColNames>tid</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="442" parent="308" name="PRIMARY">
+    <key id="441" parent="308" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="443" parent="309" name="kakaopay_request_seq">
+    <column id="442" parent="309" name="kakaopay_request_seq">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="444" parent="309" name="cid">
+    <column id="443" parent="309" name="cid">
       <DasType>varchar(10)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="445" parent="309" name="partner_order_id">
+    <column id="444" parent="309" name="partner_order_id">
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="446" parent="309" name="partner_user_id">
+    <column id="445" parent="309" name="partner_user_id">
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="447" parent="309" name="item_name">
+    <column id="446" parent="309" name="item_name">
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="448" parent="309" name="quantity">
+    <column id="447" parent="309" name="quantity">
       <DasType>varchar(100)|0s</DasType>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="449" parent="309" name="total_amount">
+    <column id="448" parent="309" name="total_amount">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="450" parent="309" name="tax_free_amount">
+    <column id="449" parent="309" name="tax_free_amount">
       <DasType>int|0s</DasType>
       <Position>8</Position>
     </column>
-    <column id="451" parent="309" name="approval_url">
+    <column id="450" parent="309" name="approval_url">
       <Comment>결제 성공 시 redirect url</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
     </column>
-    <column id="452" parent="309" name="cancel_url">
+    <column id="451" parent="309" name="cancel_url">
       <Comment>결제 취소 시 redirect url</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
     </column>
-    <column id="453" parent="309" name="fail_url">
+    <column id="452" parent="309" name="fail_url">
       <Comment>결제 실패 시 redirect url</Comment>
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
     </column>
-    <index id="454" parent="309" name="PRIMARY">
+    <index id="453" parent="309" name="PRIMARY">
       <ColNames>kakaopay_request_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="455" parent="309" name="PRIMARY">
+    <key id="454" parent="309" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="456" parent="310" name="meeting_seq">
+    <column id="455" parent="310" name="meeting_seq">
       <AutoIncrement>1</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="457" parent="310" name="meeting_session_id">
+    <column id="456" parent="310" name="meeting_session_id">
       <DasType>varchar(100)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="458" parent="310" name="auction_seq">
+    <column id="457" parent="310" name="auction_seq">
       <DasType>int|0s</DasType>
       <Position>3</Position>
     </column>
-    <foreign-key id="459" parent="310" name="FKgi7rl0u72h5akc0vd5s8b785m">
+    <foreign-key id="458" parent="310" name="FKgi7rl0u72h5akc0vd5s8b785m">
       <ColNames>auction_seq</ColNames>
       <RefColNames>auction_seq</RefColNames>
       <RefTableName>auction</RefTableName>
     </foreign-key>
-    <index id="460" parent="310" name="PRIMARY">
+    <index id="459" parent="310" name="PRIMARY">
       <ColNames>meeting_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="461" parent="310" name="FKgi7rl0u72h5akc0vd5s8b785m">
+    <index id="460" parent="310" name="FKgi7rl0u72h5akc0vd5s8b785m">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="462" parent="310" name="PRIMARY">
+    <key id="461" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="463" parent="311" name="member_seq">
+    <column id="462" parent="311" name="member_seq">
       <AutoIncrement>80</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="464" parent="311" name="member_id">
+    <column id="463" parent="311" name="member_id">
       <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="465" parent="311" name="member_name">
+    <column id="464" parent="311" name="member_name">
       <Comment>회원가입 시 입력하는 이름</Comment>
       <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="466" parent="311" name="member_pwd">
+    <column id="465" parent="311" name="member_pwd">
       <Comment>회원가입 시 입력하는 비밀번호</Comment>
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="467" parent="311" name="member_nickname">
+    <column id="466" parent="311" name="member_nickname">
       <Comment>회원가입 시 입력하는 닉네임</Comment>
       <DasType>varchar(30)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="468" parent="311" name="member_email">
+    <column id="467" parent="311" name="member_email">
       <Comment>회원가입 시 입력하는 이메일</Comment>
       <DasType>varchar(50)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="469" parent="311" name="member_contact">
+    <column id="468" parent="311" name="member_contact">
       <Comment>회원가입 시 입력하는 연락처(전화번호)</Comment>
       <DasType>varchar(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="470" parent="311" name="member_point">
+    <column id="469" parent="311" name="member_point">
       <DasType>bigint|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="471" parent="311" name="member_isdeleted">
+    <column id="470" parent="311" name="member_isdeleted">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <column id="472" parent="311" name="member_deleted_date">
+    <column id="471" parent="311" name="member_deleted_date">
       <DasType>datetime|0s</DasType>
       <Position>10</Position>
     </column>
-    <column id="473" parent="311" name="member_created_date">
+    <column id="472" parent="311" name="member_created_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>11</Position>
     </column>
-    <column id="474" parent="311" name="is_artist">
+    <column id="473" parent="311" name="is_artist">
       <DasType>bit(1)|0s</DasType>
       <Position>12</Position>
     </column>
-    <index id="475" parent="311" name="PRIMARY">
+    <index id="474" parent="311" name="PRIMARY">
       <ColNames>member_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="476" parent="311" name="member_id">
+    <index id="475" parent="311" name="member_id">
       <ColNames>member_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="477" parent="311" name="PRIMARY">
+    <key id="476" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="478" parent="311" name="member_id">
+    <key id="477" parent="311" name="member_id">
       <UnderlyingIndexName>member_id</UnderlyingIndexName>
     </key>
-    <column id="479" parent="312" name="member_auction_bidding_seq">
+    <column id="478" parent="312" name="member_auction_bidding_seq">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="480" parent="312" name="member_seq">
+    <column id="479" parent="312" name="member_seq">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="481" parent="312" name="auction_seq">
+    <column id="480" parent="312" name="auction_seq">
       <Comment>경매 개시될 경우 자동 부여되는 ID</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="482" parent="312" name="member_auction_bidding_deposit">
+    <column id="481" parent="312" name="member_auction_bidding_deposit">
       <Comment>입찰 신청 시 차감되는 보증금</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="483" parent="312" name="member_auction_bidding_created_date">
+    <column id="482" parent="312" name="member_auction_bidding_created_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="484" parent="312" name="member_auction_bidding_deleted_date">
+    <column id="483" parent="312" name="member_auction_bidding_deleted_date">
       <DasType>datetime|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="485" parent="312" name="member_auction_bidding_isdeleted">
+    <column id="484" parent="312" name="member_auction_bidding_isdeleted">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <foreign-key id="486" parent="312" name="FK3bd59vfadi0athdx7v0eyo8ng">
+    <foreign-key id="485" parent="312" name="FK3bd59vfadi0athdx7v0eyo8ng">
       <ColNames>member_seq</ColNames>
       <RefColNames>member_seq</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="487" parent="312" name="FK4ghdgco5f6qlhtep9bxtbl88p">
+    <foreign-key id="486" parent="312" name="FK4ghdgco5f6qlhtep9bxtbl88p">
       <ColNames>auction_seq</ColNames>
       <RefColNames>auction_seq</RefColNames>
       <RefTableName>auction</RefTableName>
     </foreign-key>
-    <index id="488" parent="312" name="PRIMARY">
+    <index id="487" parent="312" name="PRIMARY">
       <ColNames>member_auction_bidding_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="489" parent="312" name="FK3bd59vfadi0athdx7v0eyo8ng">
+    <index id="488" parent="312" name="FK3bd59vfadi0athdx7v0eyo8ng">
       <ColNames>member_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="490" parent="312" name="FK4ghdgco5f6qlhtep9bxtbl88p">
+    <index id="489" parent="312" name="FK4ghdgco5f6qlhtep9bxtbl88p">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="491" parent="312" name="PRIMARY">
+    <key id="490" parent="312" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="492" parent="313" name="order_detail_seq">
+    <column id="491" parent="313" name="order_detail_seq">
       <AutoIncrement>4</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="493" parent="313" name="member_seq">
+    <column id="492" parent="313" name="member_seq">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="494" parent="313" name="artist_seq">
+    <column id="493" parent="313" name="artist_seq">
       <DasType>bigint|0s</DasType>
       <Position>3</Position>
     </column>
-    <column id="495" parent="313" name="item_seq">
+    <column id="494" parent="313" name="item_seq">
       <Comment>자동 부여되는 작품 seq 번호</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="496" parent="313" name="auction_seq">
+    <column id="495" parent="313" name="auction_seq">
       <Comment>경매 개시될 경우 자동 부여되는 ID</Comment>
       <DasType>int|0s</DasType>
       <Position>5</Position>
     </column>
-    <column id="497" parent="313" name="sorting_code_detail_seq">
+    <column id="496" parent="313" name="sorting_code_detail_seq">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="498" parent="313" name="order_detail_totalpoint">
+    <column id="497" parent="313" name="order_detail_totalpoint">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <column id="499" parent="313" name="order_detail_date">
+    <column id="498" parent="313" name="order_detail_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>8</Position>
     </column>
-    <column id="500" parent="313" name="order_detail_address">
+    <column id="499" parent="313" name="order_detail_address">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <column id="501" parent="313" name="order_detail_phonenumber">
+    <column id="500" parent="313" name="order_detail_phonenumber">
       <DasType>varchar(11)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>10</Position>
     </column>
-    <column id="502" parent="313" name="order_detail_delivery_point">
+    <column id="501" parent="313" name="order_detail_delivery_point">
       <DasType>int|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>11</Position>
     </column>
-    <column id="503" parent="313" name="order_detail_contract">
+    <column id="502" parent="313" name="order_detail_contract">
       <DasType>varchar(1000)|0s</DasType>
       <Position>12</Position>
     </column>
-    <column id="504" parent="313" name="order_detail_commission">
+    <column id="503" parent="313" name="order_detail_commission">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
     </column>
-    <column id="505" parent="313" name="order_detail_isauction">
+    <column id="504" parent="313" name="order_detail_isauction">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>14</Position>
     </column>
-    <column id="506" parent="313" name="order_detail_iscanceled">
+    <column id="505" parent="313" name="order_detail_iscanceled">
       <DasType>tinyint(1)|0s</DasType>
       <DefaultExpression>0</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>15</Position>
     </column>
-    <column id="507" parent="313" name="order_detail_canceled_date">
+    <column id="506" parent="313" name="order_detail_canceled_date">
       <DasType>datetime|0s</DasType>
       <Position>16</Position>
     </column>
-    <foreign-key id="508" parent="313" name="FKeatb5b1fv0yu5hvnv5dh24hdd">
+    <foreign-key id="507" parent="313" name="FKeatb5b1fv0yu5hvnv5dh24hdd">
       <ColNames>member_seq</ColNames>
       <RefColNames>member_seq</RefColNames>
       <RefTableName>member</RefTableName>
     </foreign-key>
-    <foreign-key id="509" parent="313" name="FKi56gnvjnotj5c66t57pdkbw67">
+    <foreign-key id="508" parent="313" name="FKi56gnvjnotj5c66t57pdkbw67">
       <ColNames>artist_seq</ColNames>
       <RefColNames>artist_seq</RefColNames>
       <RefTableName>artist</RefTableName>
     </foreign-key>
-    <foreign-key id="510" parent="313" name="FKep3m0i84t50fdf3sw8kd49mgb">
+    <foreign-key id="509" parent="313" name="FKep3m0i84t50fdf3sw8kd49mgb">
       <ColNames>item_seq</ColNames>
       <RefColNames>item_seq</RefColNames>
       <RefTableName>item</RefTableName>
     </foreign-key>
-    <foreign-key id="511" parent="313" name="FK1eixjy4fttuokq8p0j9neur6o">
+    <foreign-key id="510" parent="313" name="FK1eixjy4fttuokq8p0j9neur6o">
       <ColNames>auction_seq</ColNames>
       <RefColNames>auction_seq</RefColNames>
       <RefTableName>auction</RefTableName>
     </foreign-key>
-    <index id="512" parent="313" name="PRIMARY">
+    <index id="511" parent="313" name="PRIMARY">
       <ColNames>order_detail_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="513" parent="313" name="FKeatb5b1fv0yu5hvnv5dh24hdd">
+    <index id="512" parent="313" name="FKeatb5b1fv0yu5hvnv5dh24hdd">
       <ColNames>member_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="514" parent="313" name="FKi56gnvjnotj5c66t57pdkbw67">
+    <index id="513" parent="313" name="FKi56gnvjnotj5c66t57pdkbw67">
       <ColNames>artist_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="515" parent="313" name="FKep3m0i84t50fdf3sw8kd49mgb">
+    <index id="514" parent="313" name="FKep3m0i84t50fdf3sw8kd49mgb">
       <ColNames>item_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="516" parent="313" name="FK1eixjy4fttuokq8p0j9neur6o">
+    <index id="515" parent="313" name="FK1eixjy4fttuokq8p0j9neur6o">
       <ColNames>auction_seq</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="517" parent="313" name="PRIMARY">
+    <key id="516" parent="313" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="518" parent="314" name="point_detail_seq">
+    <column id="517" parent="314" name="point_detail_seq">
       <AutoIncrement>1</AutoIncrement>
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="519" parent="314" name="point_detail_id">
+    <column id="518" parent="314" name="point_detail_id">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="520" parent="314" name="point_detail_isartist">
+    <column id="519" parent="314" name="point_detail_isartist">
       <DasType>tinyint(1)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="521" parent="314" name="point_detail_trade_point">
+    <column id="520" parent="314" name="point_detail_trade_point">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="522" parent="314" name="point_detail_trade_date">
+    <column id="521" parent="314" name="point_detail_trade_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="523" parent="314" name="point_detail_trade_category">
+    <column id="522" parent="314" name="point_detail_trade_category">
       <Comment>ENUM(판매, 경매, deposit, 충전, 환전, 작가받는포인트)</Comment>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="524" parent="314" name="point_detail_trade_table_seq">
+    <column id="523" parent="314" name="point_detail_trade_table_seq">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <index id="525" parent="314" name="PRIMARY">
+    <index id="524" parent="314" name="PRIMARY">
       <ColNames>point_detail_seq</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="526" parent="314" name="PRIMARY">
+    <key id="525" parent="314" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="527" parent="315" name="review_seq">
+    <column id="526" parent="315" name="review_seq">
       <AutoIncrement>13</AutoIncrement>
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="528" parent="315" name="member_seq">
+    <column id="527" parent="315" name="member_seq">
       <DasType>bigint|0s</DasType>
       <Position>2</Position>
     </column>
-    <column id="529" parent="315" name="review_content">
+    <column id="528" parent="315" name="review_content">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="530" parent="315" name="review_visit">
+    <column id="529" parent="315" name="review_visit">
       <DasType>int|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="531" parent="315" name="review_created_date">
+    <column id="530" parent="315" name="review_created_date">
       <DasType>datetime|0s</DasType>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="532" parent="315" name="review_title">
+    <column id="531" parent="315" name="review_title">
       <DasType>varchar(200)|0s</DasType>
       <Position>6</Position>
     </column>
-    <column id="533" parent="315" name="artist_seq">
+    <column id="532" parent="315" name="artist_seq">
       <DasType>bigint|0s</DasType>
       <Position>7</Position>
+    </column>
+    <column id="533" parent="315" name="item_seq">
+      <DasType>int|0s</DasType>
+      <Position>8</Position>
     </column>
     <foreign-key id="534" parent="315" name="FKoppeupt7ee22ix7rwfobbdwd7">
       <ColNames>member_seq</ColNames>

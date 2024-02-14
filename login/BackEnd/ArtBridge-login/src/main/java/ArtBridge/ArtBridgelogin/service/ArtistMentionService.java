@@ -66,7 +66,7 @@ public class ArtistMentionService {
     }
 
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
-    public ArtistMentionDto readOne(Long id) {
+    public ArtistMentionDto readOne(String id) {
         ArtistMention artistMention = artistMentionRepository.readOne(id);
 
         if (artistMention == null) {
