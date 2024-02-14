@@ -81,6 +81,8 @@ public class ItemService {
         Item createdItem = itemRepository.create(newItem);
 
 
+
+
         return convertToDto(createdItem);
     }
 
@@ -113,6 +115,7 @@ public class ItemService {
     @Transactional
     public ItemDto convertToDto(Item item) {
         ItemDto itemDto = new ItemDto();
+        itemDto.setItemSeq(item.getItemSeq());
         itemDto.setItemName(item.getItemName());
         itemDto.setItemWidth(item.getItemWidth());
         itemDto.setItemHeight(item.getItemHeight());

@@ -29,8 +29,9 @@ public class ReviewRepository {
         this.em = em;
     }
 
-    public void createReview(Review review) {
+    public Review createReview(Review review) {
         em.persist(review);
+        return review;
     }
 
     public Review readBySeq(Integer seq) {

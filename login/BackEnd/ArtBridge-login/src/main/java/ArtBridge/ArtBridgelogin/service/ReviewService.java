@@ -1,8 +1,11 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewDto;
+import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.Member;
+import ArtBridge.ArtBridgelogin.domain.OrderDetail;
 import ArtBridge.ArtBridgelogin.domain.Review;
-import ArtBridge.ArtBridgelogin.repository.ReviewRepository;
+import ArtBridge.ArtBridgelogin.repository.*;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
@@ -25,16 +28,42 @@ public class ReviewService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private ArtistRepository artistRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
     // CREATE
     @Transactional
-    public void createReview(ReviewDto reviewDto) {
+    public ReviewDto createReview(ReviewDto reviewDto) {
         try {
-            Review review = convertToEntity(reviewDto);
-            review.setReviewCreatedDate(LocalDateTime.now());
-            review.setReviewVisit(0);
-            System.out.println(review.getReviewTitle());
 
-            reviewRepository.createReview(review);
+            Review review = new Review();
+
+            review.setReviewContent(reviewDto.getContent());
+            review.setReviewVisit(0);
+            review.setReviewCreatedDate(LocalDateTime.now());
+            review.setReviewTitle(reviewDto.getTitle());
+
+            review.setMember(memberRepository.readMemberById(reviewDto.getMemberId()));
+            //review.setItem(itemRepository.readBySeq(reviewDto.getItemSeq()));
+            review.setArtist(artistRepository.readArtistById(reviewDto.getArtistId()));
+            review.setItem(0);
+            Review newReview = reviewRepository.createReview(review);
+            System.out.println(newReview.getReviewContent());
+            reviewDto.setSeq(newReview.getReviewSeq());
+
+            System.out.println(reviewDto.toString());
+
+
+            return reviewDto;
         } catch (DataAccessException e) {
             throw new MyDataAccessException("수정할 수 없습니다.", e);
         }
@@ -100,9 +129,11 @@ public class ReviewService {
 
     private ReviewDto convertToDto(Review review) {
         ReviewDto reviewDto = new ReviewDto();
+
         reviewDto.setSeq(review.getReviewSeq());
         reviewDto.setContent(review.getReviewContent());
         reviewDto.setTitle(reviewDto.getTitle());
+
         return reviewDto;
     }
 

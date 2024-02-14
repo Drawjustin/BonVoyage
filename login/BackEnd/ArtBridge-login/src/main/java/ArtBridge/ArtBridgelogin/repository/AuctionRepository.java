@@ -80,7 +80,6 @@ public class AuctionRepository {
         auction.setAuctionStatus(updatedAuction.getAuctionStatus());
         auction.setAuctionStartPoint(updatedAuction.getAuctionStartPoint());
         auction.setAuctionAskPoint(updatedAuction.getAuctionAskPoint());
-        auction.setAuctionSellPoint(updatedAuction.getAuctionSellPoint());
 
         // 수정 작업 수행
         queryFactory.update(QAuction.auction)
@@ -88,7 +87,6 @@ public class AuctionRepository {
                 .set(QAuction.auction.auctionStatus, updatedAuction.getAuctionStatus())
                 .set(QAuction.auction.auctionStartPoint, updatedAuction.getAuctionStartPoint())
                 .set(QAuction.auction.auctionAskPoint, updatedAuction.getAuctionAskPoint())
-                .set(QAuction.auction.auctionSellPoint, updatedAuction.getAuctionSellPoint())
                 .where(QAuction.auction.auctionSeq.eq(seq))
                 .execute();
 

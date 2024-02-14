@@ -52,6 +52,8 @@ public class QArtist extends EntityPathBase<Artist> {
 
     public final ListPath<OrderDetail, QOrderDetail> orderDetails = this.<OrderDetail, QOrderDetail>createList("orderDetails", OrderDetail.class, QOrderDetail.class, PathInits.DIRECT2);
 
+    public final ListPath<Review, QReview> reviews = this.<Review, QReview>createList("reviews", Review.class, QReview.class, PathInits.DIRECT2);
+
     public QArtist(String variable) {
         super(Artist.class, forVariable(variable));
     }

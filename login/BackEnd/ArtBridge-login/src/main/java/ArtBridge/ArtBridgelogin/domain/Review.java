@@ -16,7 +16,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_seq", nullable = false)
-    private Integer reviewSeq;
+    private int reviewSeq;
 
     @Column(name="review_title",nullable = true)
     private String reviewTitle;
@@ -30,6 +30,8 @@ public class Review {
     @Column(name = "review_created_date", nullable = false)
     private LocalDateTime reviewCreatedDate;
 
+    @Column(name = "item_seq", nullable = true)
+    private int item;
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)

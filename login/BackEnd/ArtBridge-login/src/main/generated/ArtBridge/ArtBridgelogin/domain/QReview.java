@@ -22,6 +22,10 @@ public class QReview extends EntityPathBase<Review> {
 
     public static final QReview review = new QReview("review");
 
+    public final QArtist artist;
+
+    public final NumberPath<Integer> item = createNumber("item", Integer.class);
+
     public final QMember member;
 
     public final StringPath reviewContent = createString("reviewContent");
@@ -52,6 +56,7 @@ public class QReview extends EntityPathBase<Review> {
 
     public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.artist = inits.isInitialized("artist") ? new QArtist(forProperty("artist")) : null;
         this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
     }
 

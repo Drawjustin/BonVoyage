@@ -50,12 +50,16 @@ public class ReviewController {
     @PostMapping("/new")
     public ResponseEntity<?> createReview(@RequestBody ReviewDto reviewDto) {
         try {
-            reviewService.createReview(reviewDto);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            ReviewDto createdReview = reviewService.createReview(reviewDto);
+
+            System.out.println(createdReview.toString());
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");
         }
     }
+
 
     // 리뷰 수정
     @PutMapping("/{id}")
