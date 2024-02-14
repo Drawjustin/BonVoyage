@@ -29,6 +29,7 @@ public class ReviewService {
     @Transactional
     public void createReview(ReviewDto reviewDto) {
         try {
+            System.out.println(reviewDto.getTitle());
             Review review = convertToEntity(reviewDto);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewVisit(0);
