@@ -56,7 +56,8 @@ public class AuctionService {
             //auction_win_date
             auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
             auction.setAuctionCreatedDate(LocalDateTime.now());
-
+            auction.setAuctionIsMiscarried(true);
+            System.out.println(convertToDto(auction).toString());
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create auction", e);
