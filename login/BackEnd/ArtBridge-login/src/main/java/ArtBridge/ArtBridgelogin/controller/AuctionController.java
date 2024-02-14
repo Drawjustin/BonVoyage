@@ -1,9 +1,6 @@
 package ArtBridge.ArtBridgelogin.controller;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
-import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.service.AuctionService;
@@ -42,19 +39,6 @@ public class AuctionController {
         }
     }
 
-
-//    public ResponseEntity<?> readArtistByitemSeq(@PathVariable int Seq) {
-//        ArtistDto artistDto = auctionService.readAuctionByArtistSeq(Seq);
-//
-//        if (artistDto != null) {
-//            // 조회 성공 시 200 OK와 함께 메시지 반환
-//            return ResponseEntity.ok("조회한 Aritst " + artistDto);
-//        } else {
-//            // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-//        }
-//    }
-
     @PostMapping("/new")
     public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto) {
         try {
@@ -64,10 +48,6 @@ public class AuctionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-//    @GetMapping("/artist/{seq}")
-//    public ArtistDto readAuctionByArtistSeq(@PathVariable int seq) {
-//        return auctionService.readAuctionByArtistSeq(seq);
-//    }
 
     @GetMapping("/item/{seq}")
     public Item readItemByAuctionSeq(@PathVariable(value="seq") int seq) {

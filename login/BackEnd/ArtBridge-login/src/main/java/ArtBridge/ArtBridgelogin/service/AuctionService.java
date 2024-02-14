@@ -10,15 +10,18 @@ import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
+import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,17 +31,32 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
 
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
     @Transactional
     public AuctionDto createAuction(AuctionDto auctionDto) {
         try {
+
             Auction auction = new Auction();
 
-            auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
+            auction.setItem(itemRepository.readBySeq(auctionDto.getItemSeq()));
             auction.setAuctionScheduledTime(auctionDto.getAuctionScheduledTime());
-            auction.setAuctionStatus(auctionDto.getAuctionStatus());
+            auction.setAuctionStatus(1);
             auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
             auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
-            auction.setAuctionCreatedDate(auctionDto.getAuctionCreatedDate());
+
+            //auction_winner
+            //auction_canceled_date
+            //auction_ismiscarried
+            //auction_miscarried_dateD
+            //auction_win_date
+            auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
+            auction.setAuctionCreatedDate(LocalDateTime.now());
+
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create auction", e);
@@ -143,7 +161,7 @@ public class AuctionService {
             itemDto.setItemWidth(auction.getItem().getItemWidth());
             itemDto.setItemHeight(auction.getItem().getItemHeight());
             itemDto.setArtistId(auction.getItem().getArtist().getArtistId());
-            auctionDto.setItem(itemDto);
+            auctionDto.setItemSeq(itemDto.getItemSeq());
         }
         return auctionDto;
     }

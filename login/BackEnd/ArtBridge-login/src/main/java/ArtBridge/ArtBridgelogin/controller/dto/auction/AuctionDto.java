@@ -16,7 +16,6 @@ public class AuctionDto {
     private Integer auctionStatus;
     private Integer auctionStartPoint;
     private Integer auctionAskPoint;
-    private Long auctionSellPoint;
     private Integer auctionWinner;
     private LocalDateTime auctionCreatedDate;
     private LocalDateTime auctionCanceledDate;
@@ -25,10 +24,6 @@ public class AuctionDto {
     private LocalDateTime auctionWinDate;
     private String auctionSessionId;
 
-    public void setItem(ItemDto item) {
-        this.item = item;
-    }
-
-    private ItemDto item;
+    private Integer itemSeq;
 
 }

@@ -31,9 +31,6 @@ public class Auction {
     @Column(name = "auction_ask_point", nullable = false, columnDefinition = "DEFAULT 10")
     private Integer auctionAskPoint;
 
-    @Column(name = "auction_sell_point")
-    private Long auctionSellPoint;
-
     @Column(name = "auction_winner")
     private Integer auctionWinner;
 

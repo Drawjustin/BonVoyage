@@ -17,14 +17,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055">
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist;]]></console>
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from auction;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055" />
