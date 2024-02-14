@@ -93,15 +93,15 @@ public class ArtistController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteArtist(@PathVariable(value = "id") String id) {
-        boolean deleted = artistService.deleteArtist(id);
+    public ResponseEntity<?> deleteArtist(@PathVariable(value = "seq") long seq) {
+        boolean deleted = artistService.deleteArtist(seq);
 
         if (deleted) {
             // 삭제 성공 시 200 OK와 함께 메시지 반환
             return ResponseEntity.ok("Artist deleted");
         } else {
             // 추가 실패 시 500 Internal Server Error와 함께 실패 메시지 반환
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Artist not found with ID: " + id);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Artist not found with seq: " + seq);
         }
     }
 }

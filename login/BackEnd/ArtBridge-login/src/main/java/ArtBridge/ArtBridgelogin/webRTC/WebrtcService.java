@@ -1,11 +1,9 @@
 package ArtBridge.ArtBridgelogin.webRTC;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
-import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
-import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-import ArtBridge.ArtBridgelogin.domain.*;
+import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
+import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import jakarta.transaction.Transactional;
@@ -83,6 +81,7 @@ public class WebrtcService {
         auctionPointDetail.setAuctionPointDetailPoint(auctionPointDetailDto.getAuctionPointDetailPoint());
         auctionPointDetail.setAuctionPointDetailIsWin(auctionPointDetailDto.getAuctionPointDetailIsWin());
 
+        return auctionPointDetail;
     }
     private MemberDto convertToDto(Member member) {
         MemberDto memberDto = new MemberDto();
