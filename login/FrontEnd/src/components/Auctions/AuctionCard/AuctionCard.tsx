@@ -15,12 +15,12 @@ const AuctionCard = ({ data, currentUser }:any) => {
           fill
           sizes='auto'
           className={styles['product-image']}
-          alt="artist"
+          alt="auction"
         />
       </div>
 
       <div className={styles['artist-details']}>
-        {data.title}
+        {data.item.itemName}
       </div>
 
     </div>

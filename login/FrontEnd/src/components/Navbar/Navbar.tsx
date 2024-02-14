@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
   const [sidebar, setSidebar] = useState(false);
 
   // const showSidebar = () => setSidebar(!sidebar);
-  const showSidebar = () => {console.log('퍄퍄'); setSidebar(!sidebar);}
+  const showSidebar = () => {setSidebar(!sidebar);}
   
 
   const contextValue = useContext(IconContext);
