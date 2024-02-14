@@ -16,31 +16,32 @@ const AuctionListPage = async () => {
   const currentUser = getCurrentUser();
   const navigate = useRouter();
 
-  const auctions = [{
-    auctionSeq:1,
-      imageSrc: m1,
-      title: '별 헤는 밤',
-  },
-  {
-    auctionSeq:2,
-      imageSrc: m2,
-      title: '샤라랄랄라랄라',
-  }]
+  const auctions = await axios.get(`https://i10a207.p.ssafy.io/api/auction`);
+
+  // const auctions = [{
+  //   auctionSeq:1,
+  //     imageSrc: m1,
+  //     title: '별 헤는 밤',
+  // },
+  // {
+  //   auctionSeq:2,
+  //     imageSrc: m2,
+  //     title: '샤라랄랄라랄라',
+  // }]
 
   async function handleFunc (seq, user) {
 
-    console.log(seq, user);
-
-    
-
-    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/{${seq}}`)
+    const Auction = await axios.get(`https://i10a207.p.ssafy.io/api/auction/${seq}`)
     const ClickedId = user.id;
     const WhetherArtist = user.role === 'artist' ? true : false;
 
-    console.log(ClickedId, WhetherArtist);
+    console.log(Auction.data, ClickedId, WhetherArtist);
 
-    navigate.push(`/demos/dashboard/canvas-designer.html?open=${WhetherArtist}&sessionid=${Auction.auctionId}&userFullName=${ClickedId}`)
-    
+    if (user === null) {
+      navigate.push('/LoginPage');
+    } else {
+      navigate.push(`/demos/dashboard/canvas-designer.html?open=${WhetherArtist}&sessionid=${Auction.data.auctionSessionId}&userFullName=${ClickedId}`)
+    }
   }
 
   // const [auctions, setAuctions] = useState([]);
@@ -63,19 +64,20 @@ const AuctionListPage = async () => {
     return (
       <>
       <div className={styles.container}>
-        <div className="container" style={{ marginTop: '10px', marginLeft: '12vh' , width: '85%', alignItems: 'center' }}>
-          <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
+      <h1 style={{ color: '#f1efee', textAlign: 'left', marginBottom: '10px' }}>경매 작품</h1>
+        <div className="container" style={{ marginTop: '10px', marginLeft: '30vh' , width: '85%', alignItems: 'center' }}>
+          
             
 
             {
-              (auctions.length === 0 || !auctions)
+              (auctions.data.length === 0 || !auctions.data)
               ?
               <EmptyState showReset />
               :
               (
               <>
               <div className={styles.grid}>
-              {auctions.map((auction) =>(
+              {auctions.data.map((auction) =>(
               <div onClick={() => handleFunc(auction.auctionSeq, currentUser)}>
                   <AuctionCard
                     currentUser={currentUser}
@@ -89,7 +91,13 @@ const AuctionListPage = async () => {
               </>)
             }
         </div>
-        <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
+        {
+          currentUser !== null ?
+          <FloatingButton href="/AuctionUploadPage">+</FloatingButton>
+          :
+          <></>
+        }
+        
         </div>
     </>
   )

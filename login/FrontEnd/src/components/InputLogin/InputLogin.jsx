@@ -51,7 +51,7 @@ const InputLogin = () => {
           }
         });
 
-        if (userResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
+        if (userResponse.data === "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.") {
           alert('로그인 실패');
           return;
         } else {
@@ -74,7 +74,7 @@ const InputLogin = () => {
           }
         });
 
-        if (memberResponse.data === "바보 멍텅구리 로그인 실패했잔요") {
+        if (memberResponse.data === "로그인 실패: 아이디 또는 비밀번호가 올바르지 않습니다.") {
           alert('로그인 실패');
           return;
         }
