@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistHomepageCommentDto;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.domain.ArtistHomepageComment;
 import ArtBridge.ArtBridgelogin.service.ArtistHomepageCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ public class ArtistHomepageCommentController {
     private ArtistHomepageCommentService artistHomepageCommentService;
 
     @GetMapping
-    public List<ArtistHomepageCommentDto> readAlLArtistHomepageComment() {
-        return artistHomepageCommentService.readAllArtistsHomepageComment();
+    public ResponseEntity<List<ArtistHomepageCommentDto>> readAlLArtistHomepageComment() {
+        return ResponseEntity.ok(artistHomepageCommentService.readAllArtistsHomepageComment());
     }
 
     @GetMapping("/{seq}")
