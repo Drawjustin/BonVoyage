@@ -58,6 +58,12 @@ public class MemberRepository {
                 .fetchOne();
     }
 
+    public Member readMemberBySeq(Long memberSeq) {
+        return queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberSeq.eq(memberSeq))
+                .fetchOne();
+    }
     @Transactional(readOnly = true)
     public Optional<Member> findByMemberId(String memberId) {
         Member member = queryFactory

@@ -28,7 +28,7 @@ public class ArtistMentionCommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArtistMentionCommentDto> readArtistMentionCommentById(@PathVariable Long id) {
+    public ResponseEntity<ArtistMentionCommentDto> readArtistMentionCommentById(@PathVariable(value = "id") Long id) {
         try {
             ArtistMentionCommentDto artistMentionComment = artistMentionCommentService.readArtistMentionCommentById(id);
             if (artistMentionComment != null) {
@@ -52,7 +52,7 @@ public class ArtistMentionCommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArtistMentionCommentDto> updateArtistMentionComment(@PathVariable Long id, @RequestBody ArtistMentionCommentDto updatedArtistMentionCommentDto) {
+    public ResponseEntity<ArtistMentionCommentDto> updateArtistMentionComment(@PathVariable(value = "id") Long id, @RequestBody ArtistMentionCommentDto updatedArtistMentionCommentDto) {
         try {
             ArtistMentionCommentDto artistMentionComment = artistMentionCommentService.updateArtistMentionComment(id, updatedArtistMentionCommentDto);
             if (artistMentionComment != null) {
@@ -66,7 +66,7 @@ public class ArtistMentionCommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArtistMentionComment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteArtistMentionComment(@PathVariable(value = "id") Long id) {
         try {
             boolean deleted = artistMentionCommentService.deleteArtistMentionComment(id);
             if (deleted) {

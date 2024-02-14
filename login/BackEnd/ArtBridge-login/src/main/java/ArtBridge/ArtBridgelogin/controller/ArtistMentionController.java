@@ -29,7 +29,7 @@ public class ArtistMentionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArtistMentionDto> readArtistMention(@PathVariable Long id) {
+    public ResponseEntity<ArtistMentionDto> readArtistMention(@PathVariable(value = "id") Long id) {
         try {
             ArtistMentionDto artistMention = artistMentionService.readOne(id);
             return ResponseEntity.ok(artistMention);
@@ -49,7 +49,7 @@ public class ArtistMentionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ArtistMentionDto> updateArtistMention(@PathVariable Long id, @RequestBody ArtistMentionDto updatedArtistMentionDto) {
+    public ResponseEntity<ArtistMentionDto> updateArtistMention(@PathVariable(value = "id") Long id, @RequestBody ArtistMentionDto updatedArtistMentionDto) {
         try {
             ArtistMentionDto artistMention = artistMentionService.updateArtistMention(id, updatedArtistMentionDto);
             return ResponseEntity.ok(artistMention);
@@ -59,7 +59,7 @@ public class ArtistMentionController {
     }
 
     @DeleteMapping("/{mentionSeq}")
-    public ResponseEntity<Void> deleteArtistMention(@PathVariable Long mentionSeq) {
+    public ResponseEntity<Void> deleteArtistMention(@PathVariable(value = "mentionSeq") Long mentionSeq) {
         try {
             artistMentionService.deleteArtistMention(mentionSeq);
             return ResponseEntity.noContent().build();
