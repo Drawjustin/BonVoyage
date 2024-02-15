@@ -58,6 +58,9 @@ public class WebrtcService {
 
     @Transactional
     public MemberDto readWinner(Integer seq) {
+        if(webrtcRepository.readCurrentPrice(seq).getAuctionPointDetailPoint() != null){
+            webrtcRepository.updateAuctionDetails(seq);
+        };
         Member member = webrtcRepository.readWinner(seq);
         return convertToDto(member);
     }
