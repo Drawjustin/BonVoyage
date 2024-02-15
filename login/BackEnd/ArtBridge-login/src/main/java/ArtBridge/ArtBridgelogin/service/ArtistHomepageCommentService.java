@@ -30,8 +30,8 @@ public class ArtistHomepageCommentService {
     public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageCommentDto) {
 
         ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
-        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtistId()));
-        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMemberId()));
+        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtist()));
+        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMember()));
         artistHomepageComment.setArtistHomepageCommentContentCreatedDate(LocalDateTime.now());
         artistHomepageComment.setArtistHomepageCommentIsdeleted(false);
         artistHomepageComment.setArtistHomepageCommentContent(artistHomepageCommentDto.getArtistHomepageCommentContent());

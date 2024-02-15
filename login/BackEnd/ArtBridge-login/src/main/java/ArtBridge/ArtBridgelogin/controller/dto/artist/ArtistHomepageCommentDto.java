@@ -7,7 +7,7 @@ public class ArtistHomepageCommentDto {
 
     private Long artistHomepageCommentSeq;
     private String artistHomepageCommentContent;
-    private Long memberId;
-    private Long artistId;
+    private Long member;
+    private Long artist;
 
 }
