@@ -72,9 +72,12 @@ public class ReviewService {
                 return Collections.emptyList();
             }
 
+
             return reviews.stream()
                     .map(this::convertToDto)
                     .collect(Collectors.toList());
+
+
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to read all reviews", e);
         }
@@ -121,13 +124,22 @@ public class ReviewService {
     }
 
     private ReviewDto convertToDto(Review review) {
+
         ReviewDto reviewDto = new ReviewDto();
+
+        System.out.println(review.toString());
 
         reviewDto.setSeq(review.getReviewSeq());
         reviewDto.setContent(review.getReviewContent());
-        reviewDto.setTitle(reviewDto.getTitle());
+        reviewDto.setTitle(review.getReviewTitle());
+
+        System.out.println(reviewDto.toString());
         reviewDto.setMemberId(review.getMember().getMemberId());
         reviewDto.setArtistId(review.getArtist().getArtistId());
+
+        System.out.println("check");
+
+        System.out.println(reviewDto.toString());
 
         return reviewDto;
     }
