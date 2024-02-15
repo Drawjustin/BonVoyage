@@ -9,8 +9,9 @@ import { SidebarData } from './SidebarData';
 import './newnavbar.css';
 import { IconContext } from 'react-icons';
 // import Link from 'next/link';
-// import styles from './Navbar.module.scss';
+import styles from './Navbar.module.scss';
 import {ButtonContainer} from './ButtonContainer';
+import { useRouter } from 'next/navigation';
 // import Sidebar from './Sidebar';
 
 interface SidebarItem {
@@ -25,7 +26,7 @@ const Navbar: React.FC = () => {
 
   // const showSidebar = () => setSidebar(!sidebar);
   const showSidebar = () => {setSidebar(!sidebar);}
-  
+  const navigate = useRouter();
 
   const contextValue = useContext(IconContext);
   const color = contextValue ? contextValue.color : '#fff';
@@ -37,7 +38,9 @@ const Navbar: React.FC = () => {
   // };
 
   return (
+    
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+       <div className={styles.logo_title} onClick={() => {navigate.push('/')}}>Bon Voyage</div>
         <div className='navbar'>
           <div className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />

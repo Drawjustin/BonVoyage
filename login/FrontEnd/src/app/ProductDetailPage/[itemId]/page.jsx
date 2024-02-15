@@ -19,7 +19,6 @@ const ProductDetailPage = (props) => {
   const productId = Number(id);
   const dispatch = useDispatch();
   const history = useRouter();
-  console.log(id);
 
 
   const handleDeleteClick = async () => {
@@ -49,6 +48,7 @@ const ProductDetailPage = (props) => {
   const [product, setProduct] = useState(null);
   const { products } = useSelector((state) => state.cartSlice);
   const productMatching = products.some((product) => product.id === product.id);
+  const [artist, setArtist] = useState('');
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -57,12 +57,18 @@ const ProductDetailPage = (props) => {
         // console.log(props)
         console.log(response.data)
         setProduct(response.data);
+
+        const response_artist = await axios.get(`https://i10a207.p.ssafy.io/api/artists/${response.data.artistId}`);
+        // console.log(props)
+        console.log(response_artist.data)
+        setArtist(response_artist.data);
       } catch (error) {
         console.error('Erorr fetchingproduct details:', error);
         // console.log(props)
       }
     };
-    fetchProduct()
+
+    fetchProduct();
   }, []);
     // redux에서 해당 상품 정보를 가져오는 액션 디스패치
   //   dispatch(fetchProduct(productId));
@@ -84,7 +90,13 @@ const ProductDetailPage = (props) => {
           </div>
           <div className={styles.card_description}>
             <h3>{product.itemName}</h3>
-            <h2>{product.artistId} 작가</h2>
+            {
+              artist.nickName === '쌉가능' ? 
+              <h2>닉네임 : 아린 작가</h2>
+              :
+              <h2>닉네임 : {artist.nickName} 작가</h2>
+            }
+            
 
             <p>{product.itemSellPrice}  (원) </p>
             <p>{product.explain}</p>
