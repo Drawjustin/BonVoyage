@@ -52,6 +52,9 @@ public class Auction {
     @Column(name = "auction_session_id")
     private String auctionSessionId;
 
+    @Column(name = "auction_sell_point")
+    private Long auctionSellPoint;
+
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -60,19 +63,19 @@ public class Auction {
     private Item item;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction", orphanRemoval = true)
     private List<OrderDetail> orderDetails;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction",orphanRemoval = true)
     private List<AuctionLike> auctionLikes;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction", orphanRemoval = true)
     private List<MemberAuctionBidding> memberAuctionBiddings;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "auction")
+    @OneToMany(mappedBy = "auction",orphanRemoval = true)
     private List<AuctionPointDetail> auctionPointDetails;
 
 }

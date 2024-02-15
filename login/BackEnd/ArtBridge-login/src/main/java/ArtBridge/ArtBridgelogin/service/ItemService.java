@@ -2,9 +2,12 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
+import ArtBridge.ArtBridgelogin.controller.dto.wish.WishDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Item;
+import ArtBridge.ArtBridgelogin.domain.Wish;
 import ArtBridge.ArtBridgelogin.repository.ItemRepository;
+import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +23,9 @@ import java.util.stream.Collectors;
 public class ItemService {
 
     private final ItemRepository itemRepository;
-
+    private final MemberRepository memberRepository;
     @Autowired
     private ArtistService artistService;
-
 
     //Todo: CREATE
     @Transactional
@@ -101,7 +103,11 @@ public class ItemService {
 
         return convertToDto(existingItem);
     }
+    @Transactional
+    public Wish updateItemStatus(WishDto wishDto) {
+        return itemRepository.readByMemberSeq(wishDto.getItem(),wishDto.getMember());
 
+    }
     @Transactional
     public void deleteItem(int id) {
         Item existingItem = itemRepository.readBySeq(id);

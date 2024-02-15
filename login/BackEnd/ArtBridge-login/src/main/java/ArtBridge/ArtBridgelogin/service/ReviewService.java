@@ -1,9 +1,6 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewDto;
-import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.Member;
-import ArtBridge.ArtBridgelogin.domain.OrderDetail;
 import ArtBridge.ArtBridgelogin.domain.Review;
 import ArtBridge.ArtBridgelogin.repository.*;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -46,22 +43,17 @@ public class ReviewService {
         try {
             Review review = convertToEntity(reviewDto);
             review.setReviewCreatedDate(LocalDateTime.now());
-            review.setReviewVisit(0);
             review.setReviewContent(reviewDto.getContent());
             review.setReviewVisit(0);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewTitle(reviewDto.getTitle());
 
             review.setMember(memberRepository.readMemberById(reviewDto.getMemberId()));
-            //review.setItem(itemRepository.readBySeq(reviewDto.getItemSeq()));
             review.setArtist(artistRepository.readArtistById(reviewDto.getArtistId()));
             review.setItem(0);
             Review newReview = reviewRepository.createReview(review);
-            System.out.println(newReview.getReviewContent());
+
             reviewDto.setSeq(newReview.getReviewSeq());
-
-            System.out.println(reviewDto.toString());
-
 
             return reviewDto;
         } catch (DataAccessException e) {

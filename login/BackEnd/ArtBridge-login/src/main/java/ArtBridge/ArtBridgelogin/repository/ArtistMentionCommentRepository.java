@@ -1,6 +1,7 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
+import ArtBridge.ArtBridgelogin.domain.QArtistMention;
 import ArtBridge.ArtBridgelogin.domain.QArtistMentionComment;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
@@ -17,6 +18,7 @@ public class ArtistMentionCommentRepository {
 
     private final EntityManager em;
     private final QArtistMentionComment qArtistMentionComment = QArtistMentionComment.artistMentionComment;
+    private final QArtistMention qArtistMention = QArtistMention.artistMention;
     private JPAQueryFactory queryFactory;
 
     @PostConstruct
@@ -37,12 +39,14 @@ public class ArtistMentionCommentRepository {
                 .fetchOne());
     }
 
-    public ArtistMentionComment save(ArtistMentionComment artistMentionComment) {
-        if (artistMentionComment.getArtistMentionCommentSeq() == null) {
-            em.persist(artistMentionComment);
-        } else {
-            em.merge(artistMentionComment);
-        }
+    public ArtistMentionComment create(ArtistMentionComment artistMentionComment) {
+//        if (artistMentionComment.getArtistMentionCommentSeq() == null) {
+//            em.persist(artistMentionComment);
+//        } else {
+//            em.merge(artistMentionComment);
+//        }
+//        return artistMentionComment;
+        em.persist(artistMentionComment);
         return artistMentionComment;
     }
 
@@ -51,5 +55,13 @@ public class ArtistMentionCommentRepository {
                 .delete(qArtistMentionComment)
                 .where(qArtistMentionComment.artistMentionCommentSeq.eq(artistMentionCommentSeq))
                 .execute();
+    }
+
+    public List<ArtistMentionComment> findByMentionId(Long id) {
+        return queryFactory
+                .selectFrom(qArtistMentionComment)
+                .join(qArtistMentionComment.artistMention, qArtistMention)
+                .where(qArtistMention.artistMentionSeq.eq(id))
+                .fetch();
     }
 }

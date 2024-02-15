@@ -134,13 +134,13 @@ public class ArtistService {
 
     // DELETE
     @Transactional
-    public boolean deleteArtist(String id) {
+    public boolean deleteArtist(long seq) {
         try {
             // readOne 메서드에서 예외가 발생하면 null을 반환하므로,
             // 예외가 발생하지 않으면 해당 아티스트가 존재하는 것으로 판단
-            ArtistDto artist = readOne(id);
+            Artist artist = artistRepository.readArtistBySeq(seq);
             if (artist != null) {
-                artistRepository.deleteById(id);
+                artistRepository.deleteById(artist.getArtistSeq());
                 return true;
             }
             return false;

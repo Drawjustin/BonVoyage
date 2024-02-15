@@ -40,7 +40,7 @@ public class AuctionController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<AuctionDto> createAuction(@RequestBody AuctionDto auctionDto) {
+    public ResponseEntity<?> createAuction(@RequestBody AuctionDto auctionDto) {
         try {
             AuctionDto createdAuction = auctionService.createAuction(auctionDto);
             return ResponseEntity.ok(createdAuction);

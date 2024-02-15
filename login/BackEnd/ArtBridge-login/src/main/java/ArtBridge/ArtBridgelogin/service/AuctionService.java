@@ -1,11 +1,7 @@
 package ArtBridge.ArtBridgelogin.service;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
-import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.Auction;
 import ArtBridge.ArtBridgelogin.domain.Item;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
@@ -13,6 +9,7 @@ import ArtBridge.ArtBridgelogin.repository.ItemRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +29,9 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
 
     @Autowired
-    private ItemRepository itemRepository;
+    private EntityManager entityManager;
+
+    private final ItemRepository itemRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -41,23 +40,9 @@ public class AuctionService {
     public AuctionDto createAuction(AuctionDto auctionDto) {
         try {
 
-            Auction auction = new Auction();
-
-            auction.setItem(itemRepository.readBySeq(auctionDto.getItemSeq()));
-            auction.setAuctionScheduledTime(auctionDto.getAuctionScheduledTime());
-            auction.setAuctionStatus(1);
-            auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
-            auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
-
-            //auction_winner
-            //auction_canceled_date
-            //auction_ismiscarried
-            //auction_miscarried_dateD
-            //auction_win_date
-            auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
-            auction.setAuctionCreatedDate(LocalDateTime.now());
-            auction.setAuctionIsMiscarried(true);
-            System.out.println(convertToDto(auction).toString());
+            System.out.println(auctionDto.toString());
+            Auction auction = convertToEntity(auctionDto);
+            System.out.println("에러러러러러");
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create auction", e);
@@ -133,6 +118,7 @@ public class AuctionService {
         auctionRepository.deleteById(seq);
     }
 
+
     private Auction convertToEntity(AuctionDto auctionDto) {
         Auction auction = new Auction();
         auction.setAuctionSessionId(auctionDto.getAuctionSessionId());
@@ -141,12 +127,17 @@ public class AuctionService {
         auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
         auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
         auction.setAuctionCreatedDate(auctionDto.getAuctionCreatedDate());
+        auction.setAuctionSellPoint(auctionDto.getAuctionSellPoint());
+        auction.setAuctionSeq(auctionDto.getAuctionSeq());
+        auction.setAuctionIsMiscarried(auctionDto.getAuctionIsMiscarried());
+        auction.setItem(itemRepository.readBySeq(auctionDto.getItemSeq()));
 
         return auction;
     }
 
     private AuctionDto convertToDto(Auction auction) {
         AuctionDto auctionDto = new AuctionDto();
+        auctionDto.setAuctionSellPoint(auction.getAuctionSellPoint());
         auctionDto.setAuctionSeq(auction.getAuctionSeq());
         auctionDto.setAuctionSessionId(auction.getAuctionSessionId());
         auctionDto.setAuctionScheduledTime(auction.getAuctionScheduledTime());
@@ -155,16 +146,9 @@ public class AuctionService {
         auctionDto.setAuctionAskPoint(auction.getAuctionAskPoint());
         auctionDto.setAuctionCreatedDate(auction.getAuctionCreatedDate());
         auctionDto.setAuctionIsMiscarried(auction.getAuctionIsMiscarried());
-        if (auction.getItem() != null) {
-            ItemDto itemDto = new ItemDto();
-            itemDto.setItemSeq(auction.getItem().getItemSeq());
-            itemDto.setItemName(auction.getItem().getItemName());
-            itemDto.setExplain(auction.getItem().getExplain());
-            itemDto.setItemWidth(auction.getItem().getItemWidth());
-            itemDto.setItemHeight(auction.getItem().getItemHeight());
-            itemDto.setArtistId(auction.getItem().getArtist().getArtistId());
-            auctionDto.setItemSeq(itemDto.getItemSeq());
-        }
+        auctionDto.setItemSeq(auction.getItem().getItemSeq());
+        auctionDto.setAuctionSellPoint(auction.getAuctionSellPoint());
+
         return auctionDto;
     }
 

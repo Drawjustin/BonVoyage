@@ -1,7 +1,9 @@
 package ArtBridge.ArtBridgelogin.controller;
 
 import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
+import ArtBridge.ArtBridgelogin.controller.dto.wish.WishDto;
 import ArtBridge.ArtBridgelogin.controller.form.UserAcessForm;
+import ArtBridge.ArtBridgelogin.domain.Wish;
 import ArtBridge.ArtBridgelogin.service.ItemService;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,19 @@ public class  ItemController {
         try {
             List<ItemDto> items = itemService.readAllItemsSorted(sort);
             return ResponseEntity.ok(items);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
+    }
+
+
+    @PostMapping("/mypage/perchase")
+    public ResponseEntity<?> updateItemstatus(@RequestBody WishDto wishDto) {
+        try {
+            Wish wish = itemService.updateItemStatus(wishDto);
+            return ResponseEntity.ok().body("ok");
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Collections.emptyList());

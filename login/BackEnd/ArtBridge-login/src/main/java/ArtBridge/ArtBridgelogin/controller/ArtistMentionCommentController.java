@@ -17,17 +17,23 @@ public class ArtistMentionCommentController {
 
     private final ArtistMentionCommentService artistMentionCommentService;
 
-    @GetMapping
-    public ResponseEntity<List<ArtistMentionCommentDto>> readAllArtistMentionComments() {
+    // ArtistMention id를 통해 아래에 달려있는 ArtistMentionComment 리스트 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<List<ArtistMentionCommentDto>> readArtistMentionCommentByMentionId(@PathVariable(value = "id") Long id) {
         try {
-            List<ArtistMentionCommentDto> artistMentionComments = artistMentionCommentService.readAllArtistMentionComments();
-            return ResponseEntity.ok(artistMentionComments);
+            List<ArtistMentionCommentDto> artistMentionCommentDtoList = artistMentionCommentService.readArtistMentionCommentByMentionId(id);
+            if (artistMentionCommentDtoList != null) {
+                return ResponseEntity.ok(artistMentionCommentDtoList);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    @GetMapping("/{id}")
+    // ArtistMentionComment id를 통해 단건 댓글 조회
+    @GetMapping("/reply/{id}")
     public ResponseEntity<ArtistMentionCommentDto> readArtistMentionCommentById(@PathVariable(value = "id") Long id) {
         try {
             ArtistMentionCommentDto artistMentionComment = artistMentionCommentService.readArtistMentionCommentById(id);
@@ -41,7 +47,8 @@ public class ArtistMentionCommentController {
         }
     }
 
-    @PostMapping("/new")public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
+    @PostMapping("/new")
+    public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
                 try {
             ArtistMentionCommentDto createdArtistMentionComment = artistMentionCommentService.createArtistMentionComment(artistMentionCommentDto);
 //            System.out.println(createdArtistMentionComment.toString());

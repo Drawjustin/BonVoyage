@@ -1,11 +1,17 @@
 package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
+import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
+import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
+import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
+import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionCommentRepository;
 import ArtBridge.ArtBridgelogin.repository.ArtistMentionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,16 +32,23 @@ public class ArtistMentionCommentService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public List<ArtistMentionCommentDto> readAllArtistMentionComments() {
+    @Autowired
+    private MemberService memberService;
+
+    @Autowired
+    private ArtistMentionService artistMentionService;
+
+    // ArtistMention id를 통해 아래에 달려있는 ArtistMentionComment 리스트 조회
+    public List<ArtistMentionCommentDto> readArtistMentionCommentByMentionId(Long id) {
         try {
-            List<ArtistMentionComment> artistMentionComments = artistMentionCommentRepository.findAll();
+            List<ArtistMentionComment> artistMentionComments = artistMentionCommentRepository.findByMentionId(id);
             return convertEntityListToDtoList(artistMentionComments);
         } catch (Exception e) {
-            // Log the exception or handle it as needed
             throw new RuntimeException("Failed to retrieve artist mention comments.", e);
         }
     }
 
+    // ArtistMentionComment id를 통해 단건 댓글 조회
     public ArtistMentionCommentDto readArtistMentionCommentById(Long id) {
         try {
             Optional<ArtistMentionComment> artistMentionCommentOptional = artistMentionCommentRepository.findById(id);
@@ -49,14 +62,22 @@ public class ArtistMentionCommentService {
     public ArtistMentionCommentDto createArtistMentionComment(ArtistMentionCommentDto commentDto) {
         try {
 
-            System.out.println("check");
+//            System.out.println("check");
             ArtistMentionComment artistMentionComment = new ArtistMentionComment();
 
+            System.out.println(artistMentionRepository.readOne(commentDto.getArtistMentionSeq()).getArtistMentionSeq());
+
             artistMentionComment.setArtistMention(artistMentionRepository.readOne(commentDto.getArtistMentionSeq()));
+
             artistMentionComment.setMember(memberRepository.readMemberById(commentDto.getMemberId()));
+
+            System.out.println(artistMentionComment.getMember().getMemberId());
+            System.out.println(artistMentionComment.getArtistMention().getArtistMentionSeq());
+
             artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
             artistMentionComment.setArtistMentionCommentCreatedDate(LocalDateTime.now());
-            ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.save(artistMentionComment);
+            ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.create(artistMentionComment);
+//            System.out.println(createdArtistMentionComment.getArtistMentionCommentContent());
             return convertEntityToDto(createdArtistMentionComment);
         } catch (Exception e) {
             // Log the exception or handle it as needed
@@ -69,7 +90,7 @@ public class ArtistMentionCommentService {
             Optional<ArtistMentionComment> existingArtistMentionCommentOptional = artistMentionCommentRepository.findById(id);
             return existingArtistMentionCommentOptional.map(existingArtistMentionComment -> {
                 existingArtistMentionComment.setArtistMentionCommentContent(updatedCommentDto.getContent());
-                artistMentionCommentRepository.save(existingArtistMentionComment); // 이 부분이 수정되었습니다.
+                artistMentionCommentRepository.create(existingArtistMentionComment);
                 return convertEntityToDto(existingArtistMentionComment);
             }).orElse(null);
         } catch (Exception e) {
@@ -94,7 +115,9 @@ public class ArtistMentionCommentService {
     private ArtistMentionCommentDto convertEntityToDto(ArtistMentionComment artistMentionComment) {
         ArtistMentionCommentDto commentDto = new ArtistMentionCommentDto();
         commentDto.setContent(artistMentionComment.getArtistMentionCommentContent());
-        // 나머지 필드도 복사해야 함
+        commentDto.setArtistMentionSeq(artistMentionComment.getArtistMention().getArtistMentionSeq());
+        commentDto.setMemberId(artistMentionComment.getMember().getMemberId());
+
         return commentDto;
     }
 
@@ -106,9 +129,34 @@ public class ArtistMentionCommentService {
 
     private ArtistMentionComment convertDtoToEntity(ArtistMentionCommentDto commentDto) {
         ArtistMentionComment artistMentionComment = new ArtistMentionComment();
+        if (commentDto.getArtistMentionSeq() != null && commentDto.getMemberId() != null) {
+            ArtistMentionDto artistMentionDto = artistMentionService.readOne(commentDto.getArtistMentionSeq());
+            MemberDto memberDto = memberService.findMemberById(commentDto.getMemberId());
 
+            ArtistMention artistMention = convertDtoToEntity(artistMentionDto);
+            Member member = convertDtoToEntity(memberDto);
 
-        // 나머지 필드도 복사해야 함
+            artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
+            artistMentionComment.setArtistMention(artistMention);
+            artistMentionComment.setMember(member);
+        }
         return artistMentionComment;
+    }
+
+    private ArtistMention convertDtoToEntity(ArtistMentionDto artistMentionDto) {
+        ArtistMention artistMention = new ArtistMention();
+        BeanUtils.copyProperties(artistMentionDto, artistMention);
+        return artistMention;
+    }
+
+    private Member convertDtoToEntity(MemberDto memberDto) {
+        Member member = new Member();
+        member.setMemberId(memberDto.getMemberId());
+        member.setMemberName(memberDto.getMemberName());
+        member.setMemberPwd(memberDto.getMemberPwd());
+        member.setMemberNickname(memberDto.getMemberNickname());
+        member.setMemberEmail(memberDto.getMemberEmail());
+        member.setMemberContact(memberDto.getMemberContact());
+        return member;
     }
 }

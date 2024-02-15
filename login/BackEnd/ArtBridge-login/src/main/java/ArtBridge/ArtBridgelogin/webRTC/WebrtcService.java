@@ -1,11 +1,11 @@
 package ArtBridge.ArtBridgelogin.webRTC;
 
-import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
-import ArtBridge.ArtBridgelogin.controller.dto.auction.AuctionDto;
-import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-import ArtBridge.ArtBridgelogin.domain.*;
+import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
+import ArtBridge.ArtBridgelogin.domain.Member;
+import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
+import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,23 +22,17 @@ public class WebrtcService {
     @Autowired
     private WebrtcRepository webrtcRepository;
 
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private AuctionRepository auctionRepository;
+
     @Transactional
     public String createBid(Long seq, AuctionPointDetailDto bidRequestDto) {
         try {
-            AuctionPointDetail bidRequest = new AuctionPointDetail();
 
-            Auction auction = new Auction();
-            auction.setAuctionSeq(7);
-            Member member = new Member();
-            member.setMemberSeq(3L);
-            bidRequest.setAuction(auction);
-            bidRequest.setMember(member);
-
-            bidRequest.setAuctionPointDate(bidRequestDto.getAuctionPointDate());
-            bidRequest.setAuctionPointDetailSeq(bidRequestDto.getAuctionPointDetailSeq());
-            bidRequest.setAuctionPointDetailIsWin(bidRequestDto.getAuctionPointDetailIsWin());
-            bidRequest.setAuctionPointDetailPoint(bidRequestDto.getAuctionPointDetailPoint());
-            webrtcRepository.createBid(seq, bidRequest);
+            webrtcRepository.createBid(seq, convertToEntity(bidRequestDto));
             return "sucess";
         }
         catch (Exception e){
@@ -59,8 +53,7 @@ public class WebrtcService {
     @Transactional
     public double readCurrentPrice(Integer seq) {
         try {
-            AuctionPointDetail auctionPointDetail = webrtcRepository.readCurrentPrice(seq);
-            return auctionPointDetail.getAuctionPointDetailPoint();
+            return webrtcRepository.readCurrentPrice(seq).getAuctionPointDetailPoint();
         }
         catch (Exception e){
             return 0;
@@ -79,7 +72,16 @@ public class WebrtcService {
 
 
 
-
+    private AuctionPointDetail convertToEntity(AuctionPointDetailDto auctionPointDetailDto){
+        AuctionPointDetail auctionPointDetail = new AuctionPointDetail();
+        auctionPointDetail.setAuction(auctionRepository.readOne(auctionPointDetailDto.getAuctionSeq()));
+        auctionPointDetail.setMember(memberRepository.readMemberBySeq(auctionPointDetailDto.getMemberSeq()));
+        auctionPointDetail.setAuctionPointDate(auctionPointDetailDto.getAuctionPointDate());
+        auctionPointDetail.setAuctionPointDetailSeq(auctionPointDetailDto.getAuctionPointDetailSeq());
+        auctionPointDetail.setAuctionPointDetailPoint(auctionPointDetailDto.getAuctionPointDetailPoint());
+        auctionPointDetail.setAuctionPointDetailIsWin(auctionPointDetailDto.getAuctionPointDetailIsWin());
+        return auctionPointDetail;
+    }
     private MemberDto convertToDto(Member member) {
         MemberDto memberDto = new MemberDto();
         memberDto.setMemberSeq(member.getMemberSeq());
@@ -103,23 +105,8 @@ public class WebrtcService {
         auctionPointDetailDto.setAuctionPointDetailPoint(auctionPointDetail.getAuctionPointDetailPoint());
         auctionPointDetailDto.setAuctionPointDetailIsWin(auctionPointDetail.getAuctionPointDetailIsWin());
         auctionPointDetailDto.setAuctionPointDate(auctionPointDetail.getAuctionPointDate());
-
-        // Map MemberDto
-        if (auctionPointDetail.getMember() != null) {
-            MemberDto memberDto = new MemberDto();
-            memberDto.setMemberId(auctionPointDetail.getMember().getMemberId());
-            // 이후 필요한 필드들도 여기서 설정해주세요.
-            auctionPointDetailDto.setMember(memberDto);
-        }
-
-        // Map AuctionDto
-        if (auctionPointDetail.getAuction() != null) {
-            AuctionDto auctionDto = new AuctionDto();
-            auctionDto.setAuctionSeq(auctionPointDetail.getAuction().getAuctionSeq());
-            // 이후 필요한 필드들도 여기서 설정해주세요.
-            auctionPointDetailDto.setAuction(auctionDto);
-        }
-
+        auctionPointDetailDto.setAuctionSeq(auctionPointDetail.getAuction().getAuctionSeq());
+        auctionPointDetailDto.setMemberSeq(auctionPointDetail.getMember().getMemberSeq());
         return auctionPointDetailDto;
     }
 

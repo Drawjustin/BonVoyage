@@ -2,17 +2,14 @@ package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.QArtist;
-import ArtBridge.ArtBridgelogin.domain.QItem;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -100,12 +97,10 @@ public class ArtistRepository {
                 .fetchOne();
     }
 
-    public void deleteById(String id) {
-        queryFactory
-                .delete(qArtist)
-                .where(qArtist.artistId.eq(id))
-                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
-                .execute();
+
+    public void deleteById(long artistSeq) {
+        Artist artist = em.find(Artist.class, artistSeq);
+        em.remove(artist);
     }
 
 }
