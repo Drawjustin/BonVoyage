@@ -43,6 +43,12 @@ public class ArtistMentionRepository {
                 .fetch();
     }
 
+    public List<ArtistMention> readAllbyArtist(Long Seq) {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .where(qArtistMention.artist.artistSeq.eq(Seq))
+                .fetch();
+    }
     // 아티스트 멘션 일련번호로 조회 메서드
     public ArtistMention readOne(Long artistMentionId) {
         return queryFactory
@@ -64,4 +70,5 @@ public class ArtistMentionRepository {
                 .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
                 .execute();
     }
+
 }

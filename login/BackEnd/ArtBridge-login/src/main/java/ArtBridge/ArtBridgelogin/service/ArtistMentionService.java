@@ -48,7 +48,20 @@ public class ArtistMentionService {
             throw new MyDataAccessException("Failed to create artist mention", e);
         }
     }
+@Transactional
+    public List<ArtistMentionDto> readAllMentionsByArtist(Long Seq) {
+        try {
+            List<ArtistMention> artistMentions = artistMentionRepository.readAllbyArtist(Seq);
 
+            if (artistMentions.isEmpty()) {
+                throw new NoDataFoundException("No artist mentions found");
+            }
+
+            return convertToDtoList(artistMentions);
+        } catch (DataAccessException e) {
+            throw new MyDataAccessException("Failed to read all artist mentions", e);
+        }
+    }
     // READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public List<ArtistMentionDto> readAllArtistsMention() {
@@ -67,6 +80,7 @@ public class ArtistMentionService {
 
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public ArtistMentionDto readOne(Long id) {
+
         ArtistMention artistMention = artistMentionRepository.readOne(id);
 
         if (artistMention == null) {
@@ -117,6 +131,7 @@ public class ArtistMentionService {
         artistMentionDto.setArtistId(artistMention.getArtist().getArtistId());
         artistMentionDto.setContent(artistMention.getArtistMentionContent());
         artistMentionDto.setSubject(artistMention.getArtistMentionSubject());
+
         System.out.println(artistMentionDto.getContent());
         return artistMentionDto;
     }
@@ -126,4 +141,5 @@ public class ArtistMentionService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
 }

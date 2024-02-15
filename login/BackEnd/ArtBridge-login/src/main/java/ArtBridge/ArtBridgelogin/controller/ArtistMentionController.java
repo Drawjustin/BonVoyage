@@ -18,7 +18,7 @@ public class ArtistMentionController {
 
     private final ArtistMentionService artistMentionService;
 
-    @GetMapping
+    @GetMapping("/{id}/all")
     public ResponseEntity<List<ArtistMentionDto>> readAllArtistMentions() {
         try {
             List<ArtistMentionDto> artistMentions = artistMentionService.readAllArtistsMention();
@@ -27,8 +27,16 @@ public class ArtistMentionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
     @GetMapping("/{id}")
+    public ResponseEntity<List<ArtistMentionDto>> readAllMentionsByArtist(@PathVariable(value = "id") Long id) {
+        try {
+            List<ArtistMentionDto> artistMentions = artistMentionService.readAllMentionsByArtist(id);
+            return ResponseEntity.ok(artistMentions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    @GetMapping("/{id}/one")
     public ResponseEntity<ArtistMentionDto> readArtistMention(@PathVariable(value = "id") Long id) {
         try {
             ArtistMentionDto artistMention = artistMentionService.readOne(id);
