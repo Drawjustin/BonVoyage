@@ -58,7 +58,7 @@ public class  ItemController {
     }
 
     @GetMapping("/{seq}")
-    public ResponseEntity<?> readItemBySeq(@PathVariable int seq) {
+    public ResponseEntity<?> readItemBySeq(@PathVariable(value = "seq") int seq) {
         try {
             ItemDto itemDto = itemService.readItemDtoBySeq(seq);
             return ResponseEntity.ok(itemDto);
@@ -80,7 +80,7 @@ public class  ItemController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateItem(@PathVariable int id, @RequestBody ItemDto updatedItemDto) {
+    public ResponseEntity<?> updateItem(@PathVariable(value = "id") int id, @RequestBody ItemDto updatedItemDto) {
         try {
             ItemDto itemDto = itemService.updateItem(id, updatedItemDto);
             return ResponseEntity.ok(itemDto);
@@ -92,7 +92,7 @@ public class  ItemController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteItem(@PathVariable int id) {
+    public ResponseEntity<?> deleteItem(@PathVariable(value = "id") int id) {
         try {
             itemService.deleteItem(id);
             return ResponseEntity.noContent().build();
