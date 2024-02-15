@@ -54,11 +54,18 @@ public class ArtistHomepageCommentRepository {
         queryFactory
                 .update(qArtistHomepageComment)
                 .where(qArtistHomepageComment.artistHomepageCommentSeq.eq(seq))
-                .set(qArtistHomepageComment.artistHompageCommentContent, updatedComment.getArtistHompageCommentContent())
+                .set(qArtistHomepageComment.artistHomepageCommentContent, updatedComment.getArtistHomepageCommentContent())
                 .execute();
 
         return queryFactory.selectFrom(qArtistHomepageComment)
                 .where(qArtistHomepageComment.artistHomepageCommentSeq.eq(seq))
                 .fetchOne();
+    }
+
+    public List<ArtistHomepageComment> readAlLHomepageCommentByArtist(Long seq) {
+        return queryFactory.selectFrom(qArtistHomepageComment)
+                .where(qArtistHomepageComment.artist.artistSeq.eq(seq))
+                .fetch();
+
     }
 }

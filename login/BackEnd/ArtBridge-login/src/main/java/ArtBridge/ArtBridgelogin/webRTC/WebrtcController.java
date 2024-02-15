@@ -21,12 +21,12 @@ public class WebrtcController {
     WebrtcService webrtcService;
 
     // 입찰
-    @PostMapping("/{seq}/price")
-    public ResponseEntity<?> createBid(@PathVariable("seq") Long seq, @RequestBody AuctionPointDetailDto bidRequest) {
+    @PostMapping("/price")
+    public ResponseEntity<?> createBid(@RequestBody AuctionPointDetailDto bidRequest) {
         try {
-            webrtcService.createBid(seq, bidRequest);
-            return ResponseEntity.ok(Collections.singletonMap("message", "Create Bid successfully."));
-        }catch (Exception e){
+            AuctionPointDetailDto createdDetail = webrtcService.createBid(bidRequest);
+            return ResponseEntity.ok(createdDetail);
+        }catch (Exception e) {
             return new ResponseEntity<>("Create Bid Error", HttpStatus.BAD_REQUEST);
         }
     }

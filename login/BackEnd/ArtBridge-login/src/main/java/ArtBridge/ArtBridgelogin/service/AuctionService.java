@@ -31,8 +31,7 @@ public class AuctionService {
     @Autowired
     private EntityManager entityManager;
 
-    @Autowired
-    private ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -40,7 +39,6 @@ public class AuctionService {
     @Transactional
     public AuctionDto createAuction(AuctionDto auctionDto) {
         try {
-
             Auction auction = convertToEntity(auctionDto);
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
@@ -96,18 +94,18 @@ public class AuctionService {
     }
 
 
-    //Todo: UPDATE
     @Transactional
     public AuctionDto updateAuction(int seq, AuctionDto updatedAuctionDto) {
-        Auction auction = auctionRepository.readOne(seq);
+        Auction existingAuction = auctionRepository.readOne(seq);
 
-        if(auction == null) {
+        if(existingAuction == null) {
             throw new NoDataFoundException("auction을 찾을 수 없습니다.");
         }
-        BeanUtils.copyProperties(updatedAuctionDto, auction, "auctionSeq");
 
-        auctionRepository.updateAuction(seq, auction);
-        return convertToDto(auctionRepository.readOne(seq));
+        BeanUtils.copyProperties(updatedAuctionDto, existingAuction);
+
+        auctionRepository.updateAuction(seq, existingAuction);
+        return convertToDto(existingAuction);
     }
 
 
@@ -126,12 +124,17 @@ public class AuctionService {
         auction.setAuctionStartPoint(auctionDto.getAuctionStartPoint());
         auction.setAuctionAskPoint(auctionDto.getAuctionAskPoint());
         auction.setAuctionCreatedDate(auctionDto.getAuctionCreatedDate());
+        auction.setAuctionSellPoint(auctionDto.getAuctionSellPoint());
+        auction.setAuctionSeq(auctionDto.getAuctionSeq());
+        auction.setAuctionIsMiscarried(auctionDto.getAuctionIsMiscarried());
+        auction.setItem(itemRepository.readBySeq(auctionDto.getItemSeq()));
 
         return auction;
     }
 
     private AuctionDto convertToDto(Auction auction) {
         AuctionDto auctionDto = new AuctionDto();
+        auctionDto.setAuctionSellPoint(auction.getAuctionSellPoint());
         auctionDto.setAuctionSeq(auction.getAuctionSeq());
         auctionDto.setAuctionSessionId(auction.getAuctionSessionId());
         auctionDto.setAuctionScheduledTime(auction.getAuctionScheduledTime());
@@ -140,16 +143,9 @@ public class AuctionService {
         auctionDto.setAuctionAskPoint(auction.getAuctionAskPoint());
         auctionDto.setAuctionCreatedDate(auction.getAuctionCreatedDate());
         auctionDto.setAuctionIsMiscarried(auction.getAuctionIsMiscarried());
-        if (auction.getItem() != null) {
-            ItemDto itemDto = new ItemDto();
-            itemDto.setItemSeq(auction.getItem().getItemSeq());
-            itemDto.setItemName(auction.getItem().getItemName());
-            itemDto.setExplain(auction.getItem().getExplain());
-            itemDto.setItemWidth(auction.getItem().getItemWidth());
-            itemDto.setItemHeight(auction.getItem().getItemHeight());
-            itemDto.setArtistId(auction.getItem().getArtist().getArtistId());
-            auctionDto.setItemSeq(itemDto.getItemSeq());
-        }
+        auctionDto.setItemSeq(auction.getItem().getItemSeq());
+        auctionDto.setAuctionSellPoint(auction.getAuctionSellPoint());
+
         return auctionDto;
     }
 

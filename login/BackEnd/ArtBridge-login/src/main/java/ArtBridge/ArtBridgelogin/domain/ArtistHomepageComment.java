@@ -19,16 +19,16 @@ public class ArtistHomepageComment {
     private Long artistHomepageCommentSeq;
 
     @Column(name = "artist_homepage_comment_content", updatable = false)
-    private String artistHompageCommentContent;
+    private String artistHomepageCommentContent;
 
     @Column(name = "artist_homepage_comment_created_date")
-    private LocalDateTime artistHompageCommentContentCreatedDate;
+    private LocalDateTime artistHomepageCommentContentCreatedDate;
 
     @Column(name = "artist_homepage_comment_isdeleted")
     private boolean artistHomepageCommentIsdeleted;
 
     @Column(name = "artist_homepage_comment_deleted_date")
-    private LocalDateTime artistHompageCommentContentDeletedDate;
+    private LocalDateTime artistHomepageCommentContentDeletedDate;
 
     //    ----------------------------------------------------
 

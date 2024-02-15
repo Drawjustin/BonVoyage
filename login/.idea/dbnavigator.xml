@@ -17,7 +17,11 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055">
+<<<<<<< HEAD
       <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist_homepage_comment auction review]]></console>
+=======
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist;]]></console>
+>>>>>>> 99f65b5867dddcc5b484a04818cb8ebbec750710
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -270,7 +274,6 @@
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>

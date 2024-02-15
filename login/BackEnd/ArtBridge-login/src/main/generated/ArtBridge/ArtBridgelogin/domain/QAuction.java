@@ -38,6 +38,8 @@ public class QAuction extends EntityPathBase<Auction> {
 
     public final DateTimePath<java.time.LocalDateTime> auctionScheduledTime = createDateTime("auctionScheduledTime", java.time.LocalDateTime.class);
 
+    public final NumberPath<Long> auctionSellPoint = createNumber("auctionSellPoint", Long.class);
+
     public final NumberPath<Integer> auctionSeq = createNumber("auctionSeq", Integer.class);
 
     public final StringPath auctionSessionId = createString("auctionSessionId");

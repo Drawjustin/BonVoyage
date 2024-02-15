@@ -52,6 +52,9 @@ public class Auction {
     @Column(name = "auction_session_id")
     private String auctionSessionId;
 
+    @Column(name = "auction_sell_point")
+    private Long auctionSellPoint;
+
     //    ----------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)

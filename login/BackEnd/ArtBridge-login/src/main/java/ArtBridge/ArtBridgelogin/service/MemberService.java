@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
+import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -125,6 +126,19 @@ public class MemberService {
         }
     }
 
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public Member readMemberById(String memberId) {
+
+        Member findMember = memberRepository.readMemberById(memberId);
+
+        if (findMember == null) {
+            throw new NoDataFoundException("ArtistSeq not found for artist with ID: " + memberId);
+        }
+
+
+        return findMember;
+    }
+
     // DELETE
     @Transactional
     public boolean deleteMember(String memberId) {
@@ -152,7 +166,8 @@ public class MemberService {
         member.setMemberNickname(memberDto.getMemberNickname());
         member.setMemberEmail(memberDto.getMemberEmail());
         member.setMemberContact(memberDto.getMemberContact());
-        // 다른 필드들도 필요에 따라 추가
+        member.setMemberCreatedDate(memberDto.getMemberCreatedDate());
+        member.setMemberPoint(memberDto.getMemberPoint());
 
         return member;
     }

@@ -2,16 +2,17 @@ package ArtBridge.ArtBridgelogin.webRTC;
 
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
-import ArtBridge.ArtBridgelogin.domain.Member;
+import ArtBridge.ArtBridgelogin.domain.*;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
+import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -29,14 +30,23 @@ public class WebrtcService {
     private AuctionRepository auctionRepository;
 
     @Transactional
-    public String createBid(Long seq, AuctionPointDetailDto bidRequestDto) {
+    public AuctionPointDetailDto createBid(AuctionPointDetailDto bidRequestDto) {
         try {
+            AuctionPointDetail bidRequest = new AuctionPointDetail();
 
-            webrtcRepository.createBid(seq, convertToEntity(bidRequestDto));
-            return "sucess";
+            Auction auction = auctionRepository.readOne(bidRequestDto.getAuctionSeq());
+            Member member = memberRepository.readMemberBySeq(bidRequestDto.getMemberSeq());
+            bidRequest.setAuction(auction);
+            bidRequest.setMember(member);
+
+            bidRequest.setAuctionPointDate(bidRequestDto.getAuctionPointDate());
+            bidRequest.setAuctionPointDetailSeq(bidRequestDto.getAuctionPointDetailSeq());
+            bidRequest.setAuctionPointDetailIsWin(bidRequestDto.getAuctionPointDetailIsWin());
+            bidRequest.setAuctionPointDetailPoint(bidRequestDto.getAuctionPointDetailPoint());
+            return convertToDto(webrtcRepository.createBid(bidRequest));
         }
         catch (Exception e){
-            return "error";
+            throw new MyDataAccessException("Failed to create bid", e);
         }
     }
 
@@ -80,7 +90,10 @@ public class WebrtcService {
         auctionPointDetail.setAuctionPointDetailSeq(auctionPointDetailDto.getAuctionPointDetailSeq());
         auctionPointDetail.setAuctionPointDetailPoint(auctionPointDetailDto.getAuctionPointDetailPoint());
         auctionPointDetail.setAuctionPointDetailIsWin(auctionPointDetailDto.getAuctionPointDetailIsWin());
+<<<<<<< HEAD
 
+=======
+>>>>>>> 99f65b5867dddcc5b484a04818cb8ebbec750710
         return auctionPointDetail;
     }
     private MemberDto convertToDto(Member member) {

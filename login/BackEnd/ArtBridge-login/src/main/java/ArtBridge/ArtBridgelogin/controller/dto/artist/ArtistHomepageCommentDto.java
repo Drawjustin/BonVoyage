@@ -6,8 +6,8 @@ import lombok.Data;
 public class ArtistHomepageCommentDto {
 
     private Long artistHomepageCommentSeq;
-    private String artistHompageCommentContent;
-    private String memberId;
-    private String artistId;
+    private String artistHomepageCommentContent;
+    private Long memberSeq;
+    private Long artistSeq;
 
 }

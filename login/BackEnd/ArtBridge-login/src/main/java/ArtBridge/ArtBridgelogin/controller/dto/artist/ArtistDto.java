@@ -13,4 +13,5 @@ public class ArtistDto {
     private String nickName;
     private String email;
     private String contact;
+
 }

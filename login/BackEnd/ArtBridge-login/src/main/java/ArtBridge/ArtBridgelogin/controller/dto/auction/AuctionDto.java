@@ -21,9 +21,9 @@ public class AuctionDto {
     private LocalDateTime auctionCanceledDate;
     private Boolean auctionIsMiscarried;
     private LocalDateTime auctionMiscarriedDate;
+    private Long auctionSellPoint;
     private LocalDateTime auctionWinDate;
     private String auctionSessionId;
-
     private Integer itemSeq;
 
 }

@@ -26,10 +26,10 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Autowired
-    private ArtistRepository artistRepository;
+    private ArtistService artistService;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -42,15 +42,16 @@ public class ReviewService {
     public ReviewDto createReview(ReviewDto reviewDto) {
         try {
             Review review = convertToEntity(reviewDto);
-            review.setReviewCreatedDate(LocalDateTime.now());
+
+            review.setMember(memberService.readMemberById(reviewDto.getMemberId()));
+
             review.setReviewContent(reviewDto.getContent());
             review.setReviewVisit(0);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewTitle(reviewDto.getTitle());
-
-            review.setMember(memberRepository.readMemberById(reviewDto.getMemberId()));
-            review.setArtist(artistRepository.readArtistById(reviewDto.getArtistId()));
+            review.setArtist(artistService.readArtistById(reviewDto.getArtistId()));
             review.setItem(0);
+
             Review newReview = reviewRepository.createReview(review);
 
             reviewDto.setSeq(newReview.getReviewSeq());
@@ -71,9 +72,12 @@ public class ReviewService {
                 return Collections.emptyList();
             }
 
+
             return reviews.stream()
                     .map(this::convertToDto)
                     .collect(Collectors.toList());
+
+
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to read all reviews", e);
         }
@@ -120,11 +124,22 @@ public class ReviewService {
     }
 
     private ReviewDto convertToDto(Review review) {
+
         ReviewDto reviewDto = new ReviewDto();
+
+        System.out.println(review.toString());
 
         reviewDto.setSeq(review.getReviewSeq());
         reviewDto.setContent(review.getReviewContent());
-        reviewDto.setTitle(reviewDto.getTitle());
+        reviewDto.setTitle(review.getReviewTitle());
+
+        System.out.println(reviewDto.toString());
+        reviewDto.setMemberId(review.getMember().getMemberId());
+        reviewDto.setArtistId(review.getArtist().getArtistId());
+
+        System.out.println("check");
+
+        System.out.println(reviewDto.toString());
 
         return reviewDto;
     }
