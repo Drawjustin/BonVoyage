@@ -19,9 +19,9 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 // }
 
 const CAROUSEL_IMAGES = [
-  'https://img.freepik.com/free-photo/vivid-blurred-colorful-background_58702-2545.jpg',
-  'https://img.freepik.com/premium-vector/abstract-pastel-color-background-with-pink-purple-gradient-effect-graphic-design-decoration_120819-463.jpg',
-  'https://media.architecturaldigest.com/photos/6080a73d795a7b010f3dd2e0/2:1/w_2700,h_1350,c_limit/GettyImages-1213929929.jpg',
+  'https://villiv.co.kr/data/2022/06/2022-06-27_16-25-25-23218-1656314725.jpg',
+  'https://img.maisonkorea.com/2022/05/msk_6270961acd116.jpg',
+  'https://www.wart.or.kr/main_banner/new-ex-23-04-mo.jpg',
 ]
 
 interface ReviewProp {
@@ -39,7 +39,7 @@ const ReviewPage = () => {
     // Fetch reviews data from the API
     const fetchReviews = async () => {
       try {
-        const response = await axios.get<ReviewProp[]>('https://i10a207.p.ssafy.io/api/Review');
+        const response = await axios.get<ReviewProp[]>('https://i10a207.p.ssafy.io/api/review');
         setReviewsData(response.data);
       } catch (error) {
         console.error("Error fetching reviews:", error);
