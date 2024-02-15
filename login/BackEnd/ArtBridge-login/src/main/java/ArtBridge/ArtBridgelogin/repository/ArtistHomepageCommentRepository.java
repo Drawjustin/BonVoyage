@@ -54,7 +54,7 @@ public class ArtistHomepageCommentRepository {
         queryFactory
                 .update(qArtistHomepageComment)
                 .where(qArtistHomepageComment.artistHomepageCommentSeq.eq(seq))
-                .set(qArtistHomepageComment.artistHompageCommentContent, updatedComment.getArtistHompageCommentContent())
+                .set(qArtistHomepageComment.artistHomepageCommentContent, updatedComment.getArtistHomepageCommentContent())
                 .execute();
 
         return queryFactory.selectFrom(qArtistHomepageComment)

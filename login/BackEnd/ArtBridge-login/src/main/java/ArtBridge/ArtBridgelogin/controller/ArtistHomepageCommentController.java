@@ -25,7 +25,7 @@ public class ArtistHomepageCommentController {
         return ResponseEntity.ok(artistHomepageCommentService.readAllArtistsHomepageComment());
     }
     @GetMapping("/{seq}")
-    public ResponseEntity<List<ArtistHomepageCommentDto>> readAlLHomepageCommentByArtist(Long Seq) {
+    public ResponseEntity<List<ArtistHomepageCommentDto>> readAlLHomepageCommentByArtist(@PathVariable(value = "seq") Long Seq) {
         return ResponseEntity.ok(artistHomepageCommentService.readAlLHomepageCommentByArtist(Seq));
     }
     @GetMapping("/{seq}/one")
@@ -36,7 +36,7 @@ public class ArtistHomepageCommentController {
     @PostMapping("/new")
     public ResponseEntity<?> createArtistHomepageComment(@RequestBody ArtistHomepageCommentDto artistHomepageComment) {
 
-       artistHomepageCommentService.createArtistHomepageComment(artistHomepageComment);
+       artistHomepageCommentService.createArtistHomepageComment (artistHomepageComment);
         return ResponseEntity.ok("artistHomepageComment Create");
     }
 

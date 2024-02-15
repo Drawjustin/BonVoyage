@@ -24,15 +24,15 @@ public class QArtistHomepageComment extends EntityPathBase<ArtistHomepageComment
 
     public final QArtist artist;
 
+    public final StringPath artistHomepageCommentContent = createString("artistHomepageCommentContent");
+
+    public final DateTimePath<java.time.LocalDateTime> artistHomepageCommentContentCreatedDate = createDateTime("artistHomepageCommentContentCreatedDate", java.time.LocalDateTime.class);
+
+    public final DateTimePath<java.time.LocalDateTime> artistHomepageCommentContentDeletedDate = createDateTime("artistHomepageCommentContentDeletedDate", java.time.LocalDateTime.class);
+
     public final BooleanPath artistHomepageCommentIsdeleted = createBoolean("artistHomepageCommentIsdeleted");
 
     public final NumberPath<Long> artistHomepageCommentSeq = createNumber("artistHomepageCommentSeq", Long.class);
-
-    public final StringPath artistHompageCommentContent = createString("artistHompageCommentContent");
-
-    public final DateTimePath<java.time.LocalDateTime> artistHompageCommentContentCreatedDate = createDateTime("artistHompageCommentContentCreatedDate", java.time.LocalDateTime.class);
-
-    public final DateTimePath<java.time.LocalDateTime> artistHompageCommentContentDeletedDate = createDateTime("artistHompageCommentContentDeletedDate", java.time.LocalDateTime.class);
 
     public final QMember member;
 
