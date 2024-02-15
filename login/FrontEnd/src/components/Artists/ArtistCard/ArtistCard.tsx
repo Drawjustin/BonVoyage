@@ -2,10 +2,14 @@ import React from 'react';
 import Image from 'next/image';
 import HeartButton from '../../HeartButton/HeartButton';
 import styles from './ArtistCard.module.scss';
+import { useRouter } from 'next/navigation';
 
-const ArtistCard = ({ data, currentUser }:any) => {
+const ArtistCard = ({ data, currentUser, image }:any) => {
+
+  const Navigate = useRouter();
+
   const handleCardClick = () => {
-    // Add logic for handling card click
+    Navigate.push(`/ArtistHomePage/${data.id}`)
   };
 
   return (
@@ -14,9 +18,8 @@ const ArtistCard = ({ data, currentUser }:any) => {
       className={styles['artist-card']}
     >
       <div className={styles['image-container']}>
-        <Image
-          src={data.imageSrc}
-          fill
+        <img
+          src={image}
           sizes='auto'
           className={styles['product-image']}
           alt="artist"
@@ -33,7 +36,7 @@ const ArtistCard = ({ data, currentUser }:any) => {
       </div>
 
       <div className={styles['artist-details']}>
-        {data.title}
+        {data.name}
       </div>
 
     </div>
