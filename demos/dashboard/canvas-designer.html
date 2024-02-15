@@ -44,6 +44,7 @@
                 style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
             <button id="bidBtn" class="btn btn-primary">입찰
                 100,000</button>
+            <button id="contractBtn" class="btn btn-primary">계약서 확인하러 가기</button>
         </div>
     </div>
 
@@ -130,11 +131,12 @@
         let itemInfo = {};
         let winnerInfo = {};
         let aucSeq = urlParams.get('aucSeq');
+        let afterYN = urlParams.get('after');
 
         //현재 유저와 경매 작가 조회
-        let sessionArtist; // TODO: 경매 참여한 artistID (세션 시작) 이거.. artist를 가져와야 하는데..? -> API 요청함
+        let sessionArtist;
         const currentUserName = connection.extra.userFullName; // 사용자 ID
-        //const currentUserSeq = connectin.extra.seq;
+        let currentUserSeq;
 
         // 현재 최고 호가
         let bidPrice = 0;
@@ -147,6 +149,8 @@
         //URL
         var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/price";
         var getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
+        var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+        var getMemberSeqUrl = "https://i10a207.p.ssafy.io/api/members/" + currentUserName;
 
         // here goes canvas designer
         var designer = new CanvasDesigner();
@@ -246,12 +250,12 @@
 
         //URL 통신
         function updateBidButton() {
-            console.log(bidPrice);
+            console.log("호가 : ", bidPrice);
             document.getElementById('bidBtn').innerHTML = bidPrice + '원';
         }
 
-        // 최신 호가 가져오기
-        var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+        //최신 호가 조회
+        function fetchBidPrice() {
         fetch(getBidPriceUrl)
             .then(response => response.json())
             .then(data => {
@@ -260,7 +264,9 @@
                 // 버튼 업데이트
                 updateBidButton();
             })
-            .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error:', error));
+        }
+
 
         var socket = io();
         var auctionEnded = false;
@@ -281,7 +287,7 @@
 
             if (isEnd) {
                 getBidWinnerName().then(() => {
-                    console.log(winnerInfo);
+                    console.log("이긴 사람은?? " ,winnerInfo);
                     if (sessionArtist === currentUserName || currentUserName === winnerInfo.memberId) { // 작가 혹은 낙찰자인 경우
                         nextSessionBtn.style.display = 'block';
                         returnHomeBtn.style.display = "none";
@@ -309,18 +315,23 @@
         var timeLeft = aucSessionTime;
 
         document.getElementById('bidBtn').addEventListener('click', function () {
+            var now = new Date();
+            var formattedDate = now.getFullYear() + '-' 
+                + (now.getMonth() + 1).toString().padStart(2, '0') + '-' 
+                + now.getDate().toString().padStart(2, '0') + 'T' 
+                + now.getHours().toString().padStart(2, '0') + ':' 
+                + now.getMinutes().toString().padStart(2, '0') + ':' 
+                + now.getSeconds().toString().padStart(2, '0');
+
             var data = {
                 auctionPointDetailPoint: bidPrice,
                 auctionPointDetailIsWin: false,
-                auctionPointDate: new Date().toISOString(),
-                member: {
-                    seq: 1 // TODO: pinia 확인 이후 작성하기
-                },
-                auction: {
-                    seq: auctionInfo.aucSeq
-                }
+                auctionPointDate: formattedDate,
+                memberSeq: currentUserSeq,
+                auctionSeq: aucSeq
             };
 
+            //입찰 전송
             fetch(postBidPriceUrl, {
                 method: 'POST',
                 headers: {
@@ -330,10 +341,8 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log('Success:', data);
-
                     bidPrice = Math.floor(bidPrice + bidPrice * (auctionInfo.auctionAskPoint / 100));
-
+                    console.log("bidPrice " + bidPrice);
                     updateBidButton();
                 })
                 .catch(error => {
@@ -354,9 +363,9 @@
                 timeLeft = data.timeLeft;
                 timer.textContent = data.timeLeft.toString(); // 서버로부터 받은 남은 시간을 화면에 표시
             } else if (data.message === 'auction ended') {
+                getBidWinnerName();
                 showPopup("경매가 종료되었습니다.", aucEndTime, true);
             } else if (data.message === 'bidBtn clicked') {
-                // 팝업을 띄우기
                 showPopup("현재 호가: " + data.price, bidPriceTime, false);
             } else if (data.message === 'session end') {
                 console.log("세션을 종료합니다.");
@@ -372,6 +381,7 @@
                 timer.textContent = timeLeft.toString();
                 if (timeLeft <= 0) {
                     clearInterval(intervalId);
+                    getBidWinnerName();
                     showPopup("경매가 종료되었습니다.", aucEndTime, true);
                 }
             }, 1000);
@@ -445,12 +455,14 @@
             document.getElementById('itemDetailText').innerHTML = text;
         }
 
+        // 낙찰자 찾기
         function getBidWinnerName() {
             var getBidWinnerUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/winner";
 
             return fetch(getBidWinnerUrl)
                 .then(response => response.json())
                 .then(data => {
+                    console.log(data);
                     winnerInfo = data;
                 })
                 .catch(error => console.error('Error:', error));
@@ -458,21 +470,56 @@
 
         // 유저가 누구인지에 따라 버튼 바꾸기
         function updateButtonStatus() {
+            console.log("afterYN" , afterYN);
             let sessionCloseBtn = document.getElementById('sessionCloseBtn');
             var bidBtn = document.getElementById('bidBtn');
+            var contractBtn = document.getElementById('contractBtn');
 
-            if (sessionArtist === currentUserName) { // 작가인 경우
-                sessionCloseBtn.style.display = 'block';
-                bidBtn.style.display = "none";
-            } else { // 일반 회원인 경우
+            //만약 1:1 세션이라면?
+            if(afterYN) {
                 sessionCloseBtn.style.display = 'none';
-                bidBtn.style.display = "block";
+                bidBtn.style.display = 'none';
+                contractBtn.style.display = 'block';
+            } else {
+                if (sessionArtist === currentUserName) { // 작가인 경우
+                    sessionCloseBtn.style.display = 'block';
+                    bidBtn.style.display = "none";
+                    contractBtn.style.display = 'none';
+                } else { // 일반 회원인 경우
+                    sessionCloseBtn.style.display = 'none';
+                    bidBtn.style.display = "block";
+                    contractBtn.style.display = 'none';
+                }
             }
         }
 
+        // MemberSeq 찾기
+        function fetchMemberSeq() {
+            return fetch(getMemberSeqUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // console.log(data);
+                    return data.memberSeq;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
         // 페이지가 로드되면 서버로부터 경매 정보를 받아옴
         window.onload = function () {
-            console.log("params.sessionId : " + params.sessionId);
+            updateButtonStatus();
+            //현재 멤버의 seq를 이름으로 찾기
+            fetchMemberSeq()
+                .then(seq => {
+                    currentUserSeq = seq;
+                    console.log("Member seq: ", currentUserSeq);
+                })
+                .catch(error => console.error(error));
+
             fetchAuctionInfo()
                 .then(itemSeq => {
                     displayAuctionInfo();
@@ -487,10 +534,6 @@
                     console.error('Error:', error); // 에러 처리
                     alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
                 })
-                .finally(() => {
-                    // 유저가 누구인지에 따라 버튼 바꾸기
-                    updateButtonStatus();
-                });
         };
 
         // 리다이렉트
@@ -502,31 +545,36 @@
         });
 
         nextSessionBtn.addEventListener('click', function () {
-            // 다음 세션으로 TODO : createServer 쌔벼오기
-            var sessionId = generateRandomString();
+            // 다음 세션으로 TODO :  generateRandomString() 사용하기
+            var sessionId = "a9x-124-sd9";
             var open;
             if (sessionArtist === currentUserName) { // 작가인 경우
                 open = true;
             } else { // 일반 회원인 경우
                 open = false;
             }
-            window.location.href = 'https://i10a207.p.ssafy.io:9001/demos/dashboard/canvas-designer.html?open=' + open + '&sessionId=' + sessionId + '&userFullName=' + currentUserName;
+            var isAfter = true;
+            window.location.href = 'https://i10a207.p.ssafy.io:8080/demos/dashboard/canvas-designer.html?open=' + open + '&sessionId=' + sessionId + '&userFullName=' + currentUserName + "&aucSeq=" + aucSeq + "&after=" + isAfter;
+        });
+
+        contractBtn.addEventListener('click', function () {
+            window.open('https://i10a207.p.ssafy.io/AuctionContractPage', '_blank');
         });
 
         // sessionId 생성하는 랜덤 함수
-        function generateRandomString() {
-            var characters = '0123456789abcdefghijklmnopqrstuvwxyz';
-            var result = '';
-            for (var i = 0; i < 3; i++) {
-                for (var j = 0; j < 3; j++) {
-                    result += characters.charAt(Math.floor(Math.random() * characters.length));
-                }
-                if (i < 2) {
-                    result += '-';
-                }
-            }
-            return result;
-        }
+        // function generateRandomString() {
+        //     var characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        //     var result = '';
+        //     for (var i = 0; i < 3; i++) {
+        //         for (var j = 0; j < 3; j++) {
+        //             result += characters.charAt(Math.floor(Math.random() * characters.length));
+        //         }
+        //         if (i < 2) {
+        //             result += '-';
+        //         }
+        //     }
+        //     return result;
+        // }
 
         //-------------------------------------------------------------------------------------
         //-------------------------------------------------------------------------------------

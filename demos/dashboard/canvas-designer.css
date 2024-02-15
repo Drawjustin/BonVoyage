@@ -62,6 +62,7 @@ article {
 
 #sessionCloseBtn,
 #bidBtn,
+#contractBtn,
 #btn-chat-message,
 #returnHomeBtn,
 #nextSessionBtn {
@@ -79,6 +80,7 @@ article {
 
 #sessionCloseBtn:hover,
 #bidBtn:hover,
+#contractBtn:hover,
 #btn-chat-message:hover,
 #returnHomeBtn:hover,
 #nextSessionBtn:hover {
