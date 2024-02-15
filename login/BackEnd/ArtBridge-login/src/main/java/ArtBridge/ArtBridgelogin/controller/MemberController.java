@@ -71,7 +71,7 @@ public class MemberController {
         MemberDto memberDto = memberService.updateMember(id, updatedMember);
 
         if (memberDto != null) {
-            return ResponseEntity.ok("Member updated" + memberDto);
+            return ResponseEntity.ok(memberDto);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Member not found with ID: " + id);
         }
