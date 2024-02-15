@@ -24,6 +24,7 @@ public class ArtistHomepageCommentService {
     private ArtistRepository artistRepository;
     @Autowired
     private MemberRepository memberRepository;
+
     //TODO: CRETE
     @Transactional
     public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageCommentDto) {
@@ -49,6 +50,10 @@ public class ArtistHomepageCommentService {
     }
 
 
+    public List<ArtistHomepageCommentDto> readAlLHomepageCommentByArtist(Long Seq) {
+        return convertToDtoList(artistHomepageCommentRepository.readAlLHomepageCommentByArtist(Seq));
+
+    }
     //TODO: READ
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
     public ArtistHomepageCommentDto readOne(Long seq) {
@@ -97,4 +102,5 @@ public class ArtistHomepageCommentService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
+
 }

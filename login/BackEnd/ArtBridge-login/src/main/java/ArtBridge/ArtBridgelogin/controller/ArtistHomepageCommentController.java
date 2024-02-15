@@ -24,8 +24,11 @@ public class ArtistHomepageCommentController {
     public ResponseEntity<List<ArtistHomepageCommentDto>> readAlLArtistHomepageComment() {
         return ResponseEntity.ok(artistHomepageCommentService.readAllArtistsHomepageComment());
     }
-
     @GetMapping("/{seq}")
+    public ResponseEntity<List<ArtistHomepageCommentDto>> readAlLHomepageCommentByArtist(Long Seq) {
+        return ResponseEntity.ok(artistHomepageCommentService.readAlLHomepageCommentByArtist(Seq));
+    }
+    @GetMapping("/{seq}/one")
     public ResponseEntity<?> readArtistMentionById(@PathVariable(value = "seq") Long seq) {
         return ResponseEntity.ok(artistHomepageCommentService.readOne(seq));
     }
