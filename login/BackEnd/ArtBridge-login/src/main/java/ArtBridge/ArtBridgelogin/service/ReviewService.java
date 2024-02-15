@@ -26,10 +26,10 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Autowired
-    private ArtistRepository artistRepository;
+    private ArtistService artistService;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -42,15 +42,16 @@ public class ReviewService {
     public ReviewDto createReview(ReviewDto reviewDto) {
         try {
             Review review = convertToEntity(reviewDto);
-            review.setReviewCreatedDate(LocalDateTime.now());
+
+            review.setMember(memberService.readMemberById(reviewDto.getMemberId()));
+
             review.setReviewContent(reviewDto.getContent());
             review.setReviewVisit(0);
             review.setReviewCreatedDate(LocalDateTime.now());
             review.setReviewTitle(reviewDto.getTitle());
-
-            review.setMember(memberRepository.readMemberById(reviewDto.getMemberId()));
-            review.setArtist(artistRepository.readArtistById(reviewDto.getArtistId()));
+            review.setArtist(artistService.readArtistById(reviewDto.getArtistId()));
             review.setItem(0);
+
             Review newReview = reviewRepository.createReview(review);
 
             reviewDto.setSeq(newReview.getReviewSeq());

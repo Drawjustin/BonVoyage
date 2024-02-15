@@ -52,8 +52,6 @@ public class ReviewController {
         try {
             ReviewDto createdReview = reviewService.createReview(reviewDto);
 
-            System.out.println(createdReview.toString());
-
             return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while processing the request.");

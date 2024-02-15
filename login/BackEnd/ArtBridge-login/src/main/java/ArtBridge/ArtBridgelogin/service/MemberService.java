@@ -2,6 +2,7 @@ package ArtBridge.ArtBridgelogin.service;
 
 import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
+import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -123,6 +124,19 @@ public class MemberService {
             // 데이터베이스 예외가 발생한 경우 처리
             throw new MyDataAccessException("Failed to update member", e);
         }
+    }
+
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public Member readMemberById(String memberId) {
+
+        Member findMember = memberRepository.readMemberById(memberId);
+
+        if (findMember == null) {
+            throw new NoDataFoundException("ArtistSeq not found for artist with ID: " + memberId);
+        }
+
+
+        return findMember;
     }
 
     // DELETE

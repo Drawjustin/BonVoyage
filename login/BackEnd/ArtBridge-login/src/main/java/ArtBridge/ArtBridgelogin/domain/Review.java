@@ -30,7 +30,7 @@ public class Review {
     @Column(name = "review_created_date", nullable = false)
     private LocalDateTime reviewCreatedDate;
 
-    @Column(name = "item_seq", nullable = true)
+    @Column(name = "item_seq")
     private int item;
     //    ----------------------------------------------------
 

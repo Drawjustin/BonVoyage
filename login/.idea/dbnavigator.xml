@@ -17,16 +17,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055">
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist_homepage_comment]]></console>
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from review;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="f094f3fc-1efa-4ffc-8c9c-7a74f6d1a055" />
@@ -272,7 +270,6 @@
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
-          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>

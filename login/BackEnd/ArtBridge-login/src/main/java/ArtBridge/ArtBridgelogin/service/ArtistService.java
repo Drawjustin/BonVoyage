@@ -3,7 +3,7 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.controller.dto.LoginReturnForm;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistDto;
 import ArtBridge.ArtBridgelogin.domain.Artist;
-import ArtBridge.ArtBridgelogin.repository.ArtistRepository;
+import ArtBridge.ArtBridgelogin.repository.*;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import ArtBridge.ArtBridgelogin.service.errorMessage.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +23,21 @@ public class ArtistService {
 
     @Autowired
     private ArtistRepository artistRepository;
+
+    @Autowired
+    private ArtistMentionRepository artistMentionRepository;
+
+    @Autowired
+    private ArtistHomepageCommentRepository artistHomepageCommentRepository;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     // CREATE
     @Transactional
@@ -33,10 +49,35 @@ public class ArtistService {
                 throw new IllegalStateException("이미 존재하는 회원입니다.");
             }
             // ArtistDto를 Entity로 변환
-            Artist artist = convertToEntity(artistDto);
+            Artist artist = new Artist();
+
+            artist.setArtistId(artistDto.getId());
+            artist.setArtistPwd(artistDto.getPw());
+            artist.setArtistName(artistDto.getName());
+            artist.setArtistNickname(artistDto.getNickName());
+            artist.setArtistEmail(artistDto.getEmail());
+            artist.setArtistContact(artistDto.getContact());
+            artist.setArtistPoint(0L);
+            artist.setArtistHistory(artistDto.getEmail());
+            artist.setArtistIsdeleted(false);
+            // ArtistDeletedDate
+            artist.setArtistCreatedDate(LocalDateTime.now());
+
+            artist.setArtistMentions(artistMentionRepository.readAll());
+            artist.setOrderDetails(orderDetailRepository.readAll());
+            artist.setArtistHomepageComments(artistHomepageCommentRepository.readAll());
+            artist.setItems(itemRepository.readAll());
+            artist.setReviews(reviewRepository.readAll());
 
             // 생성된 Artist를 저장하고 반환
-            return convertToDto(artistRepository.create(artist));
+            Artist newArtist = artistRepository.create(artist);
+
+            artistDto.setSeq(newArtist.getArtistSeq());
+
+            System.out.println(artistDto.toString());
+
+            return artistDto;
+
         } catch (DataAccessException e) {
             // 데이터베이스 예외가 발생한 경우 처리
             throw new MyDataAccessException("Failed to create artist", e);
