@@ -39,10 +39,7 @@ public class AuctionService {
     @Transactional
     public AuctionDto createAuction(AuctionDto auctionDto) {
         try {
-
-            System.out.println(auctionDto.toString());
             Auction auction = convertToEntity(auctionDto);
-            System.out.println("에러러러러러");
             return convertToDto(auctionRepository.create(auction));
         } catch (DataAccessException e) {
             throw new MyDataAccessException("Failed to create auction", e);
@@ -97,18 +94,18 @@ public class AuctionService {
     }
 
 
-    //Todo: UPDATE
     @Transactional
     public AuctionDto updateAuction(int seq, AuctionDto updatedAuctionDto) {
-        Auction auction = auctionRepository.readOne(seq);
+        Auction existingAuction = auctionRepository.readOne(seq);
 
-        if(auction == null) {
+        if(existingAuction == null) {
             throw new NoDataFoundException("auction을 찾을 수 없습니다.");
         }
-        BeanUtils.copyProperties(updatedAuctionDto, auction, "auctionSeq");
 
-        auctionRepository.updateAuction(seq, auction);
-        return convertToDto(auctionRepository.readOne(seq));
+        BeanUtils.copyProperties(updatedAuctionDto, existingAuction);
+
+        auctionRepository.updateAuction(seq, existingAuction);
+        return convertToDto(existingAuction);
     }
 
 
