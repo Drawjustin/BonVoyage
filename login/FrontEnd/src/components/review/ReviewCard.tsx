@@ -8,6 +8,14 @@ import { fromNow } from '@/helpers/dayjs';
 import styles from './ReviewCard.module.scss'
 
 
+const ReviewList = [
+  'https://image.chosun.com/sitedata/image/201702/20/2017022002398_0.jpg',
+  'https://photo.akmall.com/image4/goods/38/18/43/19/138184319_01_350.jpg',
+  'https://m.wart.co.kr/file_data/weart22/2022/08/01/b912e893198453807ef53d8c9b8125b4.jpg',
+  'https://media.bunjang.co.kr/product/222196100_1_1682414243_w360.jpg',
+  'https://contents.lotteon.com/itemimage/20231221131505/LO/20/85/85/14/86/_2/08/58/51/48/7/LO2085851486_2085851487_1.jpg/dims/resizef/720X720',
+];
+
 const ReviewCard = ({ data, currentUser, image }: any) => {
   
   const [ReviewDetail, setReviewDetail] = useState(null);
@@ -42,7 +50,7 @@ const ReviewCard = ({ data, currentUser, image }: any) => {
         <div className={styles.card2}>
             <div className={styles.template}>
                 <img
-                    src={image}
+                    src={ReviewList[(data.itemSeq)%4]}
                     sizes='auto'
                     className={styles.Image}
                     alt="Review"

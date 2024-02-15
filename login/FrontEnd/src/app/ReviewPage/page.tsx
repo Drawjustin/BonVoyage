@@ -58,9 +58,9 @@ const ReviewPage = () => {
       {reviewsData.length === 0 ? (
         <EmptyState showReset />
       ) : (
-        <div className={styles.Cards}>
+        <div className={styles.Cards} style={{ marginLeft: '26vh', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', justifyContent: 'center' }}>
           {reviewsData.map((review) => (
-            <ReviewCard currentUser={currentUser} key={review.reviewSeq} data={review} />
+            <ReviewCard currentUser={currentUser} key={review.reviewSeq} data={review} className={styles.ReviewCard} />
           ))}
         </div>
       )}</div>
