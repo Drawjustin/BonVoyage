@@ -24,19 +24,6 @@ public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
 
-    @Autowired
-<<<<<<< HEAD
-    private ArtistMentionService artistMentionService;
-
-    @Autowired
-    private ArtistHomepageCommentService artistHomepageCommentService;
-
-    @Autowired
-    private OrderDetailService orderDetailService;
-
-    @Autowired
-    private ReviewService reviewService;
-=======
     private ArtistMentionRepository artistMentionRepository;
 
     @Autowired
@@ -50,7 +37,6 @@ public class ArtistService {
 
     @Autowired
     private ReviewRepository reviewRepository;
->>>>>>> 99f65b5867dddcc5b484a04818cb8ebbec750710
 
     // CREATE
     @Transactional
@@ -220,7 +206,7 @@ public class ArtistService {
         //artistCreatedDate;
 //        artist.setArtistMentions(artistMentionService.readAllArtistsMention());
 //        artist.setArtistHomepageComments(artistHomepageCommentService.readAllArtistsHomepageComment());
-        artist.setOrderDetails(orderDetailService.readAllAOrderDetail());
+//        artist.setOrderDetails(OrderDetailService.readAllAOrderDetail());
 //        artist.setItems(itemService.readAllItems());
 //        artist.setReviews(reviewService.readAllReviews());
 

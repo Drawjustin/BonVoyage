@@ -2,7 +2,9 @@ package ArtBridge.ArtBridgelogin.webRTC;
 
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-import ArtBridge.ArtBridgelogin.domain.*;
+import ArtBridge.ArtBridgelogin.domain.Auction;
+import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
+import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -12,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -90,10 +91,7 @@ public class WebrtcService {
         auctionPointDetail.setAuctionPointDetailSeq(auctionPointDetailDto.getAuctionPointDetailSeq());
         auctionPointDetail.setAuctionPointDetailPoint(auctionPointDetailDto.getAuctionPointDetailPoint());
         auctionPointDetail.setAuctionPointDetailIsWin(auctionPointDetailDto.getAuctionPointDetailIsWin());
-<<<<<<< HEAD
 
-=======
->>>>>>> 99f65b5867dddcc5b484a04818cb8ebbec750710
         return auctionPointDetail;
     }
     private MemberDto convertToDto(Member member) {

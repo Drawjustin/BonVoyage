@@ -12,16 +12,12 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="false" />
+    <show-object-properties value="true" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="ce63e907-f078-485d-9e37-4881e5010ff5">
-<<<<<<< HEAD
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist]]></console>
-=======
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from auction]]></console>
->>>>>>> 99f65b5867dddcc5b484a04818cb8ebbec750710
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -35,26 +31,12 @@
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="ce63e907-f078-485d-9e37-4881e5010ff5" />
   </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="ffdc3a82-0d6e-433b-bfc7-c4c411fa9a46" dataset="artbridge.artist" active-filter-id="" />
-  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.MethodExecutionManager">
-    <method-browser />
-    <execution-history>
-      <group-entries value="true" />
-      <execution-inputs />
-    </execution-history>
-    <argument-values-cache />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
     <filters />
-  </component>
-  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -284,6 +266,7 @@
           <content-type name="JSON" enabled="true" />
           <content-type name="JSON5" enabled="true" />
           <content-type name="Groovy" enabled="true" />
+          <content-type name="AIDL" enabled="true" />
           <content-type name="YAML" enabled="true" />
           <content-type name="Manifest" enabled="true" />
         </content-types>
