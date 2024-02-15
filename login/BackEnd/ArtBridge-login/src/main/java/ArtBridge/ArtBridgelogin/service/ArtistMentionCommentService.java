@@ -3,7 +3,6 @@ package ArtBridge.ArtBridgelogin.service;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionCommentDto;
 import ArtBridge.ArtBridgelogin.controller.dto.artist.ArtistMentionDto;
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
-import ArtBridge.ArtBridgelogin.domain.Artist;
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
 import ArtBridge.ArtBridgelogin.domain.ArtistMentionComment;
 import ArtBridge.ArtBridgelogin.domain.Member;
@@ -62,23 +61,19 @@ public class ArtistMentionCommentService {
     public ArtistMentionCommentDto createArtistMentionComment(ArtistMentionCommentDto commentDto) {
         try {
 
-//            System.out.println("check");
             ArtistMentionComment artistMentionComment = new ArtistMentionComment();
 
-            System.out.println(artistMentionRepository.readOne(commentDto.getArtistMentionSeq()).getArtistMentionSeq());
-
-            artistMentionComment.setArtistMention(artistMentionRepository.readOne(commentDto.getArtistMentionSeq()));
-
-            artistMentionComment.setMember(memberRepository.readMemberById(commentDto.getMemberId()));
-
-            System.out.println(artistMentionComment.getMember().getMemberId());
-            System.out.println(artistMentionComment.getArtistMention().getArtistMentionSeq());
-
             artistMentionComment.setArtistMentionCommentContent(commentDto.getContent());
+            // artistMentionCommentIsdeleted;
             artistMentionComment.setArtistMentionCommentCreatedDate(LocalDateTime.now());
-            ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.create(artistMentionComment);
-//            System.out.println(createdArtistMentionComment.getArtistMentionCommentContent());
-            return convertEntityToDto(createdArtistMentionComment);
+            artistMentionComment.setMember(memberRepository.readMemberById(commentDto.getMemberId()));
+            artistMentionComment.setArtistMention(null);
+
+//            ArtistMentionComment createdArtistMentionComment = artistMentionCommentRepository.create(artistMentionComment);
+
+            System.out.println("check");
+
+            return commentDto;
         } catch (Exception e) {
             // Log the exception or handle it as needed
             throw new RuntimeException("Failed to create artist mention comment.", e);

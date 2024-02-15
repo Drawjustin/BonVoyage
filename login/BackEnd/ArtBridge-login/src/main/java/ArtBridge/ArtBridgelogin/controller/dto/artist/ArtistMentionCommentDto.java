@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 @Data
 public class    ArtistMentionCommentDto {
+
     private String content;
 
     private Long artistMentionSeq;
