@@ -60,6 +60,10 @@ const Navbar: React.FC = () => {
                 </Link>
               </li>
             ))}
+          <div style={{ right: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', position: 'absolute', bottom: '30px', marginLeft: '15px', color: '#f1efee', fontSize: '13px' }}>
+              <p>Made by. A207</p>
+              <p>이동훈 김성욱 김아린 박수민 유현종 이윤정</p>
+          </div>
           </ul>
         </nav>
 
