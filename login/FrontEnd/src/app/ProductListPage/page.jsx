@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext } from 'react';
+import React from 'react';
 import { IconContext } from 'react-icons';
 import ProductPagination from './ProductPagination';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,7 @@ import getCurrentUser from '../actions/getCurrentUser';
 
 const ProductContext = React.createContext();
 
-async function ProductListPage() {
+const ProductListPage = () =>{
   const router = useRouter();
   
   const backend_url = 'https://i10a207.p.ssafy.io/api/item';

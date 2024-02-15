@@ -53,9 +53,8 @@ const Underline = styled('ul')({
 });
 
 export const ButtonContainer = () => {
-
+  const navigate = useRouter();
   const session = getCurrentUser();
-
   const buttonList = [];
 
   if (!session) {
@@ -72,7 +71,6 @@ export const ButtonContainer = () => {
   }
   
   const [selected, setSelected] = useState('');
-  const navigate = useRouter();
 
   const buttonHandler = (item) => {
     setSelected(item.text);

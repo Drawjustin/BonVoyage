@@ -42,7 +42,7 @@
 
       li {
         flex: none;
-        object-fit: contain;
+        overflow: hidden;
       }
     }
   }
@@ -60,9 +60,10 @@
     transition: border 300ms;
 
     img {
-      flex-shrink: 0;
-      min-width: 100%;
-      min-height: 100%;
+        width: 100%;
+        height: 110%;
+        object-fit: cover;
+        border: #444 solid 1px;
     }
   }
 

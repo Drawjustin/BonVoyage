@@ -6,7 +6,7 @@ import ToastProvider from '@/components/ToastProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/footer/Footer';
-
+import StoreProvider from './StoreProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
@@ -27,8 +27,9 @@ export default async function RootLayout({children})
           <body>
             <main>
                     <ToastProvider />
+              <StoreProvider>
                         <Navbar/>
-                        {children}
+                        {children}</StoreProvider>
             </main>
             <Footer />
           </body>

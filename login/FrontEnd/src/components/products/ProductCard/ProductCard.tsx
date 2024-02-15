@@ -7,21 +7,25 @@ import styles from './ProductCard.module.scss';
 import Link from 'next/link';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-
+import { ImageList } from '@/constants';
 
 // get 요청
 
-const ProductCard = ({ data, currentUser }:any) => {
+const ProductCard = ({ data, currentUser, image }:any) => {
+
 
   const [ProductDetail, setProductDetail] = useState(null);
   const router = useRouter();
 
+  
   useEffect(() => {
     const fetchProductDetail = async () => {
       try {
         console.log(data.itemSeq);
-        const response = await axios.get(`https://i10a207.p.ssafy.io/api/item/{${data.itemSeq}}`);
+        const response = await axios.get(`https://i10a207.p.ssafy.io/api/item/${data.itemSeq}`);
         setProductDetail(response.data);
+
+        localStorage.setItem('productDetail', JSON.stringify(response.data));
       } catch (error) {
         console.error('Error fetching product details:', error);
       }
@@ -30,11 +34,10 @@ const ProductCard = ({ data, currentUser }:any) => {
     fetchProductDetail();
   }, [data.itemSeq]);
 
+
   const handleCardClick = () => {
     // Add logic for handling card click
-    const router = useRouter()
-
-    router.push(`/${data.itemSeq}/ProductDetailPage`);
+    router.push(`/ProductDetailPage/${data.itemSeq}`);
   };
 
   return (
@@ -43,9 +46,8 @@ const ProductCard = ({ data, currentUser }:any) => {
       className={styles['product-card']}
     >
       <div className={styles['image-container']}>
-        <Image
-          src={data.image}
-          fill
+        <img
+          src={image}
           sizes='auto'
           className={styles['product-image']}
           alt="product"

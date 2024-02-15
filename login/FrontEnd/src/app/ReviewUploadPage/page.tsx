@@ -36,7 +36,7 @@ const ReviewUploadPage = () => {
     reset
   } = useForm<FieldValues>({
     defaultValues: {
-      itemSeq: '',
+      itemName: '',
       artist: '',
       member: '',
       title: '',
@@ -58,18 +58,21 @@ const ReviewUploadPage = () => {
     try {
       if (isArtist) {
         const  ReviewUploadData = {
-          "memberId": data.member,
-          "reviewTitle": data.title,
-          "reviewContent": data.description,
-          "artistId": data.artist,
+          // "memberId": data.member,
+          "itemSeq" : '123',
+          "memberId": 'hhh',
+          "title": data.title,
+          "content": data.description,
+          // "artistId": data.artist,
+          "artistId": 'hhh',
         }
-  
+        
         const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
           headers: {
             'Content-Type': 'application/json;charset=UTF-8',
           },
         }).then(response => {
-
+          
           if (response.data !== 'fail') {
             console.log('success :', response.data);
             navigate.push('/ReviewPage');
@@ -82,10 +85,14 @@ const ReviewUploadPage = () => {
       } 
       else {
         const ReviewUploadData = {
-          "memberId": data.member,
-          "reviewTitle": data.title,
-          "reviewContent": data.description,
-          "artistId": data.artist,
+          // "memberId": data.member,
+          "memberId": 'hhh',
+          "itemSeq" : '123',
+          "title": data.title,
+          "content": data.description,
+          // "artistId": data.artist,
+          "artistId": 'hhh',
+
         }
         
         const response = await axios.post(`${backendUrl}/new`, ReviewUploadData, {
