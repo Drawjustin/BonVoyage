@@ -46,7 +46,8 @@ const AuctionUploadPage = () => {
       imageSrc: '',
       size: '',
       date: '',
-      price: ''
+      price: '',
+      askpoint: '',
     }
   });
 
@@ -69,19 +70,20 @@ const AuctionUploadPage = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
     const ID = generateRandomString();
-    data = {
-        auctionName:data.title,
-        auctionWidth:230,
-        auctionHeight:460,
-        auctionLike:0,
-        auctionSellPrice:data.price,
+    const toSend = {
+        auctionStartPoint:Number(data.price),
+        auctionAskPoint:Number(data.askpoint),
         auctionIsSold:false,
         auctionCreatedDate: dayjs(),
         auctionSessionId:ID,
+        auctionScheduledTime:dayjs(selectedDate),
+        auctionIsMiscarried:false,
+        auctionStatus:1,
+        itemSeq:12
     }
-    
+    console.log(toSend);
     try {
-      const response = await axios.post('https://i10a207.p.ssafy.io/api/auction/new', data, {
+      const response = await axios.post('https://i10a207.p.ssafy.io/api/auction/new', toSend, {
         headers: {
           'Content-Type': 'application/json;charset=UTF-8'
         },
@@ -176,6 +178,18 @@ const AuctionUploadPage = () => {
               /> 
           </div>
           <div>
+          <div>
+            <div>경매 호가</div>
+            <input
+              id="askpoint"
+              placeholder="경매 호가를 입력하세요."
+              disabled={isLoading || Object.keys(errors).length > 0}
+              {...register('askpoint', { required: true })}
+              // 필요한 경우 추가 속성이나 이벤트 핸들러를 추가합니다
+              style={{ width: '100%', padding: '10px', marginBottom: '15px', boxSizing: 'border-box', borderRadius: '8px', border: 'solid 1px #171de5' }}
+              /> 
+          </div>
+          <div></div>
             <button className={styles.btn}>작품 등록</button>
           </div>
         </form>

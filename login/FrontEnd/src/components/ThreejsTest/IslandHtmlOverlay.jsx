@@ -3,6 +3,8 @@ import styles from "./IslandHtmlOverlay.module.scss";
 import { Link } from "react-router-dom";
 import { useRouter } from 'next/navigation';
 import Img1 from "./img/review.png"
+import Img2 from "./img/product.png"
+import Img3 from "./img/auction.png"
 import Img4 from "./img/artist.png"
 
 const IslandHtmlOverlay = ({ selectedIsland } ) => {
@@ -58,7 +60,7 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
           <div className={styles.card}>
             <div className={styles.icon_container}>
               <div className={styles.icon}>
-                <img src={Img1} alt="Review" />
+                <img src={Img2} alt="Product" className={styles.img2}/>
               </div>
             </div>
           <div className={styles.title}>판매 작품</div>
@@ -73,7 +75,7 @@ const IslandHtmlOverlay = ({ selectedIsland } ) => {
           <div className={styles.card}>
             <div className={styles.icon_container}>
               <div className={styles.icon}>
-                <img src={Img1} alt="Review" />
+                <img src={Img3} alt="Auction" className={styles.img3}/>
               </div>
             </div>
           <div className={styles.title}>경매 작품</div>
