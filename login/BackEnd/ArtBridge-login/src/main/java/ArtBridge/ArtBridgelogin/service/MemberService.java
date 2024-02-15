@@ -166,7 +166,8 @@ public class MemberService {
         member.setMemberNickname(memberDto.getMemberNickname());
         member.setMemberEmail(memberDto.getMemberEmail());
         member.setMemberContact(memberDto.getMemberContact());
-        // 다른 필드들도 필요에 따라 추가
+        member.setMemberCreatedDate(memberDto.getMemberCreatedDate());
+        member.setMemberPoint(memberDto.getMemberPoint());
 
         return member;
     }
