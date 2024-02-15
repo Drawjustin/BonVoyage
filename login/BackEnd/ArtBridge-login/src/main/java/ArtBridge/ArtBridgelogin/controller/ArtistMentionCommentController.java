@@ -50,8 +50,8 @@ public class ArtistMentionCommentController {
     @PostMapping("/new")
     public ResponseEntity<ArtistMentionCommentDto> createArtistMentionComment(@RequestBody ArtistMentionCommentDto artistMentionCommentDto) {
                 try {
-            ArtistMentionCommentDto createdArtistMentionComment = artistMentionCommentService.createArtistMentionComment(artistMentionCommentDto);
-//            System.out.println(createdArtistMentionComment.toString());
+                    System.out.println(artistMentionCommentDto.toString());
+                    ArtistMentionCommentDto createdArtistMentionComment = artistMentionCommentService.createArtistMentionComment(artistMentionCommentDto);
             return ResponseEntity.ok(createdArtistMentionComment);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
