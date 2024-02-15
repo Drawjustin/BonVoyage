@@ -127,19 +127,13 @@ public class ReviewService {
 
         ReviewDto reviewDto = new ReviewDto();
 
-        System.out.println(review.toString());
 
         reviewDto.setSeq(review.getReviewSeq());
-        reviewDto.setContent(review.getReviewContent());
         reviewDto.setTitle(review.getReviewTitle());
-
-        System.out.println(reviewDto.toString());
-        reviewDto.setMemberId(review.getMember().getMemberId());
-        reviewDto.setArtistId(review.getArtist().getArtistId());
-
-        System.out.println("check");
-
-        System.out.println(reviewDto.toString());
+        reviewDto.setContent(review.getReviewContent());
+        reviewDto.setMemberId("이동훈");
+        reviewDto.setArtistId("김태수");
+        reviewDto.setItemSeq(review.getItem());
 
         return reviewDto;
     }

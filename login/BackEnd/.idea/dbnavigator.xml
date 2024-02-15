@@ -17,7 +17,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="ce63e907-f078-485d-9e37-4881e5010ff5">
-      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from artist;]]></console>
+      <console name="Connection" type="STANDARD" schema="artbridge" session="Main"><![CDATA[select * from member;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
