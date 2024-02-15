@@ -16,42 +16,153 @@
 
 <!-- 필수 항목 -->
 
-## 프로젝트 소개
+# Project : Bon Voyage
 
-* 프로젝트명: 그룹 비디오 컨퍼런스 서비스
-* 서비스 특징: 웹/모바일(웹 기술) 프로젝트를 위한 스켈레톤 프로젝트
-* 주요 기능
-    - 회원 관리
-    - 화상 미팅룸
-    - 그룹 채팅
-* 주요 기술
-    - WebRTC
-    - WebSocket
-    - JWT Authentication
-    - REST API
-* 참조 리소스
-    * Vuetify: 디자인 전반 적용
-    * Vue Argon Design System: 디자인 전반 적용
-    * Vue Black Dashboard Pro(유료): 캘린더 컴포넌트 사용
-    * AR Core: 구글에서 제공하는 AR 지원 라이브러리. 이미지 인식 및 오버레이 영상에 활용
-    * Color Thief: 이미지 색상 추출 라이브러리. 커버 사진 색상 추출 및 배경 변경에 활용
-    * Animation.css: CSS 애니메이션 지원 라이브러리. 메인 페이지 진입 애니메이션에 활용
-* 배포 환경
-    - URL: // 웹 서비스, 랜딩 페이지, 프로젝트 소개 등의 배포 URL 기입
-    - 테스트 계정: // 로그인이 필요한 경우, 사용 가능한 테스트 계정(ID/PW) 기입
+## [홈 페이지 바로가기](https://i10a207.p.ssafy.io)
 
-<!-- 자유 양식 -->
+Test용 ID/PW : dfddf0 / 123456
 
-## 팀 소개
-* 이동훈: 팀장, 백엔드 총괄
-* 김아린: 백엔드, jira관리
-* 유현종: 백엔드, git관리
-* 김성욱: 부팀장, 프론트엔드 총괄
-* 이윤정: 프론트엔드
-* 박수민: 프론트엔드
+## Roles
 
-<!-- 자유 양식 -->
+### Team Leader : 이동훈
+### FE : 김성욱, 박수민, 이윤정
+### BE : 이동훈, 김아린, 유현종
+### Infra : 유현종, 김아린
+### WebRTC : 김아린(FE), 유현종(BE)
 
-## 프로젝트 상세 설명
+<br/>
 
-// 개발 환경, 기술 스택, 시스템 구성도, ERD, 기능 상세 설명 등
+## Used Stacks
+
+### FE : React, Next.js, Three.js
+### BE : Java, Spring boot, MySQL
+### Infra : Jenkins, Docker, AWS, NGINX
+### Project Manage : JIRA, GitLab
+### Addtional Stack : WebRTC
+
+<br/>
+
+## View and Functions
+
+### 메인 화면
+
+![Main View](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/Maingif.gif)
+
+
+<br/>
+
+### 회원 가입 화면
+
+![선택](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/SellListgif.gif)
+
+가입자 선택화면
+
+<br/>
+
+![작가 가입](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/ArtistSignin.png)
+
+작가 회원가입 입력화면
+
+<br/>
+
+![멤버 가입](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/MemberSignin.png)
+
+일반 회원가입 입력화면
+
+<br/>
+
+### 경매 참여
+
+![Auction Join](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/AuctionJoingif.gif)
+
+- WebRTC 기능을 통한 경매 사이트 활성화.
+
+- sessionId, currentUser의 Id, 경매 개설자 여부를 인자값으로 전달하여 URL을 형성하고 경매 세션을 생성함.
+
+<br/>
+
+### 경매 진행
+
+![Auction](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/Auctiongif.gif)
+
+- WebRTC를 사용하여 화상 경매를 진행함.
+
+<br/>
+
+### 작가 리스트 화면
+
+![작가 리스트](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/ArtistListgif.gif)
+
+<br/>
+
+### 작가 미니홈피 화면
+
+![Minihome](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/ArtistMinihomegif.gif)
+
+<br/>
+
+### MyPage, 개인정보 화면
+
+![my Page](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/MyPageGif.gif)
+
+
+- MyPage에서 회원정보, 포인트 충전, 결제 내역 관리
+- 회원정보, 결제내역, 자주 묻는 질문, 입찰 신청 경매 관리
+
+<br/>
+
+### LogIn & LogOut
+
+![Login](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/Logingif.gif)
+
+로그인
+
+![Logout](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/Logoutgif.gif)
+
+로그아웃
+
+- sessionStorage를 통하여 로그인, 로그아웃 기능 구현
+
+<br/>
+
+### 판매 리스트 화면
+
+![Product](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/SellListgif.gif)
+
+- Pagination 구현
+
+
+![Product_Login](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/SellList_Login.png)
+
+로그인 상태 판매 리스트
+<br/>
+
+![Product_LogOut](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/SellList_Logout.png)
+
+로그아웃 상태 판매 리스트
+
+- Login한 유저만 게시물 작성이 가능하도록 구현 
+
+<br/>
+
+### 판매 상품 상세 화면
+
+![판매 상세](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/SellListDetail.png)
+
+<br/>
+
+### 경매 리스트 화면
+
+![경매리스트_로그아웃](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/AuctionList_Logout.png)
+
+로그아웃 상태
+
+<br/>
+
+![경매리스트_로그인](https://lab.ssafy.com/s10-webmobile1-sub2/S10P12A207/-/raw/master/readmeAssets/AuctionList_Login.png)
+
+로그인 상태
+
+<br/>
+
+- 로그인 한 유저만 작성, 수정, 삭제가 가능하도록 구현
