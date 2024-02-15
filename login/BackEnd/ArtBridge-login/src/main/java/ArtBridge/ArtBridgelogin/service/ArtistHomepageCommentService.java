@@ -30,21 +30,15 @@ public class ArtistHomepageCommentService {
     public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageCommentDto) {
 
         ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
-
-        artistHomepageComment.setArtist(artistRepository.readArtistById(artistHomepageCommentDto.getArtistId()));
-        artistHomepageComment.setMember(memberRepository.readMemberById(artistHomepageCommentDto.getMemberId()));
-
-        artistHomepageComment.setArtistHompageCommentContentCreatedDate(LocalDateTime.now());
-        //artist_homepage_comment_isdeleted
-        //artist_homepage_comment_deleted_date
-
-        artistHomepageComment.setArtistHompageCommentContent(artistHomepageCommentDto.getArtistHompageCommentContent());
-
-        ArtistHomepageComment newArtistHomepageComment = artistHomepageCommentRepository.create(artistHomepageComment);
+        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtistId()));
+        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMemberId()));
+        artistHomepageComment.setArtistHomepageCommentContentCreatedDate(LocalDateTime.now());
+        artistHomepageComment.setArtistHomepageCommentIsdeleted(false);
+        artistHomepageComment.setArtistHomepageCommentContent(artistHomepageCommentDto.getArtistHomepageCommentContent());
+            ArtistHomepageComment newArtistHomepageComment = artistHomepageCommentRepository.create(artistHomepageComment);
 
         artistHomepageCommentDto.setArtistHomepageCommentSeq(newArtistHomepageComment.getArtistHomepageCommentSeq());
 
-        System.out.println(artistHomepageCommentDto.toString());
 
         return artistHomepageCommentDto;
     }
@@ -73,7 +67,7 @@ public class ArtistHomepageCommentService {
         ArtistHomepageComment existingArtistHomepageComment = artistHomepageCommentRepository.readOne(seq);
 
         if (existingArtistHomepageComment != null) {
-            existingArtistHomepageComment.setArtistHompageCommentContent(updatedArtistHomepageComment.getArtistHompageCommentContent());
+            existingArtistHomepageComment.setArtistHomepageCommentContent(updatedArtistHomepageComment.getArtistHomepageCommentContent());
             artistHomepageCommentRepository.updateArtistHomepageComment(seq, existingArtistHomepageComment);
             return convertToDto(existingArtistHomepageComment);
 
@@ -81,6 +75,7 @@ public class ArtistHomepageCommentService {
             return null;
         }
     }
+
 
 
     //TODO: DELETE
@@ -91,9 +86,8 @@ public class ArtistHomepageCommentService {
 
     public ArtistHomepageCommentDto convertToDto(ArtistHomepageComment artistHomepageComment){
         ArtistHomepageCommentDto artistHomepageCommentDto = new ArtistHomepageCommentDto();
-        artistHomepageCommentDto.setArtistHompageCommentContent(artistHomepageComment.getArtistHompageCommentContent());
+        artistHomepageCommentDto.setArtistHomepageCommentContent(artistHomepageComment.getArtistHomepageCommentContent());
         artistHomepageCommentDto.setArtistHomepageCommentSeq(artistHomepageComment.getArtistHomepageCommentSeq());
-
         return artistHomepageCommentDto;
     }
 
@@ -103,4 +97,10 @@ public class ArtistHomepageCommentService {
                 .collect(Collectors.toList());
     }
 
+//    public ArtistHomepageComment convertToEntity(ArtistHomepageCommentDto artistHomepageCommentDto){
+//        ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
+//
+//
+//        return
+//    }
 }
