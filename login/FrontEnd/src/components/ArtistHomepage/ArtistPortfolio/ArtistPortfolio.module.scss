@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    color: black;
 }
 
 .filmography {
@@ -93,4 +94,11 @@
     display: flex;
     align-items: center;
   }
+}
+
+
+.edit_item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }

@@ -3,7 +3,7 @@ import React from 'react';
 import { PlaneGeometry, MeshBasicMaterial, Mesh } from 'three';
 
 const Ocean = () => {
-    const planeGeometry = new PlaneGeometry(1000, 300, 1, 1);
+    const planeGeometry = new PlaneGeometry(1500, 600, 1, 1);
     const planeMaterial = new MeshBasicMaterial({ color: "#54A0E3" }); // Sky Blue color, you can change it
     const planeMesh = new Mesh(planeGeometry, planeMaterial);
   

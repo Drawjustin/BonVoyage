@@ -10,6 +10,10 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { gsap } from 'gsap';
 import * as THREE from 'three';
 import CameraControls from './Camera';
+import Text1 from "./text/Text1"
+import Text2 from "./text/Text2"
+import Text3 from "./text/Text3"
+import Text4 from "./text/Text4"
 
 const Experience = ({ onIslandSelect, selectedIsland }) => {
     // const [selectedIsland, setSelectedIsland] = useState(null);
@@ -30,56 +34,26 @@ const Experience = ({ onIslandSelect, selectedIsland }) => {
             // 선택된 섬에 따라 카메라 타겟과 위치 설정
             switch (selectedIsland) {
                 case 1:
-                    setTarget(new THREE.Vector3(-18, 0, -25));
-                    setPosition(new THREE.Vector3(-10, 5, -10));
+                    setTarget(new THREE.Vector3(-18, -1, -25));
+                    setPosition(new THREE.Vector3(-10, 3, -9));
                     break;
                 case 2:
                     setTarget(new THREE.Vector3(-13, -2, -90));
-                    setPosition(new THREE.Vector3(-6, -1, -60));
+                    setPosition(new THREE.Vector3(-6, 2, -55));
                     break;
                 case 3:
                     setTarget(new THREE.Vector3(25, -1, -80));
-                    setPosition(new THREE.Vector3(8, 0, -55));
+                    setPosition(new THREE.Vector3(8, 3, -55));
                     break;
                 case 4:
-                    setTarget(new THREE.Vector3(20, -2, -25));
-                    setPosition(new THREE.Vector3(10, 5, -10));
+                    setTarget(new THREE.Vector3(25, -1, -23));
+                    setPosition(new THREE.Vector3(10, 3, -8));
                     break;
                 default:
                     break;
             }
         }
     }, [selectedIsland]);
-
-    // let target, position;
-    // // 선택된 Island에 따라 카메라 타겟과 위치 설정
-    // switch (selectedIsland) {
-    //     case 1:
-    //     target = new THREE.Vector3(-18, 0, -25);
-    //     position = new THREE.Vector3(-10, 5, -10);
-    //     break;
-    //     case 2:
-    //     target = new THREE.Vector3(-13, -2, -90);
-    //     position = new THREE.Vector3(-6, -1, -60);
-    //     break;
-    //     case 3:
-    //     target = new THREE.Vector3(25, -1, -80);
-    //     position = new THREE.Vector3(8, 0, -55);
-    //     break;
-    //     case 4:
-    //     target = new THREE.Vector3(20, -2, -25);
-    //     position = new THREE.Vector3(10, 5, -10);
-    //     break;
-    //     // 다른 Island들에 대한 처리 추가
-    //     // default:
-    //     // target = new THREE.Vector3(25, -5, -25);
-    //     // position = new THREE.Vector3(0, 20, 50);
-    //     // break;
-    //     default:
-    //         target = new THREE.Vector3(0, 0, 0); // 주변을 클릭했을 때 초기 타겟 위치
-    //         position = new THREE.Vector3(0, 1, 14); // 주변을 클릭했을 때 초기 카메라 위치
-    //         break;
-    // }
 
     return (
         <>
@@ -95,25 +69,32 @@ const Experience = ({ onIslandSelect, selectedIsland }) => {
 
             <CameraControls target={target} position={position}/>
             <Island_1
-                scale={[0.1, 0.1, 0.1]}
+                scale={[0.09, 0.09, 0.09]}
                 position={[-25, -5, -25]}
                 onClick={() => handleIslandClick(1)}
             />
+            <Text1 position={[-25, 3.5, -26]} scale={[1.3, 1.3, 1.3]} rotation-y={0.3}/>
+
             <Island_2
                 scale={[0.08, 0.08, 0.08]}
                 position={[-15, -6, -80]}
                 onClick={() => handleIslandClick(2)}
             />
+            <Text2 position={[-13.5, 5, -73]} scale={[1.5, 1.5, 1.5]} rotation-y={0.3}/>
+
             <Island_3
                 scale={[0.2, 0.2, 0.2]}
                 position={[15, -5, -80]}
                 onClick={() => handleIslandClick(3)}
             />
+            <Text3 position={[13.5, 5, -73]} scale={[1.5, 1.5, 1.5]} rotation-y={-0.3}/>
+
             <Island_4
                 scale={[1.5, 1.5, 1.5]}
                 position={[25, -5, -25]}
                 onClick={() => handleIslandClick(4)}
             />
+            <Text4 position={[21, 3.5, -27]} scale={[1.3, 1.3, 1.3]} rotation-y={-0.3}/>
             
             <Float floatIntensity={1} speed={3} rotationIntensity={0.2}>
                 <Ship1 position={[0, -5.5, 0]} rotation-y={78.5} scale={[1.5, 1.5, 1.5]}/>

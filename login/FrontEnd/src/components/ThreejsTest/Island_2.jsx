@@ -21,8 +21,8 @@ const Island_2 = ({ scale, position, onClick, props }) => {
       position={position}
       onClick={handleOnClick}
     >
-    <group {...props} dispose={null}>
-      <group position={[1.397, 50.417, -38.659]} rotation={[-Math.PI / 2, 0, -0.96]} scale={[0.157, 0.157, 2.074]}>
+    <group {...props} dispose={null} rotation-y={1.2} color={"black"}>
+      <group position={[1.397, 50.417, -38.659]} rotation={[-Math.PI / 2, 0, -0.9]} scale={[0.157, 0.157, 2.074]}>
         <mesh geometry={nodes['Tree2_02_-_Default_0'].geometry} material={materials['02_-_Default']} />
         <mesh geometry={nodes['Tree2_03_-_Default_0'].geometry} material={materials['03_-_Default']} />
       </group>

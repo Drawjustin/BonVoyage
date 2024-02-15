@@ -16,13 +16,14 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
   const [content, setContent] = useState("");
   const [comment, setComment] = useState("");
   const [showWriteButton, setShowWriteButton] = useState(false);
-  const [artistInfo, setArtistInfo] = useState(null);
+  const [selectedPost, setSelectedPost] = useState(null);
 
   const [posts, setPosts] = useState([]);
   const [userTalks, setUserTalks] = useState([]);
 
   // 아티스트 / 멤버 판단
-  const isArtistObject = JSON.parse(isArtist);
+  const isArtistObject = isArtist;
+  // console.log(isArtistObject.isArtist)
   const UserId = isArtistObject.id.id
   const UserRole = isArtistObject.role
   const UserSeq = isArtistObject.id.seq
@@ -36,7 +37,6 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
 
         if (UserRole === 'artist' && artistinfo.id === UserId) {
           setShowWriteButton(true);
-          
         }
         
       } catch (error) {
@@ -128,6 +128,8 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
         console.log('작가의 말 등록 성공 :', response.data);
         setTitle('');
         setContent('');
+        hide();
+        mentionRead();
       })
       .catch(error => {
         console.error('작가의 말 등록 실패(에러)', error);
@@ -135,28 +137,30 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
   }
 
   // 작가의 글 목록
-  // useEffect(() => {
-  //   const mentionRead = async () => {
-  //     try {
-  //         const backendUrl = 'https://i10a207.p.ssafy.io/api';
-  //         const response = await axios.get(`${backendUrl}/artistMentions/${artistSeq}`);
-  //         const artistMentions = response.data;
-  //         console.log(artistMentions);
-  //         const newPosts = artistMentions.map(mention => ({
-  //           title: mention.subject,
-  //           content: mention.content,
-  //           id: mention.artistId,
-  //           mentionseq: mention.artistMentionSeq
-  //           // date: mention.artistMentionCreatedDate,
-  //         }));
-  //         setPosts(newPosts);
-  //     } catch (error) {
-  //       console.error('데이터를 불러오는 중 에러 발생:', error);
-  //     }
-  //   };
+  const mentionRead = async () => {
+    try {
+        const backendUrl = 'https://i10a207.p.ssafy.io/api';
+        const response = await axios.get(`${backendUrl}/artistMentions/${artistSeq}`);
+        const artistMentions = response.data;
+        console.log(artistMentions)
+        // artistMentions.subject
+        const newPosts = artistMentions.map(mention => ({
+          title: mention.subject,
+          content: mention.content,
+          id: mention.artistId,
+          mentionseq: mention.artistMentionSeq,
+          date: new Date(mention.createdDate).toLocaleDateString('ko-KR'),
+          // date: mention.artistMentionCreatedDate,
+        }));
+        setPosts(newPosts);
+    } catch (error) {
+      console.error('데이터를 불러오는 중 에러 발생:', error);
+    }
+  };
 
-  //   mentionRead();
-  // }, []);
+  useEffect(() => {
+    mentionRead();
+  }, []);
 
   // 한 줄 응원 등록
   const CommentCreate = async(event) => {
@@ -170,18 +174,20 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
     }
 
     const CommentData = {
-      "artistHompageCommentContent": comment,
-      "artistHomepageCommentSeq": UserSeq,
+      "artistHomepageCommentContent": comment,
+      "member": UserSeq,
+      "artist": artistSeq,
     };
   
-    const jsonString = JSON.stringify(CommentData);
+    // const jsonString = JSON.stringify(CommentData);
   
-    axios.post(`${backendUrl}/artistHomepageComment/new`, jsonString, {
+    axios.post(`${backendUrl}/artistHomepageComment/new`, CommentData, {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'
       }
     })
       .then(response => {
+        console.log(CommentData)
         console.log('한 줄 응원 등록 성공 :', response.data);
         // setTitle('');
         // setContent('');
@@ -192,26 +198,29 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
   }
   
   // 한 줄 응원 목록
-  // useEffect(() => {
-  //   const CommentRead = async () => {
-  //     try {
-  //       const backendUrl = 'https://i10a207.p.ssafy.io/api';
-  //       const response = await axios.get(`${backendUrl}/artistHomepageComment/${artistSeq}`);
-  //       const HomepageComments = response.data;
-  //       console.log(HomepageComments);
-  //       const newComments = HomepageComments.map(comment => ({
-  //         content: comment.artistHompageCommentContent,
-  //         date: comment.artistHompageCommentContentCreatedDate,
-  //         commentseq: comment.artistHomepageCommentSeq
-  //       }));
-  //       setUserTalks(newComments);
-  //     } catch (error) {
-  //       console.error('데이터를 불러오는 중 에러 발생:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const CommentRead = async () => {
+      try {
+        const backendUrl = 'https://i10a207.p.ssafy.io/api';
+        const response = await axios.get(`${backendUrl}/artistHomepageComment/${artistSeq}`);
+        const HomepageComments = response.data;
+        console.log(HomepageComments);
+        const newComments = HomepageComments.map(comment => ({
+          content: comment.artistHomepageCommentContent,
+          // date: comment.artistHompageCommentContentCreatedDate,
+          commentseq: comment.artistHomepageCommentSeq,
+        }));
+        // const NewContent = HomepageComments.artistHompageCommentContent
+        // const NewSeq = HomepageComments.artistHomepageCommentSeq
+        // const newComments = HomepageComments.artistHompageCommentContent
+        setUserTalks(newComments);
+      } catch (error) {
+        console.error('데이터를 불러오는 중 에러 발생:', error);
+      }
+    };
 
-  //   CommentRead();
-  // }, []);
+    CommentRead();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -227,8 +236,8 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
               )}
               <Rodal visible={visible} onClose={hide} showCloseButton={false}
                 customStyles={{
-                  width: '65%',
-                  height: '70%',
+                  width: '700px',
+                  height: '500px',
                   padding: '30px',
                   borderRadius: '20px',
                   overflow: 'hidden',
@@ -257,7 +266,7 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
                     {posts.slice(0, visibleItems).map((post) => (
                       <div key={post.mentionseq} onClick={() => handleArtistTalkTitleClick(post.mentionseq)} className={styles.artist_talk_title}>
                         <span className={styles.talk_title}>{post.title}</span>
-                        <span className={styles.talk_date}>2024.01.25</span>
+                        <span className={styles.talk_date}>{post.date}</span>
                       </div>
                     ))}
                     <button className={styles.a_btn} onClick={handleShowMoreClick}>
@@ -281,13 +290,19 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
                   <div className={styles.no_usertalk}>작성된 응원이 없습니다.</div>
                 ) : (
                   <>
-                    {userTalks.map((comment) => (
+                    {userTalks &&
+                      userTalks.map((comment) => (
                       <div key={comment.commentseq} className={styles.user_talk_list}>
                         <div className={styles.user_talk_title}>
                           <span className={styles.user_talk_1}>{comment.content}</span>
                         </div>
                       </div>
                     ))}
+                    {/* <div key={comment.commentseq} className={styles.user_talk_list}>
+                        <div className={styles.user_talk_title}>
+                          <span className={styles.user_talk_1}>{comment.content}</span>
+                        </div>
+                      </div> */}
                   </>
                 )}
             </div>
@@ -295,7 +310,7 @@ const ArtistTalk = ({isArtist, artistId, artistSeq}) => {
         </div>
       )}
       {view === 'detail' && selectedDetailPost !== null && (
-        <ArtistTalkDetail postId={selectedDetailPost} posts={posts} isArtist={isArtist}
+        <ArtistTalkDetail postId={selectedDetailPost} posts={posts} isArtist={isArtist} artistId={artistId}
         onBackClick={handleBackFromDetail}/>
       )}
     </div>

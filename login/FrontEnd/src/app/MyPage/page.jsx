@@ -14,6 +14,7 @@ import faq from './3.png';
 import myauctioncal from './4.png';
 import dynamic from 'next/dynamic';
 import getCurrentUser from '@/app/actions/getCurrentUser';
+import { current } from '@reduxjs/toolkit';
 const AccountInfo = dynamic(() => import('../../components/MyPageComponent/AccountInfo/AccountInfo'), {ssr:false});
 const PurchaseInfo = dynamic(() => import('../../components/MyPageComponent/PurchaseInfo/PurchaseInfo'), {ssr:false});
 const Faq = dynamic(() => import('../../components/MyPageComponent/Faq/Faq'), {ssr:false});
@@ -155,7 +156,7 @@ const MyPage = () => {
             
             </div>
         </div>
-        {activeComponent === 'accountInfo' && <AccountInfo />}
+        {activeComponent === 'accountInfo' && <AccountInfo isArtist={currentUser}/>}
         {activeComponent === 'purchaseInfo' && <PurchaseInfo />}
         {activeComponent === 'faq' && <Faq />}
         {activeComponent === 'myAuctionCal' && <MyAuctionCal />}

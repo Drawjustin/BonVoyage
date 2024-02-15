@@ -3,10 +3,16 @@
 
 .title {
     font-size: 24px;
-    
-    margin-right: 60%;
     color: #f1efee;
     font-size: calc(1.3rem + .6vw);
+}
+
+.btn {
+  margin-left: 10px;
+  border: none;
+  background-color: #171de5;
+  border-radius: 10px;
+  color: white;
 }
 .account_info {
     width: 600px;
@@ -18,7 +24,6 @@
     margin: 20px;
     max-width: 600px;
     color:#292929;
-    
 
     .info_item {
       display: flex;
