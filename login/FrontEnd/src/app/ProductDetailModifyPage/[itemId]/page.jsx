@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import styles from './ProductDetailModifyPage.module.scss';
 
 const EditProductPage = (props) => {
   const router = useRouter();
@@ -96,31 +97,41 @@ const EditProductPage = (props) => {
   };
 
   return (
-    <div>
+    <div className={styles.all}>
       <h1>판매 작품 정보 수정</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          작품명
-          <input type="text" name="name" onChange={handleNameChange} value={itemName}/>
-        </label>
-        <label>
-          설명
-          <input type="text" name="description" value={explain} onChange={handleExplainChange} />
-        </label>
-        <label>
-          가로
-          <input type="number" name="widthInput" value={itemWidth} onChange={handleItemWidthChange} />
-        </label>
-        <label>
-          세로
-          <input type="number" name="heightInput" value={itemHeight} onChange={handleItemHeightChange} />
-        </label>
-        <label>
-          가격
-          <input type="number" name="price" value={itemSellPrice} onChange={handleItemSellPriceChange} />
-        </label>
+        <div className={styles.blank}>
+          <label>
+            작품명 <input type="text" name="name" onChange={handleNameChange} value={itemName}/>
+          </label>
+        </div>
 
-        <button type="submit">수정 완료</button>
+
+        <div className={styles.blank}>
+          <label>
+            설명 <input type="text" name="description" value={explain} onChange={handleExplainChange} />
+          </label>
+        </div>
+
+        <div className={styles.blank}>
+          <label>
+            가로 <input type="number" name="widthInput" value={itemWidth} onChange={handleItemWidthChange} />
+          </label>
+        </div>
+
+        <div className={styles.blank}>
+          <label>
+            세로 <input type="number" name="heightInput" value={itemHeight} onChange={handleItemHeightChange} />
+          </label>
+        </div>
+
+        <div className={styles.blank}>
+          <label>
+            가격 <input type="number" name="price" value={itemSellPrice} onChange={handleItemSellPriceChange} />
+          </label>
+        </div>
+
+        <button style={{ marginTop: '2vh', display: 'flex', alignContent: 'end'}} type="submit">수정 완료</button>
       </form>
     </div>
   );

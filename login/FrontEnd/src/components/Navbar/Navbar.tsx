@@ -9,8 +9,9 @@ import { SidebarData } from './SidebarData';
 import './newnavbar.css';
 import { IconContext } from 'react-icons';
 // import Link from 'next/link';
-// import styles from './Navbar.module.scss';
+import styles from './Navbar.module.scss';
 import {ButtonContainer} from './ButtonContainer';
+import { useRouter } from 'next/navigation';
 // import Sidebar from './Sidebar';
 
 interface SidebarItem {
@@ -25,7 +26,7 @@ const Navbar: React.FC = () => {
 
   // const showSidebar = () => setSidebar(!sidebar);
   const showSidebar = () => {setSidebar(!sidebar);}
-  
+  const navigate = useRouter();
 
   const contextValue = useContext(IconContext);
   const color = contextValue ? contextValue.color : '#fff';
@@ -37,7 +38,9 @@ const Navbar: React.FC = () => {
   // };
 
   return (
+    
     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+       <div className={styles.logo_title} onClick={() => {navigate.push('/')}}>Bon Voyage</div>
         <div className='navbar'>
           <div className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} />
@@ -60,6 +63,10 @@ const Navbar: React.FC = () => {
                 </Link>
               </li>
             ))}
+          <div style={{ right: '20px', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', position: 'absolute', bottom: '30px', marginLeft: '15px', color: '#f1efee', fontSize: '13px' }}>
+              <p>Made by. A207</p>
+              <p>이동훈 김성욱 김아린 박수민 유현종 이윤정</p>
+          </div>
           </ul>
         </nav>
 

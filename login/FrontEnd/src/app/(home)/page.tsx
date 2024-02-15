@@ -28,8 +28,7 @@ const ThreejsTestPage = () => {
       {/* {start ? (
         <StartPage onStartButtonClick={handleStartButtonClick} />
       ) : (
-        <> */}
-        <div className={styles.logo_title}>Bon Voyage</div>
+      <> */}
         {/* <div className="canvas-background" style={{ zIndex: -1 }} /> */}
         <Canvas 
           shadows 

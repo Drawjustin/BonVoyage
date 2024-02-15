@@ -19,7 +19,15 @@ const AuctionPagination = ({PageLink}) => {
   'https://file.mk.co.kr/meet/neds/2012/09/image_readtop_2012_558936_1346631627715607.jpg',
   'https://mblogthumb-phinf.pstatic.net/MjAyMzAzMDRfMjc3/MDAxNjc3OTA3MzQzODc0.Ab6w45CixyH335WqVp3G2tLIkUg6W1tgDVIXPUC7OtAg.tZNEeUlTIfvnXF8J22tEAERJZW-JAoqGyhD8bKFc3AEg.PNG.yogocode/SE-d12e618f-16cd-4461-9ef6-124515bc1fc4.png?type=w800',
   'https://cdn.namdonews.com/news/photo/202106/608469_229017_5028.jpg',
-  'https://newsprime.co.kr/data/photos/news/photo/200710/23532-2-9325.jpg'
+  'https://newsprime.co.kr/data/photos/news/photo/200710/23532-2-9325.jpg',
+  'https://mblogthumb-phinf.pstatic.net/MjAyMTA1MTJfMTMg/MDAxNjIwODA3MTMyMzEw.oC5MEqA4CX6qggK8dRTeUj-7ucs_EU56AWRAygdk8JEg.8xFg72tvqcIQxTRA7Zr9OqgFIIS8svmtnRAy2fmZDwog.JPEG.jrkimceo/Botticelli_Venus.jpg?type=w800',
+  'https://kid.chosun.com/site/data/img_dir/2006/12/11/2006121100627_0.jpg',
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxNQmN9_dxzuUSnM7xiAx-v8KUaZyECklqBg&usqp=CAU',
+  'https://cdn.onseoul.net/news/photo/202306/27200_28294_3932.jpg',
+  'https://cdn.segyenewsagency.com/news/photo/202003/94221_craw1.jpg',
+  'https://cdn.womennews.co.kr/news/photo/first/201603/img_91704_1.jpg',
+  'https://img1.yna.co.kr/etc/inner/KR/2015/04/10/AKR20150410069100005_01_i_P4.jpg',
+  'https://cdn-pro-web-251-248.cdn-nhncommerce.com/hexy1_godomall_com/data/editor/goods/6aadaf149a04f667.jpg',
   ]
 
   const currentUser = getCurrentUser();
@@ -106,9 +114,9 @@ const AuctionPagination = ({PageLink}) => {
                {fetchedData.slice((currentPage - 1) * PRODUCTS_PER_PAGE, currentPage * PRODUCTS_PER_PAGE).map((auction) => (
                 <AuctionCard
                   currentUser={currentUser}
-                  key={auction.itemSeq}
+                  key={auction.auctionSeq}
                   data={auction}
-                  image={ImageList[(auction.itemSeq)%7]}
+                  image={ImageList[(auction.auctionSeq)%15]}
                 />
               ))}
             </div>
