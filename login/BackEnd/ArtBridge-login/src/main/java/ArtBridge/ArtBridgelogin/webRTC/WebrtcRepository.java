@@ -43,8 +43,6 @@ public class WebrtcRepository {
     public AuctionPointDetail createBid(AuctionPointDetail bidRequest) {
         em.persist(bidRequest);
         return bidRequest;
-<<<<<<< Updated upstream
-=======
 //        try {
 //            // semaphore.tryAcquire() 메소드로 3초 동안에만 허용되도록 시도
 //            if (semaphore.tryAcquire(3, TimeUnit.SECONDS)) {
@@ -82,7 +80,6 @@ public class WebrtcRepository {
 //            // semaphore.release() 메소드를 호출하여 락 해제
 //            semaphore.release();
 //        }
->>>>>>> Stashed changes
     }
 
     public Member readWinner(Integer seq) {

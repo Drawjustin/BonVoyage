@@ -2,12 +2,7 @@ package ArtBridge.ArtBridgelogin.webRTC;
 
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
-<<<<<<< Updated upstream
-import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
-import ArtBridge.ArtBridgelogin.domain.Member;
-=======
 import ArtBridge.ArtBridgelogin.domain.*;
->>>>>>> Stashed changes
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -29,33 +24,18 @@ public class WebrtcService {
     private WebrtcRepository webrtcRepository;
 
     @Autowired
-<<<<<<< Updated upstream
     private MemberRepository memberRepository;
 
     @Autowired
     private AuctionRepository auctionRepository;
-
-    @Transactional
-    public AuctionPointDetailDto createBid(AuctionPointDetailDto bidRequestDto) {
-        try {
-            AuctionPointDetail auctionPointDetail = convertToEntity(bidRequestDto);
-            return convertToDto(webrtcRepository.createBid(auctionPointDetail));
-        }
-        catch (Exception e){
-            throw new MyDataAccessException("Failed to create auctionPointDetail", e);
-=======
-    private AuctionRepository auctionRepository;
-
-    @Autowired
-    private MemberRepository memberRepository;
 
     @Transactional
     public AuctionPointDetailDto createBid(AuctionPointDetailDto bidRequestDto) {
         try {
             AuctionPointDetail bidRequest = new AuctionPointDetail();
 
-            Auction auction = auctionRepository.readOne(bidRequestDto.getAuction().getAuctionSeq());
-            Member member = memberRepository.findByMemberId(bidRequestDto.getMember().getMemberId()).orElseThrow(() -> new NoSuchElementException("Member not found"));
+            Auction auction = auctionRepository.readOne(bidRequestDto.getAuctionSeq());
+            Member member = memberRepository.readMemberBySeq(bidRequestDto.getMemberSeq());
             bidRequest.setAuction(auction);
             bidRequest.setMember(member);
 
@@ -67,7 +47,6 @@ public class WebrtcService {
         }
         catch (Exception e){
             throw new MyDataAccessException("Failed to create bid", e);
->>>>>>> Stashed changes
         }
     }
 
