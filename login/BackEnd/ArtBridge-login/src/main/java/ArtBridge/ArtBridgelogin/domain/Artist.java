@@ -1,5 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
+import ArtBridge.ArtBridgelogin.controller.dto.review.ReviewDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

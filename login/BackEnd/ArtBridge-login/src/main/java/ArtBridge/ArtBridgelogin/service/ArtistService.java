@@ -23,6 +23,18 @@ public class ArtistService {
     @Autowired
     private ArtistRepository artistRepository;
 
+    @Autowired
+    private ArtistMentionService artistMentionService;
+
+    @Autowired
+    private ArtistHomepageCommentService artistHomepageCommentService;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private ReviewService reviewService;
+
     // CREATE
     @Transactional
     public ArtistDto createArtist(ArtistDto artistDto) {
@@ -153,13 +165,22 @@ public class ArtistService {
     // Function
     private Artist convertToEntity(ArtistDto artistDto) {
         Artist artist = new Artist();
-        artist.setArtistSeq(artistDto.getSeq());
         artist.setArtistId(artistDto.getId());
-        artist.setArtistName(artistDto.getName());
         artist.setArtistPwd(artistDto.getPw());
+        artist.setArtistName(artistDto.getName());
         artist.setArtistNickname(artistDto.getNickName());
         artist.setArtistEmail(artistDto.getEmail());
         artist.setArtistContact(artistDto.getContact());
+        //artistPoint;
+        //artistHistory;
+        //artistIsDeleted;
+        //artistDeletedDate;
+        //artistCreatedDate;
+//        artist.setArtistMentions(artistMentionService.readAllArtistsMention());
+//        artist.setArtistHomepageComments(artistHomepageCommentService.readAllArtistsHomepageComment());
+        artist.setOrderDetails(orderDetailService.readAllAOrderDetail());
+//        artist.setItems(itemService.readAllItems());
+//        artist.setReviews(reviewService.readAllReviews());
 
         return artist;
     }
