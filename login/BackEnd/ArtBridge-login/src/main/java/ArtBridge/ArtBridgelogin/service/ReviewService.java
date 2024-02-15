@@ -126,6 +126,8 @@ public class ReviewService {
         reviewDto.setSeq(review.getReviewSeq());
         reviewDto.setContent(review.getReviewContent());
         reviewDto.setTitle(reviewDto.getTitle());
+        reviewDto.setMemberId(review.getMember().getMemberId());
+        reviewDto.setArtistId(review.getArtist().getArtistId());
 
         return reviewDto;
     }
