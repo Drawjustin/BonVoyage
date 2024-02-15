@@ -38,7 +38,7 @@ public class MemberController {
         MemberDto memberDto = memberService.readOne(id);
 
         if (memberDto != null) {
-            return ResponseEntity.ok("조회한 Member " + memberDto);
+            return ResponseEntity.ok(memberDto);
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
