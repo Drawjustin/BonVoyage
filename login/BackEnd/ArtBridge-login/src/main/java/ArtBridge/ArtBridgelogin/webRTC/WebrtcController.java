@@ -24,10 +24,17 @@ public class WebrtcController {
     @PostMapping("/price")
     public ResponseEntity<?> createBid(@RequestBody AuctionPointDetailDto bidRequest) {
         try {
+<<<<<<< Updated upstream
             AuctionPointDetailDto createdDetail = webrtcService.createBid(bidRequest);
             return ResponseEntity.ok(createdDetail);
         }catch (Exception e){
             return new ResponseEntity<>("Create Bid Error", HttpStatus.BAD_REQUEST);
+=======
+            AuctionPointDetailDto createdBid = webrtcService.createBid(bidRequest);
+            return ResponseEntity.ok(createdBid);
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Create Bid Error");
+>>>>>>> Stashed changes
         }
     }
 

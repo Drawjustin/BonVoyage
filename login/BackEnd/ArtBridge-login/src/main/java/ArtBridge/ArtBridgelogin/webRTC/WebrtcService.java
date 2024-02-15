@@ -2,8 +2,12 @@ package ArtBridge.ArtBridgelogin.webRTC;
 
 import ArtBridge.ArtBridgelogin.controller.dto.member.MemberDto;
 import ArtBridge.ArtBridgelogin.controller.dto.webRTC.AuctionPointDetailDto;
+<<<<<<< Updated upstream
 import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
 import ArtBridge.ArtBridgelogin.domain.Member;
+=======
+import ArtBridge.ArtBridgelogin.domain.*;
+>>>>>>> Stashed changes
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
 import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
@@ -13,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -24,6 +29,7 @@ public class WebrtcService {
     private WebrtcRepository webrtcRepository;
 
     @Autowired
+<<<<<<< Updated upstream
     private MemberRepository memberRepository;
 
     @Autowired
@@ -37,6 +43,31 @@ public class WebrtcService {
         }
         catch (Exception e){
             throw new MyDataAccessException("Failed to create auctionPointDetail", e);
+=======
+    private AuctionRepository auctionRepository;
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Transactional
+    public AuctionPointDetailDto createBid(AuctionPointDetailDto bidRequestDto) {
+        try {
+            AuctionPointDetail bidRequest = new AuctionPointDetail();
+
+            Auction auction = auctionRepository.readOne(bidRequestDto.getAuction().getAuctionSeq());
+            Member member = memberRepository.findByMemberId(bidRequestDto.getMember().getMemberId()).orElseThrow(() -> new NoSuchElementException("Member not found"));
+            bidRequest.setAuction(auction);
+            bidRequest.setMember(member);
+
+            bidRequest.setAuctionPointDate(bidRequestDto.getAuctionPointDate());
+            bidRequest.setAuctionPointDetailSeq(bidRequestDto.getAuctionPointDetailSeq());
+            bidRequest.setAuctionPointDetailIsWin(bidRequestDto.getAuctionPointDetailIsWin());
+            bidRequest.setAuctionPointDetailPoint(bidRequestDto.getAuctionPointDetailPoint());
+            return convertToDto(webrtcRepository.createBid(bidRequest));
+        }
+        catch (Exception e){
+            throw new MyDataAccessException("Failed to create bid", e);
+>>>>>>> Stashed changes
         }
     }
 
