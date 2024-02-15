@@ -5,13 +5,13 @@ import dynamic from 'next/dynamic';
 // import axios from 'axios';
 // import { usePathname } from 'next/navigation';
 import ArtistTalk from '../../../components/ArtistHomepage/ArtistTalk/ArtistTalk';
+import ArtistAuctionCalendar from '../../../components/ArtistHomepage/ArtistAuctionCalendar/ArtistAuctionCalendar'
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 
 const ArtistPortfolio = dynamic(() => import('../../../components/ArtistHomepage/ArtistPortfolio/ArtistPortfolio'), {ssr:false});
-const ArtistAuctionCalendar = dynamic(() => import('../../../components/ArtistHomepage/ArtistAuctionCalendar/ArtistAuctionCalendar'), {ssr:false});
 const ArtistReview = dynamic(() => import('../../../components/ArtistHomepage/ArtistReview/ArtistReview'), {ssr:false});
 const ArtistProfile = dynamic(() => import('../../../components/ArtistHomepage/ArtistProfile/ArtistProfile'), {ssr:false});
 
@@ -66,7 +66,7 @@ const ArtistHomePage = ({ params }: { params: { artistId: String } }) => {
   const selectComponent: { [key: string]: JSX.Element } = {
     portfolio: <ArtistPortfolio />,
     talk: <ArtistTalk isArtist={currentUser} artistId={Id} artistSeq={artistSeq}/>,
-    calender: <ArtistAuctionCalendar />,
+    calender: <ArtistAuctionCalendar artistSeq={artistSeq} />,
     review: <ArtistReview />,
   }
 

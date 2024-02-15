@@ -117,23 +117,19 @@ const ArtistInputSignup = () => {
       // formData.append("penname", penname);
       
       const data = {
-       "artistName": username,
-       "artistId": userid,
-       "artistPwd": password,
-      //  "chekedpw": confirmPassword,
-       "artistNickname": penname,
-       "artistEmail": email,
-       "artistContact": phonenum,
-       "artistPoint": 0,
-       "artistHistory": "할수 있어",
-       "artistIsDeleted" : false,
-       "artistCreatedDate" : '2024-01-29T04:54:33'
+       "name": username,
+       "id": userid,
+       "pw": password,
+       "pwCheck": confirmPassword,
+       "nickName": penname,
+       "email": email,
+       "contact": phonenum,
       }
 
-      
+      const jsonString = JSON.stringify(data);
 
       try {
-        const response = await axios.post('https://i10a207.p.ssafy.io/api/artists/new', data, {
+        const response = await axios.post('https://i10a207.p.ssafy.io/api/artists/new', jsonString, {
           headers: {
             'Content-Type': 'application/json;  charset=UTF-8',
           },
@@ -144,8 +140,6 @@ const ArtistInputSignup = () => {
       } catch (error) {
         console.error(error);
       }
-
-
 
       // const formData = new FormData();
       // formData.append("data", new Blob([JSON.stringify(data)], {
