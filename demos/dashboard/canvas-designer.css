@@ -69,14 +69,14 @@ html, body, section, ul, li, nav, a, h1, h2, input[disabled], button[disabled] {
     }
     
     #conversation-panel {
+        overflow-y: scroll; 
+        max-height: 600px; 
+        padding-right: 15px;
         padding: 1em;
         margin-bottom: 20px;
         text-align: left;
-        max-height: 100%;
         border-top: 1px solid #ddd;
-        width: 106%;
-        height: 95vh;
-        overflow: auto; 
+        width: 100%; 
     }
     
     
@@ -99,12 +99,14 @@ html, body, section, ul, li, nav, a, h1, h2, input[disabled], button[disabled] {
 
     #btn-chat-message {
         margin: 5px;
-        color: red;
+        color: #f1efee;
         margin-top: 5px;
         font-size: 20px;
-        text-shadow: 1px 1px white;
-        width: 100%;  /* 가로 크기를 채팅창에 맞게 조정 */
-        height: 22px;  /* 세로 크기를 10px로 조정 */
+        width: 90%;
+        height: 50px;
+        border-radius: 8px;
+        margin-right: 5vh;
+        
     }
     
     #conversation-panel .message {
@@ -247,3 +249,7 @@ html, body, section, ul, li, nav, a, h1, h2, input[disabled], button[disabled] {
     background: linear-gradient(to right, #0056b3, #0099cc); /* 호버시 그라데이션 색상 변경 */
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* 호버시 그림자 색상 변경 */
     }
+
+.message {
+    margin-bottom: 10px;
+}
