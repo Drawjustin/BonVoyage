@@ -26,63 +26,61 @@
     <script src="/demos/js/emojionearea.min.js"></script>
     <!-- <script src="/node_modules/multistreamsmixer/MultiStreamsMixer.js"></script> -->
 
-    <article>
+    <div id="widget-container"
+    style="position: fixed;bottom: 0;right: 80%;left: 0;height: 100%;border: 1px solid black; border-top:0; border-bottom: 0; display: none;">
+    </div>
+    <div
+        style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
+    <div>
+        <p id="auctionDetailText" style="margin-top: 10%">옥션 정보를 보여줄겁니다</p>
+        <p id="itemDetailText" style="margin-top: 10%">여기는 아이템 정보를 보여줄겁니다.</p>
+    </div>
+    <div>
+        <p id="timerTxt">남은 시간 : <span id="timer">10</span></p>
+    </div>
+    <div style="position: relative; width: 100%; height: 150px;">
+        <button id="sessionCloseBtn" class="btn btn-primary"
+            style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
+        <button id="bidBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">입찰
+            100,000 현재 최고 호가를 버튼에 띄워줄 예정</button>
+    </div>
+</div>
 
-        <div id="widget-container"
-            style="position: fixed;bottom: 0;right: 80%;left: 0;height: 100%;border: 1px solid black; border-top:0; border-bottom: 0; display: none;">
-        </div>
-        <div
-            style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
-            <div>
-                <p id="auctionDetailText" style="margin-top: 10%">옥션 정보를 보여줄겁니다</p>
-                <p id="itemDetailText" style="margin-top: 10%">여기는 아이템 정보를 보여줄겁니다.</p>
-            </div>
-            <div>
-                <p id="timer">10</p>
-            </div>
-            <div style="position: relative; width: 100%; height: 150px;">
-                <button id="sessionCloseBtn" class="btn btn-primary"
-                    style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
-                <button id="bidBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">입찰
-                    100,000 현재 최고 호가를 버튼에 띄워줄 예정</button>
-            </div>
-        </div>
+<video id="screen-viewer" controls playsinline autoplay></video>
 
-        <video id="screen-viewer" controls playsinline autoplay></video>
+<div style="width: 60%; height: 100%; position: absolute;left:20%;">
+    <video id="main-video" controls playsinline autoplay></video>
+    <hr>
+    <div style="padding: 5px 10px;">
+        <div id="onUserStatusChanged"></div>
+    </div>
 
-        <div style="width: 60%; height: 100%; position: absolute;left:20%;">
-            <video id="main-video" controls playsinline autoplay></video>
-            <hr>
-            <div style="padding: 5px 10px;">
-                <div id="onUserStatusChanged"></div>
-            </div>
+    <canvas id="temp-stream-canvas" style="display: none;"></canvas>
+</div>
+<div
+    style="width: 20%; margin-top: 20px;position: absolute; left:80%; bottom: 0; background: white; padding-bottom: 20px;">
+    <div id="conversation-panel"></div>
+    <div id="key-press" style="text-align: right; display: none; font-size: 11px;">
+        <span style="vertical-align: middle;"></span>
+        <img src="https://www.webrtc-experiment.com/images/key-press.gif"
+            style="height: 12px; vertical-align: middle;">
+    </div>
+    <textarea id="txt-chat-message"></textarea>
+    <button class="btn btn-primary" id="btn-chat-message">보내기</button>
+    <img id="btn-attach-file" src="https://www.webrtc-experiment.com/images/attach-file.png"
+        title="Attach a File">
+    <img id="btn-share-screen" src="https://www.webrtc-experiment.com/images/share-screen.png"
+        title="Share Your Screen">
+</div>
+</article>
 
-            <canvas id="temp-stream-canvas" style="display: none;"></canvas>
-        </div>
-        <div
-            style="width: 20%; margin-top: 20px;position: absolute; left:80%; bottom: 0; background: white; padding-bottom: 20px;">
-            <div id="conversation-panel"></div>
-            <div id="key-press" style="text-align: right; display: none; font-size: 11px;">
-                <span style="vertical-align: middle;"></span>
-                <img src="https://www.webrtc-experiment.com/images/key-press.gif"
-                    style="height: 12px; vertical-align: middle;">
-            </div>
-            <textarea id="txt-chat-message"></textarea>
-            <button class="btn btn-primary" id="btn-chat-message">보내기</button>
-            <img id="btn-attach-file" src="https://www.webrtc-experiment.com/images/attach-file.png"
-                title="Attach a File">
-            <img id="btn-share-screen" src="https://www.webrtc-experiment.com/images/share-screen.png"
-                title="Share Your Screen">
-        </div>
-    </article>
 
     <!-- 경매 입찰 시 뜨는 팝업 -->
-    <div id="popup"
-        style="display: none; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 9999; text-align: center; padding-top: 20%;">
-        <div style="background: white; display: inline-block; padding: 20px;">
+    <div id="popup">
+        <div>
             <p id="popupText">입력 중지</p>
-            <button id="returnHomeBtn" style="background-color: lightskyblue;">퇴장하기</button>
-            <button id="nextSessionBtn" style="background-color: greenyellow;">다음 세션으로</button>
+            <button id="returnHomeBtn">퇴장하기</button>
+            <button id="nextSessionBtn">다음 세션으로</button>
         </div>
     </div>
 

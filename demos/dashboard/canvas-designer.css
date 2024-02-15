@@ -1,4 +1,4 @@
-html, body, section, ul, li, nav, a, h1, h2 {
+html, body, section, ul, li, nav, a, h1, h2, input[disabled], button[disabled] {
     padding: 0;
     margin: 0;
     outline: none;
@@ -6,119 +6,150 @@ html, body, section, ul, li, nav, a, h1, h2 {
     box-shadow: none;
     border-radius: 0;
     text-decoration: none;
-}
-
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 17px;
-    line-height: 1.5em;
-}
-
-input[disabled], button[disabled] {
-  background: transparent!important;
-  color: #dcd7d7!important;
-  border: 1px solid #dcd7d7!important;
-  cursor: not-allowed!important;
-  text-shadow: none!important;
-  box-shadow: none!important;
-  text-decoration: none!important;
-  outline: none!important;
-}
-
-.extra-controls {
+    background: transparent!important;
+    color: #dcd7d7!important;
+    height: 100vh;  /* 브라우저 창의 높이에 맞게 조정 */
+    overflow: hidden;  /* 스크롤바 제거 */
+    }
+    
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    }
+    
+    article {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    }
+    
+    #widget-container {
+        position: fixed;
+        bottom: 0;
+        right: 70%;
+        left: 0;
+        height: 70vh;  /* 브라우저 창의 높이의 70%로 조정 */
+        border: 1px solid black;
+        display: none;
+    }
+    
+    #auctionDetailText, #itemDetailText {
+    margin-top: 10%;
+    font-size: 16px;
+    color: #333;
+    }
+    
+    #timerTxt {
+    font-size: 20px;
+    font-weight: bold;
+    color: #007bff;
+    }
+    
+    #sessionCloseBtn, #bidBtn, #btn-chat-message, #returnHomeBtn, #nextSessionBtn {
     position: absolute;
-    right: 21%;
-}
-
-#btn-comments {
-  color: red;
-  margin-top: 5px;
-  font-size: 24px;
-  text-shadow: 1px 1px white;
-}
-
-#txt-chat-message {
     width: 100%;
+    height: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    }
+    
+    #sessionCloseBtn:hover, #bidBtn:hover, #btn-chat-message:hover, #returnHomeBtn:hover, #nextSessionBtn:hover {
+    background-color: #0056b3;
+    }
+    
+    video, #main-video, #other-videos video {
+    width: 100%;
+    height: auto;
+    }
+    
+    #conversation-panel {
+        padding: 1em;
+        margin-bottom: 20px;
+        text-align: left;
+        max-height: 100%;
+        border-top: 1px solid #ddd;
+        width: 106%;
+        height: 95vh;
+        overflow: auto; 
+    }
+    
+    
+    #txt-chat-message {
+    width: 100%;
+    height: 5em;
     resize: vertical;
     margin: 5px;
     margin-right: 0;
     min-height: 30px;
-}
-
-#btn-chat-message {
+    }
+    
+    #btn-comments {
     margin: 5px;
-}
+    color: red;
+    margin-top: 5px;
+    font-size: 24px;
+    text-shadow: 1px 1px white;
+    }
 
-#conversation-panel {
-    margin-bottom: 20px;
-    text-align: left;
-    max-height: 100%;
-    overflow: auto;
-    border-top: 1px solid #E5E5E5;
-    width: 106%;
-}
-
-#conversation-panel .message {
+    #btn-chat-message {
+        margin: 5px;
+        color: red;
+        margin-top: 5px;
+        font-size: 20px;
+        text-shadow: 1px 1px white;
+        width: 100%;  /* 가로 크기를 채팅창에 맞게 조정 */
+        height: 22px;  /* 세로 크기를 10px로 조정 */
+    }
+    
+    #conversation-panel .message {
     border-bottom: 1px solid #E5E5E5;
     padding: 5px 10px;
-}
-
-#conversation-panel .message img, #conversation-panel .message video, #conversation-panel .message iframe {
+    }
+    
+    #conversation-panel .message img, #conversation-panel .message video, #conversation-panel .message iframe {
     max-width: 100%;
-}
-
-#main-video {
-    width: 100%;
+    }
+    
+    #main-video {
     margin-top: -9px;
     border-bottom: 1px solid #121010;
-    display: none;
     padding-bottom: 1px;
     display: none;
-}
-
-#other-videos {
+    }
+    
+    #other-videos {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     margin-top: 5px;
-}
-
-#other-videos video {
-    width: 100%; /* 비디오의 너비를 부모 요소의 너비로 설정 */
-    height: 200px; /* 비디오의 높이를 200px로 설정 */
-    margin: 5px;
-    border: 1px solid black;
-    padding: 1px;
-    border-radius: 3px;
-}
-
-hr {
+    }
+    
+    hr {
     height: 1px;
     border: 0;
     background: #E5E5E5;
-}
-
-#btn-attach-file {
+    }
+    
+    #btn-attach-file, #btn-share-screen {
     width: 25px;
     vertical-align: middle;
     cursor: pointer;
     display: none;
-}
-
-#btn-share-screen {
-    width: 25px;
-    vertical-align: middle;
-    cursor: pointer;
-    display: none;
-}
-
-.checkmark {
+    }
+    
+    .checkmark {
     display:none;
     width: 15px;
     vertical-align: middle;
-}
-
-#screen-viewer {
+    }
+    
+    #screen-viewer {
     position: fixed;
     top: 0;
     left: 0;
@@ -126,4 +157,93 @@ hr {
     height: 100%;
     z-index: 9999999999999;
     display: none;
-}
+    }
+    
+    #popup {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    text-align: center;
+    padding-top: 20%;
+    font-family: Arial, sans-serif;
+    }
+    
+    #popup div {
+    background: white;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    }
+    
+    #popupText {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    }
+    
+    #returnHomeBtn, #nextSessionBtn {
+    background-color: lightskyblue;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    }
+    
+    #nextSessionBtn {
+    background-color: greenyellow;
+    }
+    
+    #timer, #timerTxt {
+    font-size: 30px;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    background: linear-gradient(120deg, red, rgb(200, 132, 7), rgb(176, 188, 8), green, blue, indigo, rgb(205, 90, 205));
+    background-size: 200% 200%;
+    animation: gradient 10s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    }
+    
+    @keyframes gradient {
+    0% {background-position: 100% 0%;}
+    100% {background-position: 0% 100%;}
+    }
+    
+    #bidBtn {
+    position: absolute;
+    width: 80%;
+    height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right, #007bff, #33ccff); /* 그라데이션 배경 적용 */
+    border: none;
+    border-radius: 25px;
+    transition: background-color 0.3s, box-shadow 0.3s; /* 그림자 효과에도 효과적용*/
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1); /* 그림자 효과 적용 */
+    }
+    
+    #bidBtn:hover {
+    background: linear-gradient(to right, #0056b3, #0099cc); /* 호버시 그라데이션 색상 변경 */
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* 호버시 그림자 색상 변경 */
+    }
