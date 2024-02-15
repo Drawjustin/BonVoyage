@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +31,8 @@ public class ArtistHomepageCommentService {
     public ArtistHomepageCommentDto createArtistHomepageComment(ArtistHomepageCommentDto artistHomepageCommentDto) {
 
         ArtistHomepageComment artistHomepageComment = new ArtistHomepageComment();
-        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtist()));
-        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMember()));
+        artistHomepageComment.setArtist(artistRepository.readArtistBySeq(artistHomepageCommentDto.getArtistSeq()));
+        artistHomepageComment.setMember(memberRepository.readMemberBySeq(artistHomepageCommentDto.getMemberSeq()));
         artistHomepageComment.setArtistHomepageCommentContentCreatedDate(LocalDateTime.now());
         artistHomepageComment.setArtistHomepageCommentIsdeleted(false);
         artistHomepageComment.setArtistHomepageCommentContent(artistHomepageCommentDto.getArtistHomepageCommentContent());
@@ -39,12 +40,13 @@ public class ArtistHomepageCommentService {
 
         artistHomepageCommentDto.setArtistHomepageCommentSeq(newArtistHomepageComment.getArtistHomepageCommentSeq());
 
-
         return artistHomepageCommentDto;
     }
 
 
     public List<ArtistHomepageCommentDto> readAlLHomepageCommentByArtist(Long Seq) {
+
+
         return convertToDtoList(artistHomepageCommentRepository.readAlLHomepageCommentByArtist(Seq));
 
     }
@@ -88,6 +90,8 @@ public class ArtistHomepageCommentService {
         ArtistHomepageCommentDto artistHomepageCommentDto = new ArtistHomepageCommentDto();
         artistHomepageCommentDto.setArtistHomepageCommentContent(artistHomepageComment.getArtistHomepageCommentContent());
         artistHomepageCommentDto.setArtistHomepageCommentSeq(artistHomepageComment.getArtistHomepageCommentSeq());
+        artistHomepageCommentDto.setArtistSeq(artistHomepageComment.getArtist().getArtistSeq());
+        artistHomepageCommentDto.setMemberSeq(artistHomepageComment.getMember().getMemberSeq());
         return artistHomepageCommentDto;
     }
 

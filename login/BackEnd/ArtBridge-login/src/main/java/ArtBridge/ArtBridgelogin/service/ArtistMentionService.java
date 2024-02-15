@@ -93,7 +93,7 @@ public class ArtistMentionService {
     @Transactional
     public ArtistMentionDto updateArtistMention(Long id, ArtistMentionDto updatedArtistMentionDto) {
 
-        ArtistMention artistMention = artistMentionRepository.readOne(id);
+        ArtistMention artistMention = artistMentionRepository.readById(id);
 
         if (artistMention == null) {
             throw new NoDataFoundException("ID가 " + id + "인 아티스트 멘션을 찾을 수 없습니다.");
@@ -130,7 +130,7 @@ public class ArtistMentionService {
         artistMentionDto.setArtistId(artistMention.getArtist().getArtistId());
         artistMentionDto.setContent(artistMention.getArtistMentionContent());
         artistMentionDto.setSubject(artistMention.getArtistMentionSubject());
-
+        artistMentionDto.setCreatedDate(artistMention.getArtistMentionCreatedDate());
         System.out.println(artistMentionDto.getContent());
         return artistMentionDto;
     }
