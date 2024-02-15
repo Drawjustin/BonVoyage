@@ -76,7 +76,7 @@ const AuctionModifyPage = (props:any) => {
         auctionScheduledTime:dayjs(selectedDate),
         auctionIsMiscarried:false,
         auctionStatus:1,
-        itemSeq:curData?.itemSeq
+        auctionSeq:curData?.auctionSeq
     }
     console.log(toSend);
     try {

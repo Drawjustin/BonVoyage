@@ -80,7 +80,7 @@ const ProductDetailPage = (props) => {
       ) : (
         <div className={styles.card_wrapper}>
           <div className={styles.card_img}>
-            <img src={ImageList[(props.params.itemId)%7]} alt="product card" />
+            <img src={ImageList[(props.params.itemId)%15]} alt="product card" />
           </div>
           <div className={styles.card_description}>
             <h3>{product.itemName}</h3>

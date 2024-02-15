@@ -43,7 +43,7 @@ const AuctionCard = ({ data, currentUser, image }:any) => {
       }
 
       noticeItem();
-    })
+    }, [])
 
     
 

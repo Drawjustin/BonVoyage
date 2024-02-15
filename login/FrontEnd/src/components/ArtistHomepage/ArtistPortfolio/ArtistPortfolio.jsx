@@ -31,8 +31,9 @@ const DraggableTimelineItem = ({ item, index, moveItem }) => {
   });
 
   return (
-    <div ref={(node) => ref(drop(node))} style={{ cursor: 'grab' }}>
-      {item.children}
+    <div ref={(node) => ref(drop(node))} style={{ cursor: 'grab' }} className={styles.edit_item}>
+      <div style={{marginRight: '10px'}}>=</div>
+      <div>{item.children}</div>
     </div>
   );
 };
