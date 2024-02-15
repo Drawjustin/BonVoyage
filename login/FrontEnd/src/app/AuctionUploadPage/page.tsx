@@ -79,7 +79,7 @@ const AuctionUploadPage = () => {
         auctionScheduledTime:dayjs(selectedDate),
         auctionIsMiscarried:false,
         auctionStatus:1,
-        itemSeq:12
+        itemSeq:232
     }
     console.log(toSend);
     try {
