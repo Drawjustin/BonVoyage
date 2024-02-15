@@ -130,7 +130,7 @@ public class ArtistMentionService {
         artistMentionDto.setArtistId(artistMention.getArtist().getArtistId());
         artistMentionDto.setContent(artistMention.getArtistMentionContent());
         artistMentionDto.setSubject(artistMention.getArtistMentionSubject());
-
+        artistMentionDto.setCreatedDate(artistMention.getArtistMentionCreatedDate());
         System.out.println(artistMentionDto.getContent());
         return artistMentionDto;
     }
