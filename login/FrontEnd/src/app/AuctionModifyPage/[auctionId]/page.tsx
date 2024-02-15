@@ -34,7 +34,7 @@ const AuctionModifyPage = (props:any) => {
 
       funcGetData();
 
-    })
+    }, [])
     
 
   const router = useRouter();

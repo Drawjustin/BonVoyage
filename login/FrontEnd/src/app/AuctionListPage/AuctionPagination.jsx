@@ -12,6 +12,16 @@ import { useSearchParams } from 'next/navigation';
 
 const AuctionPagination = ({PageLink}) => {
   
+  const ImageList = [
+  'https://post-phinf.pstatic.net/20161019_250/1476869873132HGuVr_JPEG/101.cafe-terrace-place-du-forum-arles-1888%281%29.jpg?type=w800_q75',
+  'https://i0.wp.com/cdn.tiqets.com/wordpress/blog/wp-content/uploads/2021/04/07092809/909px-Van_Gogh_-_Starry_Night_-_Google_Art_Project.jpg?resize=909%2C720&ssl=1',
+  'https://img.hankyung.com/photo/202108/01.27153801.1.jpg',
+  'https://file.mk.co.kr/meet/neds/2012/09/image_readtop_2012_558936_1346631627715607.jpg',
+  'https://mblogthumb-phinf.pstatic.net/MjAyMzAzMDRfMjc3/MDAxNjc3OTA3MzQzODc0.Ab6w45CixyH335WqVp3G2tLIkUg6W1tgDVIXPUC7OtAg.tZNEeUlTIfvnXF8J22tEAERJZW-JAoqGyhD8bKFc3AEg.PNG.yogocode/SE-d12e618f-16cd-4461-9ef6-124515bc1fc4.png?type=w800',
+  'https://cdn.namdonews.com/news/photo/202106/608469_229017_5028.jpg',
+  'https://newsprime.co.kr/data/photos/news/photo/200710/23532-2-9325.jpg'
+  ]
+
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);
   const [Sort, setSortBy] = useState('Like');
@@ -98,7 +108,7 @@ const AuctionPagination = ({PageLink}) => {
                   currentUser={currentUser}
                   key={auction.itemSeq}
                   data={auction}
-                  image={auction.image}
+                  image={ImageList[(auction.itemSeq)%7]}
                 />
               ))}
             </div>

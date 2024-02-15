@@ -1,6 +1,10 @@
 .cart_empty {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
     margin-top: 50px;
     margin-bottom: 50px;
+    text-align: center;
 
     img {
         width: 320px;
