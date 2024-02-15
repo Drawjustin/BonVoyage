@@ -10,10 +10,11 @@ import styles from './ArtistAuctionCalendar.module.scss'
 
 const Calendar1 = () => {
   const [value, onChange] = useState(new Date());
+  // const [dayList, setDayList] = useState([]);
 
   const dayList = [
-    '2024-01-05',
-    '2024-01-21',
+    '2024-02-12',
+    '2024-02-20',
   ];
 
   // 날짜 컨텐츠를 생성하는 함수
@@ -30,6 +31,34 @@ const Calendar1 = () => {
 
     return <div>{contents}</div>;
   };
+
+
+  // 경매 일정 get
+  // const ScheduleRead = async () => {
+  //   try {
+  //       const backendUrl = 'https://i10a207.p.ssafy.io/api';
+  //       const response = await axios.get(`${backendUrl}/mypage/${artistSeq}`);
+  //       const ScheduleList = response.data;
+  //       console.log(ScheduleList)
+  //       // artistMentions.subject
+  //       // const schedules = ScheduleList.map(schedule => ({
+          
+  //       //   // date: mention.artistMentionCreatedDate,
+  //       // }));
+  //       // const newPosts = artistMentions.map(mention => ({
+  //       //   title: mention.artistHompageCommentContent,
+  //       //   content: mention.artistHompageCommentContent,
+  //       //   id: mention.artistId,
+  //       //   mentionseq: mention.artistHomepage
+  //       //   // date: mention.artistMentionCreatedDate,
+  //       // }));
+  //       setDayList(ScheduleList);
+  //   } catch (error) {
+  //     console.error('데이터를 불러오는 중 에러 발생:', error);
+  //   }
+  // };
+
+  // console.log(dayList)
 
   return (
       <div className={styles.container}>
@@ -50,9 +79,9 @@ const Calendar1 = () => {
               {/* 상품 사진 */}
             </div>
             <div className={styles.product_info}>
-              <p>작가 ㅇㅇㅇ</p>
+              {/* <p>작가 ㅇㅇㅇ</p> */}
               <p>상품명</p>
-              <p>1월 24일 18:00</p>  
+              <p>2월 12일 12:00</p>
             </div>
           </div>
           <div className={styles.schedule_product}>
@@ -60,9 +89,9 @@ const Calendar1 = () => {
               {/* 상품 사진 */}
             </div>
             <div className={styles.product_info}>
-              <p>작가 ㅇㅇㅇ</p>
+              {/* <p>작가 ㅇㅇㅇ</p> */}
               <p>상품명</p>
-              <p>1월 24일 18:00</p>  
+              <p>2월 20일 18:00</p>
             </div>
           </div>
         </div>
