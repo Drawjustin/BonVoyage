@@ -32,14 +32,8 @@
     <div
         style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
         <div style="font-family: Arial, sans-serif; margin-top: 10%;">
-            <p id="auctionDetailText"
-                style="font-size: 20px; color: #2c3e50; margin-bottom: 20px; border-bottom: 1px solid #bdc3c7; padding-bottom: 10px;">
-                📣 경매 정보
-            </p>
-            <p id="itemDetailText"
-                style="font-size: 20px; color: #2c3e50; margin-bottom: 20px; border-bottom: 1px solid #bdc3c7; padding-bottom: 10px;">
-                📦 상품 정보
-            </p>
+            <p>📣 경매 정보 <br><span id="auctionDetailText"></span></p>
+            <p>📦 상품 정보 <br><span id="itemDetailText"></span></p>
         </div>
 
         <div>
@@ -48,8 +42,8 @@
         <div style="position: relative; width: 100%; height: 150px;">
             <button id="sessionCloseBtn" class="btn btn-primary"
                 style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
-            <button id="bidBtn" class="btn btn-primary" style="position: absolute; width: 100%; height: 100%;">입찰
-                100,000 현재 최고 호가를 버튼에 띄워줄 예정</button>
+            <button id="bidBtn" class="btn btn-primary">입찰
+                100,000</button>
         </div>
     </div>
 
@@ -151,7 +145,7 @@
         let aucSessionTime = 10; //원래 180임
 
         //URL
-        var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+        var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/price";
         var getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
 
         // here goes canvas designer
@@ -287,6 +281,7 @@
 
             if (isEnd) {
                 getBidWinnerName().then(() => {
+                    console.log(winnerInfo);
                     if (sessionArtist === currentUserName || currentUserName === winnerInfo.memberId) { // 작가 혹은 낙찰자인 경우
                         nextSessionBtn.style.display = 'block';
                         returnHomeBtn.style.display = "none";
@@ -409,11 +404,10 @@
         }
 
         // 경매 정보 한국어 변환을 위해 필요한 정보
-        let keysToShow = ["auctionSeq", "auctionScheduledTime", "auctionStatus", "auctionStartPoint", "auctionAskPoint"];
+        let keysToShow = ["auctionSeq", "auctionScheduledTime", "auctionStartPoint", "auctionAskPoint"];
         let keyToKorean = {
             "auctionSeq": "경매 번호",
             "auctionScheduledTime": "경매 예정 시간",
-            "auctionStatus": "경매 상태",
             "auctionStartPoint": "경매 시작가",
             "auctionAskPoint": "경매 호가 퍼센트",
         };
@@ -597,6 +591,7 @@
             } else {
                 div.innerHTML = '<b>You:</b> <img class="checkmark" id="' + checkmark_id + '" title="Received" src="https://www.webrtc-experiment.com/images/checkmark.png"><br>' + event;
                 div.style.background = '#cbffcb';
+                
             }
 
             conversationPanel.appendChild(div);
