@@ -6,6 +6,7 @@ import ArtBridge.ArtBridgelogin.domain.AuctionPointDetail;
 import ArtBridge.ArtBridgelogin.domain.Member;
 import ArtBridge.ArtBridgelogin.repository.AuctionRepository;
 import ArtBridge.ArtBridgelogin.repository.MemberRepository;
+import ArtBridge.ArtBridgelogin.service.errorMessage.MyDataAccessException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,13 @@ public class WebrtcService {
     private AuctionRepository auctionRepository;
 
     @Transactional
-    public String createBid(Long seq, AuctionPointDetailDto bidRequestDto) {
+    public AuctionPointDetailDto createBid(AuctionPointDetailDto bidRequestDto) {
         try {
-
-            webrtcRepository.createBid(seq, convertToEntity(bidRequestDto));
-            return "sucess";
+            AuctionPointDetail auctionPointDetail = convertToEntity(bidRequestDto);
+            return convertToDto(webrtcRepository.createBid(auctionPointDetail));
         }
         catch (Exception e){
-            return "error";
+            throw new MyDataAccessException("Failed to create auctionPointDetail", e);
         }
     }
 
