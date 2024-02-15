@@ -61,4 +61,11 @@ public class ArtistHomepageCommentRepository {
                 .where(qArtistHomepageComment.artistHomepageCommentSeq.eq(seq))
                 .fetchOne();
     }
+
+    public List<ArtistHomepageComment> readAlLHomepageCommentByArtist(Long seq) {
+        return queryFactory.selectFrom(qArtistHomepageComment)
+                .where(qArtistHomepageComment.artist.artistSeq.eq(seq))
+                .fetch();
+
+    }
 }
