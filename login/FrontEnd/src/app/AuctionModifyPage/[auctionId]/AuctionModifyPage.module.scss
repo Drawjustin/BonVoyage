@@ -1,20 +1,17 @@
 .productUploadContainer {
   position: relative;
-  // align-items: center;
-  margin: 0 auto;
-  color: #f1efee;
+    
+    margin: 0 auto;
+    color: #f1efee;
   }
   
   .formContainer {
-    margin-left: 10vh;
-    width: 75%;
     background-color: transparent;
     display: flex;
     flex-direction: column;
   }
   
   .imageUploadContainer {
-
     max-width: 50vh;
     margin: 0 auto;
   }

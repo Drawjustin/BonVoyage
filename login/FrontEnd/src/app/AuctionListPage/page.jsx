@@ -14,6 +14,7 @@ import AuctionPagination from './AuctionPagination'
 
 const AuctionListPage = async () => {
 
+
   const navigate = useRouter();
   const currentUser = getCurrentUser();
   let auctions = [];

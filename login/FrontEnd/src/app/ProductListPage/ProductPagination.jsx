@@ -16,6 +16,18 @@ import m4 from './m4.jpg';
 
 const ProductPagination = ({PageLink}) => {
   
+  const ImageList = [
+    'https://seoartgallery.com/wp-content/uploads/2016/07/828px-Vincent_Van_Gogh_-_Three_Sunflowers_F453-510x631.jpg',
+    'https://i.pinimg.com/736x/97/95/ae/9795ae9009f61d5e1b01d78ec5cae030.jpg',
+    'https://www.m-i.kr/news/photo/201703/297262_166384_5948.jpg',
+    'https://auctiondaily.com/wp-content/uploads/2022/10/Korea-News-Breeze-Art-Fair-Opens-Where-You-Can-Meet-New-Korean-Artists-1.webp',
+    'https://m.pressian.com/_resources/10/2021/09/29/2021092916105639554_l.jpg',
+    'https://wimg.mk.co.kr/meet/neds/2022/03/image_readtop_2022_231921_16471547574973113.jpg',
+    'https://artrie.com/HyAdmin/naverEditor/upload/1697258735.jpg',
+    // 'https://post-phinf.pstatic.net/MjAyMjA2MjBfMjY4/MDAxNjU1NjkxMDc3NTUz.yoLw0kBWOKguYWyds9cQoQp4IZAXl_wMoxDE4XHGuvcg.eSJw4ShyB8o13YuE-AZ0Lxh42O-rSxtgploWvfO9mCYg.JPEG/20220601_141155.jpg?type=w800_q75',
+    // '',
+    // '',
+  ];
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);
   const [Sort, setSortBy] = useState('Like');
@@ -28,10 +40,13 @@ const ProductPagination = ({PageLink}) => {
   // 서버에서 데이터를 가져오는 함수
   const fetchDataFromBackend = async (page) => {
     try {
-      const response = axios.get('https://i10a207.p.ssafy.io/api/item', {
-
+      const response = await axios.get('https://i10a207.p.ssafy.io/api/item', {
+        params: {
+          page: page,
+          itemsPerPage: PRODUCTS_PER_PAGE,
+        },
       });
-      return (await response).data;
+      return response.data;
     } catch (error) {
       console.error('Error fetching products from backend:', error);
       throw error;
@@ -126,7 +141,7 @@ const ProductPagination = ({PageLink}) => {
                     currentUser={currentUser}
                     key={product.itemSeq}
                     data={product}
-                    image={product.image}
+                    image={ImageList[(product.itemSeq)%7]}
                     />
                     ))}
               
@@ -141,7 +156,7 @@ const ProductPagination = ({PageLink}) => {
                   currentUser={currentUser}
                   key={product.itemSeq}
                   data={product}
-                  image={product.image}
+                  image={ImageList[(product.itemSeq)%7]}
                 />
               ))}
             </div>
