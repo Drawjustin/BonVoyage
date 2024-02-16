@@ -17,8 +17,8 @@ const ReviewCard = ({ data, currentUser, image }: any) => {
   useEffect(() => {
     const fetchReviewDetail = async () => {
       try {
-        console.log(data.itemSeq);
-        const response = await axios.get(`https://i10a207.p.ssafy.io/api/review/${data.itemSeq}`);
+        console.log(data.seq);
+        const response = await axios.get(`https://i10a207.p.ssafy.io/api/review/${data.seq}`);
         setReviewDetail(response.data);
 
         localStorage.setItem('productDetail', JSON.stringify(response.data));
@@ -28,16 +28,16 @@ const ReviewCard = ({ data, currentUser, image }: any) => {
     };
 
     fetchReviewDetail();
-  }, [data.itemSeq]);
+  }, [data.seq]);
 
   const handleCardClick = () => {
     // Add logic for handling card click
-    router.push(`/ReviewDetailPage/${data.itemSeq}`);
+    router.push(`/ReviewDetailPage/${data.seq}`);
   };
 
   return (
     <div
-    onClick={() => router.push(`/review/${data.itemSeq}`)}
+    onClick={handleCardClick}
     className={styles.Card}>
         <div className={styles.card2}>
             <div className={styles.template}>

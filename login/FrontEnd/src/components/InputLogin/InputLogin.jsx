@@ -87,6 +87,7 @@ const InputLogin = () => {
         
       } catch (error) {
       console.log('에러에러', error);
+      alert('로그인 실패');
       return null;
     } finally {
       setIsLoading(false);
