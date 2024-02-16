@@ -92,7 +92,7 @@ const ArtistPortfolio = () => {
         <div className={styles.history}>
           <div className={styles.title_btn}>
             <div className={styles.title}>🎨 작가 이력</div>
-            {isEditMode ? (
+            {/* {isEditMode ? (
               <button className={styles.edit} onClick={() => setIsEditMode(false)} style={{ fontFamily: 'Gowun Dodum' }}>
                 완료
               </button>
@@ -100,7 +100,7 @@ const ArtistPortfolio = () => {
               <button className={styles.edit} onClick={() => setIsEditMode(true)} style={{ fontFamily: 'Gowun Dodum' }}>
                 수정하기
               </button>
-            )}
+            )} */}
           </div>
           {isEditMode && (
             <>

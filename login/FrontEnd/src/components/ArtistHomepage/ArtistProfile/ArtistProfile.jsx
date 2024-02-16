@@ -3,6 +3,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import styles from './ArtistProfile.module.scss'
 import { Divider } from 'antd';
 import axios from 'axios';
+import img1 from './image.png'
 
 const Profile = ({artistId}) => {
   const defaultImage = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
@@ -56,15 +57,16 @@ const Profile = ({artistId}) => {
   
   return (
       <div className={styles.container}>
-        <input type='file' 
+        {/* <input type='file' 
             style={{display:'none'}}
             accept='image/jpg,image/png,image/jpeg' 
             name='profile_img'
             onChange={onChange}
-            ref={fileInput}/>
-        <img src={Image}
+            ref={fileInput}/> */}
+            <img src={img1} className={styles.profile_img}/>
+        {/* <img src={Image}
           onClick={()=>{fileInput.current.click()}} 
-          className={styles.profile_img} />
+          className={styles.profile_img} /> */}
         <div className={styles.profile_info}>
           <div className={styles.name}>
             <div style={{ paddingTop: '10px' }}>작가 {artistName}</div>

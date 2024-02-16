@@ -6,11 +6,11 @@
   position: fixed;
   color: #171de5;
   border-radius: 8px;
-  background-color: #f1efee;
+  // background-color: #f1efee;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1000;
+  z-index: 1000000;
   padding: 10px 10px; /* 네비게이션 바 내부 여백 설정 */
   display: flex;
   justify-content: space-between;
@@ -109,7 +109,7 @@
 .nnavbar {
   position: relative;
   overflow-x: hidden;
-  background-color: #CFD8DC;
+  // background-color: #CFD8DC;
 }
 
 #wrapper {

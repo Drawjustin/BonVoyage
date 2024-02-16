@@ -3,7 +3,6 @@ import Slider from 'react-slick';
 import styled from "styled-components";
 import styles from './Slider1.module.scss'
 
-import img1 from './m1.jpg';
 import img2 from './m2.jpg';
 import img3 from './m3.jpeg';
 import img4 from './m4.jpg';
@@ -96,11 +95,11 @@ const Slider1 = () => {
     return (
         <div className={styles.slide_container}>
             <StyledSlide {...settings}>
-                <img src={img2} id="0" />
-                <img src={img1} id="1" />
-                <img src={img3} id="2" />
-                <img src={img4} id="3" />
-                <img src={img3} id="4" />
+                <img src={'https://post-phinf.pstatic.net/MjAyMjA2MjBfMjY4/MDAxNjU1NjkxMDc3NTUz.yoLw0kBWOKguYWyds9cQoQp4IZAXl_wMoxDE4XHGuvcg.eSJw4ShyB8o13YuE-AZ0Lxh42O-rSxtgploWvfO9mCYg.JPEG/20220601_141155.jpg?type=w800_q75'} id="0" />
+                <img src={'https://wimg.mk.co.kr/meet/neds/2022/03/image_readtop_2022_231921_16471547574973113.jpg'} id="1" />
+                <img src={'https://image.newdaily.co.kr/site/data/img/2019/03/18/2019031800058_0.jpg'} id="2" />
+                <img src={'https://www.yeongnam.com/mnt/file/201808/20180815.010180744080001i1.jpg'} id="3" />
+                <img src={'https://www.medisobizanews.com/news/photo/202303/105593_95467_1744.jpg'} id="4" />
             </StyledSlide>
         </div>
     )

@@ -107,16 +107,7 @@ const ArtistInputSignup = () => {
         return;
       }
       
-      // const formData = new FormData();
-      // formData.append("email", email);
-      // formData.append("password", password);
-      // formData.append("confirmPassword", confirmPassword);
-      // formData.append("username", username);
-      // formData.append("userid", userid);
-      // formData.append("file", portfolio);
-      // formData.append("penname", penname);
-      
-      const data = {
+      const artistData = {
        "name": username,
        "id": userid,
        "pw": password,
@@ -126,16 +117,16 @@ const ArtistInputSignup = () => {
        "contact": phonenum,
       }
 
-      const jsonString = JSON.stringify(data);
+      const jsonString = JSON.stringify(artistData);
 
       try {
-        const response = await axios.post('https://i10a207.p.ssafy.io/api/artists/new', jsonString, {
+        axios.post('https://i10a207.p.ssafy.io/api/artists/new', jsonString, {
           headers: {
-            'Content-Type': 'application/json;  charset=UTF-8',
+            'Content-Type': 'application/json;charset=UTF-8',
           },
         });
 
-        console.log(response.data);
+        // console.log(response.data);
         navigate.push('/');
       } catch (error) {
         console.error(error);

@@ -119,28 +119,28 @@ const ArtistTalkDetail = ({ postId, posts, onBackClick, isArtist, artistId }) =>
     };
 
     // 작가의 말 댓글 목록
-    const fetchComments = async () => {
-        try {
-        const backendUrl = 'https://i10a207.p.ssafy.io/api';
-        const response = await axios.get(`${backendUrl}/artistMentionComment/${postId}`);
-        const HomepageComments = response.data;
-        console.log(HomepageComments);
-        const newMentionComment = HomepageComments.map(m_comment => ({
-            content: m_comment.artistHompageCommentContent,
-            // date: comment.artistHompageCommentContentCreatedDate,
-            commentseq: m_comment.artistHomepageCommentSeq,
-            member: m_comment.member,
-            artist: m_comment.artist,
-        }));
-        // const NewContent = HomepageComments.artistHompageCommentContent
-        // const NewSeq = HomepageComments.artistHomepageCommentSeq
-        // const newComments = HomepageComments.artistHompageCommentContent
-        setMentionComment(newMentionComment);
-        // fetchComments();
-        } catch (error) {
-        console.error('데이터를 불러오는 중 에러 발생:', error);
-        }
-    };
+    // const fetchComments = async () => {
+    //     try {
+    //     const backendUrl = 'https://i10a207.p.ssafy.io/api';
+    //     const response = await axios.get(`${backendUrl}/artistMentionComment/${postId}`);
+    //     const HomepageComments = response.data;
+    //     console.log(HomepageComments);
+    //     const newMentionComment = HomepageComments.map(m_comment => ({
+    //         content: m_comment.artistHompageCommentContent,
+    //         // date: comment.artistHompageCommentContentCreatedDate,
+    //         commentseq: m_comment.artistHomepageCommentSeq,
+    //         member: m_comment.member,
+    //         artist: m_comment.artist,
+    //     }));
+    //     // const NewContent = HomepageComments.artistHompageCommentContent
+    //     // const NewSeq = HomepageComments.artistHomepageCommentSeq
+    //     // const newComments = HomepageComments.artistHompageCommentContent
+    //     setMentionComment(newMentionComment);
+    //     // fetchComments();
+    //     } catch (error) {
+    //     console.error('데이터를 불러오는 중 에러 발생:', error);
+    //     }
+    // };
 
     // // 작가의 말 댓글 생성
     const handleCommentSubmit = () => {
@@ -258,20 +258,20 @@ const ArtistTalkDetail = ({ postId, posts, onBackClick, isArtist, artistId }) =>
                         </button> */}
                     </div>
                     <div className={styles.comment_list}>
-                        {/* <div className={styles.comment}>
+                        <div className={styles.comment}>
                             <div className={styles.nickname}>⛵ 고구마</div>
                             <div>안녕하세요 그림이 너무 제 취향이라 구독하고 갑니다~</div>
                         </div>
                         <div className={styles.comment}>
                             <div className={styles.nickname}>🚢 감자</div>
                             <div>작가 데뷔 축하드려요!</div>
-                        </div> */}
-                        {mentioncomment.map((comment, index) => (
+                        </div>
+                        {/* {mentioncomment.map((comment, index) => (
                         <div className={styles.comment} key={index}>
                             <div className={styles.nickname}>{comment.id}</div>
                             <div>{comment.comment}</div>
                         </div>
-                    ))}
+                    ))} */}
                     </div>
                     {/* <div className={styles.comment_list}>
                         {selectedPost.comments.map((comment, index) => (
