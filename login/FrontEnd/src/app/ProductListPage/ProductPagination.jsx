@@ -31,7 +31,7 @@ const ProductPagination = ({PageLink}) => {
     'https://www.medisobizanews.com/news/photo/202303/105593_95467_1744.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4EpBShyIrPqYQKr2qz4aUbB57tPVMBUozQBLhHt4S8KpkLnBa9txIVo4FH91hLdvEw1k&usqp=CAU',
     'https://cdn.imweb.me/thumbnail/20221118/5b7fe48c48774.png',
-    'https://lh3.googleusercontent.com/proxy/_vt2LnuQz14aX_GXXhd5IB3mRv-WQVzXGqjJaBZJb2n4LhjJ_VpS2oQ5GosF1XuqnoTv40wOhN5FCTyv1mH7ZOv24vwJXDQ3BbcHsnoH',
+    'https://cdn.aitimes.kr/news/photo/202210/26245_39460_5429.jpg',
   ];
   const currentUser = getCurrentUser();
   const [totalItems, setTotalItems] = useState(0);

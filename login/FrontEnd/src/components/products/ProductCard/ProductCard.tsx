@@ -67,9 +67,6 @@ const ProductCard = ({ data, currentUser, image }:any) => {
           {data.itemSellPrice}{" "}
           <span>원</span>
         </div>
-        <div className={styles['createdAt']}>
-          {fromNow(data.itemCreatedDate)}
-        </div>
       </div>
     </div>
   );
