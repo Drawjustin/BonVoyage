@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      },
+      { "name": "typescript-plugin-css-modules" }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@mui/system": ["node_modules/@mui/system"],
+    },
+    "typeRoots" : ["./@types", "./node_modules/@types"]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/store/cart/cart.slice.js", "src/app/LoginPage/page.jsx", "src/pages/api/auth/[...nextauth].page.js", "src/utils/authOptions.ts", "src/components/Navbar/ButtonContainer.jsx", "src/app/layout.jsx"],
+  "exclude": ["node_modules"]
+}

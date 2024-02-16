@@ -1,0 +1,78 @@
+.password_reset_container {
+    margin-top: 25vh;
+    background-color: #f1efee;
+    max-width: 400px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: black;
+    margin-left: 36vw;
+  
+    h2 {
+      margin-bottom: 10px;
+    }
+  
+    .info_text {
+      margin-bottom: 15px;
+      text-align: center;
+    }
+  
+    .input_container {
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 15px;
+
+      label {
+        margin-right: 10px;
+      }
+
+      // .icon_input {
+      //   position: relative;
+
+      //   label {
+      //     position: absolute;
+      //     margin-bottom: 3px;
+      //   }
+    
+      //   input {
+      //     width: calc(80% - 5px);
+      //     border: 1px solid #ccc;
+      //     border-radius: 8px;
+      //     flex: 1;
+      //     padding-left: 35px;
+      //     padding-top: 10px;
+      //     padding-bottom: 10px;
+      //     padding-right: 10px;
+      //   }
+      // }
+
+      input {
+          width: calc(80% - 15px);
+          border: 1px solid #ccc;
+          border-radius: 8px;
+          flex: 1;
+          padding-left: 15px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-right: 10px;
+      }
+
+      .newPassword {
+        margin-right: 24px;
+      }
+    }
+  
+    .reset_button {
+      width: 100%;
+      padding: 10px;
+      background-color: #171de5;
+      color: #f1efee;
+      border: #f1efee solid 1px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+  

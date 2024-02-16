@@ -1,5 +1,7 @@
 package ArtBridge.ArtBridgelogin.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,31 +18,28 @@ public class ArtistHomepageComment {
     @Column(name = "artist_homepage_comment_seq")
     private Long artistHomepageCommentSeq;
 
-    @Column(name = "artist_seq", insertable = false, updatable = false)
-    private String artistSeq;
-
-    @Column(name = "member_seq", insertable = false, updatable = false)
-    private String memberSeq;
-
     @Column(name = "artist_homepage_comment_content", updatable = false)
-    private String artistHompageCommentContent;
+    private String artistHomepageCommentContent;
 
     @Column(name = "artist_homepage_comment_created_date")
-    private LocalDateTime artistHompageCommentContentCreatedDate;
+    private LocalDateTime artistHomepageCommentContentCreatedDate;
 
     @Column(name = "artist_homepage_comment_isdeleted")
     private boolean artistHomepageCommentIsdeleted;
 
     @Column(name = "artist_homepage_comment_deleted_date")
-    private LocalDateTime artistHompageCommentContentDeletedDate;
+    private LocalDateTime artistHomepageCommentContentDeletedDate;
 
+    //    ----------------------------------------------------
 
-//    @ManyToOne
-//    @JoinColumn(name = "artist_seq")
-//    private Artist artist;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "member_seq")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "member_seq")
+    private Member member;
 
 }

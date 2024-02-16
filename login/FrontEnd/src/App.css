@@ -1,0 +1,93 @@
+#root {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  /* margin-top: 10vh; */
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-image: linear-gradient(-30deg, #8fc7e9 0%, #262e7a 100%);
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+  background-color: transparent;
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+  background-color: transparent;
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+  background-color: transparent;
+}
+
+@keyframes gradientAnimation {
+  0% {
+      background-position: 10% 10%;
+  }
+  100% {
+      background-position: 90% 90%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: transparent;
+  padding: 10px 20px;
+}
+
+.logo img {
+  height: 50px; /* 로고 이미지의 높이를 조절하세요 */
+}
+
+nav {
+  background-color: transparent;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: transparent;
+}
+
+nav ul li {
+  margin-right: 20px;
+  display: inline-block;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff; /* 링크 텍스트 색상은 원하는 색상으로 변경하세요 */
+  font-weight: bold;
+  font-size: 16px;
+}

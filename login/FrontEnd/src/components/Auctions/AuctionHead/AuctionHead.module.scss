@@ -1,0 +1,13 @@
+.auction_head_container {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    position: relative;
+  
+    .image {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+  

@@ -1,40 +1,80 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.ArtistMention;
+import ArtBridge.ArtBridgelogin.domain.QArtist;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class ArtistMentionRepository {
 
+    @PersistenceContext
     private final EntityManager em;
 
+    private final ArtBridge.ArtBridgelogin.domain.QArtistMention qArtistMention = ArtBridge.ArtBridgelogin.domain.QArtistMention.artistMention;
 
+    private JPAQueryFactory queryFactory;
 
-    @Transactional
-    public ArtistMention create(ArtistMention artistMention){
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(em);
+    }
+
+    public ArtistMentionRepository(EntityManager em) {
+        this.em = em;
+    }
+
+    // 아티스트 멘션 생성 메서드
+    public ArtistMention create(ArtistMention artistMention) {
+
         em.persist(artistMention);
         return artistMention;
     }
 
-    @Transactional(readOnly = true)
-    public ArtistMention findOne(Long id){return em.find(ArtistMention.class, id);}
-
-    @Transactional(readOnly = true)
-    public List<ArtistMention> findAll(){
-        return em.createQuery("select m from ArtistMention m", ArtistMention.class)
-                .getResultList();
+    // 모든 아티스트 멘션 조회 메서드
+    public List<ArtistMention> readAll() {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .fetch();
     }
 
-    @Transactional
-    public void deleteById(Long id) {
-        em.createQuery("DELETE FROM ArtistMention m WHERE m.artistId = :id")
-                .setParameter("artistId", id)
-                .executeUpdate();
+    public List<ArtistMention> readAllbyArtist(Long Seq) {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .where(qArtistMention.artist.artistSeq.eq(Seq))
+                .fetch();
     }
+    // 아티스트 멘션 일련번호로 조회 메서드
+    public ArtistMention readOne(Long artistMentionId) {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .where(qArtistMention.artist.artistSeq.eq(artistMentionId))
+                .fetchOne();
+    }
+
+    public ArtistMention readById(Long artistMentionId) {
+        return queryFactory
+                .selectFrom(qArtistMention)
+                .where(qArtistMention.artistMentionSeq.eq(artistMentionId))
+                .fetchOne();
+    }
+
+    // 아티스트 멘션 업데이트 메서드
+    public void updateArtistMention(Long artistMentionSeq, ArtistMention updatedArtistMention) {
+        em.merge(updatedArtistMention);
+    }
+
+    // 아티스트 멘션 삭제 메서드
+    public void deleteArtistMention(Long artistMentionSeq) {
+        queryFactory
+                .delete(qArtistMention)
+                .where(qArtistMention.artistMentionSeq.eq(artistMentionSeq))
+                .execute();
+    }
+
 }

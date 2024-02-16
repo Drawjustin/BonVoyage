@@ -1,12 +1,13 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Artist;
+import ArtBridge.ArtBridgelogin.domain.QArtist;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,44 +16,91 @@ import java.util.List;
 public class ArtistRepository {
 
     private final EntityManager em;
+    private QArtist qArtist = QArtist.artist;
+    private JPAQueryFactory queryFactory;
 
-    @Transactional
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(em);
+    }
+
     public Artist create(Artist artist) {
         em.persist(artist);
         return artist;
     }
 
-    @Transactional(readOnly = true)
-    public Artist findArtistByName(String artistId) {
-        String jpql = "SELECT a FROM Artist a WHERE a.artistId = :artistId";
-        TypedQuery<Artist> query = em.createQuery(jpql, Artist.class);
-        query.setParameter("artistId", artistId);
+    public List<Artist> readAllArtistsSorted() {
+        return queryFactory
+                .selectFrom(qArtist)
+                .orderBy(qArtist.artistName.asc())
+                .fetch();
+    }
 
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null; // 해당 조건에 맞는 결과가 없을 경우
+    public Artist readArtistById(String artistId) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistId.eq(artistId))
+                .fetchOne();
+    }
+    public Artist readArtistBySeq(Long artistSeq) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistSeq.eq(artistSeq))
+                .fetchOne();
+    }
+//    @Transactional(readOnly = true)
+//    public Optional<Artist> findById(String artistId) {
+//        Artist artist = queryFactory
+//                .selectFrom(qArtist)
+//                .where(qArtist.artistId.eq(artistId))
+//                .fetchOne();
+//
+//        return Optional.ofNullable(artist);
+//    }
+
+    public List<Artist> readAll() {
+        return queryFactory
+                .selectFrom(qArtist)
+                .fetch();
+    }
+    public Artist updateArtist(String artistId, Artist updatedArtist) {
+        long updatedCount = queryFactory
+                .update(QArtist.artist)
+                .set(QArtist.artist.artistName, updatedArtist.getArtistName())
+                .set(QArtist.artist.artistPwd, updatedArtist.getArtistPwd())
+                .set(QArtist.artist.artistNickname, updatedArtist.getArtistNickname())
+                .set(QArtist.artist.artistEmail, updatedArtist.getArtistEmail())
+                .set(QArtist.artist.artistContact, updatedArtist.getArtistContact())
+                .set(QArtist.artist.artistPoint, updatedArtist.getArtistPoint())
+                .set(QArtist.artist.artistIsdeleted, updatedArtist.isArtistIsdeleted())
+                .set(QArtist.artist.artistDeletedDate, updatedArtist.getArtistDeletedDate())
+                .set(QArtist.artist.artistCreatedDate, updatedArtist.getArtistCreatedDate())
+                .where(QArtist.artist.artistId.eq(artistId))
+                .execute();
+
+        if (updatedCount > 0) {
+            return queryFactory
+                    .selectFrom(QArtist.artist)
+                    .where(QArtist.artist.artistId.eq(artistId))
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .fetchOne();
+        } else {
+            return null;
         }
     }
 
-    @Transactional(readOnly = true)
-    public List<Artist> findAll(){
-        return em.createQuery("select m from Artist m", Artist.class)
-                .getResultList();
+
+    public Artist readByName(String name) {
+        return queryFactory
+                .selectFrom(qArtist)
+                .where(qArtist.artistName.eq(name))
+                .fetchOne();
     }
 
-    @Transactional(readOnly = true)
-    public List<Artist> findByName(String name){
-        return em.createQuery("select m from Artist m where m.artistName = :name", Artist.class)
-                .setParameter("name", name)
-                .getResultList();
-    }
 
-    @Transactional
-    public void deleteById(String id) {
-        em.createQuery("DELETE FROM Artist m WHERE m.artistId = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+    public void deleteById(long artistSeq) {
+        Artist artist = em.find(Artist.class, artistSeq);
+        em.remove(artist);
     }
 
 }

@@ -1,21 +1,30 @@
 package ArtBridge.ArtBridgelogin.repository;
 
 import ArtBridge.ArtBridgelogin.domain.Member;
-import ArtBridge.ArtBridgelogin.domain.Member;
+import ArtBridge.ArtBridgelogin.domain.QMember;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class MemberRepository {
 
     private final EntityManager em;
+    private QMember qMember = QMember.member;
+    private JPAQueryFactory queryFactory;
+
+    @PostConstruct
+    public void init() {
+        queryFactory = new JPAQueryFactory(em);
+    }
 
     @Transactional
     public Member create(Member member) {
@@ -23,39 +32,92 @@ public class MemberRepository {
         return member;
     }
 
-    @Transactional(readOnly = true)
-    public Member findOne(Long id){return em.find(Member.class, id);}
+    public List<Member> readAllMembersSorted() {
+        return queryFactory
+                .selectFrom(qMember)
+                .orderBy(qMember.memberName.asc())
+                .fetch();
+    }
+
+
 
     @Transactional(readOnly = true)
-    public List<Member> findAll(){
-        return em.createQuery("select from Member m", Member.class)
-                .getResultList();
+    public Optional<Member> findByMemberIdAndMemberPwd(String memberId, String password) {
+        Member member = queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberId.eq(memberId).and(qMember.memberPwd.eq(password)))
+                .fetchOne();
+
+        return Optional.ofNullable(member);
+    }
+
+    public Member readMemberById(String memberId) {
+        return queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberId.eq(memberId))
+                .fetchOne();
+    }
+
+    public Member readMemberBySeq(Long memberSeq) {
+        return queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberSeq.eq(memberSeq))
+                .fetchOne();
     }
     @Transactional(readOnly = true)
-    public Member findMemberId(String memberId) {
-        String jpql = "SELECT a FROM Member a WHERE a.memberId = :memberId";
-        TypedQuery<Member> query = em.createQuery(jpql, Member.class);
-        query.setParameter("memberId", memberId);
+    public Optional<Member> findByMemberId(String memberId) {
+        Member member = queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberId.eq(memberId))
+                .fetchOne();
 
-        try {
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null; // 해당 조건에 맞는 결과가 없을 경우
+        return Optional.ofNullable(member);
+    }
+
+    public List<Member> readAll() {
+        return queryFactory
+                .selectFrom(qMember)
+                .fetch();
+    }
+
+    public Member updateMember(String memberId, Member updatedMember) {
+        long updatedCount = queryFactory
+                .update(QMember.member)
+                .set(QMember.member.memberName, updatedMember.getMemberName())
+                .set(QMember.member.memberPwd, updatedMember.getMemberPwd())
+                .set(QMember.member.memberNickname, updatedMember.getMemberNickname())
+                .set(QMember.member.memberEmail, updatedMember.getMemberEmail())
+                .set(QMember.member.memberContact, updatedMember.getMemberContact())
+                .set(QMember.member.memberPoint, updatedMember.getMemberPoint())
+                .set(QMember.member.memberIsDeleted, updatedMember.isMemberIsDeleted())
+                .set(QMember.member.memberDeletedDate, updatedMember.getMemberDeletedDate())
+                .set(QMember.member.memberCreatedDate, updatedMember.getMemberCreatedDate())
+                .where(QMember.member.memberId.eq(memberId))
+                .execute();
+
+        if (updatedCount > 0) {
+            return queryFactory
+                    .selectFrom(QMember.member)
+                    .where(QMember.member.memberId.eq(memberId))
+                    .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                    .fetchOne();
+        } else {
+            return null;
         }
     }
 
-    @Transactional(readOnly = true)
-    public List<Member> findByName(String name){
-        return em.createQuery("select m from Member m where m.memberName = :name", Member.class)
-                .setParameter("name", name)
-                .getResultList();
+    public Member readByName(String name) {
+        return queryFactory
+                .selectFrom(qMember)
+                .where(qMember.memberName.eq(name))
+                .fetchOne();
     }
 
-    @Transactional
-    public void deleteById(Long id) {
-        em.createQuery("DELETE FROM Member m WHERE m.memberSeq = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+    public void deleteByMemberId(String memberId) {
+        queryFactory
+                .delete(qMember)
+                .where(qMember.memberId.eq(memberId))
+                .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                .execute();
     }
-
 }

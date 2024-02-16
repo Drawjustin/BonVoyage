@@ -36,8 +36,8 @@ for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 @rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
 
-@rem Find java.exe
-if defined JAVA_HOME goto findJavaFromJavaHome
+@rem read java.exe
+if defined JAVA_HOME goto readJavaFromJavaHome
 
 set JAVA_EXE=java.exe
 %JAVA_EXE% -version >NUL 2>&1
@@ -51,7 +51,7 @@ echo location of your Java installation.
 
 goto fail
 
-:findJavaFromJavaHome
+:readJavaFromJavaHome
 set JAVA_HOME=%JAVA_HOME:"=%
 set JAVA_EXE=%JAVA_HOME%/bin/java.exe
 

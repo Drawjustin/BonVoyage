@@ -1,0 +1,24 @@
+.container {
+    margin-left: 47vh;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 20px;
+    margin-left: 35px;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+}
+
+.card {
+    margin: 20px;
+}
+
+.linkstyle {
+    text-decoration: none; // 하이퍼링크의 밑줄 제거
+    color: inherit; // 링크 색상을 부모 요소로부터 상속
+}

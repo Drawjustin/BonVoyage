@@ -1,0 +1,46 @@
+.Card {
+    grid-column: span 1 / span 1;
+    cursor: pointer;
+
+    .card2 {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap:0.5rem;
+    }
+
+    .template {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        aspect-ratio: 1/ 1;
+        border-radius: 0.75rem;
+    }
+
+    .heartButton {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .title {
+        font-size: 1.125rem;
+        line-height: 1.75rem;
+        font-weight: 600;
+    }
+
+    .Image {
+        object-fit: cover;
+        width:100%;
+        height:100%;
+        transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+        
+        :hover{
+            transform: scale(1.1);
+        }
+        
+    }
+}
+

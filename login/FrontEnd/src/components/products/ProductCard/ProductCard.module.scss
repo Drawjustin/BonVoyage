@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'); /* Import any additional fonts if used */
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  cursor: pointer;
+
+  .image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    border-radius: 0.75rem;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .heart-button {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+    }
+  }
+
+  .product-details {
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  .category {
+    color: #718096; /* Change to your desired text color */
+  }
+
+
+  .createdAt {
+    margin-top: 0.5rem;
+  }
+}

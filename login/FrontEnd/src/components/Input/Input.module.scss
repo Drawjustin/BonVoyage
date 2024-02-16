@@ -1,0 +1,52 @@
+
+
+.inputContainer {
+    position: relative;
+    width: 100%;
+
+    span {
+        position: absolute;
+        color: #575757; /* Change to your desired color */
+        top: 1.25rem; /* Adjust the top position as needed */
+        left: 0.5rem; /* Adjust the left position as needed */
+      }
+  }
+  
+  .inputLabel {
+    position: absolute;
+    top: 5px;
+    left: 4px; /* Adjust left position */
+    font-size: 1rem;
+    transition: transform 0.15s, -translate-y 0.15s;
+    transform-origin: 0;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 1rem;
+    padding-top: 1.5rem;
+    font-weight: lighter;
+    border: 2px solid #e2e8f0; /* Adjust border color */
+    background-color: #fff;
+    border-radius: 0.375rem;
+    outline: none;
+    transition: border 0.15s;
+  
+    &.error {
+      border-color: #f43f5e; /* Adjust error border color */
+    }
+  
+    &:focus {
+      border-color: #000; /* Adjust focus border color */
+    }
+  
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  
+    &.priceFormat {
+      padding-left: 2.25rem; /* Adjust left padding for price format */
+    }
+  }
+  

@@ -1,0 +1,277 @@
+.title {
+    font-size: calc(1.3rem + 0.6vw);
+    font-size: 24px;
+    margin-right: 75%;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.frame_parent {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.frame {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  padding: 10px;
+}
+// PurchaseHistory.scss
+.bigContainer {
+  display: flex;
+  flex-direction: column;
+  width: 650px;
+  background-color: #f1efee;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+
+}
+.status {
+  font-weight: bold;
+  text-align: left;
+  
+}
+.purchaseContainer {
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    &.completed {
+      background-color: #f1efee;
+    }
+  
+    .orderStatus {
+      font-weight: bold;
+    }
+  
+    .productInfo {
+      color: black;
+      width: 600px;
+      display: flex;
+      align-items: center;
+  
+      img {
+        width: 10px; /* 사진의 너비 조절 */
+        height: auto; /* 높이 자동 조절 */
+        margin-right: 10px;
+        padding-right: 10px;
+      }
+  
+      .additionalInfo {
+        padding-left: 10px;
+        margin-left: 30px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+  
+        .date {
+          color: rgb(172, 172, 172);
+          font-size: x-small;
+          margin-bottom: 5px;
+        }
+        .productName {
+          font-size: small;
+          margin-bottom: 5px;
+          font-weight: bold;
+        }
+        .price {
+          margin-bottom: 5px;
+          font-size: small;
+        }
+      }
+    }
+  
+    .buttons {
+      display: flex;
+      flex-direction: column;
+  
+      .detailsButton,
+      .confirmButton {
+        font-family: 'Gowun Dodum', sans-serif;
+        width: 100px;
+        margin-bottom: 5px;
+        border-radius: 8px;
+        border: solid #171de5 1px;
+        background-color: #171de5;
+        color: #f1efee;
+      }
+    }
+  }
+
+.productImage {
+  padding-top: 5px;
+  // margin-top: 5px;
+  width: 80px;
+  height: 80px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+
+// WriteReview.module.scss
+
+.writeReviewContainer {
+  max-width: 600px;
+  margin: 0 auto;
+
+  h3 {
+    font-size: x-large;
+    margin-bottom: 15px;
+    text-align: left;
+  }
+
+  .formGroup {
+    margin-bottom: 1.5rem;
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+
+      &:focus {
+        outline: none;
+        border-color: #007bff;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 150px;
+    }
+
+    
+
+
+    img {
+      width: 70px;
+      height: 70px;
+    }
+    }
+  }
+
+
+.write {
+border-radius: 8px;
+}
+
+.button {
+margin-top: 10px;
+background-color: #007bff;
+color: #fff;
+padding: 0.5rem 1rem;
+font-size: 1rem;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+
+&:hover {
+  background-color: #0056b3;
+}}
+
+
+// .editor {
+//   border-bottom: 0;
+//   height: 300px;
+// }
+
+
+.add_content2 {
+  // background-color: #e9e9e9;
+  // border-radius: 20px;
+  height: 65%;
+  // padding: 15px 20px;
+  resize: none;
+  margin-bottom: 10px;
+  outline: none;
+  text-align: left;
+}
+
+
+.submit {
+  display: flex;
+  align-self: flex-end;
+}
+
+.submit_btn {
+
+  font-size: medium;
+  border: none;
+  cursor: pointer;
+  padding: 3px;
+  width: 70px;
+  // height: 10%;
+  border-radius: 10px;
+  background-color: #171de5;
+  color: #f1efee;
+  margin: 0;
+  outline: none;
+}
+
+
+.add_title {
+  // background-color: #e9e9e9;
+  border-radius: 8px;
+  border: 2px solid #171de5;
+  margin-bottom: 10px;
+  height: 10%;
+  padding: 10px 13px;
+}
+
+
+
+.modal_form {
+    display: flex;
+    flex-direction: column;
+    height: 92%;
+
+    input {
+        outline: none;
+    }
+}
+
+
+
+/* styles.module.scss 또는 해당 프로젝트의 스타일 파일에 추가하세요 */
+
+.editorWrapper {
+  max-height: 300px; /* 높이를 원하는 값으로 조절하세요 */
+  overflow-y: auto; /* 스크롤을 표시하려면 추가하세요 */
+  border: 1px solid #ccc; /* 테두리 스타일을 설정하세요 */
+}
+
+/* 스크롤 바의 색상을 원하는 대로 조절하세요 */
+.editorWrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.editorWrapper::-webkit-scrollbar-thumb {
+  background-color: #171de5;
+}
+
+.editorWrapper::-webkit-scrollbar-track {
+  background-color: #f1efee;
+}
+
+.submitButtonWrapper {
+  display: flex;
+  align-self: flex-end; /* 자식 요소를 우측 하단에 정렬 */
+  margin-top: 10px;
+}

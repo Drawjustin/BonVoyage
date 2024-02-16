@@ -1,0 +1,28 @@
+.container {
+  width:80%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 3 columns for smaller screens
+  
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr); // 3 columns for screens wider than 640px
+    }
+  
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr); // 4 columns for screens wider than 768px
+    }
+  
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr); // 5 columns for screens wider than 1024px
+    }
+    
+    grid-gap: 20px;
+  }
+
+}
+
