@@ -51,14 +51,14 @@ const Island_4 = ({ scale, position, onClick, props }) => {
           </group>
           <mesh geometry={nodes.anchor_metal_0.geometry} material={materials.metal} position={[2406.183, -171.175, -7528.28]} rotation={[0.632, -0.085, -0.329]} scale={73.176} />
           <mesh geometry={nodes.cococnut_coconut_0.geometry} material={materials.coconut} position={[-279.195, 2800.896, -2650.854]} rotation={[-1.634, -0.001, -1.797]} scale={65.374} />
-          <mesh geometry={nodes.Cube012_rocks_0.geometry} material={materials.rocks} position={[-1352.394, -143.157, -7770.19]} rotation={[-1.653, -0.279, 2.304]} scale={229.135} />
+          {/* <mesh geometry={nodes.Cube012_rocks_0.geometry} material={materials.rocks} position={[-1352.394, -143.157, -7770.19]} rotation={[-1.653, -0.279, 2.304]} scale={229.135} />
           <mesh geometry={nodes.Cube015_rocks_0.geometry} material={materials.rocks} position={[-507.767, 4.749, -7754.915]} rotation={[-0.957, -0.488, -2.22]} scale={260.858} />
           <mesh geometry={nodes.Cube016_rocks_0.geometry} material={materials.rocks} position={[116.852, -275.017, -8017.935]} rotation={[-1.653, -0.279, 2.304]} scale={229.135} />
           <mesh geometry={nodes.Cube022_rocks_0.geometry} material={materials.rocks} position={[418.948, 630.95, -4469.228]} rotation={[-1.79, 0.209, -2.368]} scale={292.203} />
           <mesh geometry={nodes.Cube023_rock2_0.geometry} material={materials.rock2} position={[-362.478, 1213.185, -3795.805]} rotation={[-1.685, 0.286, -2.439]} scale={292.203} />
           <mesh geometry={nodes.Cube024_rocks_0.geometry} material={materials.rocks} position={[3518.565, 410.957, -3891.223]} rotation={[-1.79, 0.209, -2.368]} scale={[232.799, 168.07, 326.474]} />
           <mesh geometry={nodes.Cube025_rocks_0.geometry} material={materials.rocks} position={[776.22, 224.071, -6047.028]} rotation={[-2.536, 0.641, 2.78]} scale={[500.345, 183.299, 335.655]} />
-          <mesh geometry={nodes.Cube030_rock2_0.geometry} material={materials.rock2} position={[-2195.742, -104.742, -8450.914]} rotation={[-0.07, -0.306, -0.19]} scale={[362.833, 250.672, 359.649]} />
+          <mesh geometry={nodes.Cube030_rock2_0.geometry} material={materials.rock2} position={[-2195.742, -104.742, -8450.914]} rotation={[-0.07, -0.306, -0.19]} scale={[362.833, 250.672, 359.649]} /> */}
           <mesh geometry={nodes.grass_grass_0.geometry} material={materials.grass} position={[-682.699, 281.65, -3292.567]} rotation={[-1.261, 0.039, -1.103]} scale={[570.527, 569.251, 367.508]} />
           <mesh geometry={nodes.Icosphere001_coconut_0.geometry} material={materials.coconut} position={[-1724.986, 2702.099, -3904.915]} rotation={[-1.634, -0.001, -0.914]} scale={65.374} />
           <mesh geometry={nodes.Icosphere002_coconut_0.geometry} material={materials.coconut} position={[-1184.989, 2242.948, -5334.033]} rotation={[-1.634, -0.001, -0.914]} scale={65.374} />
@@ -67,7 +67,7 @@ const Island_4 = ({ scale, position, onClick, props }) => {
           <mesh geometry={nodes.Icosphere006_coconut_0.geometry} material={materials.coconut} position={[-1022.768, 2266.26, -5223.869]} rotation={[-1.634, -0.001, -0.914]} scale={65.374} />
           <mesh geometry={nodes.Icosphere007_coconut_0.geometry} material={materials.coconut} position={[-195.731, 2827.458, -2733.418]} rotation={[-1.634, -0.001, -1.797]} scale={65.374} />
           <mesh geometry={nodes.island_island_0.geometry} material={materials.island} position={[-1037.257, -656.569, -3409.192]} rotation={[-1.634, -0.001, -0.441]} scale={[1157.128, 1157.128, 770.941]} />
-          <mesh geometry={nodes.ladder1_boat_dark_0.geometry} material={materials.boat_dark} position={[-234.412, 29.759, -7074.466]} rotation={[-0.327, 1.239, 0.001]} scale={[329.903, 87.394, 202.181]} />
+          {/* <mesh geometry={nodes.ladder1_boat_dark_0.geometry} material={materials.boat_dark} position={[-234.412, 29.759, -7074.466]} rotation={[-0.327, 1.239, 0.001]} scale={[329.903, 87.394, 202.181]} /> */}
           <mesh geometry={nodes.mast1_island_0.geometry} material={materials.island} position={[-1856.32, 762.703, -5366.961]} rotation={[0.373, -1.413, -0.785]} scale={[-55.735, -55.735, -751.602]} />
           <mesh geometry={nodes.Plane002_leaf_0.geometry} material={materials.leaf} position={[-1708.82, 2707.742, -2058.425]} rotation={[1.508, 0.001, 0.316]} scale={[58.152, 132.651, 132.651]} />
           <mesh geometry={nodes.Plane003_leaf_0.geometry} material={materials.leaf} position={[-1637.555, 3019.731, -1984.978]} rotation={[2.045, 0.433, -2.584]} scale={[46.294, 105.601, 105.601]} />
@@ -117,10 +117,10 @@ const Island_4 = ({ scale, position, onClick, props }) => {
           <mesh geometry={nodes.Plane058_leaf_0.geometry} material={materials.leaf} position={[-3281.07, 2514.629, -4253.732]} rotation={[1.522, 0.207, -2.613]} scale={[42.382, 60.737, 60.737]} />
           <mesh geometry={nodes.Plane059_leaf_0.geometry} material={materials.leaf} position={[-3232.921, 2423.761, -4794.046]} rotation={[1.469, 0.325, 2.622]} scale={[52.824, 99.952, 160.057]} />
           <mesh geometry={nodes.Plane060_leaf_0.geometry} material={materials.leaf} position={[-2900.191, 2469.064, -4748.463]} rotation={[1.392, 0.053, -2.471]} scale={[42.382, 60.737, 60.737]} />
-          <mesh geometry={nodes.rock1_rock2_0.geometry} material={materials.rock2} position={[-870.29, 944.273, -557.503]} rotation={[-1.302, 0.084, -2.389]} scale={292.203} />
+          {/* <mesh geometry={nodes.rock1_rock2_0.geometry} material={materials.rock2} position={[-870.29, 944.273, -557.503]} rotation={[-1.302, 0.084, -2.389]} scale={292.203} />
           <mesh geometry={nodes.rock4_rock2_0.geometry} material={materials.rock2} position={[1534.62, 13.595, -7243.988]} rotation={[2.036, 0.801, 1.344]} scale={[362.833, 250.672, 359.649]} />
           <mesh geometry={nodes.rock5_rocks_0.geometry} material={materials.rocks} position={[-2662.023, -180.565, -7856.883]} rotation={[-1.653, -0.279, 2.304]} scale={281.851} />
-          <mesh geometry={nodes.rock7_rock2_0.geometry} material={materials.rock2} position={[2906.711, -143.931, -6957.376]} rotation={[-1.698, 0.114, -2.506]} scale={[489.649, 449.842, 497.556]} />
+          <mesh geometry={nodes.rock7_rock2_0.geometry} material={materials.rock2} position={[2906.711, -143.931, -6957.376]} rotation={[-1.698, 0.114, -2.506]} scale={[489.649, 449.842, 497.556]} /> */}
         </group>
       </group>
     </group>

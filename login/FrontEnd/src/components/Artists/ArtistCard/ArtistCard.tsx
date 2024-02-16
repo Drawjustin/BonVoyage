@@ -31,9 +31,6 @@ const ArtistCard = ({ data, currentUser, image }:any) => {
             currentUser={currentUser}
           />
         </div>
-        <div className={styles.LikeNumber}>
-          좋아요 수
-        </div>
       </div>
 
       <div className={styles['artist-details']}>

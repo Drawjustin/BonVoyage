@@ -146,12 +146,12 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>아이디</div>
                     <div className={styles.form_inputbtn}>
-                        <input type="text" className={styles.form_input_3} placeholder='아이디'
+                        <input type="text" className={styles.form_input} placeholder='아이디'
                         value={userid} onChange={(e) => {
                             setUserid(e.target.value);
                             validateUserid(e.target.value);
                         }}/>
-                        <button className={styles.input_btn}>중복 확인</button>
+                        {/* <button className={styles.input_btn}>중복 확인</button> */}
                     </div>
                     {errors.userid && <span className={styles.error}>{errors.userid}</span>}
                 </div>
@@ -192,11 +192,11 @@ const MemberInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    <input type="text" className={styles.form_input} placeholder='연락처'
                     value={phonenum} onChange={(e) => {
                         setPhoneNumber(e.target.value);
                     }}/>
-                        <button style={{ paddingLeft: '1opx'}} className={styles.input_btn}>인증하기</button>
+                        {/* <button style={{ paddingLeft: '1opx'}} className={styles.input_btn}>인증하기</button> */}
                     </div>
                 </div>
             </div>

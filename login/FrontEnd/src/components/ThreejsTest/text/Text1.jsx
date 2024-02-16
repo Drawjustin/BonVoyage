@@ -15,6 +15,6 @@ const Text1 = (props) => {
   )
 }
 
-useGLTF.preload('./models/text/text1_4.glb')
+useGLTF.preload('./models/text/text1_3.glb')
 
 export default Text1;

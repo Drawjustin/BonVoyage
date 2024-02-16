@@ -154,12 +154,12 @@ const ArtistInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>아이디</div>
                     <div className={styles.form_inputbtn}>
-                        <input type="text" className={styles.form_input_3} placeholder='아이디'
+                        <input type="text" className={styles.form_input} placeholder='아이디'
                         value={userid} onChange={(e) => {
                             setUserid(e.target.value);
                             validateUserid(e.target.value);
                         }}/>
-                        <button className={styles.input_btn}>중복 확인</button>
+                        {/* <button className={styles.input_btn}>중복 확인</button> */}
                     </div>
                     {errors.userid && <span className={styles.error}>{errors.userid}</span>}
                 </div>
@@ -190,14 +190,14 @@ const ArtistInputSignup = () => {
                     }}
                     />
                 </div>
-                <div className={styles.form_element}>
+                {/* <div className={styles.form_element}>
                     <div className={styles.form_name}>포트폴리오</div>
                     <div className={styles.form_inputbtn}>
                         <input placeholder={portfolio} className={styles.form_input_3} style={{ padding: '10px'}}/>
                         <input type="file" id = "portfolio" onChange={changeImgText} className={styles.file}/>
                         <label htmlFor="portfolio" className={styles.input_btn2}>파일 첨부</label>
                     </div>
-                </div>
+                </div> */}
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>이메일</div>
                     <input type="text" className={styles.form_input} placeholder='이메일'
@@ -210,11 +210,11 @@ const ArtistInputSignup = () => {
                 <div className={styles.form_element}>
                     <div className={styles.form_name}>연락처</div>
                     <div className={styles.form_inputbtn}>
-                    <input type="text" className={styles.form_input_3} placeholder='연락처'
+                    <input type="text" className={styles.form_input} placeholder='연락처'
                     value={phonenum} onChange={(e) => {
                       setPhonenum(e.target.value);
                   }}/>
-                        <button className={styles.input_btn}>인증하기</button>
+                        {/* <button className={styles.input_btn}>인증하기</button> */}
                     </div>
                 </div>
             </div>

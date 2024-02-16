@@ -1,9 +1,9 @@
 .guest_card {
-    width: 300px;
-    height: 400px;
+    width: 380px;
+    height: 460px;
     background-color: #F2F2F2;
     border-radius: 20px;
-    padding: 30px 40px;
+    // padding: 30px 40px;
     box-shadow: 10px 15px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
 }
@@ -17,4 +17,14 @@
     text-align: end;
     font-size: 50px;
     color: #595959;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+
+.guest_icon {
+    height: 320px;
+    background-color: rgb(169, 226, 234);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 0 40px;
 }

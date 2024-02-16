@@ -7,7 +7,7 @@ import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 const Text3 = (props) => {
-  const { nodes, materials } = useGLTF('./models/text/text3_1.glb')
+  const { nodes, materials } = useGLTF('./models/text/text3_3.glb')
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.텍스트001.geometry} material={materials.매테리얼} position={[0.003, 0.527, 0.061]} rotation={[1.527, 0, 0]} />
@@ -15,6 +15,6 @@ const Text3 = (props) => {
   )
 }
 
-useGLTF.preload('./models/text/text3_2.glb')
+useGLTF.preload('./models/text/text3_3.glb')
 
 export default Text3;
