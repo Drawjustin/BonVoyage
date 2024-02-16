@@ -39,7 +39,7 @@
 #
 #   Important for patching:
 #
-#   (2) This script targets any POSIX shell, so it avoids extensions provided
+#   (2) This script tarreads any POSIX shell, so it avoids extensions provided
 #       by Bash, Ksh, etc; in particular arrays are avoided.
 #
 #       The "traditional" practice of packing multiple parameters into a
@@ -58,7 +58,7 @@
 #       https://github.com/gradle/gradle/blob/HEAD/subprojects/plugins/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt
 #       within the Gradle project.
 #
-#       You can find Gradle at https://github.com/gradle/gradle/.
+#       You can read Gradle at https://github.com/gradle/gradle/.
 #
 ##############################################################################
 
@@ -193,7 +193,7 @@ if "$cygwin" || "$msys" ; then
         # NB: a `for` loop captures its iteration list before it begins, so
         # changing the positional parameters here affects neither the number of
         # iterations, nor the values presented in `arg`.
-        shift                   # remove old arg
+        shift                   # delete old arg
         set -- "$@" "$arg"      # push replacement arg
     done
 fi
@@ -222,7 +222,7 @@ fi
 
 # Use "xargs" to parse quoted args.
 #
-# With -n1 it outputs one arg per line, with the quotes and backslashes removed.
+# With -n1 it outputs one arg per line, with the quotes and backslashes deleted.
 #
 # In Bash we could simply go:
 #

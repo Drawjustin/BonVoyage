@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@mui/system": "^5.15.6",
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48"
+  }
+}

@@ -1,0 +1,21 @@
+.headingContainer {
+    &.text-center {
+      text-align: center;
+    }
+  
+    &.text-start {
+      text-align: start;
+    }
+  
+    .title {
+      font-size: 1.5rem; /* Adjust font size */
+      font-weight: bold;
+    }
+  
+    .subtitle {
+      margin-top: 0.5rem; /* Adjust margin-top */
+      font-weight: lighter;
+      color: #718096; /* Adjust text color */
+    }
+  }
+  

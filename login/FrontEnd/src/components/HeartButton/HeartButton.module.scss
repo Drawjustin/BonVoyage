@@ -1,0 +1,27 @@
+.heartButton {
+    position: relative;
+    transition: opacity 0.3s;
+    cursor: pointer;
+  
+    &:hover {
+      opacity: 0.8;
+    }
+  
+    &__heart {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+  
+    &__filled {
+      @extend .heartButton__heart;
+      fill: #f43f5e; // Adjust color as needed
+    }
+  
+    &__outline {
+      @extend .heartButton__heart;
+      fill: #ffffff; // Adjust color as needed
+    }
+  }

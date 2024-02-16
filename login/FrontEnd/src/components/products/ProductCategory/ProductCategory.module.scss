@@ -1,0 +1,26 @@
+.flex_container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .icon {
+    color: #718096; /* Change to your desired color */
+  }
+  
+  .text_group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .title {
+    font-size: 1.25rem; /* Adjust as needed */
+    font-weight: 600;
+  }
+  
+  .description {
+    font-weight: 300;
+    color: #a0aec0; /* Change to your desired color */
+  }
+  
