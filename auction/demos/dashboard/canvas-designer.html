@@ -1,0 +1,1058 @@
+﻿<!-- Demo version: 2018.12.11 -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard + Video Conferencing + Chat + File Sharing | RTCMultiConnection</title>
+    <meta name="description"
+        content="WebRTC Dashboard including support for canvas drawing, canvas data syncing, video conferencing, screen sharing and video conferencing. Including chat and file sharing.">
+
+    <link rel="shortcut icon" href="/demos/logo.png">
+    <link rel="stylesheet" type="text/css" href="/demos/css/emojionearea.min.css">
+    <link rel="stylesheet" type="text/css" href="/demos/dashboard/canvas-designer.css">
+
+    <script src="/demos/js/jquery.min.js"></script>
+    <link href="/demos/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/node_modules/webrtc-adapter/out/adapter.js"></script>
+    <script src="/dist/RTCMultiConnection.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/node_modules/fbr/FileBufferReader.js"></script>
+
+    <script src="/node_modules/canvas-designer/dev/webrtc-handler.js"></script>
+    <script src="/node_modules/canvas-designer/canvas-designer-widget.js"></script>
+    <script src="/demos/js/emojionearea.min.js"></script>
+    <!-- <script src="/node_modules/multistreamsmixer/MultiStreamsMixer.js"></script> -->
+
+    <div id="widget-container"
+        style="position: fixed;bottom: 0;right: 80%;left: 0;height: 100%;border: 1px solid black; border-top:0; border-bottom: 0; display: none;">
+    </div>
+    <div
+        style="width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; position: fixed; border: 1px solid black;">
+        <div style="font-family: Arial, sans-serif; margin-top: 10%;">
+            <p>📣 경매 정보 <br><span id="auctionDetailText"></span></p>
+            <p>📦 상품 정보 <br><span id="itemDetailText"></span></p>
+        </div>
+
+        <div>
+            <p id="timerTxt">남은 시간 : <span id="timer">10</span></p>
+        </div>
+        <div style="position: relative; width: 100%; height: 150px;">
+            <button id="sessionCloseBtn" class="btn btn-primary"
+                style="position: absolute; width: 100%; height: 100%;">세션 종료</button>
+            <button id="bidBtn" class="btn btn-primary">입찰
+                100,000</button>
+            <button id="contractBtn" class="btn btn-primary">계약서 확인하러 가기</button>
+        </div>
+    </div>
+
+    <video id="screen-viewer" controls playsinline autoplay></video>
+
+    <div style="width: 60%; height: 100%; position: absolute;left:20%;">
+        <video style="margin-top: 10px;" id="main-video" controls playsinline autoplay></video>
+        <hr>
+        <div style="padding: 5px 10px;">
+            <div id="onUserStatusChanged"></div>
+        </div>
+
+        <canvas id="temp-stream-canvas" style="display: none;"></canvas>
+    </div>
+    <div
+        style="width: 20%; margin-top: 20px;position: absolute; left:80%; bottom: 0; background: white; padding-bottom: 20px; padding-right: 10px;">
+        <div id="conversation-panel"></div>
+        <div id="key-press" style="text-align: right; display: none; font-size: 11px;">
+            <span style="vertical-align: middle;"></span>
+            <img src="https://www.webrtc-experiment.com/images/key-press.gif"
+                style="height: 12px; vertical-align: middle;">
+        </div>
+
+        <div style="margin-bottom: 5vh; margin-right: 10px;">
+            <textarea id="txt-chat-message"></textarea>
+            <button class="btn btn-primary" id="btn-chat-message">보내기</button>
+        </div>
+        <img id="btn-attach-file" src="https://www.webrtc-experiment.com/images/attach-file.png" title="Attach a File">
+        <img id="btn-share-screen" src="https://www.webrtc-experiment.com/images/share-screen.png"
+            title="Share Your Screen">
+    </div>
+    </article>
+
+
+    <!-- 경매 입찰 시 뜨는 팝업 -->
+    <div id="popup">
+        <div>
+            <p id="popupText">입력 중지</p>
+            <button id="returnHomeBtn">퇴장하기</button>
+            <button id="nextSessionBtn">다음 세션으로</button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var params = {},
+                r = /([^&=]+)=?([^&]*)/g;
+
+            function d(s) {
+                return decodeURIComponent(s.replace(/\+/g, ' '));
+            }
+            var match, search = window.location.search;
+            while (match = r.exec(search.substring(1)))
+                params[d(match[1])] = d(match[2]);
+            window.params = params;
+        })();
+
+        var connection = new RTCMultiConnection();
+
+        connection.socketURL = '/';
+        // connection.socketURL = 'https://muazkhan.com:9001/';
+
+        connection.extra.userFullName = params.userFullName;
+
+        /// make this room public
+        connection.publicRoomIdentifier = params.publicRoomIdentifier;
+
+        connection.socketMessageEvent = 'canvas-dashboard-demo';
+
+        // keep room opened even if owner leaves
+        connection.autoCloseEntireSession = true;
+
+        // https://www.rtcmulticonnection.org/docs/maxParticipantsAllowed/
+        connection.maxParticipantsAllowed = 1000;
+        // set value 2 for one-to-one connection
+        // connection.maxParticipantsAllowed = 2;
+
+        // URL
+        let homeUrl = new URL(window.location.href);
+        let urlParams = new URLSearchParams(homeUrl.search);
+
+        // 경매, 작품, 낙찰자 정보
+        let auctionInfo = {};
+        let itemInfo = {};
+        let winnerInfo = {};
+        let aucSeq = urlParams.get('aucSeq');
+        let afterYN = urlParams.get('after');
+
+        //현재 유저와 경매 작가 조회
+        let sessionArtist;
+        const currentUserName = connection.extra.userFullName; // 사용자 ID
+        let currentUserSeq;
+
+        // 현재 최고 호가
+        let bidPrice = 0;
+
+        // 시간 관련
+        let bidPriceTime = 3000;
+        let aucEndTime = Infinity;
+        let aucSessionTime = 10; //원래 180임
+
+        //URL
+        var postBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/price";
+        var getAucDetailUrl = "https://i10a207.p.ssafy.io/api/auction/" + aucSeq;
+        var getBidPriceUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/price";
+        var getMemberSeqUrl = "https://i10a207.p.ssafy.io/api/members/" + currentUserName;
+
+        // here goes canvas designer
+        var designer = new CanvasDesigner();
+
+        // you can place widget.html anywhere
+        designer.widgetHtmlURL = '/node_modules/canvas-designer/widget.html';
+        designer.widgetJsURL = '/node_modules/canvas-designer/widget.min.js'
+
+        designer.addSyncListener(function (data) {
+            connection.send(data);
+        });
+
+        // here goes RTCMultiConnection
+        connection.chunkSize = 16000;
+        connection.enableFileSharing = true;
+
+        connection.session = {
+            audio: true,
+            video: true,
+            data: true
+        };
+        connection.sdpConstraints.mandatory = {
+            OfferToReceiveAudio: true,
+            OfferToReceiveVideo: true
+        };
+
+        //유저 누가 들어와있는지 알려주는 코드
+        connection.onUserStatusChanged = function (event) {
+            var infoBar = document.getElementById('onUserStatusChanged');
+            var names = [];
+            connection.getAllParticipants().forEach(function (pid) {
+                names.push(getFullName(pid));
+            });
+
+            if (!names.length) {
+                names = ['Only You'];
+            } else {
+                names = [connection.extra.userFullName || 'You'].concat(names);
+            }
+
+            infoBar.innerHTML = '<b>Active users:</b> ' + names.join(', ');
+        };
+
+        connection.onclose = connection.onerror = connection.onleave = function (event) {
+            connection.onUserStatusChanged(event);
+        };
+
+        connection.onmessage = function (event) {
+            if (event.data.showMainVideo) {
+                // $('#main-video').show();
+                $('#screen-viewer').css({
+                    top: $('#widget-container').offset().top,
+                    left: $('#widget-container').offset().left,
+                    width: $('#widget-container').width(),
+                    height: $('#widget-container').height()
+                });
+                $('#screen-viewer').show();
+                return;
+            }
+
+            if (event.data.hideMainVideo) {
+                // $('#main-video').hide();
+                $('#screen-viewer').hide();
+                return;
+            }
+
+            if (event.data.typing === true) {
+                $('#key-press').show().find('span').html(event.extra.userFullName + ' is typing');
+                return;
+            }
+
+            if (event.data.typing === false) {
+                $('#key-press').hide().find('span').html('');
+                return;
+            }
+
+            if (event.data.chatMessage) {
+                appendChatMessage(event);
+                return;
+            }
+
+            if (event.data.checkmark === 'received') {
+                var checkmarkElement = document.getElementById(event.data.checkmark_id);
+                if (checkmarkElement) {
+                    checkmarkElement.style.display = 'inline';
+                }
+                return;
+            }
+
+            if (event.data === 'plz-sync-points') {
+                designer.sync();
+                return;
+            }
+
+            designer.syncData(event.data);
+        };
+
+        //URL 통신
+        function updateBidButton() {
+            console.log("호가 : ", bidPrice);
+            document.getElementById('bidBtn').innerHTML = bidPrice + '원';
+        }
+
+        //최신 호가 조회
+        function fetchBidPrice() {
+        fetch(getBidPriceUrl)
+            .then(response => response.json())
+            .then(data => {
+                // 전역 변수 값 변경
+                bidPrice = data['auctionStartPoint'];
+                // 버튼 업데이트
+                updateBidButton();
+            })
+        .catch(error => console.error('Error:', error));
+        }
+
+
+        var socket = io();
+        var auctionEnded = false;
+        var intervalId;
+        var tickReceived = false; // 'tick' 메시지를 받았는지 확인하는 불리언 변수
+        var timeLeft = aucSessionTime;
+
+        // 팝업 띄우는 함수
+        function showPopup(message, timeout, isEnd) {
+            var popup = document.getElementById('popup');
+            var popupText = document.getElementById('popupText');
+            var returnHomeBtn = document.getElementById('returnHomeBtn');
+            var nextSessionBtn = document.getElementById('nextSessionBtn');
+
+            // 팝업에 메시지를 표시
+            popupText.textContent = message;
+            popup.style.display = 'block';
+
+            if (isEnd) {
+                getBidWinnerName().then(() => {
+                    console.log("이긴 사람은?? " ,winnerInfo);
+                    if (sessionArtist === currentUserName || currentUserName === winnerInfo.memberId) { // 작가 혹은 낙찰자인 경우
+                        nextSessionBtn.style.display = 'block';
+                        returnHomeBtn.style.display = "none";
+                    } else { // 일반 회원인 경우
+                        nextSessionBtn.style.display = 'none';
+                        returnHomeBtn.style.display = "block";
+                    }
+                });
+            }
+            else {
+                nextSessionBtn.style.display = 'none';
+                returnHomeBtn.style.display = "none";
+            }
+
+            // timeout이 지정되어 있을 경우에만 setTimeout을 호출
+            if (timeout !== aucEndTime) {
+                setTimeout(() => {
+                    popup.style.display = 'none';
+                }, timeout);
+            }
+        }
+
+        var timer = document.getElementById('timer');
+        timer.textContent = aucSessionTime.toString();
+        var timeLeft = aucSessionTime;
+
+        document.getElementById('bidBtn').addEventListener('click', function () {
+            var now = new Date();
+            var formattedDate = now.getFullYear() + '-' 
+                + (now.getMonth() + 1).toString().padStart(2, '0') + '-' 
+                + now.getDate().toString().padStart(2, '0') + 'T' 
+                + now.getHours().toString().padStart(2, '0') + ':' 
+                + now.getMinutes().toString().padStart(2, '0') + ':' 
+                + now.getSeconds().toString().padStart(2, '0');
+
+            var data = {
+                auctionPointDetailPoint: bidPrice,
+                auctionPointDetailIsWin: false,
+                auctionPointDate: formattedDate,
+                memberSeq: currentUserSeq,
+                auctionSeq: aucSeq
+            };
+
+            //입찰 전송
+            fetch(postBidPriceUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    bidPrice = Math.floor(bidPrice + bidPrice * (auctionInfo.auctionAskPoint / 100));
+                    console.log("bidPrice " + bidPrice);
+                    updateBidButton();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+                });
+            // bidBtn 클릭 시 서버에 'custom-message' 이벤트를 전송하고, 이벤트 이름으로 'bidBtn clicked', 타겟을 'all'로, 그리고 호가 정보를 전송
+            socket.emit('custom-message', { message: 'bidBtn clicked', target: 'all', price: bidPrice });
+
+            // 동시에 자신에게도 팝업 띄우기
+            showPopup("현재 호가: " + bidPrice, bidPriceTime, false);
+            resetTimer();
+        });
+
+        // 서버로부터 'custom-message' 이벤트를 받으면
+        socket.on('custom-message', function (data) {
+            if (data.message === 'tick') {
+                timeLeft = data.timeLeft;
+                timer.textContent = data.timeLeft.toString(); // 서버로부터 받은 남은 시간을 화면에 표시
+            } else if (data.message === 'auction ended') {
+                getBidWinnerName();
+                showPopup("경매가 종료되었습니다.", aucEndTime, true);
+            } else if (data.message === 'bidBtn clicked') {
+                showPopup("현재 호가: " + data.price, bidPriceTime, false);
+            } else if (data.message === 'session end') {
+                console.log("세션을 종료합니다.");
+                connection.close();
+            }
+        });
+
+        function resetTimer() {
+            timeLeft = aucSessionTime;
+            clearInterval(intervalId);
+            intervalId = setInterval(() => {
+                timeLeft--;
+                timer.textContent = timeLeft.toString();
+                if (timeLeft <= 0) {
+                    clearInterval(intervalId);
+                    getBidWinnerName();
+                    showPopup("경매가 종료되었습니다.", aucEndTime, true);
+                }
+            }, 1000);
+        }
+
+        // 경매 정보 가져오기
+        function fetchAuctionInfo() {
+            return fetch(getAucDetailUrl)
+                .then(response => response.json())
+                .then(data => {
+                    auctionInfo = data;
+                    itemInfo = data.item;
+                    sessionArtist = data.item;
+                    bidPrice = data['auctionStartPoint'];
+                    updateBidButton();
+
+                    return data.itemSeq;
+                });
+        }
+
+        // 아이템 정보 가져오기
+        function fetchItemInfo(itemSeq) {
+            var getItemDetailUrl = "https://i10a207.p.ssafy.io/api/item/" + itemSeq;
+            return fetch(getItemDetailUrl)
+                .then(response => response.json())
+                .then(data => {
+                    itemInfo = data;
+                    sessionArtist = data.artistId;
+                });
+        }
+
+        // 경매 정보 한국어 변환을 위해 필요한 정보
+        let keysToShow = ["auctionSeq", "auctionScheduledTime", "auctionStartPoint", "auctionAskPoint"];
+        let keyToKorean = {
+            "auctionSeq": "경매 번호",
+            "auctionScheduledTime": "경매 예정 시간",
+            "auctionStartPoint": "경매 시작가",
+            "auctionAskPoint": "경매 호가 퍼센트",
+        };
+
+        // 경매 정보를 한국어로 변환하여 표시
+        function displayAuctionInfo() {
+            let text = '';
+            for (let key of keysToShow) {
+                if (auctionInfo.hasOwnProperty(key)) {
+                    let koreanKey = keyToKorean.hasOwnProperty(key) ? keyToKorean[key] : key;
+                    text += koreanKey + ': ' + auctionInfo[key] + '<br>';
+                }
+            }
+            document.getElementById('auctionDetailText').innerHTML = text;
+        }
+
+        // 아이템 정보 한국어 변환을 위해 필요한 정보
+        let itemKeysToShow = ["itemName", "explain", "itemWidth", "itemHeight"];
+        let itemKeyToKorean = {
+            "itemName": "아이템 이름",
+            "explain": "설명",
+            "itemWidth": "아이템 넓이",
+            "itemHeight": "아이템 높이",
+        };
+
+        // 아이템 정보를 한국어로 변환하여 표시
+        function displayItemInfo() {
+            let text = '';
+            for (let key of itemKeysToShow) {
+                if (itemInfo.hasOwnProperty(key) && itemInfo[key] !== null) {
+                    let koreanKey = itemKeyToKorean.hasOwnProperty(key) ? itemKeyToKorean[key] : key;
+                    text += koreanKey + ': ' + itemInfo[key] + '<br>';
+                }
+            }
+            document.getElementById('itemDetailText').innerHTML = text;
+        }
+
+        // 낙찰자 찾기
+        function getBidWinnerName() {
+            var getBidWinnerUrl = "https://i10a207.p.ssafy.io/api/bid/" + aucSeq + "/winner";
+
+            return fetch(getBidWinnerUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    winnerInfo = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // 유저가 누구인지에 따라 버튼 바꾸기
+        function updateButtonStatus() {
+            console.log("afterYN" , afterYN);
+            let sessionCloseBtn = document.getElementById('sessionCloseBtn');
+            var bidBtn = document.getElementById('bidBtn');
+            var contractBtn = document.getElementById('contractBtn');
+
+            //만약 1:1 세션이라면?
+            if(afterYN) {
+                sessionCloseBtn.style.display = 'none';
+                bidBtn.style.display = 'none';
+                contractBtn.style.display = 'block';
+            } else {
+                if (sessionArtist === currentUserName) { // 작가인 경우
+                    sessionCloseBtn.style.display = 'block';
+                    bidBtn.style.display = "none";
+                    contractBtn.style.display = 'none';
+                } else { // 일반 회원인 경우
+                    sessionCloseBtn.style.display = 'none';
+                    bidBtn.style.display = "block";
+                    contractBtn.style.display = 'none';
+                }
+            }
+        }
+
+        // MemberSeq 찾기
+        function fetchMemberSeq() {
+            return fetch(getMemberSeqUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // console.log(data);
+                    return data.memberSeq;
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+        // 페이지가 로드되면 서버로부터 경매 정보를 받아옴
+        window.onload = function () {
+            updateButtonStatus();
+            //현재 멤버의 seq를 이름으로 찾기
+            fetchMemberSeq()
+                .then(seq => {
+                    currentUserSeq = seq;
+                    console.log("Member seq: ", currentUserSeq);
+                })
+                .catch(error => console.error(error));
+
+            fetchAuctionInfo()
+                .then(itemSeq => {
+                    displayAuctionInfo();
+
+                    // itemSeq를 사용하여 fetchItemInfo 호출
+                    return fetchItemInfo(itemSeq);
+                })
+                .then(() => {
+                    displayItemInfo();
+                })
+                .catch(error => {
+                    console.error('Error:', error); // 에러 처리
+                    alert('오류가 발생했습니다. 페이지를 새로고침 해주세요.');
+                })
+        };
+
+        // 리다이렉트
+        var returnHomeBtn = document.getElementById('returnHomeBtn');
+        var nextSessionBtn = document.getElementById('nextSessionBtn');
+
+        returnHomeBtn.addEventListener('click', function () {
+            window.location.href = 'https://i10a207.p.ssafy.io/AuctionListPage';
+        });
+
+        nextSessionBtn.addEventListener('click', function () {
+            // 다음 세션으로 TODO :  generateRandomString() 사용하기
+            var sessionId = "a9x-124-sd9";
+            var open;
+            if (sessionArtist === currentUserName) { // 작가인 경우
+                open = true;
+            } else { // 일반 회원인 경우
+                open = false;
+            }
+            var isAfter = true;
+            window.location.href = 'https://i10a207.p.ssafy.io:8080/demos/dashboard/canvas-designer.html?open=' + open + '&sessionId=' + sessionId + '&userFullName=' + currentUserName + "&aucSeq=" + aucSeq + "&after=" + isAfter;
+        });
+
+        contractBtn.addEventListener('click', function () {
+            window.open('https://i10a207.p.ssafy.io/AuctionContractPage', '_blank');
+        });
+
+        // sessionId 생성하는 랜덤 함수
+        // function generateRandomString() {
+        //     var characters = '0123456789abcdefghijklmnopqrstuvwxyz';
+        //     var result = '';
+        //     for (var i = 0; i < 3; i++) {
+        //         for (var j = 0; j < 3; j++) {
+        //             result += characters.charAt(Math.floor(Math.random() * characters.length));
+        //         }
+        //         if (i < 2) {
+        //             result += '-';
+        //         }
+        //     }
+        //     return result;
+        // }
+
+        //-------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        // 스트리밍 코드
+        connection.onstream = function (event) {
+            if (event.stream.isScreen && !event.stream.canvasStream) {
+                $('#screen-viewer').get(0).srcObject = event.stream;
+                $('#screen-viewer').hide();
+            }
+            else if (event.extra.roomOwner === true) {
+                var video = document.getElementById('main-video');
+                video.setAttribute('data-streamid', event.streamid);
+                // video.style.display = 'none';
+                if (event.type === 'local') {
+                    video.muted = true;
+                    video.volume = 0;
+                }
+                video.srcObject = event.stream;
+                $('#main-video').show();
+            } else {
+                event.mediaElement.controls = false;
+
+                var otherVideos = document.querySelector('#other-videos');
+                otherVideos.appendChild(event.mediaElement);
+            }
+
+            connection.onUserStatusChanged(event);
+        };
+
+        connection.onstreamended = function (event) {
+            var video = document.querySelector('video[data-streamid="' + event.streamid + '"]');
+            if (!video) {
+                video = document.getElementById(event.streamid);
+                if (video) {
+                    video.parentNode.removeChild(video);
+                    return;
+                }
+            }
+            if (video) {
+                video.srcObject = null;
+                video.style.display = 'none';
+            }
+        };
+
+        //채팅
+        var conversationPanel = document.getElementById('conversation-panel');
+
+        function appendChatMessage(event, checkmark_id) {
+            var div = document.createElement('div');
+
+            div.className = 'message';
+
+            if (event.data) {
+                div.innerHTML = '<b>' + (event.extra.userFullName || event.userid) + ':</b><br>' + event.data.chatMessage;
+
+                if (event.data.checkmark_id) {
+                    connection.send({
+                        checkmark: 'received',
+                        checkmark_id: event.data.checkmark_id
+                    });
+                }
+            } else {
+                div.innerHTML = '<b>You:</b> <img class="checkmark" id="' + checkmark_id + '" title="Received" src="https://www.webrtc-experiment.com/images/checkmark.png"><br>' + event;
+                div.style.background = '#cbffcb';
+                
+            }
+
+            conversationPanel.appendChild(div);
+
+            conversationPanel.scrollTop = conversationPanel.clientHeight;
+            conversationPanel.scrollTop = conversationPanel.scrollHeight - conversationPanel.scrollTop;
+        }
+
+        var keyPressTimer;
+        var numberOfKeys = 0;
+        $('#txt-chat-message').emojioneArea({
+            pickerPosition: "top",
+            filtersPosition: "bottom",
+            tones: false,
+            autocomplete: true,
+            inline: true,
+            hidePickerOnBlur: true,
+            events: {
+                focus: function () {
+                    $('.emojionearea-category').unbind('click').bind('click', function () {
+                        $('.emojionearea-button-close').click();
+                    });
+                },
+                keyup: function (e) {
+                    var chatMessage = $('.emojionearea-editor').html();
+                    if (!chatMessage || !chatMessage.replace(/ /g, '').length) {
+                        connection.send({
+                            typing: false
+                        });
+                    }
+
+
+                    clearTimeout(keyPressTimer);
+                    numberOfKeys++;
+
+                    if (numberOfKeys % 3 === 0) {
+                        connection.send({
+                            typing: true
+                        });
+                    }
+
+                    keyPressTimer = setTimeout(function () {
+                        connection.send({
+                            typing: false
+                        });
+                    }, 1200);
+                },
+                blur: function () {
+                    // $('#btn-chat-message').click();
+                    connection.send({
+                        typing: false
+                    });
+                }
+            }
+        });
+
+        window.onkeyup = function (e) {
+            var code = e.keyCode || e.which;
+            if (code == 13) {
+                $('#btn-chat-message').click();
+            }
+        };
+
+        document.getElementById('btn-chat-message').onclick = function () {
+            var chatMessage = $('.emojionearea-editor').html();
+            $('.emojionearea-editor').html('');
+
+            if (!chatMessage || !chatMessage.replace(/ /g, '').length) return;
+
+            var checkmark_id = connection.userid + connection.token();
+
+            appendChatMessage(chatMessage, checkmark_id);
+
+            connection.send({
+                chatMessage: chatMessage,
+                checkmark_id: checkmark_id
+            });
+
+            connection.send({
+                typing: false
+            });
+        };
+
+        // //채팅에 파일 업로드
+        // var recentFile;
+        // document.getElementById('btn-attach-file').onclick = function () {
+        //     var file = new FileSelector();
+        //     file.selectSingleFile(function (file) {
+        //         recentFile = file;
+
+        //         if (connection.getAllParticipants().length >= 1) {
+        //             recentFile.userIndex = 0;
+        //             connection.send(file, connection.getAllParticipants()[recentFile.userIndex]);
+        //         }
+        //     });
+        // };
+
+        // function getFileHTML(file) {
+        //     var url = file.url || URL.createObjectURL(file);
+        //     var attachment = '<a href="' + url + '" target="_blank" download="' + file.name + '">Download: <b>' + file.name + '</b></a>';
+        //     if (file.name.match(/\.jpg|\.png|\.jpeg|\.gif/gi)) {
+        //         attachment += '<br><img crossOrigin="anonymous" src="' + url + '">';
+        //     } else if (file.name.match(/\.wav|\.mp3/gi)) {
+        //         attachment += '<br><audio src="' + url + '" controls></audio>';
+        //     } else if (file.name.match(/\.pdf|\.js|\.txt|\.sh/gi)) {
+        //         attachment += '<iframe class="inline-iframe" src="' + url + '"></iframe></a>';
+        //     }
+        //     return attachment;
+        // }
+
+        function getFullName(userid) {
+            var _userFullName = userid;
+            if (connection.peers[userid] && connection.peers[userid].extra.userFullName) {
+                _userFullName = connection.peers[userid].extra.userFullName;
+            }
+            return _userFullName;
+        }
+
+        // connection.onFileEnd = function (file) {
+        //     var html = getFileHTML(file);
+        //     var div = progressHelper[file.uuid].div;
+
+        //     if (file.userid === connection.userid) {
+        //         div.innerHTML = '<b>You:</b><br>' + html;
+        //         div.style.background = '#cbffcb';
+
+        //         if (recentFile) {
+        //             recentFile.userIndex++;
+        //             var nextUserId = connection.getAllParticipants()[recentFile.userIndex];
+        //             if (nextUserId) {
+        //                 connection.send(recentFile, nextUserId);
+        //             }
+        //             else {
+        //                 recentFile = null;
+        //             }
+        //         }
+        //         else {
+        //             recentFile = null;
+        //         }
+        //     } else {
+        //         div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br>' + html;
+        //     }
+        // };
+
+        // // to make sure file-saver dialog is not invoked.
+        // connection.autoSaveToDisk = false;
+
+        // var progressHelper = {};
+
+        // connection.onFileProgress = function (chunk, uuid) {
+        //     var helper = progressHelper[chunk.uuid];
+        //     helper.progress.value = chunk.currentPosition || chunk.maxChunks || helper.progress.max;
+        //     updateLabel(helper.progress, helper.label);
+        // };
+
+        // connection.onFileStart = function (file) {
+        //     var div = document.createElement('div');
+        //     div.className = 'message';
+
+        //     if (file.userid === connection.userid) {
+        //         var userFullName = file.remoteUserId;
+        //         if (connection.peersBackup[file.remoteUserId]) {
+        //             userFullName = connection.peersBackup[file.remoteUserId].extra.userFullName;
+        //         }
+
+        //         div.innerHTML = '<b>You (to: ' + userFullName + '):</b><br><label>0%</label> <progress></progress>';
+        //         div.style.background = '#cbffcb';
+        //     } else {
+        //         div.innerHTML = '<b>' + getFullName(file.userid) + ':</b><br><label>0%</label> <progress></progress>';
+        //     }
+
+        //     div.title = file.name;
+        //     conversationPanel.appendChild(div);
+        //     progressHelper[file.uuid] = {
+        //         div: div,
+        //         progress: div.querySelector('progress'),
+        //         label: div.querySelector('label')
+        //     };
+        //     progressHelper[file.uuid].progress.max = file.maxChunks;
+
+        //     conversationPanel.scrollTop = conversationPanel.clientHeight;
+        //     conversationPanel.scrollTop = conversationPanel.scrollHeight - conversationPanel.scrollTop;
+        // };
+
+        // function updateLabel(progress, label) {
+        //     if (progress.position == -1) return;
+        //     var position = +progress.position.toFixed(2).split('.')[1] || 100;
+        //     label.innerHTML = position + '%';
+        // }
+
+        if (!!params.password) {
+            connection.password = params.password;
+        }
+
+        designer.appendTo(document.getElementById('widget-container'), function () {
+            if (params.open === true || params.open === 'true') {
+                var tempStreamCanvas = document.getElementById('temp-stream-canvas');
+                var tempStream = tempStreamCanvas.captureStream();
+                tempStream.isScreen = true;
+                tempStream.streamid = tempStream.id;
+                tempStream.type = 'local';
+                connection.attachStreams.push(tempStream);
+                window.tempStream = tempStream;
+
+                connection.extra.roomOwner = true;
+                connection.open(params.sessionId, function (isRoomOpened, roomid, error) {
+                    if (error) {
+                        if (error === connection.errors.ROOM_NOT_AVAILABLE) {
+                            alert('Someone already created this room. Please either join or create a separate room.');
+                            return;
+                        }
+                        alert(error);
+                    }
+
+                    connection.socket.on('disconnect', function () {
+                        location.reload();
+                    });
+                });
+            } else {
+                joinSession();
+                // connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                //     if (error) {
+                //         if (error === connection.errors.ROOM_NOT_AVAILABLE) {
+                //             alert('This room does not exist. Please either create it or wait for moderator to enter in the room.');
+                //             return;
+                //         }
+                //         if (error === connection.errors.ROOM_FULL) {
+                //             alert('Room is full.');
+                //             return;
+                //         }
+                //         if (error === connection.errors.INVALID_PASSWORD) {
+                //             connection.password = prompt('Please enter room password.') || '';
+                //             if (!connection.password.length) {
+                //                 alert('Invalid password.');
+                //                 return;
+                //             }
+                //             connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                //                 if (error) {
+                //                     alert(error);
+                //                 }
+                //             });
+                //             return;
+                //         }
+                //         alert(error);
+                //     }
+
+                //     connection.socket.on('disconnect', function () {
+                //         location.reload();
+                //     });
+                // });
+            }
+        });
+
+        function joinSession() {
+            connection.checkPresence(params.sessionId, function (isRoomExist, roomid) {
+                if (isRoomExist) {
+                    connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                        if (error) {
+                            if (error === connection.errors.ROOM_FULL) {
+                                alert('Room is full.');
+                                return;
+                            }
+                            if (error === connection.errors.INVALID_PASSWORD) {
+                                connection.password = prompt('Please enter room password.') || '';
+                                if (!connection.password.length) {
+                                    alert('Invalid password.');
+                                    return;
+                                }
+                                connection.join(params.sessionId, function (isRoomJoined, roomid, error) {
+                                    if (error) {
+                                        alert(error);
+                                    }
+                                });
+                                return;
+                            }
+                            alert(error);
+                        }
+
+                        connection.socket.on('disconnect', function () {
+                            location.reload();
+                        });
+                    });
+                } else {
+                    setTimeout(joinSession, 5000); // Try again after 5 seconds
+                }
+            });
+        }
+
+        function addStreamStopListener(stream, callback) {
+            stream.addEventListener('ended', function () {
+                callback();
+                callback = function () { };
+            }, false);
+
+            stream.addEventListener('inactive', function () {
+                callback();
+                callback = function () { };
+            }, false);
+
+            stream.getTracks().forEach(function (track) {
+                track.addEventListener('ended', function () {
+                    callback();
+                    callback = function () { };
+                }, false);
+
+                track.addEventListener('inactive', function () {
+                    callback();
+                    callback = function () { };
+                }, false);
+            });
+        }
+
+        function replaceTrack(videoTrack, screenTrackId) {
+            if (!videoTrack) return;
+            if (videoTrack.readyState === 'ended') {
+                alert('Can not replace an "ended" track. track.readyState: ' + videoTrack.readyState);
+                return;
+            }
+            connection.getAllParticipants().forEach(function (pid) {
+                var peer = connection.peers[pid].peer;
+                if (!peer.getSenders) return;
+                var trackToReplace = videoTrack;
+                peer.getSenders().forEach(function (sender) {
+                    if (!sender || !sender.track) return;
+                    if (screenTrackId) {
+                        if (trackToReplace && sender.track.id === screenTrackId) {
+                            sender.replaceTrack(trackToReplace);
+                            trackToReplace = null;
+                        }
+                        return;
+                    }
+
+                    if (sender.track.id !== tempStream.getTracks()[0].id) return;
+                    if (sender.track.kind === 'video' && trackToReplace) {
+                        sender.replaceTrack(trackToReplace);
+                        trackToReplace = null;
+                    }
+                });
+            });
+        }
+
+        function replaceScreenTrack(stream) {
+            stream.isScreen = true;
+            stream.streamid = stream.id;
+            stream.type = 'local';
+
+            // connection.attachStreams.push(stream);
+            connection.onstream({
+                stream: stream,
+                type: 'local',
+                streamid: stream.id,
+                // mediaElement: video
+            });
+
+            var screenTrackId = stream.getTracks()[0].id;
+            addStreamStopListener(stream, function () {
+                connection.send({
+                    hideMainVideo: true
+                });
+
+                // $('#main-video').hide();
+                $('#screen-viewer').hide();
+                $('#btn-share-screen').show();
+                replaceTrack(tempStream.getTracks()[0], screenTrackId);
+            });
+
+            stream.getTracks().forEach(function (track) {
+                if (track.kind === 'video' && track.readyState === 'live') {
+                    replaceTrack(track);
+                }
+            });
+
+            connection.send({
+                showMainVideo: true
+            });
+
+            // $('#main-video').show();
+            $('#screen-viewer').css({
+                top: $('#widget-container').offset().top,
+                left: $('#widget-container').offset().left,
+                width: $('#widget-container').width(),
+                height: $('#widget-container').height()
+            });
+            $('#screen-viewer').show();
+        }
+
+        $('#btn-share-screen').click(function () {
+            if (!window.tempStream) {
+                alert('Screen sharing is not enabled.');
+                return;
+            }
+
+            $('#btn-share-screen').hide();
+
+            if (navigator.mediaDevices.getDisplayMedia) {
+                navigator.mediaDevices.getDisplayMedia(screen_constraints).then(stream => {
+                    replaceScreenTrack(stream);
+                }, error => {
+                    alert('Please make sure to use Edge 17 or higher.');
+                });
+            }
+            else if (navigator.getDisplayMedia) {
+                navigator.getDisplayMedia(screen_constraints).then(stream => {
+                    replaceScreenTrack(stream);
+                }, error => {
+                    alert('Please make sure to use Edge 17 or higher.');
+                });
+            }
+            else {
+                alert('getDisplayMedia API is not available in this browser.');
+            }
+        });
+    </script>
+    </body>
+
+</html>
