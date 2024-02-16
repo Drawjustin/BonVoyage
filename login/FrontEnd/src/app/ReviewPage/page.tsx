@@ -24,8 +24,17 @@ const CAROUSEL_IMAGES = [
   'https://www.wart.or.kr/main_banner/new-ex-23-04-mo.jpg',
 ]
 
+const ReviewList = [
+  'https://image.chosun.com/sitedata/image/201702/20/2017022002398_0.jpg',
+  'https://photo.akmall.com/image4/goods/38/18/43/19/138184319_01_350.jpg',
+  'https://m.wart.co.kr/file_data/weart22/2022/08/01/b912e893198453807ef53d8c9b8125b4.jpg',
+  'https://media.bunjang.co.kr/product/222196100_1_1682414243_w360.jpg',
+  'https://contents.lotteon.com/itemimage/20231221131505/LO/20/85/85/14/86/_2/08/58/51/48/7/LO2085851486_2085851487_1.jpg/dims/resizef/720X720',
+];
+
 interface ReviewProp {
-  reviewSeq: number;
+  itemSeq: number;
+  seq:number
   // Add other properties based on your actual data structure
 }
 
@@ -58,9 +67,9 @@ const ReviewPage = () => {
       {reviewsData.length === 0 ? (
         <EmptyState showReset />
       ) : (
-        <div className={styles.Cards}>
+        <div className={styles.Cards} style={{ marginLeft: '22vh', display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', justifyContent: 'center' }}>
           {reviewsData.map((review) => (
-            <ReviewCard currentUser={currentUser} key={review.reviewSeq} data={review} />
+            <ReviewCard currentUser={currentUser} key={review.seq} data={review} className={styles.ReviewCard} image={ReviewList[(review.seq) % 5]}/>
           ))}
         </div>
       )}</div>
