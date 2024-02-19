@@ -1,3 +1,50 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:de860df93f78e71198ebe319cb79037b3ae6cb2d55a364f39c4834cc1c33e2ea
-size 1122
+//import useFavorite from '@/hooks/useFavorite';
+'use client'
+import React, { useState } from 'react';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
+import styles from './HeartButton.module.scss';
+
+interface HeartButtonProps {
+    productId: string;
+    currentUser?: boolean | null;
+}
+
+
+const HeartButton = ({ productId, currentUser }: HeartButtonProps) => {
+
+    const [isFavorited, setIsFavorited] = useState(false);
+
+
+    const toggleFavorite = (event: React.MouseEvent) => {
+      event.stopPropagation();
+      setIsFavorited(!isFavorited);
+      console.log('클릭');
+    }
+    // const hasFavorite = false;
+
+    return (
+        <div
+          onClick={toggleFavorite}
+          className={styles.heartButton}
+        >
+          {isFavorited ? (
+            <AiFillHeart
+              size={24}
+              className={styles.heartButton__filled}
+            />
+
+          ) : (
+
+            <AiOutlineHeart
+              size={24}
+              className={styles.heartButton__outline}
+            />
+          )
+        
+        }
+    
+        </div>
+      );
+    };
+
+export default HeartButton

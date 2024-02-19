@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:928206a105c69a9c0cb3b8ed3d50c3cacace6788ab766baa54583bff94ddd731
-size 1176
+package ArtBridge.ArtBridgelogin.repository;
+
+import ArtBridge.ArtBridgelogin.domain.Point;
+import ArtBridge.ArtBridgelogin.domain.QPoint;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public class PointRepository {
+
+    private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
+    private final QPoint qPoint = QPoint.point;
+
+    public PointRepository(EntityManager em) {
+        this.em = em;
+        this.queryFactory = new JPAQueryFactory(em);
+    }
+
+    public List<Point> readAll() {
+        return queryFactory
+                .selectFrom(qPoint)
+                .fetch();
+    }
+
+    public Point readPointByDetailSeq(Long pointDetailSeq) {
+        return queryFactory
+                .selectFrom(qPoint)
+                .where(qPoint.pointDetailSeq.eq(pointDetailSeq))
+                .fetchOne();
+    }
+
+    public Point create(Point point) {
+        em.persist(point);
+        return point;
+    }
+
+    // Add other methods as needed
+
+    // You can add methods for update and delete based on your requirements
+
+}

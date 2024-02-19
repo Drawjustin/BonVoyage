@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b25a533561c2c69a58e5446e9866434dd7a82d681d7894d8106ce22e8344559b
-size 702
+import React from 'react'
+import Avatar from '../Avatar';
+import { formatTime } from '@/helpers/dayjs';
+import style from './ReviewInfo.module.scss';
+
+// interface ReviewInfoProps {
+//     user: User,
+//     description: string,
+//     createdAt: Date,
+// }
+
+const ReviewInfo = ({
+    user,
+    createdAt,
+    description
+}: any) => {
+  return (
+    <div>
+        <div>
+            <div className={style.Avatar}>
+                <Avatar src={user?.image}/>
+                <p>{user?.name}</p>
+            </div>
+            <div>
+                {formatTime(createdAt)}
+            </div>
+        </div>
+        <div>
+            {description}
+        </div>
+    </div>
+  )
+}
+
+export default ReviewInfo

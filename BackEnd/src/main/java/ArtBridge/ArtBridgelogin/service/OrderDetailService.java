@@ -1,3 +1,40 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d6296c177c3d6230037733b49bd6985bf87a8edeab4703cec3e6580e2dbe3c10
-size 1201
+package ArtBridge.ArtBridgelogin.service;
+
+import ArtBridge.ArtBridgelogin.domain.OrderDetail;
+import ArtBridge.ArtBridgelogin.repository.OrderDetailRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class OrderDetailService {
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+    //Todo: CREATE
+    @Transactional
+    public OrderDetail createOrderDetail(OrderDetail orderDetail) {
+        return orderDetailRepository.create(orderDetail);
+    }
+
+    //Todo: READ
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public List<OrderDetail> readAllAOrderDetail() {
+        return orderDetailRepository.readAll();
+    }
+
+    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
+    public OrderDetail readOne(Long id) {
+        return orderDetailRepository.readOne(id);
+    }
+
+    //Todo: UPDATE : NONE
+
+    //Todo: DELETE : NONE
+}

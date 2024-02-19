@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5d147e8a74ec75cd192bf02a71ac8698e7aecf4d411ed15dd12842e14fe30b68
-size 674
+'use client'
+import React from 'react'
+import CartEmpty from '@/components/cart-empty/CartEmpty';
+import { useAppSelector } from '@/hooks/redux';
+import CartList from './cart-list/CartList';
+import Checkout from './checkout/Checkout';
+
+const CartPage = () => {
+  const { products } = useAppSelector((state:any) => state.cartSlice);
+  return (
+        <div className='page'>
+          {!products.length ? (
+            <CartEmpty title="Cart" />
+          ) : (
+            <div className='container'>
+              <h1>장바구니</h1>
+              <CartList />
+              <Checkout />
+            </div>
+          )}
+        </div >
+    
+  )
+}
+
+export default CartPage

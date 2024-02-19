@@ -1,3 +1,31 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1bf96d6c6ee96a6502baef2c8cd1a790d3c422ad70625df902c2b0de5a118ede
-size 703
+import React from 'react';
+import Heading from '../../Heading/Heading';
+import Image from 'next/image';
+import HeartButton from '../../HeartButton/HeartButton';
+import styles from './ProductHead.module.scss';
+
+const ProductHead = ({
+  title,
+  imageSrc,
+  id,
+  currentUser
+}: any) => {
+  return (
+    <>
+      <div className={styles.product_head_container}>
+        <Heading title={title} />
+        <Image
+          src={imageSrc}
+          fill
+          className={styles.image}
+          alt="product"
+        />
+        <div className={styles.heart_button}>
+          <HeartButton productId={id} currentUser={currentUser} />
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ProductHead;

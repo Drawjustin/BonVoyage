@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:061e8dcf97e9accbd08dc6bc1aa194b17076c43c50bea11e5263ea8e56a5dddc
-size 689
+import React from 'react'
+import styles from './CardSkeleton.module.scss'
+import Skeleton from 'react-loading-skeleton'
+import "react-loading-skeleton"
+
+const CardSkeleton = () => {
+  return (
+    <div className={styles.card_skeleton_container}>
+        <div className={styles.card_skeleton}>
+            <Skeleton height={350} />
+        </div>
+        <div className={styles.card_skeleton}>
+            <Skeleton height={350} />
+        </div>
+        <div className={styles.card_skeleton}>
+            <Skeleton height={350} />
+        </div>
+        <div className={styles.card_skeleton}>
+            <Skeleton height={350} />
+        </div>
+    </div>
+)
+}
+
+export default CardSkeleton

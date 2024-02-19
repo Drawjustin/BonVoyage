@@ -1,3 +1,20 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fb18a7de5d0d09db0e36179b35ffc557fcd10be84723bf4ecfc4ee1fb03cd5c7
-size 1052
+> "rooms" directory is used to store json-files created via "publish.php"
+
+Live Demo: https://muazkhan.com:9001/demos/SSEConnection.html
+
+Server Sent Events (SSE) are used to setup WebRTC peer-to-peer connections.
+
+1. Download above directory
+2. Upload to your PHP webserver
+3. Give the directory both read-and-write permissions
+4. Go to [`dev/SSEConnection.js`](https://github.com/muaz-khan/RTCMultiConnection/blob/master/dev/SSEConnection.js) and replace [`sseDirPath`](https://github.com/muaz-khan/RTCMultiConnection/blob/master/dev/SSEConnection.js#L6) with `sseDirPath='https://php-server.com/SSEConnection/';`
+5. Try [`demos/SSEConnection.html`](https://github.com/muaz-khan/RTCMultiConnection/blob/master/demos/SSEConnection.html) demo on HTTPs or localhost.
+
+Relevant files:
+
+1. https://github.com/muaz-khan/RTCMultiConnection/blob/master/dev/SSEConnection.js
+2. https://github.com/muaz-khan/RTCMultiConnection/blob/master/demos/SSEConnection.html
+
+PHP Source:
+
+* https://github.com/muaz-khan/RTCMultiConnection/tree/master/demos/SSEConnection

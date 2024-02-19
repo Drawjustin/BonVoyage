@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:bf9a94ca0ef26f479cd82b571532ed3e8d96ab585e98a6ee344354c4eb728d07
-size 846
+import { OrbitControls } from "@react-three/drei";
+import { useEffect, useRef } from "react";
+import gsap from 'gsap';
+import { useThree } from "@react-three/fiber";
+
+const CameraControls = ({ position, target }) => {
+  const { camera } = useThree();
+  const controlsRef = useRef();
+
+  useEffect(() => {
+    if (controlsRef.current && position && target) {
+      gsap.to(controlsRef.current.target, {
+        duration: 1,
+        x: target.x,
+        y: target.y,
+        z: target.z,
+        ease: "power3.inOut"
+      });
+      gsap.to(camera.position, {
+        duration: 1,
+        x: position.x,
+        y: position.y,
+        z: position.z,
+        ease: "power3.inOut"
+      });
+    }
+  }, [position, target, camera]);
+
+  return <OrbitControls ref={controlsRef} enableZoom={false} enableRotate={false}/>;
+};
+
+export default CameraControls;

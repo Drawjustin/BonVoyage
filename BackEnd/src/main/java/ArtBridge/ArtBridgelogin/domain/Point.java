@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:f9f3eca6c3cc9935dd5e13ecfa9cdda8e84b77cea01d6d6a2b8e80e37cab4db7
-size 1034
+package ArtBridge.ArtBridgelogin.domain;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "point")
+@Data
+public class Point {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "point_detail_seq")
+    private Long pointDetailSeq;
+
+    @Column(name = "point_detail_id", nullable = false)
+    private Integer pointDetailId;
+
+    @Column(name = "point_detail_isartist", length = 30, nullable = false)
+    private boolean pointDetailIsartist;
+
+    @Column(name = "point_detail_trade_point", length = 30, nullable = false)
+    private Long pointDetailTradePoint;
+
+    @Column(name = "point_detail_trade_date", length = 30, nullable = false)
+    private LocalDateTime pointDetailTradeDate;
+
+    @Column(name = "point_detail_trade_category", length = 30, nullable = false)
+    private Integer pointDetailTradeCategory;
+
+    @Column(name = "point_detail_trade_table_seq", length = 30, nullable = false)
+    private Integer pointDetailTradeTableSeq;
+}

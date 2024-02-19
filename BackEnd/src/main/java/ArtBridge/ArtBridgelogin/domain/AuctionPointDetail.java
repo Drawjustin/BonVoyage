@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1ad3ad4e353222efee7feb6e34808fdcbb4c7ee36c588523999f00be79552c48
-size 1078
+package ArtBridge.ArtBridgelogin.domain;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Data
+@Table(name = "auction_point_detail")
+public class AuctionPointDetail{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "auction_point_detail_seq")
+    private Integer auctionPointDetailSeq;
+
+    @Column(name = "auction_point_detail_point", nullable = false)
+    private Integer auctionPointDetailPoint;
+
+    @Column(name = "auction_point_detail_iswin", nullable = false)
+    private Boolean auctionPointDetailIsWin;
+
+    @Column(name = "auction_point_date", nullable = false)
+    private LocalDateTime auctionPointDate;
+
+    //    ----------------------------------------------------
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
+}

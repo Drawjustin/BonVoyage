@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:d7444ef44435cf06fe1a649edae1cb4f1878a2ffcd4c74bc0a1d09e3c63ddecd
-size 822
+package ArtBridge.ArtBridgelogin.controller.dto.auction;
+
+import ArtBridge.ArtBridgelogin.controller.dto.item.ItemDto;
+
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+
+@Data
+@Component
+public class AuctionDto {
+
+    private Integer auctionSeq;
+    private LocalDateTime auctionScheduledTime;
+    private Integer auctionStatus;
+    private Integer auctionStartPoint;
+    private Integer auctionAskPoint;
+    private Integer auctionWinner;
+    private LocalDateTime auctionCreatedDate;
+    private LocalDateTime auctionCanceledDate;
+    private Boolean auctionIsMiscarried;
+    private LocalDateTime auctionMiscarriedDate;
+    private Long auctionSellPoint;
+    private LocalDateTime auctionWinDate;
+    private String auctionSessionId;
+    private Integer itemSeq;
+
+}

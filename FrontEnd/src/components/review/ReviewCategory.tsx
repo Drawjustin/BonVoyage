@@ -1,3 +1,33 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a532e36cd358a0dfd2a5a6d69bbeac4c79e13f06fb9c40dffe2a54cdd9cee81b
-size 865
+import React from 'react'
+import { IconType } from 'react-icons'
+import styles from './ReviewCategory.module.scss';
+
+interface ReviewCategoryProps {
+    icon: IconType;
+    label: string;
+    description: string;
+}
+
+const ReviewCategory = ({
+    icon: Icon,
+    label,
+    description
+}: ReviewCategoryProps) => {
+    return (
+        <div className={styles.myComponent}>
+          <div className={`${styles.myComponent__icon} text-neutral-600`}>
+            <Icon></Icon>
+          </div>
+          <div className={styles.myComponent__content}>
+            <div className={styles.myComponent__content__label}>
+              {label}
+            </div>
+            <div className={`${styles.myComponent__content__description} text-neutral-500`}>
+              {description}
+            </div>
+          </div>
+        </div>
+      );
+}
+
+export default ReviewCategory

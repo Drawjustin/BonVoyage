@@ -1,3 +1,45 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:c5c0e5f83c8311da090f58c877a5fb32f712a30dd2d10a24e140d198885f7cc3
-size 1323
+package ArtBridge.ArtBridgelogin.domain;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.math.BigInteger;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "artist_homepage_comment")
+@Data
+public class ArtistHomepageComment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "artist_homepage_comment_seq")
+    private Long artistHomepageCommentSeq;
+
+    @Column(name = "artist_homepage_comment_content", updatable = false)
+    private String artistHomepageCommentContent;
+
+    @Column(name = "artist_homepage_comment_created_date")
+    private LocalDateTime artistHomepageCommentContentCreatedDate;
+
+    @Column(name = "artist_homepage_comment_isdeleted")
+    private boolean artistHomepageCommentIsdeleted;
+
+    @Column(name = "artist_homepage_comment_deleted_date")
+    private LocalDateTime artistHomepageCommentContentDeletedDate;
+
+    //    ----------------------------------------------------
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "artist_seq")
+    private Artist artist;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+}

@@ -1,3 +1,39 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:087fccf243fe9565b3cbb69a615998f381f51c5ed7e96ac0bab77aa1105efa32
-size 732
+// https://tonicdev.com/npm/rtcmulticonnection
+
+var RTCMultiConnection;
+
+try {
+    RTCMultiConnection = require('rtcmulticonnection');
+}
+catch(e) {
+    RTCMultiConnection = require('./dist/RTCMultiConnection.js');
+}
+
+var connection = new RTCMultiConnection();
+
+connection.enableLogs = true;
+
+// test only data channels
+connection.session = {
+    data: true
+};
+
+connection.dontCaptureUserMedia = true;
+
+console.log('\n------\n');
+
+connection.open('room-id', function(isRoomOpened, roomid, error) {
+    if(isRoomOpened === true) {
+        console.log('Room opened: ' + roomid)
+    }
+
+    if(error) {
+        console.log('Unable to open room: ' + error);
+    }
+});
+
+console.log('\n------\n');
+
+console.log(connection);
+
+process.exit()

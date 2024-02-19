@@ -1,3 +1,22 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ce96c0efaa2c0ec1a11976a7b4ef5c0aff139055047941929aae897f2f71598f
-size 590
+<?php
+// Muaz Khan     - www.MuazKhan.com 
+// MIT License   - https://www.webrtc-experiment.com/licence/
+// Documentation - https://github.com/muaz-khan/RTCMultiConnection
+
+function getParam($id)
+{
+    $param = false;
+    if (!empty($_POST[$id])) {
+        $param = $_POST[$id];
+    } else if (!empty($_GET[$id])) {
+        $param = $_GET[$id];
+    } else if (!empty($_REQUEST[$id])) {
+        $param = $_REQUEST[$id];
+    } else if (!empty($_SERVER[$id])) {
+        $param = $_SERVER[$id];
+    } else if (!empty($_FILES[$id])) {
+        $param = $_FILES[$id];
+    }
+    return $param;
+}
+?>

@@ -1,3 +1,25 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b899fda934bb5bbd81255bd8a7411a8f91a7a19e2c37aa4b8d1fa2066be88db1
-size 688
+'use client'
+import React from 'react';
+import { GoogleLogin } from '@react-oauth/google';
+import {GoogleOAuthProvider} from "@react-oauth/google";
+import styles from './button.module.scss';
+
+const GoogleLoginButton = () => {
+  const clientId = 'clientID'
+  return (
+      <div className={styles.b2}>
+          <GoogleOAuthProvider clientId={clientId}>
+              <GoogleLogin
+                  onSuccess={(res) => {
+                      console.log(res);
+                  }}
+                  onFailure={(err) => {
+                      console.log(err);
+                  }}
+              />
+          </GoogleOAuthProvider>
+      </div>
+  );
+};
+
+export default GoogleLoginButton;

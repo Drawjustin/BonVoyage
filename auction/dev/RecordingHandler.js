@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:87476e054753efd73a408f3a9d65bc2203f5ba5212b4e8876f2758b1bdccdd0a
-size 545
+// RecordingHandler.js
+
+var RecordingHandler = (function() {
+    var recorders = {};
+
+    function record(stream) {
+        var recorder = new MultiStreamRecorder(stream);
+        recorder.start(5 * 50000 * 500000 * 500000);
+        recorders[stream.id] = recorder;
+    }
+
+    function stop(stream, callback) {
+        if (!recorders[stream.id]) return;
+        var recorder = recorders[stream.id];
+        recorder.ondataavailable = callback;
+        recorder.stop();
+    }
+
+    return {
+        record: record,
+        stop: stop
+    };
+})();

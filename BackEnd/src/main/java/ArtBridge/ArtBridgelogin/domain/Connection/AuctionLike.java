@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:5971de2b9c0d3fcfe2aa543fbe2daea6e90d74d98206242206e2dc96a219ecef
-size 810
+package ArtBridge.ArtBridgelogin.domain.Connection;
+
+import ArtBridge.ArtBridgelogin.domain.Auction;
+import ArtBridge.ArtBridgelogin.domain.Member;
+import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+
+@Component
+@Entity
+@Table(name="auction_like")
+@Data
+public class AuctionLike {
+
+//    @Column(name = "auction_seq", nullable = false)
+//    private Integer auctionSeq;
+//
+//    @Column(name = "member_seq", nullable = false)
+//    private Long    memberSeq;
+
+    // Many-to-One relationship with Member
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "member_seq")
+    private Member member;
+
+    // Many-to-One relationship with Auction
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "auction_seq")
+    private Auction auction;
+
+}

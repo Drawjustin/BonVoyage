@@ -1,3 +1,34 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:1838a4a72788f124796f33263ce378f2ced5a032c2a78e5788aaf03d644b02fa
-size 714
+import getCurrentUser from '@/app/actions/getCurrentUser';
+// import getProductById from '@/app/actions/getProductById'
+import EmptyState from '@/components/EmptyState/EmptyState';
+import React from 'react'
+import ProductClient from './ProductClient';
+import axios from 'axios';
+
+interface Params {
+  productId?: string
+}
+
+const ProductPage = async () => {
+  
+
+  const backend_url = 'https://i10a207.p.ssafy.io/api';
+
+  const product = await axios.get(`${backend_url}/items`);
+  const currentUser = await getCurrentUser();
+  
+  if(!product) {
+    return (
+      <EmptyState />
+    )
+  }
+
+  return (
+    <ProductClient
+      product={product}
+      currentUser={currentUser}
+    />
+  )
+}
+
+export default ProductPage

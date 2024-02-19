@@ -1,3 +1,38 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a2374f1266dde5d30ea1cb73e63f404d6529b71a6ac12f25c1f9d0efa4cbae7e
-size 866
+import React from 'react';
+import * as FaIcons from 'react-icons/fa';
+import * as AiIcons from 'react-icons/ai';
+import * as IoIcons from 'react-icons/io';
+
+export const SidebarData = [
+    {
+        title: 'Home',
+        path: '/',
+        icon: <AiIcons.AiFillHome />,
+        cName: 'nav-text'
+    },
+    {
+        title: '판매 작품',
+        path: '/ProductListPage',
+        icon: <FaIcons.FaCartPlus />,
+        cName: 'nav-text'
+    },
+    {
+        title: '경매 작품',
+        path: '/AuctionListPage',
+        icon: <FaIcons.FaCartPlus />,
+        cName: 'nav-text'
+    },
+    {
+        title: '작가',
+        path: '/ArtistListPage',
+        icon: <IoIcons.IoMdPeople/>,
+        cName: 'nav-text'
+    },
+    {
+        title: '리뷰',
+        path: '/ReviewPage',
+        icon: <FaIcons.FaEnvelopeOpenText />,
+        cName: 'nav-text'
+    },
+
+]

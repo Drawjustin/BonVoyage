@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6bfc17d6d60271336ded8548af1513bda2626f5604d1ad83e9cd1b5ab931f1df
-size 863
+import { createSlice } from "@reduxjs/toolkit";
+import LocalStorage from '@/constants'
+
+const initialState = LocalStorage.getItem('user') ?
+    JSON.parse(LocalStorage.getItem('user')) : { email: "", token: "", id: "" }
+
+
+export const userSlice = createSlice({
+    name: 'user',
+    initialState,
+    reducers: {
+        setUser: (state, action) => {
+            state.email = action.payload.email;
+            state.token = action.payload.token;
+            state.id = action.payload.id;
+
+            LocalStorage.setItem('user', JSON.stringify(state));
+        },
+        removeUser: (state) => {
+            state.email = "";
+            state.token = "";
+            state.id = "";
+
+            LocalStorage.setItem('user', JSON.stringify(state));
+        }
+    }
+})
+
+export const { setUser, removeUser } = userSlice.actions;
+export default userSlice.reducer;

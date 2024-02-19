@@ -1,3 +1,44 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6cf0d38fae2c97bb3a34d60925ff8ec571307430dcc20da9c48218c55516954c
-size 996
+import React from 'react'
+import Heading from '../Heading/Heading';
+import Image from 'next/image';
+// import HeartButtonForReview from '../HeartButtonForReview';
+import style from './ReviewHead.module.scss'
+
+// interface ReviewHeadProps {
+//     title: string,
+//     imageSrc: string;
+//     id:string;
+//     currentUser?: User | null;
+// }
+
+const ReviewHead = ({
+    title,
+    imageSrc,
+    id,
+    currentUser
+}: any) => {
+  return (
+    <>
+        <Heading
+            title={title}
+        />
+        <div className={style.Head}>
+            <Image
+                src={imageSrc}
+                fill
+                objectFit='contain'
+                className={style.Image}
+                alt="Review"
+            />
+            <div className={style.heartButton}>
+                {/* <HeartButtonForReview
+                    reviewId={id}
+                    currentUser={currentUser}
+                /> */}
+            </div>
+        </div>
+    </>
+  )
+}
+
+export default ReviewHead

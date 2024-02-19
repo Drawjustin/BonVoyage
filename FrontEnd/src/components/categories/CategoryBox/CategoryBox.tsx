@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:6162029b549f0c88a09d9a8b023d50eee7ab52794cdccd6ba20aa4983697f3aa
-size 613
+import Link from 'next/link';
+import React from 'react'
+import { IconType } from 'react-icons'
+import styles from './CategoryBox.module.scss'
+
+interface CategoryBoxProps {
+    icon: IconType;
+    label: string;
+    path: string;
+    selected?: boolean;
+}
+
+const CategoryBox = ({
+    icon: Icon,
+    label,
+    path,
+    selected
+}: CategoryBoxProps) => {
+  return (
+    <Link href={`/ProductListPage/?category=${path}`}
+    className={selected ? styles.box_selected : styles.box }
+    >
+        <Icon size={26} />
+        <div>
+            {label}
+        </div>
+    </Link>
+    
+  )
+}
+
+export default CategoryBox

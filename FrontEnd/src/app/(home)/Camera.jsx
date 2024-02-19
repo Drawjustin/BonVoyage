@@ -1,3 +1,28 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:9373912fe1dbc90bae48706667cd28747ae155e7529bdb7c14c19b0b9df2ab72
-size 616
+import { OrbitControls } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
+import { useRef } from "react";
+import { Vector3 } from "three";
+
+ const CameraControls = () => {
+   //Initialize camera controls
+   const {
+     camera,
+     gl: { domElement },
+   } = useThree();
+   const ref = useRef(null);
+
+   // Determines camera up Axis
+   camera.up = new Vector3(0, 1, 0);
+
+   // return the controls object   
+   return (
+     <OrbitControls
+       ref={ref}
+       args={[camera, domElement]}
+       panSpeed={1}
+       maxPolarAngle={Math.PI / 2}
+     />
+   );
+ };
+
+export { CameraControls };

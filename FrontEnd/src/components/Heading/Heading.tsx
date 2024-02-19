@@ -1,3 +1,30 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:b210c6298d29ece3a258c127a6fd074eb4c831db482c3d911b31da171a936799
-size 593
+import React from 'react';
+import styles from './Heading.module.scss';
+
+interface HeadingProps {
+  title: string;
+  subtitle?: string;
+  center?: boolean;
+}
+
+const Heading: React.FC<HeadingProps> = ({
+  title,
+  subtitle,
+  center
+}: HeadingProps) => {
+  return (
+    <div className={`${styles.headingContainer} ${center ? styles.textCenter : styles.textStart}`}>
+      <div className={`${styles.title}`}>
+        {title}
+      </div>
+
+      {subtitle && (
+        <div className={`${styles.subtitle}`}>
+          {subtitle}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Heading;

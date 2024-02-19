@@ -1,3 +1,47 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:12cf719d84d0cab0ae118518a377a0b053b0ba3d5b9eb308b4fe9ec3e7a815a2
-size 1086
+'use client'
+import React from 'react';
+import Image from 'next/image';
+import HeartButton from '../../HeartButton/HeartButton';
+import styles from './ArtistCard.module.scss';
+import { useRouter } from 'next/navigation';
+
+const ArtistCard = ({ data, currentUser, image }:any) => {
+
+  const Navigate = useRouter();
+
+  const handleCardClick = () => {
+    Navigate.push(`/ArtistHomePage/${data.id}`)
+  };
+
+  return (
+    <div
+      onClick={handleCardClick}
+      className={styles['artist-card']}
+    >
+      <div className={styles['image-container']}>
+        <img
+          src={image}
+          sizes='auto'
+          className={styles['product-image']}
+          alt="artist"
+        />
+        <div className={styles['heart-button']}>
+          <HeartButton 
+            productId={data.id}
+            currentUser={currentUser}
+          />
+        </div>
+        <div className={styles.LikeNumber}>
+          좋아요 수
+        </div>
+      </div>
+
+      <div className={styles['artist-details']}>
+        {data.name}
+      </div>
+
+    </div>
+  );
+};
+
+export default ArtistCard;

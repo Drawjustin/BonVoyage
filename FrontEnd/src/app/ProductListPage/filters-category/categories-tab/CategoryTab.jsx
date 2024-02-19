@@ -1,3 +1,29 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:3be067a51a00b6ff4085c61ad7c69295351a27a76d1120dab2e66fd2873fcb83
-size 797
+'use client'
+import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
+import { setActiveCategory } from '../../../../store/categories/categories.slice';
+import styles from './CategoryTab.module.scss';
+
+
+const CategoryTab = ({ text, categoryName }) => {
+    const dispatch = useAppDispatch();
+    const category = useAppSelector((state) => state.categoriesSlice);
+
+    const getActiveCategory = () => {
+        dispatch(setActiveCategory(categoryName))
+    }
+
+    return (
+        <button
+            className={
+                categoryName === category
+                    ? styles.active_category
+                    : styles.category_button
+            }
+            onClick={getActiveCategory}
+        >
+            {text}
+        </button>
+    )
+}
+
+export default CategoryTab

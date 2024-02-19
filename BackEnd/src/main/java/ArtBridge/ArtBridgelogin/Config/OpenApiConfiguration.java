@@ -1,3 +1,18 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:8f60389f664e425e4952e18bd920dc587077956801865644928366bbb48fd524
-size 560
+package ArtBridge.ArtBridgelogin.config;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class OpenApiConfiguration {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("ArtBridge API")
+                        .version("0.0.1-SNAPSHOT")
+                        .description("This is a sample ArtBridge server."));
+    }
+}

@@ -1,3 +1,26 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:a1605c3a83573575d01cb22d2f1caa9eabe1fc6f39698fa08a506a6af79d3be7
-size 658
+package ArtBridge.ArtBridgelogin.controller.dto.member;
+
+import ArtBridge.ArtBridgelogin.domain.Member;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+
+@Data
+@Component
+public class MemberDto {
+
+    private Long memberSeq;
+    private boolean isArtist;
+    private String memberId;
+    private String memberName;
+    private String memberPwd;
+    private String memberNickname;
+    private String memberEmail;
+    private String memberContact;
+    private Long memberPoint;
+    private boolean memberIsDeleted;
+    private LocalDateTime memberDeletedDate;
+    private LocalDateTime memberCreatedDate;
+
+}

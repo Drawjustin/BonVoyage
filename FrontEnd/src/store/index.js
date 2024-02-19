@@ -1,3 +1,23 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:fbabfdcd370a54a4dc16be35748341fc35a4ea373e9c4f40c3758184b3bc89e4
-size 668
+import { configureStore } from "@reduxjs/toolkit"
+import categoriesSlice from "./categories/categories.slice"
+import productsSlice from './products/products.slice';
+import productSlice from './products/product.slice';
+import cartSlice from './cart/cart.slice';
+import orderSlice from './order/order.slice'
+import userSlice from './user/user.slice'
+import artistsSlice from "./Artists/artist.slice";
+import { useSelector } from "react-redux";
+
+const store = configureStore({
+    reducer: {
+        orderSlice,
+        categoriesSlice,
+        productSlice,
+        productsSlice,
+        cartSlice,
+        userSlice,
+        artistsSlice
+    }
+})
+
+export default store
