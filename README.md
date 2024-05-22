@@ -12,7 +12,7 @@
 
 
 # Project : Bon Voyage
-
+## 2024년 1월3일 ~ 2024년 2월 16일
 ### [홈 페이지 바로가기](https://i10a207.p.ssafy.io)
 
 Test용 ID/PW : dfddf0 / 123456
