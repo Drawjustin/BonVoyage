@@ -1,0 +1,68 @@
+.id_finder_container {
+  background-color: #f1efee;
+  max-width: 400px;
+  margin-top: 25vh;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: black;
+  margin-left: 35.5vw;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .input_container {
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    text-align: right;
+    margin-bottom: 15px;
+    width: 340px;
+    margin-left: 20px;
+
+    label {
+      margin-top: 5px;
+      margin-right: 10px;
+      width: 60px;
+    }
+
+    input {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      flex: 1;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  }
+
+  .find_button {
+    margin-top: 20px;
+    margin-left: 35px;
+    font-family: 'Gowun Dodum', sans-serif;    width: 80%;
+    padding: 10px;
+    background-color: #171de5;
+    color: #f1efee;
+    border: #f1efee solid 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .result_container {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
